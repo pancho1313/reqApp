@@ -1,11 +1,21 @@
 {# espera variable: proyecto #}
-<div class="navbar1">
+<div class="navbar_up">
     <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#news">News</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#about">About</a></li>
+    <li><a href="{% url 'reqApp:TU' %}">Proyecto</a></li>
+    <li><a href="#Documentos">Documentos</a></li>
+    <li><a href="#Herramientas">Herramientas</a></li>
     </ul>
 </div>
 
-<h1>{{ proyecto }}</h1>
+<div class="proyect_name">
+<p>{{ proyecto }}</p>
+</div>
+<div class="navbar_down">
+    <ul>
+    <li><a href="#home">Tipos de Usuario</a></li>
+    <li><a href="#news">Requisitos de Usuario</a></li>
+    <li><a href="#contact">Requisitos de Software</a></li>
+    <li><a href="#about">Módulos</a></li>
+    <li><a href="#about">Casos de Prueba</a></li>
+    </ul>
+</div>

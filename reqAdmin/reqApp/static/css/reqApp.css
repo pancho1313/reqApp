@@ -1,3 +1,4 @@
+/* barra de navegación principal */
 .navbar_up ul
 {
 list-style-type:none;
@@ -14,24 +15,24 @@ float:left;
 .navbar_up a:link,a:visited
 {
 display:block;
-width:120px;
-font-weight:bold;
-color:#FFFFFF;
-background-color:#98bf21;
+width:auto;
+color:Black;
+background-color:WhiteSmoke;
 text-align:center;
-padding:4px;
+padding:10px;
 text-decoration:none;
-text-transform:uppercase;
+border-style:solid;
+border-width:1px;
 }
 
 .navbar_up a:hover,a:active
 {
-background-color:#7A991A;
+background-color:LightGray;
 }
 
 
 
-
+/* barra de navegación secundaria */
 .navbar_down ul
 {
 list-style-type:none;
@@ -48,17 +49,25 @@ float:left;
 .navbar_down a:link,a:visited
 {
 display:block;
-width:120px;
-font-weight:bold;
-color:#FFFFFF;
-background-color:#98bf21;
+width:auto;
+color:Black;
+background-color:WhiteSmoke;
 text-align:center;
 padding:4px;
 text-decoration:none;
-text-transform:uppercase;
+border-style:solid;
+border-width:1px;
 }
 
 .navbar_down a:hover,a:active
 {
-background-color:#7A991A;
+background-color:LightGray;
+}
+
+/* título de proyecto */
+.proyect_name p
+{
+margin-top: 2px;
+margin-bottom: 2px;
+font-size:1.5em;
 }

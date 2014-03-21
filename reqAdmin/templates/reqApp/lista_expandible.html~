@@ -1,0 +1,9 @@
+{% extends "reqApp/base.html" %}
+{% block body %}
+{% for string in elementos_de_lista %}
+<div>
+{{ string }}
+hey
+</div>
+{% endfor %}
+{% endblock %}
