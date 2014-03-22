@@ -6,7 +6,19 @@ class ProyectoForm(forms.ModelForm):
         model = Proyecto
         fields = ['nombre', 'descripcion']
         
-class ProyectoForm(forms.ModelForm):
+class HitoForm(forms.ModelForm):
     class Meta:
-        model = Proyecto
+        model = Hito
         fields = ['nombre', 'descripcion']
+        # TODO
+
+class TUForm(forms.ModelForm):
+    class Meta:
+        model = TipoUsuario
+        fields = [
+            'nombre',
+            'descripcion',
+            'cantidad',
+            'usuariosContactables',
+        ]
+        # TODO

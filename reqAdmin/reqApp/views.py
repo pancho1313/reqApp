@@ -1,10 +1,15 @@
 from django.shortcuts import render
+from reqApp.forms import *
 
 def viewTU(request):
     elementosDeLista = [
     "TU1","TU2","TU3",
     ]
-    context = {'elementos_de_lista': elementosDeLista}
+    context = {
+        'elementos_de_lista': elementosDeLista,
+        'form_template': 'reqApp/TU_form.html',
+        'form': TUForm(),
+    }
     return render(request, 'reqApp/lista_expandible.html', context)
 
 def viewRU(request):

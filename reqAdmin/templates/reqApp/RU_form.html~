@@ -1,0 +1,19 @@
+<form action="" method="post">
+	{% csrf_token %}
+
+	<div class="row-fluid">
+		<div class="span2{% if type_form.term_type.errors %} error required{% endif %} pagination-centered">
+			{% trans "Type" %}			
+		</div>
+		{% render_field type_form.term_type class+="selectpicker span9" %}
+	</div>
+
+	{% include form_template %} 
+	<div class="row-fluid">
+		<div class="span4 offset4 pagination-centered">
+			<button type="submit" class="btn btn-primary btn-center orange-button">
+				{% trans "Submit" %}
+			</button>
+		</div>
+	</div>
+</form>

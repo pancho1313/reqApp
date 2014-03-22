@@ -11,9 +11,9 @@ class Proyecto(models.Model):
 
 class Bitacora(models.Model):
     nombre = models.CharField(max_length=64)
-    identificador = models.PositiveIntegerField(default=1)
-    descripcion = models.CharField(max_length=200)
-    proyecto = models.ForeignKey(Proyecto, blank=False, null=False)
+    identificador = models.PositiveIntegerField(default=1, blank=True, null=False)
+    descripcion = models.CharField(max_length=200, blank=True)
+    proyecto = models.ForeignKey(Proyecto, blank=True, null=False)
     fecha = models.DateTimeField()
     usuario = models.ForeignKey(User, null=True)
     vigencia = models.BooleanField()
@@ -32,15 +32,7 @@ class TipoUsuario(Bitacora):
     def __unicode__(self):
         return u'TU%04d %s' % (self.identificador, self.nombre)
     
-class Modulo(Bitacora):
-    costo = models.IntegerField(default=0, blank=True)
-    
-    prioridad = models.CharField(max_length=30, choices=PRIORIDAD_CHOICES)
-    
-    requisitosSoftware = models.ManyToManyField(RequisitoSoftware, null=True, blank=True)
-    
-    def __unicode__(self):
-        return u'MD%04d %s' % (self.identificador, self.nombre)
+
     
 class RequisitoUsuario(Bitacora):
     fuente = models.CharField(max_length=140)
@@ -79,9 +71,19 @@ class CasoPrueba(Bitacora):
     
     estado = models.CharField(max_length=30, choices=ESTADO_CHOICES)
     
-    tiposUsuario = models.ManyToManyField(TipoUsuario, null=True, blank=True
+    tiposUsuario = models.ManyToManyField(TipoUsuario, null=True, blank=True)
     requisitoSoftware = models.ForeignKey(RequisitoSoftware, null=True, blank=True)
     requisitoUsuario = models.ForeignKey(RequisitoUsuario, null=True, blank=True)
     
     def __unicode__(self):
         return u'CP%04d %s' % (self.identificador, self.nombre)
+        
+class Modulo(Bitacora):
+    costo = models.IntegerField(default=0, blank=True)
+    
+    prioridad = models.CharField(max_length=30, choices=PRIORIDAD_CHOICES)
+    
+    requisitosSoftware = models.ManyToManyField(RequisitoSoftware, null=True, blank=True)
+    
+    def __unicode__(self):
+        return u'MD%04d %s' % (self.identificador, self.nombre)

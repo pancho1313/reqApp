@@ -31,3 +31,9 @@ PRIORIDAD_CHOICES = [
     ("deseable","deseable"),
     ("innecesario","innecesario"),
 ]
+
+ESTADO_CHOICES = [
+    ("cumple", "cumple"),
+    ("no cumple", "no cumple"),
+    ("ambiguo", "ambiguo"),
+]
