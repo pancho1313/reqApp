@@ -23,12 +23,11 @@ padding:10px;
 text-decoration:none;
 border-style:solid;
 border-width:1px;
-font-size:1.5em;
 }
 
 .navbar_up a:hover,a:active
 {
-background-color:LightGray;
+background-color:White;
 }
 
 
@@ -62,7 +61,7 @@ border-width:1px;
 
 .navbar_down a:hover,a:active
 {
-background-color:LightGray;
+background-color:White;
 }
 
 /* título de proyecto */

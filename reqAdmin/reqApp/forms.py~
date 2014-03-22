@@ -1,0 +1,12 @@
+from django import forms
+from reqApp.models import *
+
+class ProyectoForm(forms.ModelForm):
+    class Meta:
+        model = Proyecto
+        fields = ['nombre', 'descripcion']
+        
+class ProyectoForm(forms.ModelForm):
+    class Meta:
+        model = Proyecto
+        fields = ['nombre', 'descripcion']
