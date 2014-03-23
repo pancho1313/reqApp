@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Max
 from django.contrib.auth.models import User
 from reqApp.choices import *
 
@@ -9,9 +10,24 @@ class Proyecto(models.Model):
     def __unicode__(self):
         return u'%s' % self.nombre
 
+class BitacoraManager(models.Manager):
+    def todos(self, proyecto_id):
+        return self.model.objects.filter(proyecto__id=proyecto_id)
+        
+    def vigentes(self, proyecto_id):
+        return self.model.objects.filter(proyecto__id=proyecto_id).filter(vigencia=True)
+    
+    def nuevoIdentificador(self):
+        #return self.model.objects.latest('identificador').identificador + 1
+        elementos = self.model.objects.all()
+        
+        if elementos.count() > 0:
+            return elementos.aggregate(Max('identificador'))['identificador__max'] + 1
+        return 1
+
 class Bitacora(models.Model):
     nombre = models.CharField(max_length=64)
-    identificador = models.PositiveIntegerField(default=1, blank=True, null=False)
+    identificador = models.PositiveIntegerField(default=0, blank=True, null=False)
     descripcion = models.CharField(max_length=200, blank=True)
     proyecto = models.ForeignKey(Proyecto, blank=True, null=False)
     fecha = models.DateTimeField()
@@ -20,14 +36,20 @@ class Bitacora(models.Model):
     
     def __unicode__(self):
         return u'%s' % self.nombre
-    
+        
+
+
 class Hito(Bitacora):
     fechaInicio = models.DateTimeField()
     fechaFin = models.DateTimeField()
     
+    objects = BitacoraManager()
+    
 class TipoUsuario(Bitacora):
     cantidad = models.PositiveIntegerField(default=1)
     usuariosContactables = models.CharField(max_length=140) # TODO en realidad es mejor una lista
+    
+    objects = BitacoraManager()
     
     def __unicode__(self):
         return u'TU%04d %s' % (self.identificador, self.nombre)
@@ -46,6 +68,8 @@ class RequisitoUsuario(Bitacora):
     tiposUsuario = models.ManyToManyField(TipoUsuario, null=True, blank=True)
     hito = models.ForeignKey(Hito, blank=False, null=False)
     
+    objects = BitacoraManager()
+    
     def __unicode__(self):
         return u'RU%04d %s' % (self.identificador, self.nombre)
     
@@ -62,6 +86,8 @@ class RequisitoSoftware(Bitacora):
     requisitosUsuario = models.ManyToManyField(RequisitoUsuario, null=True, blank=True)
     hito = models.ForeignKey(Hito, blank=False, null=False)
     
+    objects = BitacoraManager()
+    
     def __unicode__(self):
         return u'RS%04d %s' % (self.identificador, self.nombre)
 
@@ -75,6 +101,8 @@ class CasoPrueba(Bitacora):
     requisitoSoftware = models.ForeignKey(RequisitoSoftware, null=True, blank=True)
     requisitoUsuario = models.ForeignKey(RequisitoUsuario, null=True, blank=True)
     
+    objects = BitacoraManager()
+    
     def __unicode__(self):
         return u'CP%04d %s' % (self.identificador, self.nombre)
         
@@ -84,6 +112,8 @@ class Modulo(Bitacora):
     prioridad = models.CharField(max_length=30, choices=PRIORIDAD_CHOICES)
     
     requisitosSoftware = models.ManyToManyField(RequisitoSoftware, null=True, blank=True)
+    
+    objects = BitacoraManager()
     
     def __unicode__(self):
         return u'MD%04d %s' % (self.identificador, self.nombre)

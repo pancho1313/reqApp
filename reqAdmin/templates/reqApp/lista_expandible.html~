@@ -1,8 +1,9 @@
 {% extends "reqApp/base.html" %}
 {% block body %}
-{% for string in elementos_de_lista %}
+{% for mensaje in mensajes %}
 <div>
 {{ string }}
 </div>
 {% endfor %}
+{% include form_template with form=form %}
 {% endblock %}

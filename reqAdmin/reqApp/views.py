@@ -1,12 +1,23 @@
 from django.shortcuts import render
 from reqApp.forms import *
+from reqApp.util import *
 
 def viewTU(request):
-    elementosDeLista = [
-    "TU1","TU2","TU3",
-    ]
+    mensajes = ['holi soy TU',]    
+    
+    if request.method == 'POST':
+        form = TUForm(request.POST)
+        if form.is_valid():
+            mensajes.append('form valid!')
+            
+            usuario = get_user_or_none(request)
+            form.crearElementoDeBitacora(usuario)
+            mensajes.append('saved form!')
+        else:
+            mensajes.append('invalid form!')
+    
     context = {
-        'elementos_de_lista': elementosDeLista,
+        'mensajes': mensajes,
         'form_template': 'reqApp/TU_form.html',
         'form': TUForm(),
     }

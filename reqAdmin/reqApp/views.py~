@@ -2,11 +2,23 @@ from django.shortcuts import render
 from reqApp.forms import *
 
 def viewTU(request):
-    elementosDeLista = [
-    "TU1","TU2","TU3",
-    ]
+    mensajes = ['holi soy TU',]    
+    
+    if request.method == 'POST':
+        form = TUForm(request.POST)
+        if form.is_valid():
+            mensajes.append('form valid!')
+            
+            form.fields['nombre'] = 'fer'
+            form.save()
+            mensajes.append('saved form!')
+        else:
+            mensajes.append('invalid form!')
+    
     context = {
-        'elementos_de_lista': elementosDeLista,
+        'mensajes': mensajes,
+        'form_template': 'reqApp/TU_form.html',
+        'form': TUForm(),
     }
     return render(request, 'reqApp/lista_expandible.html', context)
 
