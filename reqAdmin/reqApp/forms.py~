@@ -22,7 +22,7 @@ class BitacoraForm(forms.ModelForm):
         elemento.fecha = timezone.now()
         
         # identificador nuevo
-        elemento.identificador = elemento.type().objects.nuevoIdentificador()
+        elemento.identificador = elemento.__class__.objects.nuevoIdentificador()
         elemento.vigencia = True
         
         # guardar elemento de bitacora

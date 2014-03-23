@@ -30,6 +30,10 @@ class BitacoraForm(forms.ModelForm):
         
         # actualizar relaciones "many2many"
         self.save_m2m()
+    
+    def actualizarElementoDeBitacora(self, identificador, usuario):
+        # TODO
+        pass
 
 class TUForm(BitacoraForm):
     class Meta:
