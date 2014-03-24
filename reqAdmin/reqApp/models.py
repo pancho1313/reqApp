@@ -10,6 +10,13 @@ class Proyecto(models.Model):
     def __unicode__(self):
         return u'%s' % self.nombre
 
+class ReqAdminUser(models.Model):
+    user = models.OneToOneField(User)
+    
+    # un usuario puede tener varios proyectos asociados pero solo uno de ellos puede ser el proyecto activo
+    proyectos = models.ManyToManyField(Proyecto, null=True, blank=True)
+    proyectoActivo = models.ForeignKey(Proyecto, null=True)
+
 class BitacoraManager(models.Manager):
     def todos(self, proyecto_id):
         return self.model.objects.filter(proyecto__id=proyecto_id)
@@ -18,7 +25,6 @@ class BitacoraManager(models.Manager):
         return self.model.objects.filter(proyecto__id=proyecto_id).filter(vigencia=True)
     
     def nuevoIdentificador(self):
-        #return self.model.objects.latest('identificador').identificador + 1
         elementos = self.model.objects.all()
         
         if elementos.count() > 0:
@@ -31,7 +37,7 @@ class Bitacora(models.Model):
     descripcion = models.CharField(max_length=200, blank=True)
     proyecto = models.ForeignKey(Proyecto, blank=True, null=False)
     fecha = models.DateTimeField()
-    usuario = models.ForeignKey(User, null=True)
+    usuario = models.ForeignKey(User, null=True) # TODO referenciar al User correcto
     vigencia = models.BooleanField()
     
     def __unicode__(self):
