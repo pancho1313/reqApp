@@ -16,7 +16,9 @@ class BitacoraForm(forms.ModelForm):
         elemento.usuario = usuario
         
         # obtener el proyecto asociado
-        elemento.proyecto = Proyecto.objects.all()[:1].get() # TODO obtener proyecto del usuario
+        # TODO obtener proyecto seleccionado de sesion de usuario
+        # por el momento seleccionamos siempre el "primer" proyecto asociado al usuario
+        elemento.proyecto = usuario.userprofile.proyectos.all()[:1].get()
         
         # fecha de creación
         elemento.fecha = timezone.now()

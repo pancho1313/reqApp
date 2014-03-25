@@ -5,3 +5,4 @@ def get_user_or_none(request):
         return request.user
     else:
         return None
+    

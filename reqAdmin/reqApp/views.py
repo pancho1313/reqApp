@@ -2,6 +2,8 @@ from django.shortcuts import render
 from reqApp.forms import *
 from reqApp.util import *
 
+from django.contrib.auth.models import User
+
 def viewTU(request):
     mensajes = ['holi soy TU',]    
     
@@ -10,7 +12,7 @@ def viewTU(request):
         if form.is_valid():
             mensajes.append('form valid!')
             
-            usuario = get_user_or_none(request)
+            usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
             form.crearElementoDeBitacora(usuario)
             mensajes.append('saved form!')
         else:

@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Max
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 from reqApp.choices import *
 
 class Proyecto(models.Model):
@@ -10,12 +11,22 @@ class Proyecto(models.Model):
     def __unicode__(self):
         return u'%s' % self.nombre
 
-class ReqAdminUser(models.Model):
+class UserProfile(models.Model):
+    """
+    >>> u = User.objects.get(username='fred')
+    >>> freds_proyecto = u.userProfile.proyectos
+    """
     user = models.OneToOneField(User)
     
-    # un usuario puede tener varios proyectos asociados pero solo uno de ellos puede ser el proyecto activo
-    proyectos = models.ManyToManyField(Proyecto, null=True, blank=True)
-    proyectoActivo = models.ForeignKey(Proyecto, null=True)
+    # un usuario debe escoger el proyecto que desea ver (en el caso de tener mas de uno asociado)
+    proyectos = models.ManyToManyField(Proyecto, null=True)
+    
+def profile(sender, **kwargs):
+    if kwargs.get('created', False):
+        UserProfile.objects.create(
+            user=kwargs.get('instance')
+            )
+post_save.connect(profile, sender=User)
 
 class BitacoraManager(models.Manager):
     def todos(self, proyecto_id):

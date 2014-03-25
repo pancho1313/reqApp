@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from reqApp.forms import *
+from reqApp.util import *
 
 def viewTU(request):
     mensajes = ['holi soy TU',]    
@@ -9,8 +10,8 @@ def viewTU(request):
         if form.is_valid():
             mensajes.append('form valid!')
             
-            form.fields['nombre'] = 'fer'
-            form.save()
+            usuario = get_alejandro() #TODO#get_user_or_none(request)
+            form.crearElementoDeBitacora(usuario)
             mensajes.append('saved form!')
         else:
             mensajes.append('invalid form!')
