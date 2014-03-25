@@ -30,10 +30,26 @@ post_save.connect(profile, sender=User)
 
 class BitacoraManager(models.Manager):
     def todos(self, proyecto_id):
-        return self.model.objects.filter(proyecto__id=proyecto_id)
+        try:
+            resp = self.model.objects.filter(proyecto__id=proyecto_id)
+        except self.model.DoesNotExist:
+            pass
+        return resp
+        
         
     def vigentes(self, proyecto_id):
-        return self.model.objects.filter(proyecto__id=proyecto_id).filter(vigencia=True)
+        try:
+            resp = self.model.objects.filter(proyecto__id=proyecto_id).filter(vigencia=True)
+        except self.model.DoesNotExist:
+            pass
+        return resp
+        
+    def vigente(self, identificador):
+        try:
+            resp = self.model.objects.filter(proyecto__id=proyecto_id).filter(vigencia=True)
+        except self.model.DoesNotExist:
+            pass
+        return resp
     
     def nuevoIdentificador(self):
         elementos = self.model.objects.all()

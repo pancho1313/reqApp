@@ -2,8 +2,10 @@
 {% block body %}
 {% for mensaje in mensajes %}
 <div>
-{{ string }}
+{{ mensaje }}
 </div>
 {% endfor %}
-{% include form_template with form=form %}
+{% include form_template with form=form_new %}
+<br/>
+{% include form_template with form=form_edit %}
 {% endblock %}

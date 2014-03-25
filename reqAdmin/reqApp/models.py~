@@ -19,7 +19,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     
     # un usuario debe escoger el proyecto que desea ver (en el caso de tener mas de uno asociado)
-    proyectos = models.ManyToManyField(Proyecto)
+    proyectos = models.ManyToManyField(Proyecto, null=True)
     
 def profile(sender, **kwargs):
     if kwargs.get('created', False):
@@ -34,6 +34,11 @@ class BitacoraManager(models.Manager):
         
     def vigentes(self, proyecto_id):
         return self.model.objects.filter(proyecto__id=proyecto_id).filter(vigencia=True)
+        
+    def vigente(self, idElemento):
+        try:
+        except self.model.DoesNotExist:
+        return 
     
     def nuevoIdentificador(self):
         elementos = self.model.objects.all()

@@ -2,6 +2,8 @@ from django.shortcuts import render
 from reqApp.forms import *
 from reqApp.util import *
 
+from django.contrib.auth.models import User
+
 def viewTU(request):
     mensajes = ['holi soy TU',]    
     
@@ -9,10 +11,14 @@ def viewTU(request):
         form = TUForm(request.POST)
         if form.is_valid():
             mensajes.append('form valid!')
-            
-            usuario = get_alejandro() #TODO#get_user_or_none(request)
-            form.crearElementoDeBitacora(usuario)
-            mensajes.append('saved form!')
+            if 'identificador' in request.POST:
+                identificador = request.POST['identificador']
+                m = 'vas a editar! identificador=' + identificador
+                mensajes.append(m)
+            else:
+                usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
+                form.crearElementoDeBitacora(usuario)
+                mensajes.append('saved form!')
         else:
             mensajes.append('invalid form!')
     

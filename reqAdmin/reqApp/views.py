@@ -11,10 +11,13 @@ def viewTU(request):
         form = TUForm(request.POST)
         if form.is_valid():
             mensajes.append('form valid!')
-            
-            usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
-            form.crearElementoDeBitacora(usuario)
-            mensajes.append('saved form!')
+            if 'identificador' in request.POST:
+                identificador = request.POST['identificador']
+                mensajes.append('vas a editar! identificador=' + identificador)
+            else:
+                usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
+                form.crearElementoDeBitacora(usuario)
+                mensajes.append('saved form!')
         else:
             mensajes.append('invalid form!')
     
