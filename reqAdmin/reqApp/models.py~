@@ -34,26 +34,26 @@ class BitacoraManager(models.Manager):
         return super(BitacoraManager, self).get_queryset().filter(vigencia=True)
     """
         
-    def todos(self, proyecto_id):
-        return super(BitacoraManager, self).get_queryset().filter(proyecto__id=proyecto_id)
+    def todos(self, proyecto):
+        return super(BitacoraManager, self).get_queryset().filter(proyecto=proyecto)
         
         
-    def vigentes(self, proyecto_id):
+    def vigentes(self, proyecto):
         try:
-            resp = self.model.objects.filter(proyecto__id=proyecto_id).filter(vigencia=True)
+            resp = self.model.objects.filter(proyecto=proyecto).filter(vigencia=True)
         except self.model.DoesNotExist:
             pass
         return resp
         
     def vigente(self, identificador):
         try:
-            resp = self.model.objects.filter(proyecto__id=proyecto_id).filter(vigencia=True)
+            resp = self.model.objects.filter(proyecto=proyecto).filter(vigencia=True)
         except self.model.DoesNotExist:
             pass
         return resp
     
     def nuevoIdentificador(self):
-        elementos = self.model.objects.all()
+        elementos = self.model.objects.all().filter(proyecto=proyecto)
         
         if elementos.count() > 0:
             return elementos.aggregate(Max('identificador'))['identificador__max'] + 1

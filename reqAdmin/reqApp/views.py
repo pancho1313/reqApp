@@ -5,6 +5,8 @@ from reqApp.util import *
 from django.contrib.auth.models import User
 
 def elementView(request, mensajes, modelFormClass):
+    usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
+    proyecto = proyectoDeUsuario(usuario)
     if request.method == 'POST':
         form = modelFormClass(request.POST)
         if form.is_valid():
@@ -13,8 +15,6 @@ def elementView(request, mensajes, modelFormClass):
                 identificador = request.POST['identificador']
                 mensajes.append('vas a editar! identificador=' + identificador)
             else:
-                usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
-                proyecto = proyectoDeUsuario(usuario)
                 form.asignarProyecto(proyecto)
                 form.crearElementoDeBitacora(usuario)
                 mensajes.append('saved form!')
@@ -24,7 +24,7 @@ def elementView(request, mensajes, modelFormClass):
     context = {
         'mensajes': mensajes,
         'form_template': 'reqApp/element_form.html',
-        'form': modelFormClass(),
+        'form': modelFormClass().asignarProyecto(proyecto),
     }
     return render(request, 'reqApp/lista_expandible.html', context)
 

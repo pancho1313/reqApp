@@ -52,8 +52,8 @@ class BitacoraManager(models.Manager):
             pass
         return resp
     
-    def nuevoIdentificador(self):
-        elementos = self.model.objects.all()
+    def nuevoIdentificador(self, proyecto):
+        elementos = self.model.objects.all().filter(proyecto=proyecto)
         
         if elementos.count() > 0:
             return elementos.aggregate(Max('identificador'))['identificador__max'] + 1

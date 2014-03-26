@@ -9,8 +9,15 @@ class ProyectoForm(forms.ModelForm):
         fields = ['nombre', 'descripcion']
 
 class BitacoraForm(forms.ModelForm):
+    camposVigentesDelProyecto = []
     def asignarProyecto(self, proyecto):
         self.proyecto = proyecto
+        
+        # estos campos solo consideran elementos vigentes del proyecto
+        
+        for campo in self.camposVigentesDelProyecto:
+            self.fields[campo].queryset = self.fields[campo].queryset.filter(vigencia=True).filter(proyecto=self.proyecto)
+        return self
         
     def crearElementoDeBitacora(self, usuario):
         elemento = self.save(commit=False)
@@ -25,7 +32,7 @@ class BitacoraForm(forms.ModelForm):
         elemento.fecha = timezone.now()
         
         # identificador nuevo
-        elemento.identificador = elemento.__class__.objects.nuevoIdentificador()
+        elemento.identificador = elemento.__class__.objects.nuevoIdentificador(self.proyecto)
         elemento.vigencia = True
         
         # guardar elemento de bitacora
@@ -51,7 +58,9 @@ class TUForm(BitacoraForm):
 class RUForm(BitacoraForm):
     def __init__(self,*args,**kwargs):
         super (RUForm,self ).__init__(*args,**kwargs)
-        self.fields['tiposUsuario'].queryset = self.fields['tiposUsuario'].queryset.filter(vigencia=True)#.filter(proyecto=self.proyecto)
+        self.camposVigentesDelProyecto = [
+            'tiposUsuario',
+        ]
         
     class Meta:
         model = RequisitoUsuario

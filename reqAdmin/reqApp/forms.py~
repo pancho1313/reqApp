@@ -9,8 +9,15 @@ class ProyectoForm(forms.ModelForm):
         fields = ['nombre', 'descripcion']
 
 class BitacoraForm(forms.ModelForm):
+    camposVigentesDelProyecto = []
     def asignarProyecto(self, proyecto):
         self.proyecto = proyecto
+        
+        # estos campos solo consideran elementos vigentes del proyecto
+        
+        for campo in self.camposVigentesDelProyecto:
+            print "lala: "+self.fields[campo].queryset.filter(vigencia=True).filter(proyecto=self.proyecto)
+            self.fields[campo].queryset = self.fields[campo].queryset.filter(vigencia=True).filter(proyecto=self.proyecto)
         
     def crearElementoDeBitacora(self, usuario):
         elemento = self.save(commit=False)
@@ -25,7 +32,7 @@ class BitacoraForm(forms.ModelForm):
         elemento.fecha = timezone.now()
         
         # identificador nuevo
-        elemento.identificador = elemento.__class__.objects.nuevoIdentificador()
+        elemento.identificador = elemento.__class__.objects.nuevoIdentificador(self.proyecto)
         elemento.vigencia = True
         
         # guardar elemento de bitacora
@@ -35,28 +42,8 @@ class BitacoraForm(forms.ModelForm):
         self.save_m2m()
     
     def actualizarElementoDeBitacora(self, identificador, usuario):
-        elemento = self.save(commit=False)
-        
-        # obtener usuario
-        elemento.usuario = usuario
-        
-        # obtener el proyecto asociado
-        # TODO obtener proyecto seleccionado de sesion de usuario
-        # por el momento seleccionamos siempre el "primer" proyecto asociado al usuario
-        elemento.proyecto = self.proyecto # usuario.userprofile.proyectos.all()[:1].get()
-        
-        # fecha de creación
-        elemento.fecha = timezone.now()
-        
-        # identificador nuevo
-        elemento.identificador = identificador
-        elemento.vigencia = True
-        
-        # guardar elemento de bitacora
-        elemento.save()
-        
-        # actualizar relaciones "many2many"
-        self.save_m2m()
+        # TODO
+        pass
 
 class TUForm(BitacoraForm):
     class Meta:
@@ -71,7 +58,9 @@ class TUForm(BitacoraForm):
 class RUForm(BitacoraForm):
     def __init__(self,*args,**kwargs):
         super (RUForm,self ).__init__(*args,**kwargs)
-        self.fields['tiposUsuario'].queryset = self.fields['tiposUsuario'].queryset.filter(vigencia=True)#.filter(proyecto=self.proyecto)
+        self.camposVigentesDelProyecto = [
+            'tiposUsuario',
+        ]
         
     class Meta:
         model = RequisitoUsuario

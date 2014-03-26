@@ -8,4 +8,4 @@ def get_user_or_none(request):
 
 def proyectoDeUsuario(usuario):
     # TODO: obtener el proyecto activo del usuario (en la sesion)
-    return Proyecto.objects.all()[:1].get()
+    return Proyecto.objects.all()[0]
