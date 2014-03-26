@@ -9,7 +9,7 @@ ESTABILIDAD_CHOICES = [
 TIPO_RU_CHOICES = [
     ("funcional", "funcional"),
     ("calidad", "calidad"),
-    ("restricción", "restricción"),
+    ("restriccion", "restricción"),
 ]
 
 TIPO_RS_CHOICES = [
@@ -24,11 +24,11 @@ TIPO_RS_CHOICES = [
     ("interfaz", "interfaz"),
     ("operacional", "operacional"),
     ("recursos", "recursos"),
-    ("documentación", "documentación"),
+    ("documentacion", "documentación"),
 ]
 
 PRIORIDAD_CHOICES = [
-    ("crítico","crítico"),
+    ("critico","crítico"),
     ("deseable","deseable"),
     ("innecesario","innecesario"),
 ]

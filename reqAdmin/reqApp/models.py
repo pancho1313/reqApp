@@ -29,24 +29,25 @@ def profile(sender, **kwargs):
 post_save.connect(profile, sender=User)
 
 class BitacoraManager(models.Manager):
-    def todos(self, proyecto_id):
-        try:
-            resp = self.model.objects.filter(proyecto__id=proyecto_id)
-        except self.model.DoesNotExist:
-            pass
-        return resp
+    """
+    def get_queryset(self):
+        return super(BitacoraManager, self).get_queryset().filter(vigencia=True)
+    """
+        
+    def todos(self, proyecto):
+        return super(BitacoraManager, self).get_queryset().filter(proyecto=proyecto)
         
         
-    def vigentes(self, proyecto_id):
+    def vigentes(self, proyecto):
         try:
-            resp = self.model.objects.filter(proyecto__id=proyecto_id).filter(vigencia=True)
+            resp = self.model.objects.filter(proyecto=proyecto).filter(vigencia=True)
         except self.model.DoesNotExist:
             pass
         return resp
         
     def vigente(self, identificador):
         try:
-            resp = self.model.objects.filter(proyecto__id=proyecto_id).filter(vigencia=True)
+            resp = self.model.objects.filter(proyecto=proyecto).filter(vigencia=True)
         except self.model.DoesNotExist:
             pass
         return resp
@@ -90,7 +91,7 @@ class TipoUsuario(Bitacora):
 
     
 class RequisitoUsuario(Bitacora):
-    fuente = models.CharField(max_length=140)
+    fuente = models.CharField(max_length=140, blank=True)
     costo = models.IntegerField(default=0, blank=True)
     
     estabilidad = models.CharField(max_length=30, choices=ESTABILIDAD_CHOICES)

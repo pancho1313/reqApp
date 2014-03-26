@@ -1,0 +1,11 @@
+<form action="" method="post">
+	{% csrf_token %}
+    {% if identificador %}
+    <input type="hidden" name="identificador" value={{ identificador }}>
+    {% endif %}
+    {{ form }}
+
+	<button type="submit">
+		Submit
+	</button>
+</form>

@@ -4,17 +4,42 @@ from reqApp.util import *
 
 from django.contrib.auth.models import User
 
+def elementView(request, mensajes, modelFormClass):
+    if request.method == 'POST':
+        form = modelFormClass(request.POST)
+        if form.is_valid():
+            mensajes.append('form valid!')
+            if 'identificador' in request.POST:
+                identificador = request.POST['identificador']
+                mensajes.append('vas a editar! identificador=' + identificador)
+            else:
+                usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
+                proyecto = proyectoDeUsuario(usuario)
+                form.asignarProyecto(proyecto)
+                form.crearElementoDeBitacora(usuario)
+                mensajes.append('form.proyecto='+ form.proyecto)
+                mensajes.append('saved form!')
+        else:
+            mensajes.append('invalid form!')
+    
+    context = {
+        'mensajes': mensajes,
+        'form_template': 'reqApp/element_form.html',
+        'form': modelFormClass(),
+    }
+    return render(request, 'reqApp/lista_expandible.html', context)
+
 def viewTU(request):
     mensajes = ['holi soy TU',]    
-    
+    return elementView(request, mensajes, TUForm)
+    """
     if request.method == 'POST':
         form = TUForm(request.POST)
         if form.is_valid():
             mensajes.append('form valid!')
             if 'identificador' in request.POST:
                 identificador = request.POST['identificador']
-                m = 'vas a editar! identificador=' + identificador
-                mensajes.append(m)
+                mensajes.append('vas a editar! identificador=' + identificador)
             else:
                 usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
                 form.crearElementoDeBitacora(usuario)
@@ -24,24 +49,19 @@ def viewTU(request):
     
     context = {
         'mensajes': mensajes,
-        'form_template': 'reqApp/TU_form.html',
+        'form_template': 'reqApp/element_form.html',
         'form': TUForm(),
     }
     return render(request, 'reqApp/lista_expandible.html', context)
+    """
 
 def viewRU(request):
-    elementosDeLista = [
-    "RU1","RU2","RU3",
-    ]
-    context = {'elementos_de_lista': elementosDeLista}
-    return render(request, 'reqApp/lista_expandible.html', context)
+    mensajes = ['holi soy RU',]    
+    return elementView(request, mensajes, RUForm)
 
 def viewRS(request):
-    elementosDeLista = [
-    "RS1","RS2","RS3",
-    ]
-    context = {'elementos_de_lista': elementosDeLista}
-    return render(request, 'reqApp/lista_expandible.html', context)
+    mensajes = ['holi soy RS',]    
+    return elementView(request, mensajes, RSForm)
 
 def viewMD(request):
     elementosDeLista = [

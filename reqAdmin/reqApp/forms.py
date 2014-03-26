@@ -9,6 +9,9 @@ class ProyectoForm(forms.ModelForm):
         fields = ['nombre', 'descripcion']
 
 class BitacoraForm(forms.ModelForm):
+    def asignarProyecto(self, proyecto):
+        self.proyecto = proyecto
+        
     def crearElementoDeBitacora(self, usuario):
         elemento = self.save(commit=False)
         
@@ -16,9 +19,7 @@ class BitacoraForm(forms.ModelForm):
         elemento.usuario = usuario
         
         # obtener el proyecto asociado
-        # TODO obtener proyecto seleccionado de sesion de usuario
-        # por el momento seleccionamos siempre el "primer" proyecto asociado al usuario
-        elemento.proyecto = usuario.userprofile.proyectos.all()[:1].get()
+        elemento.proyecto = self.proyecto
         
         # fecha de creación
         elemento.fecha = timezone.now()
@@ -45,4 +46,41 @@ class TUForm(BitacoraForm):
             'descripcion',
             'cantidad',
             'usuariosContactables',
+        ]
+
+class RUForm(BitacoraForm):
+    def __init__(self,*args,**kwargs):
+        super (RUForm,self ).__init__(*args,**kwargs)
+        self.fields['tiposUsuario'].queryset = self.fields['tiposUsuario'].queryset.filter(vigencia=True)#.filter(proyecto=self.proyecto)
+        
+    class Meta:
+        model = RequisitoUsuario
+        fields = [
+            'nombre',
+            'descripcion',
+            'fuente',
+            'costo',
+            'estabilidad',
+            'tipo',
+            'prioridad',
+            'estado',
+            'tiposUsuario',
+            'hito',
+        ]
+
+class RSForm(BitacoraForm):
+    class Meta:
+        model = RequisitoSoftware
+        fields = [
+            'nombre',
+            'descripcion',
+            'fuente',
+            'costo',
+            'estabilidad',
+            'tipo',
+            'prioridad',
+            'estado',
+            'tiposUsuario',
+            'requisitosUsuario',
+            'hito',
         ]

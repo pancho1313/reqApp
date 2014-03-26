@@ -5,3 +5,7 @@ def get_user_or_none(request):
         return request.user
     else:
         return None
+
+def proyectoDeUsuario(usuario):
+    # TODO
+    return Proyecto.objects.all()[:1].get()
