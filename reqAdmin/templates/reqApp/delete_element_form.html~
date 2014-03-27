@@ -3,10 +3,8 @@
     {% if identificador %}
     <input type="hidden" name="identificador" value={{ identificador }}>
     {% endif %}
-    
-    {{ form }}
-
+    <input type="hidden" name="borrar" value="borrar">
 	<button type="submit">
-		Submit
+		Borrar
 	</button>
 </form>

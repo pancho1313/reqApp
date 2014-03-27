@@ -19,45 +19,20 @@ class BitacoraForm(forms.ModelForm):
             
         return self
         
-    def bitacorarElemento(self, usuario, identificador=None, borrar=False):
+    def bitacorarElemento(self, usuario, identificador=None):
+        # https://docs.djangoproject.com/en/1.6/topics/forms/modelforms/#the-save-method
         elemento = self.save(commit=False)
         
         if identificador == None: # crear un elemento nuevo
-            # identificador nuevo
-            elemento.identificador = elemento.__class__.objects.nuevoIdentificador(self.proyecto)
-            
-            # vigencia del elemento
-            elemento.vigencia = True
-            
-            # obtener el proyecto asociado
-            elemento.proyecto = self.proyecto
+            # crear nuevo registro en la base de datos
+            elemento.bitacorarNuevoElemento(self.proyecto, usuario)
             
         else: # editar elemento
             # registrar una copia no vigente en la bitacora
-            elementoPrevio = elemento.__class__.objects.vigente(self.proyecto, identificador)
-            if elementoPrevio == None:
-                # TODO: ERROR
-                print "ERROR"
-            # https://docs.djangoproject.com/en/1.6/topics/db/queries/#copying-model-instances
-            m2mVigentes = elementoPrevio.m2mVigentes()
-            elementoPrevio.id = None # para luego crear un registro nuevo en la bitacora
-            elementoPrevio.pk = None # para luego crear un registro nuevo en la bitacora
-            elementoPrevio.save() # obtener nuevo id para el nuevo registro
-            elementoPrevio.copiarM2MVigentes(m2mVigentes)
-            elementoPrevio.vigencia = False
-            elementoPrevio.save() # guardar el estado del elemento previo
-        
-        # obtener usuario
-        elemento.usuario = usuario
-        
-        # fecha de creación
-        elemento.fecha = timezone.now()
-        
-        if borrar: # borrar el elemento cuenta como una edicion actualizando un elemento a no-vigente
-            elemento.vigencia = False
-        
-        # guardar elemento de bitacora
-        elemento.save()
+            elemento.__class__.bitacorarCopiaDeElemento(self.proyecto, identificador)
+            
+            # registrar nuevo estado en la base de datos
+            elemento.bitacorarElemento(usuario)
         
         # actualizar relaciones "many2many"
         self.save_m2m()

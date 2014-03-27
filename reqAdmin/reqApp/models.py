@@ -1,8 +1,10 @@
+# -*- encoding: utf-8 -*-
 from django.db import models
 from django.db.models import Max
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from reqApp.choices import *
+from django.utils import timezone
 
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=64)
@@ -79,7 +81,54 @@ class Bitacora(models.Model):
         # aca se realiza la copia de las referencias m2m que son vigentes
         pass
     """ 
+    
+    def bitacorarCopiaDeElemento(self, proyecto, identificador):
+        # registrar una copia no vigente en la bitacora
+        elementoPrevio = self.__class__.objects.vigente(proyecto, identificador)
+        if elementoPrevio == None:
+            # TODO: ERROR
+            print "ERROR"
+        # https://docs.djangoproject.com/en/1.6/topics/db/queries/#copying-model-instances
+        m2mVigentes = elementoPrevio.m2mVigentes()
+        elementoPrevio.id = None # para luego crear un registro nuevo en la bitacora
+        elementoPrevio.pk = None # para luego crear un registro nuevo en la bitacora
+        elementoPrevio.save() # obtener nuevo id para el nuevo registro
+        elementoPrevio.copiarM2MVigentes(m2mVigentes)
+        elementoPrevio.vigencia = False
+        elementoPrevio.save() # guardar el estado del elemento previo
+    
+    def bitacorarElemento(self, usuario):
+        #registrar usuario responsable
+        self.usuario = usuario
+        
+        # fecha de creación / modificación
+        self.fecha = timezone.now()
+        
+        # guardar en base de datos
+        self.save()
+     
+    def bitacorarNuevoElemento(self, proyecto, usuario):
+        # identificador nuevo
+        self.identificador = self.__class__.objects.nuevoIdentificador(proyecto)
+        
+        # vigencia del elemento
+        self.vigencia = True
+        
+        # proyecto asociado
+        self.proyecto = proyecto
+        
+        # guardar en base de datos
+        self.bitacorarElemento(usuario)
 
+    def bitacorarElementoBorrado(self, usuario):
+        # registrar una copia no vigente en la bitacora
+        self.bitacorarCopiaDeElemento(self.proyecto, self.identificador)
+        
+        # un elemento borrado no es vigente
+        self.vigencia = False
+        
+        # guardar en base de datos
+        self.bitacorarElemento(usuario)
 
 class Hito(Bitacora):
     fechaInicio = models.DateTimeField()

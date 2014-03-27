@@ -10,15 +10,20 @@ def elementView(request, mensajes, modelFormClass, modelClass):
     if request.method == 'POST':
         if 'identificador' in request.POST:# editar o borrar
             identificador = request.POST['identificador']
-            mensajes.append('vas a editar! identificador=' + identificador)
             instance = modelClass.objects.vigente(proyecto, identificador)
-            form = modelFormClass(instance=instance, data=request.POST)
-            if form.is_valid():
-                form.asignarProyecto(proyecto)
-                form.actualizarElementoDeBitacora(usuario, identificador)
-                mensajes.append('saved form!')
-            else:
-                mensajes.append('invalid form!')
+            if 'borrar' in request.POST:# borrar elemento
+                mensajes.append('vas a borrar! identificador=' + identificador)
+                instance.bitacorarElementoBorrado(usuario)
+                mensajes.append('borrado!')
+            else:# editar elemento
+                mensajes.append('vas a editar! identificador=' + identificador)
+                form = modelFormClass(instance=instance, data=request.POST)
+                if form.is_valid():
+                    form.asignarProyecto(proyecto)
+                    form.actualizarElementoDeBitacora(usuario, identificador)
+                    mensajes.append('saved form!')
+                else:
+                    mensajes.append('invalid form!')
         else:# crear
             mensajes.append('vas a crear!')
             form = modelFormClass(request.POST)
@@ -28,14 +33,20 @@ def elementView(request, mensajes, modelFormClass, modelClass):
                 mensajes.append('saved form!')
             else:
                 mensajes.append('invalid form!')
-            
-    instance = RequisitoUsuario.objects.vigente(proyecto, 5)# TODO delete
+    
     context = {
         'mensajes': mensajes,
         'form_template': 'reqApp/element_form.html',
         'form': modelFormClass().asignarProyecto(proyecto),
-        'form_instanced': modelFormClass(instance=instance).asignarProyecto(instance.proyecto),# TODO delete
+        'borrar_form': 'reqApp/delete_element_form.html',
     }
+    
+    # TODO delete
+    instance = RequisitoUsuario.objects.vigente(proyecto, 2)
+    if instance != None:
+        form_instanced = modelFormClass(instance=instance).asignarProyecto(instance.proyecto)
+        context.update({'form_instanced': form_instanced,})
+    
     return render(request, 'reqApp/lista_expandible.html', context)
 
 def viewTU(request):

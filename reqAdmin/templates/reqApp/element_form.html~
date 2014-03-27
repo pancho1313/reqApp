@@ -3,7 +3,6 @@
     {% if identificador %}
     <input type="hidden" name="identificador" value={{ identificador }}>
     {% endif %}
-    
     {{ form }}
 
 	<button type="submit">
