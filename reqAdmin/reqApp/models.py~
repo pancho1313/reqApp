@@ -32,7 +32,7 @@ class BitacoraManager(models.Manager):
     """
     def get_queryset(self):
         return super(BitacoraManager, self).get_queryset().filter(vigencia=True)
-    """
+    
         
     def todos(self, proyecto):
         return super(BitacoraManager, self).get_queryset().filter(proyecto=proyecto)
@@ -44,15 +44,16 @@ class BitacoraManager(models.Manager):
         except self.model.DoesNotExist:
             pass
         return resp
+    """
         
-    def vigente(self, identificador):
+    def vigente(self, proyecto, identificador):
         try:
-            resp = self.model.objects.filter(proyecto=proyecto).filter(vigencia=True)
+            resp = self.model.objects.filter(proyecto=proyecto).filter(vigencia=True).filter(identificador=identificador)[:1].get()
         except self.model.DoesNotExist:
-            pass
+            resp = None
         return resp
     
-    def nuevoIdentificador(self):
+    def nuevoIdentificador(self, proyecto):
         elementos = self.model.objects.all().filter(proyecto=proyecto)
         
         if elementos.count() > 0:
@@ -70,7 +71,14 @@ class Bitacora(models.Model):
     
     def __unicode__(self):
         return u'%s' % self.nombre
-        
+    """
+    def m2mVigentes(self):
+        # aca se crea un diccionario con referencias m2m que son vigentes
+        return {}
+    def copiarM2MVigentes(self, m2mVigentesDicc):
+        # aca se realiza la copia de las referencias m2m que son vigentes
+        pass
+    """ 
 
 
 class Hito(Bitacora):
@@ -106,6 +114,18 @@ class RequisitoUsuario(Bitacora):
     
     def __unicode__(self):
         return u'RU%04d %s' % (self.identificador, self.nombre)
+    
+    def m2mVigentes(self):
+        # aca se crea un diccionario con referencias m2m que son vigentes
+        print "m2mVigentes >> "+self.tiposUsuario.all()
+        print "m2mVigentes >> "+self.tiposUsuario.filter(vigencia=True)
+        return {
+            'tiposUsuario':self.tiposUsuario.filter(vigencia=True),
+        }
+        
+    def copiarM2MVigentes(self, m2mVigentesDicc):
+        # aca se realiza la copia de las referencias m2m que son vigentes
+        self.tiposUsuario = m2mVigentesDicc['tiposUsuario']
     
 class RequisitoSoftware(Bitacora):
     fuente = models.CharField(max_length=140)
