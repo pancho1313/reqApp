@@ -65,6 +65,7 @@ class RUForm(BitacoraForm):
         
     class Meta:
         model = RequisitoUsuario
+        
         fields = [
             'nombre',
             'descripcion',

@@ -20,6 +20,7 @@ class BitacoraForm(forms.ModelForm):
         return self
         
     def bitacorarElemento(self, usuario, identificador=None):
+        # https://docs.djangoproject.com/en/1.6/topics/forms/modelforms/#the-save-method
         elemento = self.save(commit=False)
         
         if identificador == None: # crear un elemento nuevo
@@ -64,6 +65,7 @@ class RUForm(BitacoraForm):
         
     class Meta:
         model = RequisitoUsuario
+        
         fields = [
             'nombre',
             'descripcion',
@@ -76,6 +78,24 @@ class RUForm(BitacoraForm):
             'tiposUsuario',
             'hito',
         ]
+        """
+        fieldsets = [
+            (None, {'fields':  [
+            'nombre',
+            'descripcion',
+            'fuente',
+            'costo',
+            'estabilidad',]}),
+            
+            ('Extra info', {'fields': [
+            'tipo',
+            'prioridad',
+            'estado',
+            'tiposUsuario',
+            'hito',
+            ], 'classes': ['collapse']}),
+        ]
+        """
 
 class RSForm(BitacoraForm):
     class Meta:

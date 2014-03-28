@@ -34,19 +34,26 @@ def elementView(request, mensajes, modelFormClass, modelClass):
             else:
                 mensajes.append('invalid form!')
     
-    context = {
-        'mensajes': mensajes,
-        'form_template': 'reqApp/element_form.html',
-        'form': modelFormClass().asignarProyecto(proyecto),
-        'borrar_form': 'reqApp/delete_element_form.html',
-    }
-    
-    # TODO delete
-    instance = RequisitoUsuario.objects.vigente(proyecto, 2)
-    if instance != None:
-        form_instanced = modelFormClass(instance=instance).asignarProyecto(instance.proyecto)
-        context.update({'form_instanced': form_instanced,})
-    
+        context = {
+            'mensajes': mensajes,
+            'form_template': 'reqApp/element_form.html',
+            'form': modelFormClass().asignarProyecto(proyecto),
+            'borrar_form': 'reqApp/delete_element_form.html',
+        }
+        
+    elif request.method == 'GET':
+        listaElementos = []
+        elementos = modelClass.objects.vigentes(proyecto)#TODO orderBy
+        for elemento in elementos:
+            listaElementos.append({'elemento':elemento, 'form_instanced':modelFormClass(instance=elemento).asignarProyecto(elemento.proyecto)})
+        context = {
+            'mensajes': mensajes,
+            'elementos': listaElementos,
+            'elemento_template': 'reqApp/elemento.html',
+            'form': modelFormClass().asignarProyecto(proyecto),
+            'form_template': 'reqApp/element_form.html',
+            'borrar_form': 'reqApp/delete_element_form.html',
+        }
     return render(request, 'reqApp/lista_expandible.html', context)
 
 def viewTU(request):

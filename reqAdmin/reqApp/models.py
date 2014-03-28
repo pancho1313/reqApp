@@ -39,14 +39,9 @@ class BitacoraManager(models.Manager):
     def todos(self, proyecto):
         return super(BitacoraManager, self).get_queryset().filter(proyecto=proyecto)
         
-        
-    def vigentes(self, proyecto):
-        try:
-            resp = self.model.objects.filter(proyecto=proyecto).filter(vigencia=True)
-        except self.model.DoesNotExist:
-            pass
-        return resp
     """
+    def vigentes(self, proyecto, order='identificador'):
+        return self.model.objects.filter(proyecto=proyecto).filter(vigencia=True).order_by(order)
         
     def vigente(self, proyecto, identificador):
         try:
@@ -129,6 +124,13 @@ class Bitacora(models.Model):
         
         # guardar en base de datos
         self.bitacorarElemento(usuario)
+    
+    def campos(self):
+        return [
+            self.identificador,
+            self.nombre,
+            self.descripcion,
+        ]
 
 class Hito(Bitacora):
     fechaInicio = models.DateTimeField()
@@ -144,6 +146,12 @@ class TipoUsuario(Bitacora):
     
     def __unicode__(self):
         return u'TU%04d %s' % (self.identificador, self.nombre)
+    
+    def campos(self):
+        return Bitacora.campos(self) + [
+            self.cantidad,
+            self.usuariosContactables,
+        ]
     
 
     
@@ -175,6 +183,18 @@ class RequisitoUsuario(Bitacora):
     def copiarM2MVigentes(self, m2mVigentesDicc):
         # aca se realiza la copia de las referencias m2m que son vigentes
         self.tiposUsuario = m2mVigentesDicc['tiposUsuario']
+    
+    def campos(self):
+        return Bitacora.campos(self) + [
+            self.estado,
+            self.fuente,
+            self.costo,
+            self.estabilidad,
+            self.tipo,
+            self.prioridad,
+            self.tiposUsuario,
+            self.hito,
+        ]
     
 class RequisitoSoftware(Bitacora):
     fuente = models.CharField(max_length=140)

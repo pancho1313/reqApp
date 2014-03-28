@@ -5,9 +5,32 @@
 {{ mensaje }}
 </div>
 {% endfor %}
+<br/>
+<p>Nuevo</p>
 {% include form_template with form=form %}
-<br/>
-{% include form_template with form=form_instanced identificador=2 %}
-<br/>
-{% include borrar_form with identificador=2 %}
+<br>
+{% for e in elementos %}
+    <div>
+    <p>elemento...</p>
+    {% include elemento_template with elemento=e.elemento %}
+    <br/>
+    {% include form_template with form=e.form identificador=e.elemento.identificador %}
+    {% include borrar_form with identificador=e.elemento.identificador %}
+    </div>
+    <br/>
+    <br/>
+{% endfor %}
+
+
+
+
+{% comment %}
+    {% include form_template with form=form %}
+    <br/>
+    {% include form_template with form=form_instanced identificador=2 %}
+    <br/>
+    {% include borrar_form with identificador=2 %}
+{% endcomment %}
+
+
 {% endblock %}
