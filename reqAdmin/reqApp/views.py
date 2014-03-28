@@ -36,7 +36,7 @@ def elementView(request, mensajes, modelFormClass, modelClass):
     
         context = {
             'mensajes': mensajes,
-            'form_template': 'reqApp/element_form.html',
+            #'form_template': 'reqApp/element_form.html',
             'form': modelFormClass().asignarProyecto(proyecto),
             'borrar_form': 'reqApp/delete_element_form.html',
         }
@@ -45,7 +45,7 @@ def elementView(request, mensajes, modelFormClass, modelClass):
         listaElementos = []
         elementos = modelClass.objects.vigentes(proyecto)#TODO orderBy
         for elemento in elementos:
-            listaElementos.append({'elemento':elemento, 'form':modelFormClass(instance=elemento).asignarProyecto(elemento.proyecto)})
+            listaElementos.append({'elemento':elemento, 'template':elemento.htmlTemplate(), 'form':modelFormClass(instance=elemento).asignarProyecto(elemento.proyecto)})
         context = {
             'mensajes': mensajes,
             'elementos': listaElementos,

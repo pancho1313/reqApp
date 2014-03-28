@@ -17,7 +17,7 @@ float:left;
 display:block;
 width:auto;
 color:Black;
-background-color:WhiteSmoke;
+background-color:White;
 text-align:center;
 padding:10px;
 text-decoration:none;
@@ -27,7 +27,7 @@ border-width:1px;
 
 .navbar_up a:hover,a:active
 {
-background-color:White;
+background-color:LightGray;
 }
 
 
@@ -51,7 +51,7 @@ float:left;
 display:block;
 width:auto;
 color:Black;
-background-color:WhiteSmoke;
+background-color:White;
 text-align:center;
 padding:4px;
 text-decoration:none;
@@ -61,7 +61,7 @@ border-width:1px;
 
 .navbar_down a:hover,a:active
 {
-background-color:White;
+background-color:LightGray;
 }
 
 /* título de proyecto */
@@ -70,4 +70,11 @@ background-color:White;
 margin-top: 2px;
 margin-bottom: 2px;
 font-size:1.5em;
+}
+
+/* contenedor de elemento de lista */
+.contenedorElemento
+{
+border:1px solid Black;
+border-radius:5px;
 }

@@ -146,13 +146,17 @@ class TipoUsuario(Bitacora):
     
     def __unicode__(self):
         return u'TU%04d %s' % (self.identificador, self.nombre)
-    
+        
+    """
     def campos(self):
         return Bitacora.campos(self) + [
             self.cantidad,
             self.usuariosContactables,
         ]
+    """
     
+    def htmlTemplate(self):
+        return 'reqApp/TU.html'
 
     
 class RequisitoUsuario(Bitacora):
@@ -183,7 +187,8 @@ class RequisitoUsuario(Bitacora):
     def copiarM2MVigentes(self, m2mVigentesDicc):
         # aca se realiza la copia de las referencias m2m que son vigentes
         self.tiposUsuario = m2mVigentesDicc['tiposUsuario']
-    
+        
+    """
     def campos(self):
         return Bitacora.campos(self) + [
             self.estado,
@@ -195,6 +200,10 @@ class RequisitoUsuario(Bitacora):
             self.tiposUsuario,
             self.hito,
         ]
+    """
+      
+    def htmlTemplate(self):
+        return 'reqApp/RU.html'
     
 class RequisitoSoftware(Bitacora):
     fuente = models.CharField(max_length=140)
