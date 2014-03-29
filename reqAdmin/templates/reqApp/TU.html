@@ -1,6 +1,8 @@
 <div>
     <div class="tituloElemento">
-        <a onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}')" href="#" name="{{ elemento.textoIdentificador }}" script="onclick(alert());"><b class="no_cumple">{{ elemento }}</b></a>
+        <a onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_contenido')" href="#" name="{{ elemento.textoIdentificador }}">
+            <b>{{ elemento }}</b>
+        </a>
     </div>
 </div>
 
@@ -15,10 +17,10 @@
     </div>
     <br/>
     <div>
-        <div style="display: inline-block;width:40%;border:1px solid Green;">
+        <div style="display: inline-block;width:40%;border:">
             Cantidad de usuarios: {{ elemento.cantidad }}
         </div>
-        <div style="display: inline-block;width:40%;border:1px solid Green;">
+        <div style="display: inline-block;width:40%;border:">
             Usuarios contactables: {{ elemento.usuariosContactables }}
         </div>
     </div>

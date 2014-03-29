@@ -1,5 +1,5 @@
 function expandirContraerElemento(id){
-    var elemento_contenido = document.getElementById(id+"_contenido");
+    var elemento_contenido = document.getElementById(id);
     elemento_contenido.style.display = (elemento_contenido.style.display == 'block') ? 'none' : 'block';
 }
 

@@ -68,14 +68,6 @@ class Bitacora(models.Model):
     
     def __unicode__(self):
         return u'%s' % self.nombre
-    """
-    def m2mVigentes(self):
-        # aca se crea un diccionario con referencias m2m que son vigentes
-        return {}
-    def copiarM2MVigentes(self, m2mVigentesDicc):
-        # aca se realiza la copia de las referencias m2m que son vigentes
-        pass
-    """ 
     
     def bitacorarCopiaDeElemento(self, proyecto, identificador):
         # registrar una copia no vigente en la bitacora
@@ -176,13 +168,14 @@ class RequisitoUsuario(Bitacora):
     
     objects = BitacoraManager()
     
+    def textoIdentificador(self):
+        return u'RU%04d' % self.identificador
+    
     def __unicode__(self):
         return u'RU%04d %s' % (self.identificador, self.nombre)
     
     def m2mVigentes(self):
         # aca se crea un diccionario con referencias m2m que son vigentes
-        print self.tiposUsuario.all()
-        print self.tiposUsuario.filter(vigencia=True)
         return {
             'tiposUsuario':self.tiposUsuario.filter(vigencia=True),
         }
@@ -191,20 +184,6 @@ class RequisitoUsuario(Bitacora):
         # aca se realiza la copia de las referencias m2m que son vigentes
         self.tiposUsuario = m2mVigentesDicc['tiposUsuario']
         
-    """
-    def campos(self):
-        return Bitacora.campos(self) + [
-            self.estado,
-            self.fuente,
-            self.costo,
-            self.estabilidad,
-            self.tipo,
-            self.prioridad,
-            self.tiposUsuario,
-            self.hito,
-        ]
-    """
-      
     def htmlTemplate(self):
         return 'reqApp/RU.html'
     
@@ -223,8 +202,26 @@ class RequisitoSoftware(Bitacora):
     
     objects = BitacoraManager()
     
+    def textoIdentificador(self):
+        return u'RS%04d' % self.identificador
+    
     def __unicode__(self):
         return u'RS%04d %s' % (self.identificador, self.nombre)
+        
+    def m2mVigentes(self):
+        # aca se crea un diccionario con referencias m2m que son vigentes
+        return {
+            'tiposUsuario':self.tiposUsuario.filter(vigencia=True),
+            'requisitosUsuario':self.requisitosUsuario.filter(vigencia=True),
+        }
+        
+    def copiarM2MVigentes(self, m2mVigentesDicc):
+        # aca se realiza la copia de las referencias m2m que son vigentes
+        self.tiposUsuario = m2mVigentesDicc['tiposUsuario']
+        self.requisitosUsuario = m2mVigentesDicc['requisitosUsuario']
+        
+    def htmlTemplate(self):
+        return 'reqApp/RS.html'
 
 class CasoPrueba(Bitacora):
     resultadoAceptable = models.CharField(max_length=140)
@@ -238,8 +235,24 @@ class CasoPrueba(Bitacora):
     
     objects = BitacoraManager()
     
+    def textoIdentificador(self):
+        return u'CP%04d' % self.identificador
+    
     def __unicode__(self):
         return u'CP%04d %s' % (self.identificador, self.nombre)
+    
+    def m2mVigentes(self):
+        # aca se crea un diccionario con referencias m2m que son vigentes
+        return {
+            'tiposUsuario':self.tiposUsuario.filter(vigencia=True),
+        }
+        
+    def copiarM2MVigentes(self, m2mVigentesDicc):
+        # aca se realiza la copia de las referencias m2m que son vigentes
+        self.tiposUsuario = m2mVigentesDicc['tiposUsuario']
+        
+    def htmlTemplate(self):
+        return 'reqApp/CP.html'
         
 class Modulo(Bitacora):
     costo = models.IntegerField(default=0, blank=True)
@@ -250,5 +263,21 @@ class Modulo(Bitacora):
     
     objects = BitacoraManager()
     
+    def textoIdentificador(self):
+        return u'MD%04d' % self.identificador
+    
     def __unicode__(self):
         return u'MD%04d %s' % (self.identificador, self.nombre)
+        
+    def m2mVigentes(self):
+        # aca se crea un diccionario con referencias m2m que son vigentes
+        return {
+            'requisitosSoftware':self.requisitosSoftware.filter(vigencia=True),
+        }
+        
+    def copiarM2MVigentes(self, m2mVigentesDicc):
+        # aca se realiza la copia de las referencias m2m que son vigentes
+        self.requisitosSoftware = m2mVigentesDicc['requisitosSoftware']
+        
+    def htmlTemplate(self):
+        return 'reqApp/MD.html'

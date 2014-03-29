@@ -10,8 +10,9 @@
 </head>
 
 <body>
-    {% include "reqApp/navbar.html" %}
+    {% include "reqApp/navbar.html" with proyecto="mi proyecto" %}
     
+    {% block body %}{% endblock %}
     {% block body %}{% endblock %}
 </body>
 </html>

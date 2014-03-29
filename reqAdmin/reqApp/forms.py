@@ -29,7 +29,7 @@ class BitacoraForm(forms.ModelForm):
             
         else: # editar elemento
             # registrar una copia no vigente en la bitacora
-            elemento.__class__.bitacorarCopiaDeElemento(self.proyecto, identificador)
+            elemento.bitacorarCopiaDeElemento(self.proyecto, identificador)
             
             # registrar nuevo estado en la base de datos
             elemento.bitacorarElemento(usuario)
@@ -58,9 +58,10 @@ class TUForm(BitacoraForm):
 
 class RUForm(BitacoraForm):
     def __init__(self,*args,**kwargs):
-        super (RUForm,self ).__init__(*args,**kwargs)
+        super (RUForm,self).__init__(*args,**kwargs)
         self.camposVigentesDelProyecto = [
             'tiposUsuario',
+            'hito',
         ]
         
     class Meta:
@@ -80,6 +81,14 @@ class RUForm(BitacoraForm):
         ]
 
 class RSForm(BitacoraForm):
+    def __init__(self,*args,**kwargs):
+        super (RSForm,self).__init__(*args,**kwargs)
+        self.camposVigentesDelProyecto = [
+            'tiposUsuario',
+            'requisitosUsuario',
+            'hito',
+        ]
+    
     class Meta:
         model = RequisitoSoftware
         fields = [
@@ -94,4 +103,44 @@ class RSForm(BitacoraForm):
             'tiposUsuario',
             'requisitosUsuario',
             'hito',
+        ]
+        
+class CPForm(BitacoraForm):
+    def __init__(self,*args,**kwargs):
+        super (CPForm,self).__init__(*args,**kwargs)
+        self.camposVigentesDelProyecto = [
+            'tiposUsuario',
+            'requisitoSoftware',
+            'requisitoUsuario',
+        ]
+    
+    class Meta:
+        model = CasoPrueba
+        fields = [
+            'nombre',
+            'requisitoSoftware',
+            'requisitoUsuario',
+            'descripcion',
+            'resultadoAceptable',
+            'resultadoOptimo',
+            'tiposUsuario',
+            'estado',
+        ]
+        
+class MDForm(BitacoraForm):
+    def __init__(self,*args,**kwargs):
+        super (MDForm,self).__init__(*args,**kwargs)
+        self.camposVigentesDelProyecto = [
+            'requisitosSoftware',
+        ]
+    
+    class Meta:
+        model = Modulo
+        fields = [
+            'nombre',
+            'descripcion',
+            'requisitosSoftware',
+            'costo',
+            'prioridad',
+            
         ]

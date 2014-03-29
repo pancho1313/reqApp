@@ -1,1 +1,58 @@
-RU Template
+{% load reqApp_tags %}
+<div>
+    <div class="tituloElemento">
+        <div style="display: inline-block;width:43%;">
+            <a onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_contenido')" href="#" name="{{ elemento.textoIdentificador }}">
+                <b class="{{ elemento.estado }}">{{ elemento }}</b>
+            </a>
+        </div>
+        <div style="display: inline-block;width:2%;">
+            {{ elemento.costo }}
+        </div>
+        <div style="display: inline-block;width:12%;">
+            {{ elemento|prioridad }}
+        </div>
+        <div style="display: inline-block;width:16%;">
+            {{ elemento|tipoRU }}
+        </div>
+        <div style="display: inline-block;width:20%;">
+            {{ elemento.hito }}
+        </div>
+        <div style="display: inline-block;width:3%;">
+        A
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div id="{{ elemento.textoIdentificador }}_contenido" style="display:none;">
+    <div class="{{ elemento.estado }}">{{ elemento|estado }}</div>
+    <br/>
+    <div>
+        {{ elemento.descripcion }}
+    </div>
+    <br/>
+    <div>
+        <div style="display: inline-block;width:30%;">
+            Fuente: {{ elemento.fuente }}
+        </div>
+        <div style="display: inline-block;width:30%;">
+            Estabilidad: {{ elemento.estabilidad }}
+        </div>
+        <div style="display: inline-block;width:30%;">
+            <ul>
+            <li><a href="#" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_tiposUsuario')">Usuarios asociados({{elemento.tiposUsuario|enlistar|largoLista}})</a></li>
+            <ul id="{{ elemento.textoIdentificador }}_tiposUsuario" style="display:none;">
+            {% for tu in elemento.tiposUsuario|enlistar %}
+                <li>{{tu}}</li>
+            {% endfor %}
+            </ul>
+            </ul>
+        </div>
+    </div>
+    
+    <button onclick="editarElemento('{{ elemento.textoIdentificador }}')">editar</button>
+</div>

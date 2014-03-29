@@ -15,7 +15,9 @@
 {% for e in elementos %}
     <div class="contenedorElemento">
         <div>
-            {% include e.template with elemento=e.elemento %}
+            <div id="{{ e.elemento.textoIdentificador }}">
+                {% include e.template with elemento=e.elemento %}
+            </div>
             <div id="{{ e.elemento.textoIdentificador }}_form" class="contenedorEdicionElemento" style="display:none;">
                 {% include form_template with form=e.form identificador=e.elemento.identificador %}
                 {% include borrar_form with identificador=e.elemento.identificador %}

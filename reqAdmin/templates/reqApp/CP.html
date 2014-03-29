@@ -12,7 +12,7 @@
         <div style="display: inline-block;width:12%;">
             {{ elemento|prioridad }}
         </div>
-        <div style="display: inline-block;width:16%;">
+        <div style="display: inline-block;width:15%;">
             {{ elemento|tipoRU }}
         </div>
         <div style="display: inline-block;width:20%;">
@@ -44,10 +44,10 @@
         </div>
         <div style="display: inline-block;width:30%;">
             <ul>
-            <li><a href="#" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_tiposUsuario')">Usuarios asociados({{elemento.tiposUsuario|toList|largoLista}})</a></li>
+            <li><a href="#" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_tiposUsuario')">Usuarios asociados</a></li>
             <ul id="{{ elemento.textoIdentificador }}_tiposUsuario" style="display:none;">
             {% for tu in elemento.tiposUsuario|toList %}
-                <li>{{tu}}</li>
+                <li class="ambiguo">{{tu}}</li>
             {% endfor %}
             </ul>
             </ul>

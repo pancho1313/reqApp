@@ -9,11 +9,11 @@
         <div style="display: inline-block;width:2%;">
             {{ elemento.costo }}
         </div>
-        <div style="display: inline-block;width:12%;">
+        <div style="display: inline-block;width:11%;">
             {{ elemento|prioridad }}
         </div>
-        <div style="display: inline-block;width:16%;">
-            {{ elemento|tipoRU }}
+        <div style="display: inline-block;width:17%;">
+            {{ elemento|tipoRS }}
         </div>
         <div style="display: inline-block;width:20%;">
             {{ elemento.hito }}
@@ -37,10 +37,8 @@
     <br/>
     <div>
         <div style="display: inline-block;width:30%;">
-            Fuente: {{ elemento.fuente }}
-        </div>
-        <div style="display: inline-block;width:30%;">
-            Estabilidad: {{ elemento.estabilidad }}
+            <div>Fuente: {{ elemento.fuente }}</div>
+            <div>Estabilidad: {{ elemento.estabilidad }}</div>
         </div>
         <div style="display: inline-block;width:30%;">
             <ul>
@@ -48,6 +46,16 @@
             <ul id="{{ elemento.textoIdentificador }}_tiposUsuario" style="display:none;">
             {% for tu in elemento.tiposUsuario|toList %}
                 <li>{{tu}}</li>
+            {% endfor %}
+            </ul>
+            </ul>
+        </div>
+        <div style="display: inline-block;width:30%;">
+            <ul>
+            <li><a href="#" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_requisitosUsuario')">RU asociados({{elemento.requisitosUsuario|toList|largoLista}})</a></li>
+            <ul id="{{ elemento.textoIdentificador }}_requisitosUsuario" style="display:none;">
+            {% for ru in elemento.requisitosUsuario|toList %}
+                <li class="{{ ru.estado }}">{{ru}}</li>
             {% endfor %}
             </ul>
             </ul>

@@ -103,8 +103,7 @@ text-decoration:underline;
 }
 
 /* color estado de cumplimiento de elemento */
-/* IMPORTANTE: estas clases deben corresponder con el nombre del estado especificado en choices.py */
-.tituloElemento .no_cumple
+.no_cumple
 {
 color:Red;
 }
