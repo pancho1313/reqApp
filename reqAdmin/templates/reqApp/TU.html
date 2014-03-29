@@ -1,1 +1,27 @@
-TU template
+<div>
+    <div class="tituloElemento">
+        <a onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}')" href="#" name="{{ elemento.textoIdentificador }}" script="onclick(alert());"><b class="no_cumple">{{ elemento }}</b></a>
+    </div>
+</div>
+
+
+
+
+
+<div id="{{ elemento.textoIdentificador }}_contenido" style="display:none;">
+    <br/>
+    <div>
+        {{ elemento.descripcion }}
+    </div>
+    <br/>
+    <div>
+        <div style="display: inline-block;width:40%;border:1px solid Green;">
+            Cantidad de usuarios: {{ elemento.cantidad }}
+        </div>
+        <div style="display: inline-block;width:40%;border:1px solid Green;">
+            Usuarios contactables: {{ elemento.usuariosContactables }}
+        </div>
+    </div>
+    
+    <button onclick="editarElemento('{{ elemento.textoIdentificador }}')">editar</button>
+</div>

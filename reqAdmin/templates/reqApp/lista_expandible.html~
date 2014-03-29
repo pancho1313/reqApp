@@ -7,26 +7,29 @@
 {% endfor %}
 
 <br/>
-<p>Nuevo</p>
 
-{% include form_template with form=form %}
+
 
 <br>
 
 {% for e in elementos %}
     <div class="contenedorElemento">
-        <p>elemento...</p>
-        {% include e.htmlTemplate with elemento=e.elemento %}
-        <br/>
-        {% include form_template with form=e.form identificador=e.elemento.identificador %}
-        {% include borrar_form with identificador=e.elemento.identificador %}
+        <div>
+            {% include e.template with elemento=e.elemento %}
+            <div id="{{ e.elemento.textoIdentificador }}_form" class="contenedorEdicionElemento" style="display:none;">
+                {% include form_template with form=e.form identificador=e.elemento.identificador %}
+                {% include borrar_form with identificador=e.elemento.identificador %}
+                <button onclick="cancelarEdicionElemento('{{ e.elemento.textoIdentificador }}')">cancel</button>
+            </div>
+        </div>
     </div>
-    <br/>
-    <br/>
 {% endfor %}
 
 
-
+<p>Agregar Nuevo:</p>
+<div class="contenedorEdicionElemento">
+    {% include form_template with form=form %}
+</div>
 
 {% comment %}
     {% include form_template with form=form %}

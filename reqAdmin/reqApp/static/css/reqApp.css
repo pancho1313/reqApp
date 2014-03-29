@@ -75,6 +75,46 @@ font-size:1.5em;
 /* contenedor de elemento de lista */
 .contenedorElemento
 {
-border:1px solid Black;
-border-radius:5px; /* CSS3 !!! */
+border:1px solid #D6D6D6;
+border-radius:5px;
+padding:10px;
+}
+
+
+.contenedorEdicionElemento
+{
+border:1px dashed Black;
+}
+
+/*display: inline-block;*/
+
+/* titulo elemento */
+.tituloElemento a:link,a:visited
+{
+color:Black;
+background-color:White;
+text-decoration:none;
+}
+
+.tituloElemento a:hover,a:active
+{
+background-color:White;
+text-decoration:underline;
+}
+
+/* color estado de cumplimiento de elemento */
+/* IMPORTANTE: estas clases deben corresponder con el nombre del estado especificado en choices.py */
+.no_cumple
+{
+color:Red;
+}
+
+.cumple
+{
+color:Green;
+}
+
+.ambiguo
+{
+color:Purple;
 }

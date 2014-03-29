@@ -3,14 +3,14 @@ function expandirContraerElemento(id){
     elemento_contenido.style.display = (elemento_contenido.style.display == 'block') ? 'none' : 'block';
 }
 
-function cancelarEdicionElemento(id){
+function cancelarEdicion(id){
     var elemento_form = document.getElementById(id+"_form");
     var elemento = document.getElementById(id);
     elemento_form.style.display = 'none';
     elemento.style.display = 'block';
 }
 
-function editarElemento(id){
+function editar(id){
     var elemento_form = document.getElementById(id+"_form");
     var elemento = document.getElementById(id);
     elemento_form.style.display = 'block';

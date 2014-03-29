@@ -200,9 +200,9 @@ class RequisitoUsuario(Bitacora):
             self.tiposUsuario,
             self.hito,
         ]
-     """
+    """
       
-     def htmlTemplate(self):
+    def htmlTemplate(self):
         return 'reqApp/RU.html'
     
 class RequisitoSoftware(Bitacora):

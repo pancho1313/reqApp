@@ -146,6 +146,9 @@ class TipoUsuario(Bitacora):
     
     def __unicode__(self):
         return u'TU%04d %s' % (self.identificador, self.nombre)
+       
+    def textoIdentificador(self):
+        return u'TU%04d' % self.identificador
         
     """
     def campos(self):

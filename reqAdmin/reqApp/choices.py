@@ -35,6 +35,6 @@ PRIORIDAD_CHOICES = [
 
 ESTADO_CHOICES = [
     ("cumple", "cumple"),
-    ("no cumple", "no cumple"),
+    ("no_cumple", "no cumple"),
     ("ambiguo", "ambiguo"),
 ]
