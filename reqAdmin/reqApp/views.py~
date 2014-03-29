@@ -4,7 +4,7 @@ from reqApp.util import *
 
 from django.contrib.auth.models import User
 
-def elementView(request, mensajes, modelFormClass, modelClass):
+def elementView(request, mensajes, modelFormClass, formTemplate, modelClass):
     usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
     proyecto = proyectoDeUsuario(usuario)
     if request.method == 'POST':
@@ -50,29 +50,29 @@ def elementView(request, mensajes, modelFormClass, modelClass):
     context = {
         'mensajes': mensajes,
         'elementos': listaElementos,
-        'elemento_template': 'reqApp/elemento.html',
+        #'elemento_template': 'reqApp/elemento.html',
         'form': modelFormClass().asignarProyecto(proyecto),
-        'form_template': 'reqApp/element_form.html',
+        'form_template': formTemplate,
         'borrar_form': 'reqApp/delete_element_form.html',
     }
     return render(request, 'reqApp/lista_expandible.html', context)
 
 def viewTU(request):
     mensajes = ['holi soy TU',]    
-    return elementView(request, mensajes, TUForm, TipoUsuario)
+    return elementView(request, mensajes, TUForm, 'reqApp/TU_form.html', TipoUsuario)
 
 def viewRU(request):
     mensajes = ['holi soy RU',]    
-    return elementView(request, mensajes, RUForm, RequisitoUsuario)
+    return elementView(request, mensajes, RUForm, 'reqApp/RU_form.html', RequisitoUsuario)
 
 def viewRS(request):
     mensajes = ['holi soy RS',]    
-    return elementView(request, mensajes, RSForm, RequisitoSoftware)
+    return elementView(request, mensajes, RSForm, 'reqApp/RS_form.html', RequisitoSoftware)
 
 def viewMD(request):
-    mensajes = ['holi soy RS',]    
-    return elementView(request, mensajes, RSForm, RequisitoSoftware)
+    mensajes = ['holi soy MD',]    
+    return elementView(request, mensajes, MDForm, 'reqApp/MD_form.html', Modulo)
 
 def viewCP(request):
-    mensajes = ['holi soy RS',]    
-    return elementView(request, mensajes, RSForm, RequisitoSoftware)
+    mensajes = ['holi soy CP',]    
+    return elementView(request, mensajes, CPForm, 'reqApp/CP_form.html', CasoPrueba)

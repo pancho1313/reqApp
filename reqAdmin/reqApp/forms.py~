@@ -55,6 +55,11 @@ class TUForm(BitacoraForm):
             'cantidad',
             'usuariosContactables',
         ]
+        widgets = {
+            'descripcion': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
+            'nombre': forms.TextInput(attrs={'size': 60}),
+            'cantidad': forms.TextInput(attrs={'size': 5}),
+        }
 
 class RUForm(BitacoraForm):
     def __init__(self,*args,**kwargs):
@@ -79,6 +84,11 @@ class RUForm(BitacoraForm):
             'tiposUsuario',
             'hito',
         ]
+        
+        widgets = {
+            'descripcion': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
+            'nombre': forms.TextInput(attrs={'size': 60}),
+        }
 
 class RSForm(BitacoraForm):
     def __init__(self,*args,**kwargs):
@@ -104,6 +114,11 @@ class RSForm(BitacoraForm):
             'requisitosUsuario',
             'hito',
         ]
+        
+        widgets = {
+            'descripcion': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
+            'nombre': forms.TextInput(attrs={'size': 60}),
+        }
         
 class CPForm(BitacoraForm):
     def __init__(self,*args,**kwargs):
@@ -144,3 +159,7 @@ class MDForm(BitacoraForm):
             'prioridad',
             
         ]
+        widgets = {
+            'descripcion': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
+            'nombre': forms.TextInput(attrs={'size': 60}),
+        }

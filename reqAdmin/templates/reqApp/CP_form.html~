@@ -1,0 +1,28 @@
+<form action="" method="post">
+	{% csrf_token %}
+    {% if identificador %}
+        <input type="hidden" name="identificador" value={{ identificador }}>
+    {% endif %}
+    <div>
+        {% if  textoIdentificador %}
+            <b>{{ textoIdentificador }}</b>
+        {% endif %}
+        <div>Nombre: {{ form.nombre }}</div>
+        <div>
+            Requisito asociado:
+            <input type="radio" name="requisito" value="ru" onchange="seleccionarRequisitoCP(true)"> de Usuario
+            <input type="radio" name="requisito" value="rs" onchange="seleccionarRequisitoCP(true)"> de Software
+        </div>
+        <div id="_id_requisitoUsuario" style="display:none;">RU asociado: {{ form.requisitoUsuario }}</div>
+        <div id="_id_requisitoSoftware" style="display:none;">RS asociado: {{ form.requisitoSoftware }}</div>
+        <div class="top">Descripción:</div> <div class="top">{{ form.descripcion }}</div>
+        <div>Resultado aceptable: {{ form.resultadoAceptable }}</div>
+        <div>Resultado óptimo: {{ form.resultadoOptimo }}</div>
+        <div><div class="top">Usuarios asociados: </div><div class="top">{{ form.tiposUsuario }}</div>(presionar "Ctrl" para seleccionar)</div>
+        <div>Estado: {{ form.estado }}</div>
+    </div>
+
+	<button type="submit">
+		Guardar
+	</button>
+</form>
