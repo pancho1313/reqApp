@@ -1,24 +1,24 @@
 {% load reqApp_tags %}
 <div>
     <div class="tituloElemento">
-        <div style="display: inline-block;width:43%;">
+        <div style="display: inline-block;width:43%;vertical-align:top;">
             <a onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_contenido')" href="#" name="{{ elemento.textoIdentificador }}">
                 <b class="{{ elemento.estado }}">{{ elemento }}</b>
             </a>
         </div>
-        <div style="display: inline-block;width:2%;">
+        <div style="display: inline-block;width:2%;vertical-align:top;">
             {{ elemento.costo }}
         </div>
-        <div style="display: inline-block;width:12%;">
+        <div style="display: inline-block;width:12%;vertical-align:top;">
             {{ elemento|prioridad }}
         </div>
-        <div style="display: inline-block;width:16%;">
+        <div style="display: inline-block;width:16%;vertical-align:top;">
             {{ elemento|tipoRU }}
         </div>
-        <div style="display: inline-block;width:20%;">
+        <div style="display: inline-block;width:20%;vertical-align:top;">
             {{ elemento.hito }}
         </div>
-        <div style="display: inline-block;width:3%;">
+        <div style="display: inline-block;width:3%;vertical-align:top;">
         A
         </div>
     </div>
@@ -36,17 +36,17 @@
     </div>
     <br/>
     <div>
-        <div style="display: inline-block;width:30%;">
+        <div style="display: inline-block;width:30%;vertical-align:top;">
             Fuente: {{ elemento.fuente }}
         </div>
-        <div style="display: inline-block;width:30%;">
+        <div style="display: inline-block;width:30%;vertical-align:top;">
             Estabilidad: {{ elemento.estabilidad }}
         </div>
-        <div style="display: inline-block;width:30%;">
+        <div style="display: inline-block;width:30%;vertical-align:top;">
             <ul>
-            <li><a href="#" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_tiposUsuario')">Usuarios asociados({{elemento.tiposUsuario|toList|largoLista}})</a></li>
+            <li><a href="#" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_tiposUsuario')">Usuarios asociados({{elemento.tiposUsuario|enlistar|largoLista}})</a></li>
             <ul id="{{ elemento.textoIdentificador }}_tiposUsuario" style="display:none;">
-            {% for tu in elemento.tiposUsuario|toList %}
+            {% for tu in elemento.tiposUsuario|enlistar %}
                 <li>{{tu}}</li>
             {% endfor %}
             </ul>
