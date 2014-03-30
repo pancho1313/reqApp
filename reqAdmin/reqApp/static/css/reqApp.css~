@@ -129,5 +129,19 @@ vertical-align:top;
 /* barra para ordenar lista de elementos */
 .barra_orden
 {
-background-color:Yellow;
+background-color:#D6D6D6;
+}
+
+a.barra_orden:link, a.barra_orden:visited
+{
+color:Blue;
+background-color:#D6D6D6;
+text-align:center;
+text-decoration:none;
+}
+
+a.barra_orden:hover, a.barra_orden:active
+{
+color:Blue
+text-decoration:underline;
 }

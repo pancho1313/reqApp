@@ -61,8 +61,8 @@ def viewTU(request):
     mensajes = ['holi soy TU',]
     
     listaAtributos = [
-        {'orden': 'identificador', 'porcentaje': 10,},
-        {'orden': 'nombre', 'porcentaje': 10,},
+        {'orden': 'identificador', 'porcentaje': 15,},
+        {'orden': 'nombre', 'porcentaje': 9,},
     ]
       
     return elementView(request, mensajes, TUForm, 'reqApp/TU_form.html', TipoUsuario, listaAtributos)
@@ -71,12 +71,12 @@ def viewRU(request):
     mensajes = ['holi soy RU',]
     
     listaAtributos = [
-        {'orden': 'identificador', 'porcentaje': 10,},
-        {'orden': 'nombre', 'porcentaje': 10,},
-        {'orden': 'estado', 'porcentaje': 10,},
-        {'orden': 'costo', 'porcentaje': 10,},
-        {'orden': 'prioridad', 'porcentaje': 10,},
-        {'orden': 'tipo', 'porcentaje': 10,},
+        {'orden': 'identificador', 'porcentaje': 15,},
+        {'orden': 'nombre', 'porcentaje': 9,},
+        {'orden': 'estado', 'porcentaje': 13,},
+        {'orden': 'costo', 'porcentaje': 6,},
+        {'orden': 'prioridad', 'porcentaje': 13,},
+        {'orden': 'tipo', 'porcentaje': 18,},
         {'orden': 'hito', 'porcentaje': 10,},
     ]    
     
@@ -86,14 +86,14 @@ def viewRS(request):
     mensajes = ['holi soy RS',]
     
     listaAtributos = [
-        {'orden': 'identificador', 'porcentaje': 10,},
-        {'orden': 'nombre', 'porcentaje': 10,},
-        {'orden': 'estado', 'porcentaje': 10,},
-        {'orden': 'costo', 'porcentaje': 10,},
-        {'orden': 'prioridad', 'porcentaje': 10,},
-        {'orden': 'tipo', 'porcentaje': 10,},
+        {'orden': 'identificador', 'porcentaje': 15,},
+        {'orden': 'nombre', 'porcentaje': 9,},
+        {'orden': 'estado', 'porcentaje': 13,},
+        {'orden': 'costo', 'porcentaje': 6,},
+        {'orden': 'prioridad', 'porcentaje': 13,},
+        {'orden': 'tipo', 'porcentaje': 18,},
         {'orden': 'hito', 'porcentaje': 10,},
-    ]
+    ]  
      
     return elementView(request, mensajes, RSForm, 'reqApp/RS_form.html', RequisitoSoftware, listaAtributos)
 
@@ -101,9 +101,9 @@ def viewMD(request):
     mensajes = ['holi soy MD',]
     
     listaAtributos = [
-        {'orden': 'identificador', 'porcentaje': 10,},
-        {'orden': 'nombre', 'porcentaje': 10,},
-        {'orden': 'costo', 'porcentaje': 10,},
+        {'orden': 'identificador', 'porcentaje': 15,},
+        {'orden': 'nombre', 'porcentaje': 41,},
+        {'orden': 'costo', 'porcentaje': 8,},
         {'orden': 'prioridad', 'porcentaje': 10,},
     ]
        
@@ -113,9 +113,9 @@ def viewCP(request):
     mensajes = ['holi soy CP',]    
     
     listaAtributos = [
-        {'orden': 'identificador', 'porcentaje': 10,},
-        {'orden': 'nombre', 'porcentaje': 10,},
-        {'orden': 'estado', 'porcentaje': 10,},
+        {'orden': 'identificador', 'porcentaje': 15,},
+        {'orden': 'nombre', 'porcentaje': 9,},
+        {'orden': 'estado', 'porcentaje': 20,},
         {'orden': 'requisito', 'porcentaje': 10,},
     ]
     
