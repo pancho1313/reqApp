@@ -68,6 +68,14 @@ class Bitacora(models.Model):
     
     def __unicode__(self):
         return u'%s' % self.nombre
+        
+    def m2mVigentes(self):
+        # aca se crea un diccionario con referencias m2m que son vigentes
+        return {}
+        
+    def copiarM2MVigentes(self, m2mVigentesDicc):
+        # aca se realiza la copia de las referencias m2m que son vigentes
+        pass
     
     def bitacorarCopiaDeElemento(self, proyecto, identificador):
         # registrar una copia no vigente en la bitacora
@@ -145,8 +153,23 @@ class TipoUsuario(Bitacora):
     def htmlTemplate(self):
         return 'reqApp/TU.html'
 
+class RequisitoManager(models.Manager):
+    
+    def get_queryset(self):
+        #TODO ordenar por identificador primero los RU y luego los RS
+        return super(RequisitoManager, self).get_queryset().filter(vigencia=True)
+    
+    
 class Requisito(Bitacora):
-    pass
+    prefijo=''
+    objects = RequisitoManager()
+    
+    def __unicode__(self):
+        req = RequisitoUsuario.objects.filter(id=self.id)
+        pre = 'RU'
+        if len(req) < 1:
+            pre = 'RS'
+        return u'%s%04d %s' % (pre,self.identificador, self.nombre)
     
 class RequisitoUsuario(Requisito):
     fuente = models.CharField(max_length=140, blank=True)
@@ -159,6 +182,8 @@ class RequisitoUsuario(Requisito):
     
     tiposUsuario = models.ManyToManyField(TipoUsuario, null=True, blank=True)
     hito = models.ForeignKey(Hito, blank=False, null=False)
+    
+    prefijo = 'RU'
     
     objects = BitacoraManager()
     
@@ -193,6 +218,8 @@ class RequisitoSoftware(Requisito):
     tiposUsuario = models.ManyToManyField(TipoUsuario, null=True, blank=True)
     requisitosUsuario = models.ManyToManyField(RequisitoUsuario, null=True, blank=True)
     hito = models.ForeignKey(Hito, blank=False, null=False)
+    
+    prefijo = 'RS'
     
     objects = BitacoraManager()
     
