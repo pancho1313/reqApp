@@ -29,8 +29,10 @@ function seleccionarRequisitoCP(selecRU, textoIdentificador){
     if(selecRU){
         div_ru.style.display = 'block';
         div_rs.style.display = 'none';
+        div_rs.children[0].value = '';
     }else{
         div_ru.style.display = 'none';
         div_rs.style.display = 'block';
+        div_ru.children[0].value = '';
     }
 }

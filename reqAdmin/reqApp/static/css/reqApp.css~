@@ -120,8 +120,14 @@ color:Purple;
 }
 
 /* vertical-align:top; */
-div.top
+.top
 {
 display: inline-block;
 vertical-align:top;
+}
+
+/* barra para ordenar lista de elementos */
+.barra_orden
+{
+background-color:Yellow;
 }

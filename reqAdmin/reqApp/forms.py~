@@ -57,8 +57,9 @@ class TUForm(BitacoraForm):
         ]
         widgets = {
             'descripcion': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
-            'nombre': forms.TextInput(attrs={'size': 60}),
+            'nombre': forms.TextInput(attrs={'size': 100}),
             'cantidad': forms.TextInput(attrs={'size': 5}),
+            'usuariosContactables': forms.Textarea(attrs={'cols': 50, 'rows': 4}),
         }
 
 class RUForm(BitacoraForm):
@@ -87,7 +88,7 @@ class RUForm(BitacoraForm):
         
         widgets = {
             'descripcion': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
-            'nombre': forms.TextInput(attrs={'size': 60}),
+            'nombre': forms.TextInput(attrs={'size': 100}),
         }
 
 class RSForm(BitacoraForm):
@@ -117,7 +118,7 @@ class RSForm(BitacoraForm):
         
         widgets = {
             'descripcion': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
-            'nombre': forms.TextInput(attrs={'size': 60}),
+            'nombre': forms.TextInput(attrs={'size': 100}),
         }
         
 class CPForm(BitacoraForm):
@@ -134,7 +135,7 @@ class CPForm(BitacoraForm):
         for campo in self.camposVigentesDelProyecto:
             self.fields[campo].queryset = self.fields[campo].queryset.filter(vigencia=True).filter(proyecto=self.proyecto).order_by('identificador')
             
-        self.fields['requisito'].queryset = self.fields['requisito'].queryset.filter(vigencia=True).filter(proyecto=self.proyecto).order_by('-requisitousuario','requisitosoftware')
+        self.fields['requisito'].queryset = self.fields['requisito'].queryset.filter(vigencia=True).filter(proyecto=self.proyecto).order_by('requisitousuario')
             
         return self
     
@@ -151,7 +152,9 @@ class CPForm(BitacoraForm):
         ]
         widgets = {
             'descripcion': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
-            'nombre': forms.TextInput(attrs={'size': 60}),
+            'nombre': forms.TextInput(attrs={'size': 100}),
+            'resultadoAceptable': forms.Textarea(attrs={'cols': 70, 'rows': 2}),
+            'resultadoOptimo': forms.Textarea(attrs={'cols': 70, 'rows': 2}),
         }
         
 class MDForm(BitacoraForm):
@@ -173,5 +176,5 @@ class MDForm(BitacoraForm):
         ]
         widgets = {
             'descripcion': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
-            'nombre': forms.TextInput(attrs={'size': 60}),
+            'nombre': forms.TextInput(attrs={'size': 100}),
         }

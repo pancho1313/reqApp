@@ -125,3 +125,9 @@ color:Purple;
 display: inline-block;
 vertical-align:top;
 }
+
+/* barra para ordenar lista de elementos */
+.barra_orden
+{
+background-color:#D6D6D6;
+}

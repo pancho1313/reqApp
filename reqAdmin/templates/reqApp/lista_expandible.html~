@@ -28,7 +28,6 @@
 
 <p>Agregar Nuevo:</p>
 <div class="contenedorEdicionElemento">
-<div id="pok">pokpok</div>
     {% include form_template with form=form %}
 </div>
 

@@ -20,19 +20,3 @@ function editarElemento(id){
     elemento_form.style.display = 'block';
     elemento.style.display = 'none';
 }
-
-// mostrar el selector de requisitos asociados a un CP según el tipo (RU ó RS), y limpiar la info. del inactivo
-function seleccionarRequisitoCP(selecRU, textoIdentificador){
-    var div_ru = document.getElementById(textoIdentificador+"_id_requisitoUsuario");
-    var div_rs = document.getElementById(textoIdentificador+"_id_requisitoSoftware");
-    
-    if(selecRU){
-        div_ru.style.display = 'block';
-        div_rs.style.display = 'none';
-        div_rs.children[0].value = '';
-    }else{
-        div_ru.style.display = 'none';
-        div_rs.style.display = 'block';
-        div_ru.children[0].value = '';
-    }
-}

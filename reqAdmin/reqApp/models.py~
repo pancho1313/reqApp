@@ -41,6 +41,7 @@ class BitacoraManager(models.Manager):
         
     """
     def vigentes(self, proyecto, order='identificador'):
+        print 'order'+order
         return self.model.objects.filter(proyecto=proyecto).filter(vigencia=True).order_by(order)
         
     def vigente(self, proyecto, identificador):
@@ -58,9 +59,9 @@ class BitacoraManager(models.Manager):
         return 1
 
 class Bitacora(models.Model):
-    nombre = models.CharField(max_length=64)
+    nombre = models.CharField(max_length=100)
     identificador = models.PositiveIntegerField(default=0, blank=True, null=False)
-    descripcion = models.CharField(max_length=200, blank=True)
+    descripcion = models.CharField(max_length=1000, blank=True)
     proyecto = models.ForeignKey(Proyecto, blank=True, null=False)
     fecha = models.DateTimeField()
     usuario = models.ForeignKey(User, null=True) # TODO referenciar al User correcto
@@ -140,7 +141,7 @@ class Hito(Bitacora):
     
 class TipoUsuario(Bitacora):
     cantidad = models.PositiveIntegerField(default=1)
-    usuariosContactables = models.CharField(max_length=140) # TODO en realidad es mejor una lista
+    usuariosContactables = models.CharField(max_length=200) # TODO en realidad es mejor una lista
     
     objects = BitacoraManager()
     
@@ -153,17 +154,8 @@ class TipoUsuario(Bitacora):
     def htmlTemplate(self):
         return 'reqApp/TU.html'
 
-class RequisitoManager(models.Manager):
-    pass
-    """
-    def get_queryset(self):
-        #TODO ordenar por identificador primero los RU y luego los RS
-        return super(RequisitoManager, self).get_queryset().filter(vigencia=True).order_by('requisitousuario').order_by('requisitosoftware')
-    """
-    
+
 class Requisito(Bitacora):
-    prefijo=''
-    objects = RequisitoManager()
     
     def __unicode__(self):
         req = RequisitoUsuario.objects.filter(id=self.id)
@@ -189,8 +181,6 @@ class RequisitoUsuario(Requisito):
     
     tiposUsuario = models.ManyToManyField(TipoUsuario, null=True, blank=True)
     hito = models.ForeignKey(Hito, blank=False, null=False)
-    
-    prefijo = 'RU'
     
     objects = BitacoraManager()
     
@@ -225,8 +215,6 @@ class RequisitoSoftware(Requisito):
     tiposUsuario = models.ManyToManyField(TipoUsuario, null=True, blank=True)
     requisitosUsuario = models.ManyToManyField(RequisitoUsuario, null=True, blank=True)
     hito = models.ForeignKey(Hito, blank=False, null=False)
-    
-    prefijo = 'RS'
     
     objects = BitacoraManager()
     

@@ -10,8 +10,8 @@
 
 
 
-<br>
-
+<br/>
+{% include barra_orden_elementos with atributos=atributos_ordenables %}
 {% for e in elementos %}
     <div class="contenedorElemento">
         <div id="{{ e.elemento.textoIdentificador }}">

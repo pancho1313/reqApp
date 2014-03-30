@@ -58,9 +58,9 @@ class BitacoraManager(models.Manager):
         return 1
 
 class Bitacora(models.Model):
-    nombre = models.CharField(max_length=64)
+    nombre = models.CharField(max_length=100)
     identificador = models.PositiveIntegerField(default=0, blank=True, null=False)
-    descripcion = models.CharField(max_length=200, blank=True)
+    descripcion = models.CharField(max_length=1000, blank=True)
     proyecto = models.ForeignKey(Proyecto, blank=True, null=False)
     fecha = models.DateTimeField()
     usuario = models.ForeignKey(User, null=True) # TODO referenciar al User correcto
@@ -140,7 +140,7 @@ class Hito(Bitacora):
     
 class TipoUsuario(Bitacora):
     cantidad = models.PositiveIntegerField(default=1)
-    usuariosContactables = models.CharField(max_length=140) # TODO en realidad es mejor una lista
+    usuariosContactables = models.CharField(max_length=200) # TODO en realidad es mejor una lista
     
     objects = BitacoraManager()
     
