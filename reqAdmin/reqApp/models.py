@@ -154,11 +154,12 @@ class TipoUsuario(Bitacora):
         return 'reqApp/TU.html'
 
 class RequisitoManager(models.Manager):
-    
+    pass
+    """
     def get_queryset(self):
         #TODO ordenar por identificador primero los RU y luego los RS
-        return super(RequisitoManager, self).get_queryset().filter(vigencia=True).order_by('requisitousuario')
-    
+        return super(RequisitoManager, self).get_queryset().filter(vigencia=True).order_by('requisitousuario').order_by('requisitosoftware')
+    """
     
 class Requisito(Bitacora):
     prefijo=''

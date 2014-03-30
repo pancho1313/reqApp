@@ -157,7 +157,7 @@ class RequisitoManager(models.Manager):
     
     def get_queryset(self):
         #TODO ordenar por identificador primero los RU y luego los RS
-        return super(RequisitoManager, self).get_queryset().filter(vigencia=True)
+        return super(RequisitoManager, self).get_queryset().filter(vigencia=True).order_by('requisitousuario').order_by('requisitosoftware')
     
     
 class Requisito(Bitacora):

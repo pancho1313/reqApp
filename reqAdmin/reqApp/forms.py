@@ -125,8 +125,18 @@ class CPForm(BitacoraForm):
         super (CPForm,self).__init__(*args,**kwargs)
         self.camposVigentesDelProyecto = [
             'tiposUsuario',
-            'requisito',
         ]
+    
+    def asignarProyecto(self, proyecto):
+        self.proyecto = proyecto
+        
+        # estos campos solo consideran elementos vigentes del proyecto ordenados por identificador
+        for campo in self.camposVigentesDelProyecto:
+            self.fields[campo].queryset = self.fields[campo].queryset.filter(vigencia=True).filter(proyecto=self.proyecto).order_by('identificador')
+            
+        self.fields['requisito'].queryset = self.fields['requisito'].queryset.filter(vigencia=True).filter(proyecto=self.proyecto).order_by('requisitousuario')
+            
+        return self
     
     class Meta:
         model = CasoPrueba
