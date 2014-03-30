@@ -18,7 +18,7 @@
             {% include e.template with elemento=e.elemento %}
         </div>
         <div id="{{ e.elemento.textoIdentificador }}_form" class="contenedorEdicionElemento" style="display:none;">
-            {% include form_template with form=e.form identificador=e.elemento.identificador %}
+            {% include form_template with form=e.form identificador=e.elemento.identificador textoIdentificador=e.elemento.textoIdentificador %}
             {% include borrar_form with identificador=e.elemento.identificador %}
             <button onclick="cancelarEdicionElemento('{{ e.elemento.textoIdentificador }}')">cancel</button>
         </div>
@@ -28,6 +28,7 @@
 
 <p>Agregar Nuevo:</p>
 <div class="contenedorEdicionElemento">
+<div id="pok">pokpok</div>
     {% include form_template with form=form %}
 </div>
 

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+// -*- encoding: utf-8 -*-
 // para expandir y contraer elementos
 function expandirContraerElemento(id){
     var elemento_contenido = document.getElementById(id);
@@ -22,19 +22,17 @@ function editarElemento(id){
 }
 
 // mostrar el selector de requisitos asociados a un CP según el tipo (RU ó RS), y limpiar la info. del inactivo
-function seleccionarRequisitoCP(selecRU){
+function seleccionarRequisitoCP(selecRU, textoIdentificador){
     var ru = document.getElementById("id_requisitoUsuario");
     var rs = document.getElementById("id_requisitoSoftware");
-    var _ru = document.getElementById("_id_requisitoUsuario");
-    var _rs = document.getElementById("_id_requisitoSoftware");
+    var div_ru = document.getElementById(textoIdentificador+"_id_requisitoUsuario");
+    var div_rs = document.getElementById(textoIdentificador+"_id_requisitoSoftware");
     
     if(selecRU){
-        alert("ru");
-        _ru.style.display = 'block';
-        _rs.style.display = 'none';
+        div_ru.style.display = 'block';
+        div_rs.style.display = 'none';
     }else{
-        alert("rs");
-        _ru.style.display = 'none';
-        _rs.style.display = 'block';
+        div_ru.style.display = 'none';
+        div_rs.style.display = 'block';
     }
 }
