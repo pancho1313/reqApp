@@ -125,16 +125,14 @@ class CPForm(BitacoraForm):
         super (CPForm,self).__init__(*args,**kwargs)
         self.camposVigentesDelProyecto = [
             'tiposUsuario',
-            'requisitoSoftware',
-            'requisitoUsuario',
+            'requisito',
         ]
     
     class Meta:
         model = CasoPrueba
         fields = [
             'nombre',
-            'requisitoSoftware',
-            'requisitoUsuario',
+            'requisito',
             'descripcion',
             'resultadoAceptable',
             'resultadoOptimo',

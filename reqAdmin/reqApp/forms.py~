@@ -133,14 +133,17 @@ class CPForm(BitacoraForm):
         model = CasoPrueba
         fields = [
             'nombre',
-            'requisitoSoftware',
-            'requisitoUsuario',
+            'requisito',
             'descripcion',
             'resultadoAceptable',
             'resultadoOptimo',
             'tiposUsuario',
             'estado',
         ]
+        widgets = {
+            'descripcion': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
+            'nombre': forms.TextInput(attrs={'size': 60}),
+        }
         
 class MDForm(BitacoraForm):
     def __init__(self,*args,**kwargs):

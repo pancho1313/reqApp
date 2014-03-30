@@ -68,14 +68,6 @@ class Bitacora(models.Model):
     
     def __unicode__(self):
         return u'%s' % self.nombre
-    """
-    def m2mVigentes(self):
-        # aca se crea un diccionario con referencias m2m que son vigentes
-        return {}
-    def copiarM2MVigentes(self, m2mVigentesDicc):
-        # aca se realiza la copia de las referencias m2m que son vigentes
-        pass
-    """ 
     
     def bitacorarCopiaDeElemento(self, proyecto, identificador):
         # registrar una copia no vigente en la bitacora
@@ -150,19 +142,13 @@ class TipoUsuario(Bitacora):
     def textoIdentificador(self):
         return u'TU%04d' % self.identificador
         
-    """
-    def campos(self):
-        return Bitacora.campos(self) + [
-            self.cantidad,
-            self.usuariosContactables,
-        ]
-    """
-    
     def htmlTemplate(self):
         return 'reqApp/TU.html'
 
+class Requisito(Bitacora):
+    pass
     
-class RequisitoUsuario(Bitacora):
+class RequisitoUsuario(Requisito):
     fuente = models.CharField(max_length=140, blank=True)
     costo = models.IntegerField(default=0, blank=True)
     
@@ -195,7 +181,7 @@ class RequisitoUsuario(Bitacora):
     def htmlTemplate(self):
         return 'reqApp/RU.html'
     
-class RequisitoSoftware(Bitacora):
+class RequisitoSoftware(Requisito):
     fuente = models.CharField(max_length=140)
     costo = models.IntegerField(default=0, blank=True)
     
@@ -238,8 +224,9 @@ class CasoPrueba(Bitacora):
     estado = models.CharField(max_length=30, choices=ESTADO_CHOICES)
     
     tiposUsuario = models.ManyToManyField(TipoUsuario, null=True, blank=True)
-    requisitoSoftware = models.ForeignKey(RequisitoSoftware, null=True, blank=True)
-    requisitoUsuario = models.ForeignKey(RequisitoUsuario, null=True, blank=True)
+    requisito = models.ForeignKey(Requisito, null=False, blank=False)
+    #requisitoSoftware = models.ForeignKey(RequisitoSoftware, null=True, blank=True)
+    #requisitoUsuario = models.ForeignKey(RequisitoUsuario, null=True, blank=True)
     
     objects = BitacoraManager()
     
