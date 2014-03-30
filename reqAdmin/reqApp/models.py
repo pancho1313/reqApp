@@ -153,17 +153,8 @@ class TipoUsuario(Bitacora):
     def htmlTemplate(self):
         return 'reqApp/TU.html'
 
-class RequisitoManager(models.Manager):
-    pass
-    """
-    def get_queryset(self):
-        #TODO ordenar por identificador primero los RU y luego los RS
-        return super(RequisitoManager, self).get_queryset().filter(vigencia=True).order_by('requisitousuario').order_by('requisitosoftware')
-    """
-    
+
 class Requisito(Bitacora):
-    prefijo=''
-    objects = RequisitoManager()
     
     def __unicode__(self):
         req = RequisitoUsuario.objects.filter(id=self.id)
@@ -171,6 +162,12 @@ class Requisito(Bitacora):
         if len(req) < 1:
             pre = 'RS'
         return u'%s%04d %s' % (pre,self.identificador, self.nombre)
+        
+    def estado(self):
+        req = RequisitoUsuario.objects.filter(id=self.id)
+        if len(req) < 1:
+            req = RequisitoSoftware.objects.filter(id=self.id)
+        return req[0].estado
     
 class RequisitoUsuario(Requisito):
     fuente = models.CharField(max_length=140, blank=True)
@@ -183,8 +180,6 @@ class RequisitoUsuario(Requisito):
     
     tiposUsuario = models.ManyToManyField(TipoUsuario, null=True, blank=True)
     hito = models.ForeignKey(Hito, blank=False, null=False)
-    
-    prefijo = 'RU'
     
     objects = BitacoraManager()
     
@@ -219,8 +214,6 @@ class RequisitoSoftware(Requisito):
     tiposUsuario = models.ManyToManyField(TipoUsuario, null=True, blank=True)
     requisitosUsuario = models.ManyToManyField(RequisitoUsuario, null=True, blank=True)
     hito = models.ForeignKey(Hito, blank=False, null=False)
-    
-    prefijo = 'RS'
     
     objects = BitacoraManager()
     
