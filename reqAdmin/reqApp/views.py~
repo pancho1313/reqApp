@@ -89,7 +89,7 @@ def viewRS(request):
         {'orden': 'identificador', 'porcentaje': 15,},
         {'orden': 'nombre', 'porcentaje': 9,},
         {'orden': 'estado', 'porcentaje': 13,},
-        {'orden': 'costo', 'porcentaje': 5,},
+        {'orden': 'costo', 'porcentaje': 6,},
         {'orden': 'prioridad', 'porcentaje': 13,},
         {'orden': 'tipo', 'porcentaje': 18,},
         {'orden': 'hito', 'porcentaje': 10,},

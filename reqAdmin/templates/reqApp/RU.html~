@@ -36,13 +36,11 @@
     </div>
     <br/>
     <div>
-        <div style="display: inline-block;width:30%;vertical-align:top;">
-            Fuente: {{ elemento.fuente }}
+        <div style="display: inline-block;width:40%;vertical-align:top;">
+            <div>Fuente: {{ elemento.fuente }}</div>
+            <div>Estabilidad: {{ elemento.estabilidad }}</div>
         </div>
-        <div style="display: inline-block;width:30%;vertical-align:top;">
-            Estabilidad: {{ elemento.estabilidad }}
-        </div>
-        <div style="display: inline-block;width:30%;vertical-align:top;">
+        <div style="display: inline-block;width:50%;vertical-align:top;">
             <ul>
             <li><a href="#" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_tiposUsuario')">Usuarios asociados({{elemento.tiposUsuario|enlistar|largoLista}})</a></li>
             <ul id="{{ elemento.textoIdentificador }}_tiposUsuario" style="display:none;">

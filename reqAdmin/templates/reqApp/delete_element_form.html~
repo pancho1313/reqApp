@@ -4,7 +4,7 @@
     <input type="hidden" name="identificador" value={{ identificador }}>
     {% endif %}
     <input type="hidden" name="borrar" value="borrar">
-	<button type="submit">
-		Borrar
+	<button class="boton_azul" type="submit">
+		Borrar identificador {{ identificador }}
 	</button>
 </form>

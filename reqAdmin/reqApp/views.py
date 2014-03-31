@@ -58,7 +58,7 @@ def elementView(request, mensajes, modelFormClass, formTemplate, modelClass, lis
     return render(request, 'reqApp/lista_expandible.html', context)
 
 def viewTU(request):
-    mensajes = ['holi soy TU',]
+    mensajes = []
     
     listaAtributos = [
         {'orden': 'identificador', 'porcentaje': 15,},
@@ -68,7 +68,7 @@ def viewTU(request):
     return elementView(request, mensajes, TUForm, 'reqApp/TU_form.html', TipoUsuario, listaAtributos)
 
 def viewRU(request):
-    mensajes = ['holi soy RU',]
+    mensajes = []
     
     listaAtributos = [
         {'orden': 'identificador', 'porcentaje': 15,},
@@ -83,7 +83,7 @@ def viewRU(request):
     return elementView(request, mensajes, RUForm, 'reqApp/RU_form.html', RequisitoUsuario, listaAtributos)
 
 def viewRS(request):
-    mensajes = ['holi soy RS',]
+    mensajes = []
     
     listaAtributos = [
         {'orden': 'identificador', 'porcentaje': 15,},
@@ -98,7 +98,7 @@ def viewRS(request):
     return elementView(request, mensajes, RSForm, 'reqApp/RS_form.html', RequisitoSoftware, listaAtributos)
 
 def viewMD(request):
-    mensajes = ['holi soy MD',]
+    mensajes = []
     
     listaAtributos = [
         {'orden': 'identificador', 'porcentaje': 15,},
@@ -110,7 +110,7 @@ def viewMD(request):
     return elementView(request, mensajes, MDForm, 'reqApp/MD_form.html', Modulo, listaAtributos)
 
 def viewCP(request):
-    mensajes = ['holi soy CP',]    
+    mensajes = []    
     
     listaAtributos = [
         {'orden': 'identificador', 'porcentaje': 15,},

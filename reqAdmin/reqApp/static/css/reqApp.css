@@ -146,3 +146,23 @@ a.barra_orden:hover, a.barra_orden:active
 color:Blue
 text-decoration:underline;
 }
+
+/* botones azules de formularios y herramientas */
+button.boton_azul
+{
+color:White;
+background-color:#1464F6;
+text-decoration:none;
+border: 1px solid White;
+border-radius:5px;
+}
+
+button.boton_azul:hover
+{
+background-color:#0C59CF;
+}
+
+button.boton_azul:active
+{
+background-color:#3D8AF7;
+}

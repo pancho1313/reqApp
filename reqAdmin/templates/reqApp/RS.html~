@@ -52,9 +52,9 @@
         </div>
         <div style="display: inline-block;width:30%;vertical-align:top;">
             <ul>
-            <li><a href="#" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_requisitosUsuario')">RU asociados({{elemento.requisitosUsuario|toList|largoLista}})</a></li>
+            <li><a href="#" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_requisitosUsuario')">RU asociados({{elemento.requisitosUsuario|enlistar|largoLista}})</a></li>
             <ul id="{{ elemento.textoIdentificador }}_requisitosUsuario" style="display:none;">
-            {% for ru in elemento.requisitosUsuario|toList %}
+            {% for ru in elemento.requisitosUsuario|enlistar %}
                 <li class="{{ ru.estado }}">{{ru}}</li>
             {% endfor %}
             </ul>

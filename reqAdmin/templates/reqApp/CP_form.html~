@@ -8,13 +8,7 @@
             <b>{{ textoIdentificador }}</b>
         {% endif %}
         <div>Nombre: {{ form.nombre }}</div>
-        <div>
-            Requisito asociado:
-            <input type="radio" name="requisito" value="ru" onchange="seleccionarRequisitoCP(true,'{{textoIdentificador}}')"/> de Usuario
-            <input type="radio" name="requisito" value="rs" onchange="seleccionarRequisitoCP(false,'{{textoIdentificador}}')"/> de Software
-        </div>
-        <div id="{{textoIdentificador}}_id_requisitoUsuario" style="display:none;">RU asociado: {{ form.requisitoUsuario }}</div>
-        <div id="{{textoIdentificador}}_id_requisitoSoftware" style="display:none;">RS asociado: {{ form.requisitoSoftware }}</div>
+        <div>Requisito asociado: {{ form.requisito }}</div>
         <div class="top">Descripción:</div> <div class="top">{{ form.descripcion }}</div>
         <div>Resultado aceptable: {{ form.resultadoAceptable }}</div>
         <div>Resultado óptimo: {{ form.resultadoOptimo }}</div>
