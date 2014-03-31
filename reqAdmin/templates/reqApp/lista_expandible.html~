@@ -9,9 +9,10 @@
 <br/>
 
 <div>
-<a style="display: inline-block;width:30%;" href='#' class="boton_azul" onclick='editarNuevoElemento()'>(+)Abrir todos</a>
-<a style="display: inline-block;width:30%;" href='#' class="boton_azul" onclick='editarNuevoElemento()'>(--)Cerrar todos</a>
-<a style="display: inline-block;width:30%;" href='#nuevo' class="boton_azul" onclick='editarNuevoElemento()'>Nuevo</a>
+<a style="display: inline-block;width:15%;" href='#' class="boton_azul" onclick='abrirTodos()'>(+)Abrir todos</a>
+<a style="display: inline-block;width:15%;" href='#' class="boton_azul" onclick='cerrarTodos()'>(--)Cerrar todos</a>
+<div style="display: inline-block;width:20%;"></div>
+<a style="display: inline-block;width:10%;" href='#nuevo' class="boton_azul" onclick='editarNuevoElemento()'>Nuevo</a>
 </div>
 <br/>
 {% include barra_orden_elementos with atributos=atributos_ordenables %}
