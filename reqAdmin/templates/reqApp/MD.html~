@@ -43,5 +43,5 @@
         </div>
     </div>
     
-    <button onclick="editarElemento('{{ elemento.textoIdentificador }}')">editar</button>
+    <button class="boton_azul" onclick="editarElemento('{{ elemento.textoIdentificador }}')">Editar</button>
 </div>

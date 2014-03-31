@@ -61,8 +61,8 @@ def viewTU(request):
     mensajes = []
     
     listaAtributos = [
-        {'orden': 'identificador', 'porcentaje': 15,},
-        {'orden': 'nombre', 'porcentaje': 9,},
+        {'orden': 'identificador', 'posicion': 15,},
+        {'orden': 'nombre', 'posicion': 9,},
     ]
       
     return elementView(request, mensajes, TUForm, 'reqApp/TU_form.html', TipoUsuario, listaAtributos)
@@ -71,13 +71,13 @@ def viewRU(request):
     mensajes = []
     
     listaAtributos = [
-        {'orden': 'identificador', 'porcentaje': 15,},
-        {'orden': 'nombre', 'porcentaje': 9,},
-        {'orden': 'estado', 'porcentaje': 13,},
-        {'orden': 'costo', 'porcentaje': 6,},
-        {'orden': 'prioridad', 'porcentaje': 13,},
-        {'orden': 'tipo', 'porcentaje': 18,},
-        {'orden': 'hito', 'porcentaje': 10,},
+        {'orden': 'identificador', 'posicion': 15,},
+        {'orden': 'nombre', 'posicion': 9,},
+        {'orden': 'estado', 'posicion': 13,},
+        {'orden': 'costo', 'posicion': 6,},
+        {'orden': 'prioridad', 'posicion': 13,},
+        {'orden': 'tipo', 'posicion': 18,},
+        {'orden': 'hito', 'posicion': 10,},
     ]    
     
     return elementView(request, mensajes, RUForm, 'reqApp/RU_form.html', RequisitoUsuario, listaAtributos)
@@ -86,13 +86,13 @@ def viewRS(request):
     mensajes = []
     
     listaAtributos = [
-        {'orden': 'identificador', 'porcentaje': 15,},
-        {'orden': 'nombre', 'porcentaje': 9,},
-        {'orden': 'estado', 'porcentaje': 13,},
-        {'orden': 'costo', 'porcentaje': 6,},
-        {'orden': 'prioridad', 'porcentaje': 13,},
-        {'orden': 'tipo', 'porcentaje': 18,},
-        {'orden': 'hito', 'porcentaje': 10,},
+        {'orden': 'identificador', 'posicion': 15,},
+        {'orden': 'nombre', 'posicion': 9,},
+        {'orden': 'estado', 'posicion': 13,},
+        {'orden': 'costo', 'posicion': 6,},
+        {'orden': 'prioridad', 'posicion': 13,},
+        {'orden': 'tipo', 'posicion': 18,},
+        {'orden': 'hito', 'posicion': 10,},
     ]  
      
     return elementView(request, mensajes, RSForm, 'reqApp/RS_form.html', RequisitoSoftware, listaAtributos)
@@ -101,10 +101,10 @@ def viewMD(request):
     mensajes = []
     
     listaAtributos = [
-        {'orden': 'identificador', 'porcentaje': 15,},
-        {'orden': 'nombre', 'porcentaje': 41,},
-        {'orden': 'costo', 'porcentaje': 8,},
-        {'orden': 'prioridad', 'porcentaje': 10,},
+        {'orden': 'identificador', 'posicion': 15,},
+        {'orden': 'nombre', 'posicion': 41,},
+        {'orden': 'costo', 'posicion': 8,},
+        {'orden': 'prioridad', 'posicion': 10,},
     ]
        
     return elementView(request, mensajes, MDForm, 'reqApp/MD_form.html', Modulo, listaAtributos)
@@ -113,10 +113,10 @@ def viewCP(request):
     mensajes = []    
     
     listaAtributos = [
-        {'orden': 'identificador', 'porcentaje': 15,},
-        {'orden': 'nombre', 'porcentaje': 9,},
-        {'orden': 'estado', 'porcentaje': 20,},
-        {'orden': 'requisito', 'porcentaje': 10,},
+        {'orden': 'identificador', 'posicion': 15,},
+        {'orden': 'nombre', 'posicion': 9,},
+        {'orden': 'estado', 'posicion': 20,},
+        {'orden': 'requisito', 'posicion': 10,},
     ]
     
     return elementView(request, mensajes, CPForm, 'reqApp/CP_form.html', CasoPrueba, listaAtributos)

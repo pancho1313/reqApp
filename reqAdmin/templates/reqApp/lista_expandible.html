@@ -8,8 +8,11 @@
 
 <br/>
 
-
-
+<div>
+<a style="display: inline-block;width:30%;" href='#' class="boton_azul" onclick='abrirTodos()'>(+)Abrir todos</a>
+<a style="display: inline-block;width:30%;" href='#' class="boton_azul" onclick='cerrarTodos()'>(--)Cerrar todos</a>
+<a style="display: inline-block;width:30%;" href='#nuevo' class="boton_azul" onclick='editarNuevoElemento()'>Nuevo</a>
+</div>
 <br/>
 {% include barra_orden_elementos with atributos=atributos_ordenables %}
 {% for e in elementos %}
@@ -26,9 +29,12 @@
 {% endfor %}
 
 
-<p>Agregar Nuevo:</p>
-<div class="contenedorEdicionElemento">
+
+<div id='nuevoElemento' class="contenedorEdicionElemento" style="display:none;">
+    <a name='nuevo'></a>
+    <p>Nuevo:</p>
     {% include form_template with form=form %}
+    <button class="boton_azul" onclick="cancelarNuevoElemento()">Cancelar</button>
 </div>
 
 {% comment %}

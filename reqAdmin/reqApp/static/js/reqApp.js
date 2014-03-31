@@ -20,3 +20,31 @@ function editarElemento(id){
     elemento_form.style.display = 'block';
     elemento.style.display = 'none';
 }
+
+// ocultar edicion de nuevo elemento de lista
+function cancelarNuevoElemento(){
+    var elemento = document.getElementById('nuevoElemento');
+    elemento.style.display = 'none';
+}
+
+// mostrar edicion de un nuevo elemento de lista
+function editarNuevoElemento(){
+    var elemento = document.getElementById('nuevoElemento');
+    elemento.style.display = 'block';
+}
+
+// abrir la descripcion de todos los elementos de lista
+function abrirTodos(){
+    var elementos = document.getElementsByName('elemento_contenido');
+    for(var i = 0; i < elementos.length; i++){
+        elementos[i].style.display = 'block';
+    }
+}
+
+// cerrar la descripcion de todos los elementos de lista
+function cerrarTodos(){
+    var elementos = document.getElementsByName('elemento_contenido');
+    for(var i = 0; i < elementos.length; i++){
+        elementos[i].style.display = 'none';
+    }
+}

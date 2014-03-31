@@ -80,10 +80,12 @@ border-radius:5px;
 padding:10px;
 }
 
-
+/* contenedor edicion de elemento */
 .contenedorEdicionElemento
 {
-border:1px solid Black;
+border:1px dashed #D6D6D6;
+border-radius:5px;
+padding:5px;
 }
 
 /*display: inline-block;*/
@@ -148,7 +150,7 @@ text-decoration:underline;
 }
 
 /* botones azules de formularios y herramientas */
-button.boton_azul
+button.boton_azul, a.boton_azul
 {
 color:White;
 background-color:#1464F6;
@@ -157,14 +159,17 @@ border: 1px solid White;
 border-radius:5px;
 }
 
-button.boton_azul:hover
+button.boton_azul:hover, a.boton_azul:hover
 {
-color:White;
 background-color:#0C59CF;
 }
 
-button.boton_azul:active
+button.boton_azul:active, a.boton_azul:active
 {
-color:Red;
 background-color:#3D8AF7;
+}
+
+button.boton_azul:focus
+{
+border: 2px solid Black;
 }
