@@ -12,7 +12,7 @@ overflow:hidden;
 float:left;
 }
 
-.navbar_up a:link,a:visited
+.navbar_up a:link, .navbar_up a:visited
 {
 display:block;
 width:auto;
@@ -25,11 +25,15 @@ border-style:solid;
 border-width:1px;
 }
 
-.navbar_up a:hover,a:active
+.navbar_up a:hover, .navbar_up  a:active
 {
-background-color:LightGray;
+background-color:#F7F6F6;
 }
 
+a.navbar_selected[name='navbar']
+{
+background-color:#D6D6D6;
+}
 
 
 /* barra de navegación secundaria */
@@ -46,7 +50,7 @@ overflow:hidden;
 float:left;
 }
 
-.navbar_down a:link,a:visited
+.navbar_down a:link, .navbar_down a:visited
 {
 display:block;
 width:auto;
@@ -59,9 +63,9 @@ border-style:solid;
 border-width:1px;
 }
 
-.navbar_down a:hover,a:active
+.navbar_down a:hover, .navbar_down a:active
 {
-background-color:LightGray;
+background-color:#F7F6F6;
 }
 
 /* título de proyecto */
@@ -91,14 +95,14 @@ padding:5px;
 /*display: inline-block;*/
 
 /* titulo elemento */
-.tituloElemento a:link,a:visited
+.tituloElemento a:link, .tituloElemento  a:visited
 {
 color:Black;
 background-color:White;
 text-decoration:none;
 }
 
-.tituloElemento a:hover,a:active
+.tituloElemento a:hover, .tituloElemento a:active
 {
 background-color:White;
 text-decoration:underline;
@@ -145,7 +149,7 @@ text-decoration:none;
 
 a.barra_orden:hover, a.barra_orden:active
 {
-color:Blue
+color:Blue;
 text-decoration:underline;
 }
 

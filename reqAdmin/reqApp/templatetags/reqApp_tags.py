@@ -28,9 +28,9 @@ def estado(elemento):
         if key == elemento.estado:
             return val
             
-@register.filter(name="enlistar")
-def enlistar(queryList):
-    return queryList.order_by('identificador')
+@register.filter(name="enlistarVigentes")
+def enlistarVigentes(queryList):
+    return queryList.filter(vigencia=True).order_by('identificador')
     
 @register.filter(name="largoLista")
 def largoLista(lista):

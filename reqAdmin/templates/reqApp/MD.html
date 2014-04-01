@@ -33,9 +33,9 @@
         <div style="display: inline-block;width:30%;vertical-align:top;"></div>
         <div style="display: inline-block;width:30%;vertical-align:top;">
             <ul>
-            <li><a href="#" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_requisitosSoftware')">RS asociados({{elemento.requisitosSoftware|enlistar|largoLista}})</a></li>
+            <li><a href="#" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_requisitosSoftware')">RS asociados({{elemento.requisitosSoftware|enlistarVigentes|largoLista}})</a></li>
             <ul id="{{ elemento.textoIdentificador }}_requisitosSoftware" style="display:none;">
-            {% for rs in elemento.requisitosSoftware|enlistar %}
+            {% for rs in elemento.requisitosSoftware|enlistarVigentes %}
                 <li class="{{ rs.estado }}">{{rs}}</li>
             {% endfor %}
             </ul>

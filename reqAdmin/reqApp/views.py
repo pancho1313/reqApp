@@ -4,7 +4,7 @@ from reqApp.util import *
 
 from django.contrib.auth.models import User
 
-def elementView(request, mensajes, modelFormClass, formTemplate, modelClass, listaAtributos):
+def elementView(request, mensajes, modelFormClass, formTemplate, modelClass, listaAtributos, navbar):
     usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
     proyecto = proyectoDeUsuario(usuario)
     if request.method == 'POST':
@@ -54,6 +54,7 @@ def elementView(request, mensajes, modelFormClass, formTemplate, modelClass, lis
         'barra_orden_elementos': 'reqApp/orden_elementos.html',
         'atributos_ordenables': listaAtributos,
         'orden_actual': ordenActual,
+        'navbar':navbar,
     }
     return render(request, 'reqApp/lista_expandible.html', context)
 
@@ -64,8 +65,10 @@ def viewTU(request):
         {'orden': 'identificador', 'posicion': 15,},
         {'orden': 'nombre', 'posicion': 9,},
     ]
-      
-    return elementView(request, mensajes, TUForm, 'reqApp/TU_form.html', TipoUsuario, listaAtributos)
+    
+    navbar = {'1':'proyecto', '2':'TU'}
+    
+    return elementView(request, mensajes, TUForm, 'reqApp/TU_form.html', TipoUsuario, listaAtributos, navbar)
 
 def viewRU(request):
     mensajes = []
@@ -80,7 +83,9 @@ def viewRU(request):
         {'orden': 'hito', 'posicion': 10,},
     ]    
     
-    return elementView(request, mensajes, RUForm, 'reqApp/RU_form.html', RequisitoUsuario, listaAtributos)
+    navbar = {'1':'proyecto', '2':'RU'}
+    
+    return elementView(request, mensajes, RUForm, 'reqApp/RU_form.html', RequisitoUsuario, listaAtributos, navbar)
 
 def viewRS(request):
     mensajes = []
@@ -94,8 +99,10 @@ def viewRS(request):
         {'orden': 'tipo', 'posicion': 18,},
         {'orden': 'hito', 'posicion': 10,},
     ]  
-     
-    return elementView(request, mensajes, RSForm, 'reqApp/RS_form.html', RequisitoSoftware, listaAtributos)
+    
+    navbar = {'1':'proyecto', '2':'RS'}
+    
+    return elementView(request, mensajes, RSForm, 'reqApp/RS_form.html', RequisitoSoftware, listaAtributos, navbar)
 
 def viewMD(request):
     mensajes = []
@@ -106,8 +113,10 @@ def viewMD(request):
         {'orden': 'costo', 'posicion': 8,},
         {'orden': 'prioridad', 'posicion': 10,},
     ]
-       
-    return elementView(request, mensajes, MDForm, 'reqApp/MD_form.html', Modulo, listaAtributos)
+    
+    navbar = {'1':'proyecto', '2':'MD'}
+    
+    return elementView(request, mensajes, MDForm, 'reqApp/MD_form.html', Modulo, listaAtributos, navbar)
 
 def viewCP(request):
     mensajes = []    
@@ -119,4 +128,6 @@ def viewCP(request):
         {'orden': 'requisito', 'posicion': 10,},
     ]
     
-    return elementView(request, mensajes, CPForm, 'reqApp/CP_form.html', CasoPrueba, listaAtributos)
+    navbar = {'1':'proyecto', '2':'CP'}
+    
+    return elementView(request, mensajes, CPForm, 'reqApp/CP_form.html', CasoPrueba, listaAtributos, navbar)
