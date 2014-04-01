@@ -21,8 +21,7 @@ background-color:White;
 text-align:center;
 padding:10px;
 text-decoration:none;
-border-style:solid;
-border-width:1px;
+border: 1px solid LightGray;
 }
 
 .navbar_up a:hover, .navbar_up  a:active
@@ -53,8 +52,7 @@ background-color:White;
 text-align:center;
 padding:4px;
 text-decoration:none;
-border-style:solid;
-border-width:1px;
+border: 1px solid LightGray;
 }
 
 .navbar_down a:hover, .navbar_down a:active

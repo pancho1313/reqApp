@@ -21,20 +21,13 @@ background-color:White;
 text-align:center;
 padding:10px;
 text-decoration:none;
-border-style:solid;
-border-width:1px;
+border: 1px solid LightGray;
 }
 
 .navbar_up a:hover, .navbar_up  a:active
 {
 background-color:#F7F6F6;
 }
-
-a.navbar_selected[name='navbar']
-{
-background-color:#D6D6D6;
-}
-
 
 /* barra de navegación secundaria */
 .navbar_down ul
@@ -59,13 +52,18 @@ background-color:White;
 text-align:center;
 padding:4px;
 text-decoration:none;
-border-style:solid;
-border-width:1px;
+border: 1px solid #F7F6F6;
 }
 
 .navbar_down a:hover, .navbar_down a:active
 {
 background-color:#F7F6F6;
+}
+
+/* destacar ruta actual en el navbar */
+a.navbar_selected[name='navbar']
+{
+background-color:#D6D6D6;
 }
 
 /* título de proyecto */
