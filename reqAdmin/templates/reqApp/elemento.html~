@@ -1,3 +1,0 @@
-{% for campo in elemento.campos %}
-    {{ campo }}
-{% endfor %}
