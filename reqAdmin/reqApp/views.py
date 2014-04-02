@@ -131,3 +131,15 @@ def viewCP(request):
     navbar = {'1':'proyecto', '2':'CP'}
     
     return elementView(request, mensajes, CPForm, 'reqApp/CP_form.html', CasoPrueba, listaAtributos, navbar)
+    
+def viewHT(request):
+    mensajes = []    
+    
+    listaAtributos = [
+        {'orden': 'identificador', 'posicion': 15,},
+        {'orden': 'nombre', 'posicion': 9,},
+    ]
+    
+    navbar = {'1':'proyecto', '2':'HT'}
+    
+    return elementView(request, mensajes, HTForm, 'reqApp/HT_form.html', Hito, listaAtributos, navbar)

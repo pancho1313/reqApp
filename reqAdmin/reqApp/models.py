@@ -124,19 +124,26 @@ class Bitacora(models.Model):
         
         # guardar en base de datos
         self.bitacorarElemento(usuario)
-    
+    """
     def campos(self):
         return [
             self.identificador,
             self.nombre,
             self.descripcion,
         ]
+    """
 
 class Hito(Bitacora):
-    fechaInicio = models.DateTimeField()
-    fechaFin = models.DateTimeField()
+    fechaInicio = models.DateTimeField(default=timezone.now)
+    fechaFin = models.DateTimeField(default=timezone.now)
     
     objects = BitacoraManager()
+    
+    def textoIdentificador(self):
+        return u'HT%04d' % self.identificador
+        
+    def htmlTemplate(self):
+        return 'reqApp/HT.html'
     
 class TipoUsuario(Bitacora):
     cantidad = models.PositiveIntegerField(default=1)

@@ -1,9 +1,9 @@
 {# espera variable: proyecto #}
 <div class="navbar_up">
     <ul>
-    <li><a name="navbar" {% ifequal navbar1 "proyecto" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:TU' %}">Proyecto</a></li>
-    <li><a name="navbar" {% ifequal navbar1 "documentos" %} class="navbar_selected" {% endifequal %} href="#Documentos">Documentos</a></li>
-    <li><a name="navbar" {% ifequal navbar1 "herramientas" %} class="navbar_selected" {% endifequal %} href="#Herramientas">Herramientas</a></li>
+    <li><a name="navbar" {% ifequal navbar.1 "proyecto" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:TU' %}">Proyecto</a></li>
+    <li><a name="navbar" {% ifequal navbar.1 "documentos" %} class="navbar_selected" {% endifequal %} href="#Documentos">Documentos</a></li>
+    <li><a name="navbar" {% ifequal navbar.1 "herramientas" %} class="navbar_selected" {% endifequal %} href="#Herramientas">Herramientas</a></li>
     </ul>
 </div>
 
@@ -12,10 +12,11 @@
 </div>
 <div class="navbar_down">
     <ul>
-    <li><a name="navbar" {% ifequal navbar2 "TU" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:TU' %}">Tipos de Usuario</a></li>
-    <li><a name="navbar" {% ifequal navbar2 "RU" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:RU' %}">Requisitos de Usuario</a></li>
-    <li><a name="navbar" {% ifequal navbar2 "RS" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:RS' %}">Requisitos de Software</a></li>
-    <li><a name="navbar" {% ifequal navbar2 "MD" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:MD' %}">Módulos</a></li>
-    <li><a name="navbar" {% ifequal navbar2 "CP" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:CP' %}">Casos de Prueba</a></li>
+    <li><a name="navbar" {% ifequal navbar.2 "HT" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:TU' %}">Hitos</a></li>
+    <li><a name="navbar" {% ifequal navbar.2 "TU" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:TU' %}">Tipos de Usuario</a></li>
+    <li><a name="navbar" {% ifequal navbar.2 "RU" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:RU' %}">Requisitos de Usuario</a></li>
+    <li><a name="navbar" {% ifequal navbar.2 "RS" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:RS' %}">Requisitos de Software</a></li>
+    <li><a name="navbar" {% ifequal navbar.2 "MD" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:MD' %}">Módulos</a></li>
+    <li><a name="navbar" {% ifequal navbar.2 "CP" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:CP' %}">Casos de Prueba</a></li>
     </ul>
 </div>

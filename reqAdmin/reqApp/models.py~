@@ -41,7 +41,6 @@ class BitacoraManager(models.Manager):
         
     """
     def vigentes(self, proyecto, order='identificador'):
-        print 'order'+order
         return self.model.objects.filter(proyecto=proyecto).filter(vigencia=True).order_by(order)
         
     def vigente(self, proyecto, identificador):
@@ -125,19 +124,26 @@ class Bitacora(models.Model):
         
         # guardar en base de datos
         self.bitacorarElemento(usuario)
-    
+    """
     def campos(self):
         return [
             self.identificador,
             self.nombre,
             self.descripcion,
         ]
+    """
 
 class Hito(Bitacora):
-    fechaInicio = models.DateTimeField()
-    fechaFin = models.DateTimeField()
+    fechaInicio = models.DateTimeField(auto_now_add=True)
+    fechaFin = models.DateTimeField(auto_now_add=True)
     
     objects = BitacoraManager()
+    
+    def textoIdentificador(self):
+        return u'HT%04d' % self.identificador
+        
+    def htmlTemplate(self):
+        return 'reqApp/HT.html'
     
 class TipoUsuario(Bitacora):
     cantidad = models.PositiveIntegerField(default=1)

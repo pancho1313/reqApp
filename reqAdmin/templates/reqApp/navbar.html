@@ -12,6 +12,7 @@
 </div>
 <div class="navbar_down">
     <ul>
+    <li><a name="navbar" {% ifequal navbar.2 "HT" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:HT' %}">Hitos</a></li>
     <li><a name="navbar" {% ifequal navbar.2 "TU" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:TU' %}">Tipos de Usuario</a></li>
     <li><a name="navbar" {% ifequal navbar.2 "RU" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:RU' %}">Requisitos de Usuario</a></li>
     <li><a name="navbar" {% ifequal navbar.2 "RS" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:RS' %}">Requisitos de Software</a></li>

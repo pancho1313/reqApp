@@ -85,7 +85,7 @@ def viewRU(request):
     
     navbar = {'1':'proyecto', '2':'RU'}
     
-    return elementView(request, mensajes, RUForm, 'reqApp/RU_form.html', RequisitoUsuario, listaAtributos)
+    return elementView(request, mensajes, RUForm, 'reqApp/RU_form.html', RequisitoUsuario, listaAtributos, navbar)
 
 def viewRS(request):
     mensajes = []
@@ -102,7 +102,7 @@ def viewRS(request):
     
     navbar = {'1':'proyecto', '2':'RS'}
     
-    return elementView(request, mensajes, RSForm, 'reqApp/RS_form.html', RequisitoSoftware, listaAtributos)
+    return elementView(request, mensajes, RSForm, 'reqApp/RS_form.html', RequisitoSoftware, listaAtributos, navbar)
 
 def viewMD(request):
     mensajes = []
@@ -116,7 +116,7 @@ def viewMD(request):
     
     navbar = {'1':'proyecto', '2':'MD'}
     
-    return elementView(request, mensajes, MDForm, 'reqApp/MD_form.html', Modulo, listaAtributos)
+    return elementView(request, mensajes, MDForm, 'reqApp/MD_form.html', Modulo, listaAtributos, navbar)
 
 def viewCP(request):
     mensajes = []    
@@ -130,4 +130,16 @@ def viewCP(request):
     
     navbar = {'1':'proyecto', '2':'CP'}
     
-    return elementView(request, mensajes, CPForm, 'reqApp/CP_form.html', CasoPrueba, listaAtributos)
+    return elementView(request, mensajes, CPForm, 'reqApp/CP_form.html', CasoPrueba, listaAtributos, navbar)
+    
+def viewHT(request):
+    mensajes = []    
+    
+    listaAtributos = [
+        {'orden': 'identificador', 'posicion': 15,},
+        {'orden': 'nombre', 'posicion': 9,},
+    ]
+    
+    navbar = {'1':'proyecto', '2':'HT'}
+    
+    return elementView(request, mensajes, MDForm, 'reqApp/HT_form.html', Hito, listaAtributos, navbar)

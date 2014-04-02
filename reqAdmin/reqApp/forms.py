@@ -178,3 +178,18 @@ class MDForm(BitacoraForm):
             'descripcion': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
             'nombre': forms.TextInput(attrs={'size': 80}),
         }
+        
+class HTForm(BitacoraForm):
+    
+    class Meta:
+        model = Hito
+        fields = [
+            'nombre',
+            'descripcion',
+            'fechaInicio',
+            'fechaFin',
+        ]
+        widgets = {
+            'descripcion': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
+            'nombre': forms.TextInput(attrs={'size': 80}),
+        }
