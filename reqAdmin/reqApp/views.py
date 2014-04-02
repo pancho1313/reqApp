@@ -68,7 +68,7 @@ def viewTU(request):
     
     navbar = {'1':'proyecto', '2':'TU'}
     
-    return elementView(request, mensajes, TUForm, 'reqApp/TU_form.html', TipoUsuario, listaAtributos, navbar)
+    return elementView(request, mensajes, TUForm, 'reqApp/proyecto/TU/TU_form.html', TipoUsuario, listaAtributos, navbar)
 
 def viewRU(request):
     mensajes = []
@@ -85,7 +85,7 @@ def viewRU(request):
     
     navbar = {'1':'proyecto', '2':'RU'}
     
-    return elementView(request, mensajes, RUForm, 'reqApp/RU_form.html', RequisitoUsuario, listaAtributos, navbar)
+    return elementView(request, mensajes, RUForm, 'reqApp/proyecto/RU/RU_form.html', RequisitoUsuario, listaAtributos, navbar)
 
 def viewRS(request):
     mensajes = []
@@ -102,7 +102,7 @@ def viewRS(request):
     
     navbar = {'1':'proyecto', '2':'RS'}
     
-    return elementView(request, mensajes, RSForm, 'reqApp/RS_form.html', RequisitoSoftware, listaAtributos, navbar)
+    return elementView(request, mensajes, RSForm, 'reqApp/proyecto/RS/RS_form.html', RequisitoSoftware, listaAtributos, navbar)
 
 def viewMD(request):
     mensajes = []
@@ -116,7 +116,7 @@ def viewMD(request):
     
     navbar = {'1':'proyecto', '2':'MD'}
     
-    return elementView(request, mensajes, MDForm, 'reqApp/MD_form.html', Modulo, listaAtributos, navbar)
+    return elementView(request, mensajes, MDForm, 'reqApp/proyecto/MD/MD_form.html', Modulo, listaAtributos, navbar)
 
 def viewCP(request):
     mensajes = []    
@@ -130,7 +130,7 @@ def viewCP(request):
     
     navbar = {'1':'proyecto', '2':'CP'}
     
-    return elementView(request, mensajes, CPForm, 'reqApp/CP_form.html', CasoPrueba, listaAtributos, navbar)
+    return elementView(request, mensajes, CPForm, 'reqApp/proyecto/CP/CP_form.html', CasoPrueba, listaAtributos, navbar)
     
 def viewHT(request):
     mensajes = []    
@@ -142,4 +142,4 @@ def viewHT(request):
     
     navbar = {'1':'proyecto', '2':'HT'}
     
-    return elementView(request, mensajes, HTForm, 'reqApp/HT_form.html', Hito, listaAtributos, navbar)
+    return elementView(request, mensajes, HTForm, 'reqApp/proyecto/HT/HT_form.html', Hito, listaAtributos, navbar)

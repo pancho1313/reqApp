@@ -143,7 +143,7 @@ class Hito(Bitacora):
         return u'HT%04d' % self.identificador
         
     def htmlTemplate(self):
-        return 'reqApp/HT.html'
+        return 'reqApp/proyecto/HT/HT.html'
     
 class TipoUsuario(Bitacora):
     cantidad = models.PositiveIntegerField(default=1)
@@ -158,7 +158,7 @@ class TipoUsuario(Bitacora):
         return u'TU%04d' % self.identificador
         
     def htmlTemplate(self):
-        return 'reqApp/TU.html'
+        return 'reqApp/proyecto/TU/TU.html'
 
 
 class Requisito(Bitacora):
@@ -207,7 +207,7 @@ class RequisitoUsuario(Requisito):
         self.tiposUsuario = m2mVigentesDicc['tiposUsuario']
         
     def htmlTemplate(self):
-        return 'reqApp/RU.html'
+        return 'reqApp/proyecto/RU/RU.html'
     
 class RequisitoSoftware(Requisito):
     fuente = models.CharField(max_length=140)
@@ -243,7 +243,7 @@ class RequisitoSoftware(Requisito):
         self.requisitosUsuario = m2mVigentesDicc['requisitosUsuario']
         
     def htmlTemplate(self):
-        return 'reqApp/RS.html'
+        return 'reqApp/proyecto/RS/RS.html'
 
 class CasoPrueba(Bitacora):
     resultadoAceptable = models.CharField(max_length=140)
@@ -275,7 +275,7 @@ class CasoPrueba(Bitacora):
         self.tiposUsuario = m2mVigentesDicc['tiposUsuario']
         
     def htmlTemplate(self):
-        return 'reqApp/CP.html'
+        return 'reqApp/proyecto/CP/CP.html'
         
 class Modulo(Bitacora):
     costo = models.IntegerField(default=0, blank=True)
@@ -303,4 +303,4 @@ class Modulo(Bitacora):
         self.requisitosSoftware = m2mVigentesDicc['requisitosSoftware']
         
     def htmlTemplate(self):
-        return 'reqApp/MD.html'
+        return 'reqApp/proyecto/MD/MD.html'

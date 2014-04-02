@@ -134,8 +134,8 @@ class Bitacora(models.Model):
     """
 
 class Hito(Bitacora):
-    fechaInicio = models.DateTimeField(auto_now_add=True)
-    fechaFin = models.DateTimeField(auto_now_add=True)
+    fechaInicio = models.DateTimeField(default=timezone.now)
+    fechaFin = models.DateTimeField(default=timezone.now)
     
     objects = BitacoraManager()
     

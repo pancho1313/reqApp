@@ -142,4 +142,4 @@ def viewHT(request):
     
     navbar = {'1':'proyecto', '2':'HT'}
     
-    return elementView(request, mensajes, MDForm, 'reqApp/HT_form.html', Hito, listaAtributos, navbar)
+    return elementView(request, mensajes, HTForm, 'reqApp/HT_form.html', Hito, listaAtributos, navbar)
