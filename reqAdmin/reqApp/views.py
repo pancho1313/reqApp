@@ -5,6 +5,8 @@ from reqApp.util import *
 
 from django.contrib.auth.models import User
 
+################ Proyecto ################
+
 def elementView(request, mensajes, modelFormClass, formTemplate, modelClass, listaAtributos, navbar):
     usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
     proyecto = proyectoDeUsuario(usuario)
@@ -141,3 +143,53 @@ def viewHT(request):
     navbar = {'1':'proyecto', '2':'HT'}
     
     return elementView(request, mensajes, HTForm, 'reqApp/proyecto/HT/HT_form.html', Hito, listaAtributos, navbar)
+    
+################################# Documentos #############################
+def docView(request, navbar):
+    context = {
+        'navbar':navbar,
+    }
+    return render(request, 'reqApp/documentos.html', context)
+
+def docRequisitos(request):
+    navbar = {'1':'documentos', '2':'requisitos'}
+    return docView(request, navbar)
+    
+def docDiseno(request):
+    navbar = {'1':'documentos', '2':'diseno'}
+    return docView(request, navbar)
+    
+def docCP(request):
+    navbar = {'1':'documentos', '2':'cp'}
+    return docView(request, navbar)
+
+def docHistorico(request):
+    navbar = {'1':'documentos', '2':'historico'}
+    return docView(request, navbar)
+
+############################### Herramientas ##########################
+def HerrView(request, navbar):
+    context = {
+        'navbar':navbar,
+    }
+    return render(request, 'reqApp/herramientas.html', context)
+
+def tareas(request):
+    navbar = {'1':'herramientas', '2':'tareas'}
+    return docView(request, navbar)
+    
+def estadisticas(request):
+    navbar = {'1':'herramientas', '2':'estadisticas'}
+    return docView(request, navbar)
+    
+def matrices(request):
+    navbar = {'1':'herramientas', '2':'matrices'}
+    return docView(request, navbar)
+    
+def consistencia(request):
+    navbar = {'1':'herramientas', '2':'consistencia'}
+    return docView(request, navbar)
+    
+def bitacora(request):
+    navbar = {'1':'herramientas', '2':'bitacora'}
+    return docView(request, navbar)

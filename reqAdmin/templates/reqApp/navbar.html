@@ -2,8 +2,8 @@
 <div class="navbar_up">
     <ul>
     <li><a name="navbar" {% ifequal navbar.1 "proyecto" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:TU' %}">Proyecto</a></li>
-    <li><a name="navbar" {% ifequal navbar.1 "documentos" %} class="navbar_selected" {% endifequal %} href="#Documentos">Documentos</a></li>
-    <li><a name="navbar" {% ifequal navbar.1 "herramientas" %} class="navbar_selected" {% endifequal %} href="#Herramientas">Herramientas</a></li>
+    <li><a name="navbar" {% ifequal navbar.1 "documentos" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:docReq' %}">Documentos</a></li>
+    <li><a name="navbar" {% ifequal navbar.1 "herramientas" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:tareas' %}">Herramientas</a></li>
     </ul>
 </div>
 
@@ -12,11 +12,28 @@
 </div>
 <div class="navbar_down">
     <ul>
-    <li><a name="navbar" {% ifequal navbar.2 "HT" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:HT' %}">Hitos</a></li>
-    <li><a name="navbar" {% ifequal navbar.2 "TU" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:TU' %}">Tipos de Usuario</a></li>
-    <li><a name="navbar" {% ifequal navbar.2 "RU" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:RU' %}">Requisitos de Usuario</a></li>
-    <li><a name="navbar" {% ifequal navbar.2 "RS" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:RS' %}">Requisitos de Software</a></li>
-    <li><a name="navbar" {% ifequal navbar.2 "MD" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:MD' %}">Módulos</a></li>
-    <li><a name="navbar" {% ifequal navbar.2 "CP" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:CP' %}">Casos de Prueba</a></li>
+        {% ifequal navbar.1 "proyecto" %}
+            <li><a name="navbar" {% ifequal navbar.2 "HT" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:HT' %}">Hitos</a></li>
+            <li><a name="navbar" {% ifequal navbar.2 "TU" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:TU' %}">Tipos de Usuario</a></li>
+            <li><a name="navbar" {% ifequal navbar.2 "RU" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:RU' %}">Requisitos de Usuario</a></li>
+            <li><a name="navbar" {% ifequal navbar.2 "RS" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:RS' %}">Requisitos de Software</a></li>
+            <li><a name="navbar" {% ifequal navbar.2 "MD" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:MD' %}">Módulos</a></li>
+            <li><a name="navbar" {% ifequal navbar.2 "CP" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:CP' %}">Casos de Prueba</a></li>
+        {% endifequal %}
+        
+        {% ifequal navbar.1 "documentos" %}
+            <li><a name="navbar" {% ifequal navbar.2 "requisitos" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:docReq' %}">Documento de Requisitos</a></li>
+            <li><a name="navbar" {% ifequal navbar.2 "diseno" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:docDis' %}">Documento de Diseño</a></li>
+            <li><a name="navbar" {% ifequal navbar.2 "cp" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:docCP' %}">Documento de Casos de Prueba</a></li>
+            <li><a name="navbar" {% ifequal navbar.2 "historico" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:docHis' %}">Documento Histórico</a></li>
+        {% endifequal %}
+        
+        {% ifequal navbar.1 "herramientas" %}
+            <li><a name="navbar" {% ifequal navbar.2 "tareas" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:tareas' %}">Tareas</a></li>
+            <li><a name="navbar" {% ifequal navbar.2 "estadisticas" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:estadisticas' %}">Estadísticas</a></li>
+            <li><a name="navbar" {% ifequal navbar.2 "matrices" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:matrices' %}">Matrices de Trazado</a></li>
+            <li><a name="navbar" {% ifequal navbar.2 "consistencia" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:consistencia' %}">Consistencia de Relaciones</a></li>
+            <li><a name="navbar" {% ifequal navbar.2 "bitacora" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:bitacora' %}">Bitácora</a></li>
+        {% endifequal %}
     </ul>
 </div>
