@@ -38,7 +38,7 @@
         <div style="display: inline-block;width:50%;vertical-align:top;"></div>
         <div style="display: inline-block;width:30%;vertical-align:top;">
             <ul>
-            <li><a href="#" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_tiposUsuario')">Usuarios asociados({{elemento.tiposUsuario|enlistarVigentes|largoLista}})</a></li>
+            <li><button class="sublista" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_tiposUsuario')">Usuarios asociados({{elemento.tiposUsuario|enlistarVigentes|largoLista}})</button></li>
             <ul id="{{ elemento.textoIdentificador }}_tiposUsuario" style="display:none;">
             {% for tu in elemento.tiposUsuario|enlistarVigentes %}
                 <li>{{tu}}</li>

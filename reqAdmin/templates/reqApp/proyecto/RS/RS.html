@@ -42,7 +42,7 @@
         </div>
         <div style="display: inline-block;width:30%;vertical-align:top;">
             <ul>
-            <li><a href="#" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_tiposUsuario')">Usuarios asociados({{elemento.tiposUsuario|enlistarVigentes|largoLista}})</a></li>
+            <li><button class="sublista" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_tiposUsuario')">Usuarios asociados({{elemento.tiposUsuario|enlistarVigentes|largoLista}})</button></li>
             <ul id="{{ elemento.textoIdentificador }}_tiposUsuario" style="display:none;">
             {% for tu in elemento.tiposUsuario|enlistarVigentes %}
                 <li>{{tu}}</li>
@@ -52,7 +52,7 @@
         </div>
         <div style="display: inline-block;width:30%;vertical-align:top;">
             <ul>
-            <li><a href="#" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_requisitosUsuario')">RU asociados({{elemento.requisitosUsuario|enlistarVigentes|largoLista}})</a></li>
+            <li><button class="sublista" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_requisitosUsuario')">RU asociados({{elemento.requisitosUsuario|enlistarVigentes|largoLista}})</button></li>
             <ul id="{{ elemento.textoIdentificador }}_requisitosUsuario" style="display:none;">
             {% for ru in elemento.requisitosUsuario|enlistarVigentes %}
                 <li class="{{ ru.estado }}">{{ru}}</li>

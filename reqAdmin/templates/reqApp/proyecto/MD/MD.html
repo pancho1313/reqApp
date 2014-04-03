@@ -33,7 +33,7 @@
         <div style="display: inline-block;width:30%;vertical-align:top;"></div>
         <div style="display: inline-block;width:30%;vertical-align:top;">
             <ul>
-            <li><a href="#" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_requisitosSoftware')">RS asociados({{elemento.requisitosSoftware|enlistarVigentes|largoLista}})</a></li>
+            <li><button class="sublista" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_requisitosSoftware')">RS asociados({{elemento.requisitosSoftware|enlistarVigentes|largoLista}})</button></li>
             <ul id="{{ elemento.textoIdentificador }}_requisitosSoftware" style="display:none;">
             {% for rs in elemento.requisitosSoftware|enlistarVigentes %}
                 <li class="{{ rs.estado }}">{{rs}}</li>

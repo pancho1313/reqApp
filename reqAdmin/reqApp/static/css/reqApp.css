@@ -189,3 +189,27 @@ text-align:center;
 background-color:#D4E3FC;
 padding:5px;
 }
+
+/* botones que despliegan sublistas en los elementos */
+button.sublista
+{
+color:#1464F6;
+background-color:White;
+text-decoration:none;
+border: none;
+}
+
+button.sublista:hover
+{
+text-decoration:underline;
+}
+
+button.sublista:active
+{
+background-color:White;
+}
+
+button.sublista:focus
+{
+text-decoration:underline;
+}
