@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from django.shortcuts import render
 from reqApp.forms import *
 from reqApp.util import *
@@ -12,27 +13,24 @@ def elementView(request, mensajes, modelFormClass, formTemplate, modelClass, lis
             identificador = request.POST['identificador']
             instance = modelClass.objects.vigente(proyecto, identificador)
             if 'borrar' in request.POST:# borrar elemento
-                mensajes.append('vas a borrar! identificador=' + identificador)
                 instance.bitacorarElementoBorrado(usuario)
-                mensajes.append('borrado!')
+                mensajes.append('elemento borrado!')
             else:# editar elemento
-                mensajes.append('vas a editar! identificador=' + identificador)
                 form = modelFormClass(instance=instance, data=request.POST)
                 if form.is_valid():
                     form.asignarProyecto(proyecto)
                     form.actualizarElementoDeBitacora(usuario, identificador)
-                    mensajes.append('saved form!')
+                    mensajes.append('elemento editado!')
                 else:
-                    mensajes.append('invalid form!')
+                    mensajes.append('datos inválidos!')
         else:# crear
-            mensajes.append('vas a crear!')
             form = modelFormClass(request.POST)
             if form.is_valid():
                 form.asignarProyecto(proyecto)
                 form.crearElementoDeBitacora(usuario)
-                mensajes.append('saved form!')
+                mensajes.append('elemento creado!')
             else:
-                mensajes.append('invalid form!')
+                mensajes.append('datos inválidos!')
     
     ordenActual = 'identificador'
     if 'orden' in request.GET:# ordenar lista de elementos

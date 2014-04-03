@@ -1,7 +1,7 @@
 {% extends "reqApp/base.html" %}
 {% block body %}
 {% for mensaje in mensajes %}
-    <div>
+    <div class="mensaje">
         {{ mensaje }}
     </div>
 {% endfor %}
@@ -16,19 +16,23 @@
 </div>
 <br/>
 {% include barra_orden_elementos with atributos=atributos_ordenables %}
-{% for e in elementos %}
-    <div class="contenedorElemento">
-        <div id="{{ e.elemento.textoIdentificador }}">
-            {% include e.template with elemento=e.elemento %}
-        </div>
-        <div id="{{ e.elemento.textoIdentificador }}_form" class="contenedorEdicionElemento" style="display:none;">
-            {% include form_template with form=e.form identificador=e.elemento.identificador textoIdentificador=e.elemento.textoIdentificador %}
-            {% include borrar_form with identificador=e.elemento.identificador %}
-            <button class="boton_azul" onclick="cancelarEdicionElemento('{{ e.elemento.textoIdentificador }}')">Cancelar</button>
-        </div>
-    </div>
-{% endfor %}
 
+{% ifequal elementos|length 0 %}
+    <p class="centrado">--------------- Lista Vacía ---------------</p>
+{% else %}
+    {% for e in elementos %}
+        <div class="contenedorElemento">
+            <div id="{{ e.elemento.textoIdentificador }}">
+                {% include e.template with elemento=e.elemento %}
+            </div>
+            <div id="{{ e.elemento.textoIdentificador }}_form" class="contenedorEdicionElemento" style="display:none;">
+                {% include form_template with form=e.form identificador=e.elemento.identificador textoIdentificador=e.elemento.textoIdentificador %}
+                {% include borrar_form with identificador=e.elemento.identificador %}
+                <button class="boton_azul" onclick="cancelarEdicionElemento('{{ e.elemento.textoIdentificador }}')">Cancelar</button>
+            </div>
+        </div>
+    {% endfor %}
+{% endifequal %}
 
 
 <div id='nuevoElemento' class="contenedorEdicionElemento" style="display:none;">

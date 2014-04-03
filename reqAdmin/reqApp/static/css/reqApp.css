@@ -134,6 +134,7 @@ vertical-align:top;
 .barra_orden
 {
 background-color:#D6D6D6;
+border-radius:5px;
 padding:5px;
 }
 
@@ -174,4 +175,17 @@ background-color:#3D8AF7;
 button.boton_azul:focus
 {
 border: 2px solid Black;
+}
+
+/* texto centrado */
+p.centrado
+{
+text-align:center;
+}
+
+/* mensajes para el usuario */
+.mensaje
+{
+background-color:#D4E3FC;
+padding:5px;
 }
