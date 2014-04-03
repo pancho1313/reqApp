@@ -24,8 +24,10 @@
     </div>
     <br/>
     <div>
-        <div style="display: inline-block;width:45%;vertical-align:top;">Fecha inicio: {{ elemento.fechaInicio }}</div>
-        <div style="display: inline-block;width:45%;vertical-align:top;">Fecha fin: {{ elemento.fechaFin }}</div>
+        <div style="display: inline-block;width:20%;">Fecha inicio: </div><div style="display: inline-block;">{{ elemento.fechaInicio }}</div>
+    </div>
+    <div>
+        <div style="display: inline-block;width:20%;">Fecha fin: </div><div style="display: inline-block;">{{ elemento.fechaFin }}</div>
     </div>
     
     <button class="boton_azul" onclick="editarElemento('{{ elemento.textoIdentificador }}')">Editar</button>
