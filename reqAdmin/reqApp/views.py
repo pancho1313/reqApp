@@ -214,9 +214,11 @@ def matrices(request):
     for fila in range(0,len(m1s)):
         filas.append([])
         for col in range(0,len(m2s)):
+            match = m1s[fila].matrixMatch(proyecto, m2s[col])
             filas[fila].append({
                 'fila':m1s[fila],
                 'col':m2s[col],
+                'match':match,
                 })
     
     context = {

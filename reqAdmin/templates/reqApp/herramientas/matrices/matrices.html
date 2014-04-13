@@ -10,7 +10,7 @@
 {% for fila in filas %}
     <br/>
     {% for col in fila %}
-        <button>{{col}}</button>
+        <button>{{col.fila}}|{{col.col}}|{{col.match}}</button>
     {% endfor %}
 {% endfor %}
 {% endblock %}
