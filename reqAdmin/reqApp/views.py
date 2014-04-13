@@ -2,7 +2,6 @@
 from django.shortcuts import render
 from reqApp.forms import *
 from reqApp.util import *
-
 from django.contrib.auth.models import User
 
 ################ Proyecto ################
@@ -176,20 +175,62 @@ def HerrView(request, navbar):
 
 def tareas(request):
     navbar = {'1':'herramientas', '2':'tareas'}
-    return docView(request, navbar)
+    return HerrView(request, navbar)
     
 def estadisticas(request):
     navbar = {'1':'herramientas', '2':'estadisticas'}
-    return docView(request, navbar)
+    return HerrView(request, navbar)
     
 def matrices(request):
+    MATRIZ_CHOICES = [
+        ("rurs", "RU/RS"),
+        ("mdrs", "MD/RS"),
+        ("rucp", "RU/CP"),
+        ("rscp", "RS/CP"),
+    ]
+
+    usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
+    proyecto = proyectoDeUsuario(usuario)
     navbar = {'1':'herramientas', '2':'matrices'}
-    return docView(request, navbar)
+    
+    tipo =  request.GET.get('tipo', 'rurs')
+    
+    if tipo == 'rurs':
+        model1 = RequisitoUsuario
+        model2 = RequisitoSoftware
+    elif tipo == 'mdrs':
+        model1 = Modulo
+        model2 = RequisitoSoftware
+    elif tipo == 'rucp':
+        model1 = RequisitoUsuario
+        model2 = CasoPrueba
+    elif tipo == 'rscp':
+        model1 = RequisitoSoftware
+        model2 = CasoPrueba
+    
+    m1s = model1.objects.vigentes(proyecto)
+    m2s = model2.objects.vigentes(proyecto)
+    filas = []
+    for fila in range(0,len(m1s)):
+        filas.append([])
+        for col in range(0,len(m2s)):
+            filas[fila].append({
+                'fila':m1s[fila],
+                'col':m2s[col],
+                })
+    
+    context = {
+        'navbar':navbar,
+        'filas':filas,
+        'MATRIZ_CHOICES':MATRIZ_CHOICES,
+        'tipo':tipo,
+    }
+    return render(request, 'reqApp/herramientas/matrices/matrices.html', context)
     
 def consistencia(request):
     navbar = {'1':'herramientas', '2':'consistencia'}
-    return docView(request, navbar)
+    return HerrView(request, navbar)
     
 def bitacora(request):
     navbar = {'1':'herramientas', '2':'bitacora'}
-    return docView(request, navbar)
+    return HerrView(request, navbar)

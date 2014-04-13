@@ -1,0 +1,16 @@
+{% extends "reqApp/base.html" %}
+{% block body %}
+
+<select onchange="location = this.options[this.selectedIndex].value;">
+    {% for key,val in MATRIZ_CHOICES %}
+        <option value="?tipo={{key}}"{% ifequal tipo key %}selected{% endifequal %}>{{val}}</option>
+    {% endfor %}
+</select>
+
+{% for fila in filas %}
+    <br/>
+    {% for col in fila %}
+        <button>{{col}}</button>
+    {% endfor %}
+{% endfor %}
+{% endblock %}
