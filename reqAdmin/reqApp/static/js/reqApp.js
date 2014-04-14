@@ -52,5 +52,5 @@ function cerrarTodos(){
 // mostrar elementos de fila y columna seleccionada en la matriz de trazado
 function mostrarElementosDeMatrizDeTrazado(elFila, elFilaEstado, elCol, elColEstado){
     document.getElementById('fila').innerHTML = "<b class="+elFilaEstado+">"+elFila+"</b>";
-    document.getElementById('columna').innerHTML = "<b class="+elColEstado+">"+elCol+"</b>";
+    document.getElementById('columna').innerHTML = "<b href='#' class="+elColEstado+">"+elCol+"</b>";
 }

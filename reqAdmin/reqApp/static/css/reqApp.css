@@ -259,3 +259,33 @@ div.matr_no_intersec:hover
 {
 background-color:#1464F6;
 }
+
+div.matr_fila
+{
+background-color:#F4EB49;
+border: 1px solid #D6D6D6;
+position: absolute;
+left: 100px;
+top: 100px; 
+width: 9px;
+height: 9px; 
+}
+div.matr_fila:hover
+{
+background-color:#1464F6;
+}
+
+div.matr_col
+{
+background-color:#4DD7FA;
+border: 1px solid #D6D6D6;
+position: absolute;
+left: 100px;
+top: 100px; 
+width: 9px;
+height: 9px; 
+}
+div.matr_col:hover
+{
+background-color:#1464F6;
+}
