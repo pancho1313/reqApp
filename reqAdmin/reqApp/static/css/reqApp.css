@@ -213,3 +213,37 @@ button.sublista:focus
 {
 text-decoration:underline;
 }
+
+/* botones de las matrices de trazado */
+div.matr_match
+{
+background-color:Black;
+border: 1px solid Gray;
+position: absolute;
+left: 100px;
+top: 100px; 
+width: 8px;
+height: 8px; 
+}
+
+div.matr_no_match
+{
+background-color:White;
+border: 1px solid Gray;
+position: absolute;
+left: 100px;
+top: 100px; 
+width: 8px;
+height: 8px; 
+}
+
+div.matr_no_intersec
+{
+background-color:Green;
+border: 1px solid Gray;
+position: absolute;
+left: 100px;
+top: 100px; 
+width: 8px;
+height: 8px; 
+}

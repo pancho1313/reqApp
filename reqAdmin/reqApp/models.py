@@ -208,9 +208,6 @@ class RequisitoUsuario(Requisito):
         
     def htmlTemplate(self):
         return 'reqApp/proyecto/RU/RU.html'
-        
-    def matrixMatch(self, proyecto, requisitoSoftware):
-        return len(RequisitoSoftware.objects.vigentes(proyecto).filter(id=requisitoSoftware.id).filter(requisitosUsuario=self))>0
     
 class RequisitoSoftware(Requisito):
     fuente = models.CharField(max_length=140)

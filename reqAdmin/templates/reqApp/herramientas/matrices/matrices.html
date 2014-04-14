@@ -8,9 +8,10 @@
 </select>
 
 {% for fila in filas %}
-    <br/>
-    {% for col in fila %}
-        <button>{{col.fila}}|{{col.col}}|{{col.match}}</button>
+    <div style="position:relative;">
+    {% for e in fila %}
+        <div style="left: {{e.col}}0px;top: {{e.fila}}0px; " class="{% if e.match %}matr_match{% elif e.no_intersec %}matr_no_intersec{% else %}matr_no_match{% endif %}" name="elemento_matriz" fila="{{e.fila}}" col="{{e.col}}"></div>
     {% endfor %}
+    </div>
 {% endfor %}
 {% endblock %}

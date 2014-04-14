@@ -181,6 +181,10 @@ def estadisticas(request):
     navbar = {'1':'herramientas', '2':'estadisticas'}
     return HerrView(request, navbar)
     
+def matrixMatch(elemento1, elemento2, proyecto):
+    
+    return len(RequisitoSoftware.objects.vigentes(proyecto).filter(id=requisitoSoftware.id).filter(requisitosUsuario=self))>0
+    
 def matrices(request):
     MATRIZ_CHOICES = [
         ("rurs", "RU/RS"),
@@ -196,29 +200,41 @@ def matrices(request):
     tipo =  request.GET.get('tipo', 'rurs')
     
     if tipo == 'rurs':
-        model1 = RequisitoUsuario
-        model2 = RequisitoSoftware
+        m1s = RequisitoUsuario.objects.vigentes(proyecto)
+        m2s = RequisitoSoftware.objects.vigentes(proyecto)
+        
+        m2idsmatchs = []
+        for fila in range(0,len(m1s)):
+            m2idsmatchs.append([])
+            for rs in m2s.filter(requisitosUsuario=m1s[fila]):
+                m2idsmatchs[fila].append(rs.id)
+                
+        colNoIntersec = []
+        for rs in m2s:
+            colNoIntersec.append(len(m1s.filter(requisitosoftware=rs))==0)
     elif tipo == 'mdrs':
-        model1 = Modulo
-        model2 = RequisitoSoftware
+        m1s = Modulo.objects.vigentes(proyecto)
+        m2s = RequisitoSoftware.objects.vigentes(proyecto)
     elif tipo == 'rucp':
-        model1 = RequisitoUsuario
-        model2 = CasoPrueba
+        m1s = RequisitoUsuario.objects.vigentes(proyecto)
+        m2s = CasoPrueba.objects.vigentes(proyecto)
     elif tipo == 'rscp':
-        model1 = RequisitoSoftware
-        model2 = CasoPrueba
-    
-    m1s = model1.objects.vigentes(proyecto)
-    m2s = model2.objects.vigentes(proyecto)
+        m1s = RequisitoSoftware.objects.vigentes(proyecto)
+        m2s = CasoPrueba.objects.vigentes(proyecto)
+        
     filas = []
     for fila in range(0,len(m1s)):
         filas.append([])
+        
         for col in range(0,len(m2s)):
-            match = m1s[fila].matrixMatch(proyecto, m2s[col])
+            match = m2s[col].id in m2idsmatchs[fila]
             filas[fila].append({
-                'fila':m1s[fila],
-                'col':m2s[col],
+                'elFila':m1s[fila],
+                'elCol':m2s[col],
+                'fila':fila,
+                'col':col,
                 'match':match,
+                'no_intersec':((len(m2idsmatchs[fila])==0)or(colNoIntersec[col])),
                 })
     
     context = {
