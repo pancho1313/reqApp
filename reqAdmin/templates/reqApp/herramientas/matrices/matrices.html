@@ -1,16 +1,23 @@
 {% extends "reqApp/base.html" %}
 {% block body %}
-
-<select onchange="location = this.options[this.selectedIndex].value;">
-    {% for key,val in MATRIZ_CHOICES %}
-        <option value="?tipo={{key}}"{% ifequal tipo key %}selected{% endifequal %}>{{val}}</option>
-    {% endfor %}
-</select>
-
+<br/>
+<div>
+    <div style="display: inline-block;width:60px;vertical-align:top;">
+        <select onchange="location = this.options[this.selectedIndex].value;">
+            {% for key,val in MATRIZ_CHOICES %}
+                <option value="?tipo={{key}}"{% ifequal tipo key %}selected{% endifequal %}>{{val}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div style="display: inline-block;width:auto;vertical-align:top;">
+        <div id='fila'></div>
+        <div id='columna'></div>
+    </div>
+</div>
 {% for fila in filas %}
     <div style="position:relative;">
     {% for e in fila %}
-        <div style="left: {{e.col}}0px;top: {{e.fila}}0px; " class="{% if e.match %}matr_match{% elif e.no_intersec %}matr_no_intersec{% else %}matr_no_match{% endif %}" name="elemento_matriz" fila="{{e.fila}}" col="{{e.col}}"></div>
+        <div style="left: {{e.col}}0px;top: {{e.fila}}0px; " class="{% if e.match %}matr_match{% elif e.no_intersec %}matr_no_intersec{% else %}matr_no_match{% endif %}" name="elemento_matriz" elFila="{{e.elFila.textoIdentificador}}" elCol="{{e.elCol.textoIdentificador}}" onClick="mostrarElementosDeMatrizDeTrazado('{{e.elFila}}','{{ e.elFila.estado }}', '{{e.elCol}}','{{ e.elCol.estado }}');"></div>
     {% endfor %}
     </div>
 {% endfor %}

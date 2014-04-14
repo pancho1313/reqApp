@@ -215,12 +215,42 @@ def matrices(request):
     elif tipo == 'mdrs':
         m1s = Modulo.objects.vigentes(proyecto)
         m2s = RequisitoSoftware.objects.vigentes(proyecto)
+        
+        m2idsmatchs = []
+        for fila in range(0,len(m1s)):
+            m2idsmatchs.append([])
+            for rs in m2s.filter(modulo=m1s[fila]):
+                m2idsmatchs[fila].append(rs.id)
+                
+        colNoIntersec = []
+        for rs in m2s:
+            colNoIntersec.append(len(m1s.filter(requisitosSoftware=rs))==0)
     elif tipo == 'rucp':
         m1s = RequisitoUsuario.objects.vigentes(proyecto)
         m2s = CasoPrueba.objects.vigentes(proyecto)
+        
+        m2idsmatchs = []
+        for fila in range(0,len(m1s)):
+            m2idsmatchs.append([])
+            for cp in m2s.filter(requisito=m1s[fila]):
+                m2idsmatchs[fila].append(cp.id)
+                
+        colNoIntersec = []
+        for cp in m2s:
+            colNoIntersec.append(len(m1s.filter(casoprueba=cp))==0)
     elif tipo == 'rscp':
         m1s = RequisitoSoftware.objects.vigentes(proyecto)
         m2s = CasoPrueba.objects.vigentes(proyecto)
+        
+        m2idsmatchs = []
+        for fila in range(0,len(m1s)):
+            m2idsmatchs.append([])
+            for cp in m2s.filter(requisito=m1s[fila]):
+                m2idsmatchs[fila].append(cp.id)
+                
+        colNoIntersec = []
+        for cp in m2s:
+            colNoIntersec.append(len(m1s.filter(casoprueba=cp))==0)
         
     filas = []
     for fila in range(0,len(m1s)):

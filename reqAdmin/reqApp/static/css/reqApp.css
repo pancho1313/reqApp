@@ -218,32 +218,44 @@ text-decoration:underline;
 div.matr_match
 {
 background-color:Black;
-border: 1px solid Gray;
+border: 1px solid #D6D6D6;
 position: absolute;
 left: 100px;
 top: 100px; 
-width: 8px;
-height: 8px; 
+width: 9px;
+height: 9px; 
+}
+div.matr_match:hover
+{
+background-color:#1464F6;
 }
 
 div.matr_no_match
 {
 background-color:White;
-border: 1px solid Gray;
+border: 1px solid #D6D6D6;
 position: absolute;
 left: 100px;
 top: 100px; 
-width: 8px;
-height: 8px; 
+width: 9px;
+height: 9px; 
+}
+div.matr_no_match:hover
+{
+background-color:#1464F6;
 }
 
 div.matr_no_intersec
 {
-background-color:Green;
-border: 1px solid Gray;
+background-color:#D6D6D6;
+border: 1px solid #D6D6D6;
 position: absolute;
 left: 100px;
 top: 100px; 
-width: 8px;
-height: 8px; 
+width: 9px;
+height: 9px; 
+}
+div.matr_no_intersec:hover
+{
+background-color:#1464F6;
 }
