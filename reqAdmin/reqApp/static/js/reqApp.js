@@ -54,3 +54,20 @@ function mostrarElementosDeMatrizDeTrazado(elFila, elFilaEstado, elCol, elColEst
     document.getElementById('fila').innerHTML = "<b class="+elFilaEstado+">"+elFila+"</b>";
     document.getElementById('columna').innerHTML = "<b href='#' class="+elColEstado+">"+elCol+"</b>";
 }
+
+// ajax para verificacion de formularios
+function validForm(form){
+    $.ajax({
+        url: "",
+        data: form.serialize() + "&solo_validar=1",
+        type: "POST",
+        success: function(data){
+            if(data.server_response == "OK"){
+                form.submit();
+            }else{
+                // TODO: recorrer el diccionario (key=input_name,val=error_message),
+                // pintar de rojo inputs con errores y mostrar los mensajes de error de cada input en un div de errores del formulario?
+            }
+       }
+    });
+}

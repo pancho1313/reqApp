@@ -3,6 +3,7 @@ from django.shortcuts import render
 from reqApp.forms import *
 from reqApp.util import *
 from django.contrib.auth.models import User
+from django.utils import simplejson
 
 ################ Proyecto ################
 
@@ -23,7 +24,13 @@ def elementView(request, mensajes, modelFormClass, formTemplate, modelClass, lis
                     form.actualizarElementoDeBitacora(usuario, identificador)
                     mensajes.append('elemento editado!')
                 else:
+                    m=form.errors.as_text
                     mensajes.append('datos inválidos!')
+                    mensajes.append(m)
+                    """
+                    response_dict = {'server_response': "OK" }
+                    return HttpResponse(simplejson.dumps(response_dict), mimetype='application/json')
+                    """
         else:# crear
             form = modelFormClass(request.POST)
             if form.is_valid():
