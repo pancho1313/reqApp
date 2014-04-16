@@ -63,10 +63,12 @@ function validForm(form){
         type: "POST",
         success: function(data){
             if(data.server_response == "OK"){
+                alert(data.server_response);
                 form.submit();
             }else{
                 // TODO: recorrer el diccionario (key=input_name,val=error_message),
                 // pintar de rojo inputs con errores y mostrar los mensajes de error de cada input en un div de errores del formulario?
+                alert(data.server_response);
             }
        }
     });

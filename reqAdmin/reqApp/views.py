@@ -20,10 +20,16 @@ def elementView(request, mensajes, modelFormClass, formTemplate, modelClass, lis
             else:# editar elemento
                 form = modelFormClass(instance=instance, data=request.POST)
                 if form.is_valid():
+                    if 'solo_validar' in request.POST:
+                        response_dict = {'server_response': "OK" }
+                        return HttpResponse(simplejson.dumps(response_dict), mimetype='application/json')
                     form.asignarProyecto(proyecto)
                     form.actualizarElementoDeBitacora(usuario, identificador)
                     mensajes.append('elemento editado!')
                 else:
+                    if 'solo_validar' in request.POST:
+                        response_dict = {'server_response': "FAIL" }
+                        return HttpResponse(simplejson.dumps(response_dict), mimetype='application/json')
                     m=form.errors.as_text
                     mensajes.append('datos inválidos!')
                     mensajes.append(m)
@@ -174,7 +180,7 @@ def docHistorico(request):
     return docView(request, navbar)
 
 ############################### Herramientas ##########################
-def HerrView(request, navbar):
+def herrView(request, navbar):
     context = {
         'navbar':navbar,
     }
@@ -182,11 +188,11 @@ def HerrView(request, navbar):
 
 def tareas(request):
     navbar = {'1':'herramientas', '2':'tareas'}
-    return HerrView(request, navbar)
+    return herrView(request, navbar)
     
 def estadisticas(request):
     navbar = {'1':'herramientas', '2':'estadisticas'}
-    return HerrView(request, navbar)
+    return herrView(request, navbar)
     
 def matrixMatch(elemento1, elemento2, proyecto):
     
@@ -284,8 +290,8 @@ def matrices(request):
     
 def consistencia(request):
     navbar = {'1':'herramientas', '2':'consistencia'}
-    return HerrView(request, navbar)
+    return herrView(request, navbar)
     
 def bitacora(request):
     navbar = {'1':'herramientas', '2':'bitacora'}
-    return HerrView(request, navbar)
+    return herrView(request, navbar)
