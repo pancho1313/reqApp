@@ -35,6 +35,10 @@ function editarNuevoElemento(){
 
 // borrar un elemento de lista
 function borrarElemento(identificador, csrf){
+    // confirmar accion
+    if(!confirm("¿Desea eliminarlo de la lista?"))
+        return;
+
     var params = new Array();
     params["csrfmiddlewaretoken"] = csrf;// '{{csrf_token}}'
     params["identificador"] = identificador;

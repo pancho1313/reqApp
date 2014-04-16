@@ -19,7 +19,7 @@ def elementView(request, mensajes, modelFormClass, formTemplate, modelClass, lis
             instance = modelClass.objects.vigente(proyecto, identificador)
             if 'borrar' in request.POST:# borrar elemento
                 instance.bitacorarElementoBorrado(usuario)
-                mensajes.append('elemento borrado!')
+                mensajes.append('elemento borrado y registrado en la bitácora')
             else:# editar elemento
                 form = modelFormClass(instance=instance, data=request.POST)
                 if form.is_valid():
@@ -28,7 +28,7 @@ def elementView(request, mensajes, modelFormClass, formTemplate, modelClass, lis
                         return HttpResponse(json.dumps(response_dict), content_type='application/json')
                     form.asignarProyecto(proyecto)
                     form.actualizarElementoDeBitacora(usuario, identificador)
-                    mensajes.append('elemento editado!')
+                    mensajes.append('elemento modificado y registrado en la bitácora')
                 else:
                     if request.POST.has_key("solo_validar"):
                         response_dict = {'server_response': "FAIL" }
@@ -45,7 +45,7 @@ def elementView(request, mensajes, modelFormClass, formTemplate, modelClass, lis
                     return HttpResponse(json.dumps(response_dict), content_type='application/json')
                 form.asignarProyecto(proyecto)
                 form.crearElementoDeBitacora(usuario)
-                mensajes.append('elemento creado!')
+                mensajes.append('elemento creado')
             else:
                 if request.POST.has_key("solo_validar"):
                     response_dict = {'server_response': "FAIL" }

@@ -1,21 +1,7 @@
-<form action="" method="post">
-	{% csrf_token %}
-    {% if identificador %}
-        <input type="hidden" name="identificador" value={{ identificador }}>
-    {% endif %}
-    <div>
-        {% if  textoIdentificador %}
-            <b>{{ textoIdentificador }}</b>
-        {% endif %}
-        
-        <div>Nombre: {{ form.nombre }}</div>
-        <div class="top">Descripción:</div> <div class="top">{{ form.descripcion }}</div>
-        <div>Cantidad: {{ form.cantidad }}</div>
-        <div class="top">Usuarios contactables: </div><div>{{ form.usuariosContactables }}</div>
-    </div>
-
-	<button class="boton_azul" type="submit">
-		Guardar
-	</button>
-</form>
-
+{% extends "reqApp/proyecto/element_form.html" %}
+{% block campos %}
+    <div>Nombre: {{ form.nombre }}</div>
+    <div class="top">Descripción:</div> <div class="top">{{ form.descripcion }}</div>
+    <div>Cantidad: {{ form.cantidad }}</div>
+    <div class="top">Usuarios contactables: </div><div>{{ form.usuariosContactables }}</div>
+{% endblock %}
