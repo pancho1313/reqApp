@@ -3,7 +3,10 @@ from django.shortcuts import render
 from reqApp.forms import *
 from reqApp.util import *
 from django.contrib.auth.models import User
-from django.utils import simplejson
+#from django.utils import simplejson
+import json
+
+from django.http import HttpResponse
 
 ################ Proyecto ################
 
@@ -20,16 +23,19 @@ def elementView(request, mensajes, modelFormClass, formTemplate, modelClass, lis
             else:# editar elemento
                 form = modelFormClass(instance=instance, data=request.POST)
                 if form.is_valid():
-                    if 'solo_validar' in request.POST:
+                    if request.POST.has_key("solo_validar"):
                         response_dict = {'server_response': "OK" }
-                        return HttpResponse(simplejson.dumps(response_dict), mimetype='application/json')
+                        return HttpResponse(json.dumps(response_dict), content_type='application/json')
                     form.asignarProyecto(proyecto)
                     form.actualizarElementoDeBitacora(usuario, identificador)
                     mensajes.append('elemento editado!')
                 else:
-                    if 'solo_validar' in request.POST:
+                    print "not valid!!"
+                    print request.POST
+                    if request.POST.has_key("solo_validar"):
+                        print "solo_validar"
                         response_dict = {'server_response': "FAIL" }
-                        return HttpResponse(simplejson.dumps(response_dict), mimetype='application/json')
+                        return HttpResponse(json.dumps(response_dict), content_type='application/json')
                     m=form.errors.as_text
                     mensajes.append('datos inválidos!')
                     mensajes.append(m)

@@ -56,15 +56,24 @@ function mostrarElementosDeMatrizDeTrazado(elFila, elFilaEstado, elCol, elColEst
 }
 
 // ajax para verificacion de formularios
-function validForm(form){
+function validForm(event,form){
+
+event = event || window.event // cross browser
+event.preventDefault(); // para evitar recargar la pagina completa
+
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "solo_validar";
+        input.value = "1";
+        form.appendChild(input);
     $.ajax({
         url: "",
-        data: form.serialize() + "&solo_validar=1",
+        data: $(form).serialize(),
         type: "POST",
         success: function(data){
             if(data.server_response == "OK"){
                 alert(data.server_response);
-                form.submit();
+                //form.submit();
             }else{
                 // TODO: recorrer el diccionario (key=input_name,val=error_message),
                 // pintar de rojo inputs con errores y mostrar los mensajes de error de cada input en un div de errores del formulario?
@@ -72,4 +81,6 @@ function validForm(form){
             }
        }
     });
+    
+    return false;
 }
