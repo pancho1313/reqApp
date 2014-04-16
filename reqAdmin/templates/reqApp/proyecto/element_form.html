@@ -1,0 +1,24 @@
+<form {% if textoIdentificador %}id="{{ textoIdentificador }}_form"{% else %}id='nuevoElemento'{% endif %} action="" method="post" class="contenedorEdicionElemento">
+	{% csrf_token %}
+    {% if identificador %}
+        <input type="hidden" name="identificador" value={{ identificador }}>
+    {% endif %}
+    
+    <div>
+        {% if  textoIdentificador %}
+            <b>{{ textoIdentificador }}</b>
+        {% endif %}
+        
+        {% block campos %}{% endblock %}
+        
+    </div>
+
+	<button class="boton_azul" type="submit" onclick="return validForm(event,this)">Guardar</button>
+	
+	{% if  textoIdentificador %}
+        <button class="boton_azul" type="button" onclick="cancelarEdicionElemento('{{ textoIdentificador }}')">Cancelar</button>
+	    <button class="boton_azul" type="button" onclick="borrarElemento({{ identificador }}, '{{csrf_token}}')" >Eliminar</button>
+	{% else %}
+    	<button class="boton_azul" type="button" onclick="cancelarNuevoElemento()">Cancelar</button>
+	{% endif %}
+</form>

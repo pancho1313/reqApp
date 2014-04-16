@@ -1,23 +1,42 @@
-<form action="" method="post">
-	{% csrf_token %}
-    {% if identificador %}
-        <input type="hidden" name="identificador" value={{ identificador }}>
-    {% endif %}
-    <div>
-        {% if  textoIdentificador %}
-            <b>{{ textoIdentificador }}</b>
+{% extends "reqApp/proyecto/element_form.html" %}
+{% block campos %}
+    <div>Nombre: {{ form.nombre }}</div>
+    <div>Requisito asociado: {{ form.requisito }}</div>
+    <div class="top">Descripción:</div> <div class="top">{{ form.descripcion }}</div>
+    <div><div class="top">Resultado aceptable:</div><div class="top">{{ form.resultadoAceptable }}</div></div>
+    <div><div class="top">Resultado óptimo:</div><div class="top">{{ form.resultadoOptimo }}</div></div>
+    <div><div class="top">Usuarios asociados: </div><div class="top">{{ form.tiposUsuario }}</div>(presionar "Ctrl" para seleccionar)</div>
+    <div>Estado: {{ form.estado }}</div>
+{% endblock %}
+
+
+{% comment %}
+    <form {% if textoIdentificador %}id="{{ textoIdentificador }}_form"{% else %}id='nuevoElemento'{% endif %} action="" method="post" class="contenedorEdicionElemento">
+	    {% csrf_token %}
+        {% if identificador %}
+            <input type="hidden" name="identificador" value={{ identificador }}>
         {% endif %}
-        <div>Nombre: {{ form.nombre }}</div>
-        <div>Requisito asociado: {{ form.requisito }}</div>
-        <div class="top">Descripción:</div> <div class="top">{{ form.descripcion }}</div>
-        <div><div class="top">Resultado aceptable:</div><div class="top">{{ form.resultadoAceptable }}</div></div>
-        <div><div class="top">Resultado óptimo:</div><div class="top">{{ form.resultadoOptimo }}</div></div>
-        <div><div class="top">Usuarios asociados: </div><div class="top">{{ form.tiposUsuario }}</div>(presionar "Ctrl" para seleccionar)</div>
-        <div>Estado: {{ form.estado }}</div>
-    </div>
+        
+        <div>
+            {% if  textoIdentificador %}
+                <b>{{ textoIdentificador }}</b>
+            {% endif %}
+            <div>Nombre: {{ form.nombre }}</div>
+            <div>Requisito asociado: {{ form.requisito }}</div>
+            <div class="top">Descripción:</div> <div class="top">{{ form.descripcion }}</div>
+            <div><div class="top">Resultado aceptable:</div><div class="top">{{ form.resultadoAceptable }}</div></div>
+            <div><div class="top">Resultado óptimo:</div><div class="top">{{ form.resultadoOptimo }}</div></div>
+            <div><div class="top">Usuarios asociados: </div><div class="top">{{ form.tiposUsuario }}</div>(presionar "Ctrl" para seleccionar)</div>
+            <div>Estado: {{ form.estado }}</div>
+        </div>
 
-	<button class="boton_azul" type="submit" onclick="return validForm(event,this.form)">
-		Guardar
-	</button>
-</form>
-
+	    <button class="boton_azul" type="submit" onclick="return validForm(event,this)">Guardar</button>
+	
+	    {% if  textoIdentificador %}
+            <button class="boton_azul" type="button" onclick="cancelarEdicionElemento('{{ textoIdentificador }}')">Cancelar</button>
+	        <button class="boton_azul" type="button" onclick="borrarElemento({{ identificador }}, '{{csrf_token}}')" >Eliminar</button>
+	    {% else %}
+        	<button class="boton_azul" type="button" onclick="cancelarNuevoElemento()">Cancelar</button>
+	    {% endif %}
+    </form>
+{% endcomment %}

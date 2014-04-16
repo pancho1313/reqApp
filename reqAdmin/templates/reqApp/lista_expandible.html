@@ -25,22 +25,19 @@
             <div id="{{ e.elemento.textoIdentificador }}">
                 {% include e.template with elemento=e.elemento %}
             </div>
-            <div id="{{ e.elemento.textoIdentificador }}_form" class="contenedorEdicionElemento" style="display:none;">
+            {% if form_template %}
                 {% include form_template with form=e.form identificador=e.elemento.identificador textoIdentificador=e.elemento.textoIdentificador %}
-                {% include borrar_form with identificador=e.elemento.identificador %}
-                <button class="boton_azul" onclick="cancelarEdicionElemento('{{ e.elemento.textoIdentificador }}')">Cancelar</button>
-            </div>
+            {% endif %}
         </div>
     {% endfor %}
 {% endifequal %}
 
-
-<div id='nuevoElemento' class="contenedorEdicionElemento" style="display:none;">
-    <a name='nuevo'></a>
-    <p>Nuevo:</p>
-    {% include form_template with form=form %}
-    <button class="boton_azul" onclick="cancelarNuevoElemento()">Cancelar</button>
-</div>
+{% if form_template %}
+    <div>
+        <a name='nuevo'></a>
+        {% include form_template with form=form %}
+    </div>
+{% endif %}
 
 {% comment %}
     {% include form_template with form=form %}

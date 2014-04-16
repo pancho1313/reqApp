@@ -30,26 +30,26 @@ def elementView(request, mensajes, modelFormClass, formTemplate, modelClass, lis
                     form.actualizarElementoDeBitacora(usuario, identificador)
                     mensajes.append('elemento editado!')
                 else:
-                    print "not valid!!"
-                    print request.POST
                     if request.POST.has_key("solo_validar"):
-                        print "solo_validar"
                         response_dict = {'server_response': "FAIL" }
                         return HttpResponse(json.dumps(response_dict), content_type='application/json')
                     m=form.errors.as_text
                     mensajes.append('datos inválidos!')
                     mensajes.append(m)
-                    """
-                    response_dict = {'server_response': "OK" }
-                    return HttpResponse(simplejson.dumps(response_dict), mimetype='application/json')
-                    """
         else:# crear
             form = modelFormClass(request.POST)
             if form.is_valid():
+                print request.POST
+                if request.POST.has_key("solo_validar"):
+                    response_dict = {'server_response': "OK" }
+                    return HttpResponse(json.dumps(response_dict), content_type='application/json')
                 form.asignarProyecto(proyecto)
                 form.crearElementoDeBitacora(usuario)
                 mensajes.append('elemento creado!')
             else:
+                if request.POST.has_key("solo_validar"):
+                    response_dict = {'server_response': "FAIL" }
+                    return HttpResponse(json.dumps(response_dict), content_type='application/json')
                 mensajes.append('datos inválidos!')
     
     ordenActual = 'identificador'
@@ -67,8 +67,7 @@ def elementView(request, mensajes, modelFormClass, formTemplate, modelClass, lis
         'mensajes': mensajes,
         'elementos': listaElementos,
         'form': modelFormClass().asignarProyecto(proyecto),
-        'form_template': formTemplate,
-        'borrar_form': 'reqApp/delete_element_form.html',
+        'form_template': formTemplate,# TODO: enviar solo si el usuario tiene permisos de edicion
         'barra_orden_elementos': 'reqApp/orden_elementos.html',
         'atributos_ordenables': listaAtributos,
         'orden_actual': ordenActual,
