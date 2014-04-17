@@ -21,7 +21,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     
     # un usuario debe escoger el proyecto que desea ver (en el caso de tener mas de uno asociado)
-    proyectos = models.ManyToManyField(Proyecto, null=True)
+    proyectos = models.ManyToManyField(Proyecto, null=True, blank=True)
     
 def profile(sender, **kwargs):
     if kwargs.get('created', False):
@@ -138,7 +138,7 @@ class Hito(Bitacora):
         return 'reqApp/proyecto/HT/HT.html'
     
 class TipoUsuario(Bitacora):
-    cantidad = models.PositiveIntegerField(default=1, blank=True)
+    cantidad = models.PositiveIntegerField(default=1)
     usuariosContactables = models.CharField(max_length=200, default='', blank=True) # TODO en realidad es mejor una lista
     
     objects = BitacoraManager()
@@ -170,7 +170,7 @@ class Requisito(Bitacora):
     
 class RequisitoUsuario(Requisito):
     fuente = models.CharField(max_length=140, blank=True)
-    costo = models.IntegerField(default=0, blank=True)
+    costo = models.IntegerField(default=0)
     
     estabilidad = models.CharField(max_length=30, choices=ESTABILIDAD_CHOICES)
     tipo = models.CharField(max_length=30, choices=TIPO_RU_CHOICES)
@@ -203,7 +203,7 @@ class RequisitoUsuario(Requisito):
     
 class RequisitoSoftware(Requisito):
     fuente = models.CharField(max_length=140)
-    costo = models.IntegerField(default=0, blank=True)
+    costo = models.IntegerField(default=0)
     
     estabilidad = models.CharField(max_length=30, choices=ESTABILIDAD_CHOICES)
     tipo = models.CharField(max_length=30, choices=TIPO_RS_CHOICES)
@@ -245,8 +245,6 @@ class CasoPrueba(Bitacora):
     
     tiposUsuario = models.ManyToManyField(TipoUsuario, null=True, blank=True)
     requisito = models.ForeignKey(Requisito, null=False, blank=False)
-    #requisitoSoftware = models.ForeignKey(RequisitoSoftware, null=True, blank=True)
-    #requisitoUsuario = models.ForeignKey(RequisitoUsuario, null=True, blank=True)
     
     objects = BitacoraManager()
     
@@ -270,7 +268,7 @@ class CasoPrueba(Bitacora):
         return 'reqApp/proyecto/CP/CP.html'
         
 class Modulo(Bitacora):
-    costo = models.IntegerField(default=0, blank=True)
+    costo = models.IntegerField(default=0)
     
     prioridad = models.CharField(max_length=30, choices=PRIORIDAD_CHOICES)
     
