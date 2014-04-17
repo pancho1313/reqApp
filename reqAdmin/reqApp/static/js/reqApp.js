@@ -71,7 +71,6 @@ function mostrarElementosDeMatrizDeTrazado(elFila, elFilaEstado, elCol, elColEst
 
 // ajax para verificacion de formularios
 function validForm(event,button){
-    // TODO: agregar confirm box (OK, Cancelar)?
     var form = button.form;
     button.disabled = true; // deshabilitar el boton submit
 
@@ -82,7 +81,7 @@ function validForm(event,button){
     var input = document.createElement("input");
     input.type = "hidden";
     input.name = "solo_validar";
-    input.value = "1";
+    input.value = '1';
     form.appendChild(input);
     
     $.ajax({
@@ -97,10 +96,20 @@ function validForm(event,button){
                 // enviar formulario
                 form.submit();
             }else{
-                // TODO: recorrer el diccionario (key=input_name,val=error_message),
-                // pintar de rojo inputs con errores y mostrar los mensajes de error de cada input en un div de errores del formulario?
-                alert(data.server_response);
+                // remover marca ajax
+                form.removeChild(input);
                 button.disabled = false;// habilitar el boton submit para corregir errores
+                // mostrar errores
+                for(var e = 0; e < data.errores.length; e++){
+                    input_name = data.errores[e][0];
+                    input_error = data.errores[e][1];
+                    var campo = form.elements[input_name];
+                    if(campo!=undefined){
+                        campo.className += " invalido";
+                        var newInput = $("<div style='color:Red'>"+input_error+"</div>");
+                        $(campo).before(newInput);
+                    }
+                }
             }
        }
     });

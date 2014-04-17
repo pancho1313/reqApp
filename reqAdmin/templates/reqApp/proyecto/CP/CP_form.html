@@ -1,10 +1,10 @@
 {% extends "reqApp/proyecto/element_form.html" %}
 {% block campos %}
-    <div>Nombre: {{ form.nombre }}</div>
-    <div>Requisito asociado: {{ form.requisito }}</div>
-    <div class="top">Descripción:</div> <div class="top">{{ form.descripcion }}</div>
-    <div><div class="top">Resultado aceptable:</div><div class="top">{{ form.resultadoAceptable }}</div></div>
-    <div><div class="top">Resultado óptimo:</div><div class="top">{{ form.resultadoOptimo }}</div></div>
+    <div>*Nombre: {{ form.nombre }}</div>
+    <div>*Requisito asociado: {{ form.requisito }}</div>
+    <div class="top">*Descripción:</div> <div class="top">{{ form.descripcion }}</div>
+    <div><div class="top">*Resultado aceptable:</div><div class="top">{{ form.resultadoAceptable }}</div></div>
+    <div><div class="top">*Resultado óptimo:</div><div class="top">{{ form.resultadoOptimo }}</div></div>
     <div><div class="top">Usuarios asociados: </div><div class="top">{{ form.tiposUsuario }}</div>(presionar "Ctrl" para seleccionar)</div>
-    <div>Estado: {{ form.estado }}</div>
+    <div>*Estado: {{ form.estado }}</div>
 {% endblock %}

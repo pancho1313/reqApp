@@ -85,10 +85,16 @@ padding:10px;
 /* contenedor edicion de elemento */
 .contenedorEdicionElemento
 {
-border:1px dashed #D6D6D6;
-border-radius:5px;
 padding:5px;
 display:none;
+}
+
+/* contenedor de nuevo elemento de lista */
+.contenedorNuevoElemento form
+{
+border:2px dashed #D6D6D6;
+border-radius:5px;
+padding:10px;
 }
 
 /*display: inline-block;*/
@@ -259,4 +265,10 @@ height: 9px;
 div.matr_no_intersec:hover
 {
 background-color:#1464F6;
+}
+
+/* input invalido */
+.invalido
+{
+background-color: #ffdddd;
 }

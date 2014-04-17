@@ -10,6 +10,19 @@ from django.http import HttpResponse
 
 ################ Proyecto ################
 
+def ajax_form_valid(form, validado):
+    # para validar a traves de ajax
+    if validado:
+        response_dict = {'server_response': "OK" }
+        return HttpResponse(json.dumps(response_dict), content_type='application/json')    
+    else:
+        errores = []
+        for campo, errors in form.errors.items():
+            for error in errors:
+                errores.append([campo,error])
+        response_dict = {'server_response': "FAIL", 'errores':errores}
+        return HttpResponse(json.dumps(response_dict), content_type='application/json')
+
 def elementView(request, mensajes, modelFormClass, formTemplate, modelClass, listaAtributos, navbar):
     usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
     proyecto = proyectoDeUsuario(usuario)
@@ -24,32 +37,27 @@ def elementView(request, mensajes, modelFormClass, formTemplate, modelClass, lis
                 form = modelFormClass(instance=instance, data=request.POST)
                 if form.is_valid():
                     if request.POST.has_key("solo_validar"):
-                        response_dict = {'server_response': "OK" }
-                        return HttpResponse(json.dumps(response_dict), content_type='application/json')
+                        return ajax_form_valid(form, True)
                     form.asignarProyecto(proyecto)
                     form.actualizarElementoDeBitacora(usuario, identificador)
                     mensajes.append('elemento modificado y registrado en la bitácora')
                 else:
                     if request.POST.has_key("solo_validar"):
-                        response_dict = {'server_response': "FAIL" }
-                        return HttpResponse(json.dumps(response_dict), content_type='application/json')
+                        return ajax_form_valid(form, False)
                     m=form.errors.as_text
                     mensajes.append('datos inválidos!')
                     mensajes.append(m)
         else:# crear
             form = modelFormClass(request.POST)
             if form.is_valid():
-                print request.POST
                 if request.POST.has_key("solo_validar"):
-                    response_dict = {'server_response': "OK" }
-                    return HttpResponse(json.dumps(response_dict), content_type='application/json')
+                    return ajax_form_valid(form, True)
                 form.asignarProyecto(proyecto)
                 form.crearElementoDeBitacora(usuario)
                 mensajes.append('elemento creado')
             else:
                 if request.POST.has_key("solo_validar"):
-                    response_dict = {'server_response': "FAIL" }
-                    return HttpResponse(json.dumps(response_dict), content_type='application/json')
+                    return ajax_form_valid(form, False)
                 mensajes.append('datos inválidos!')
     
     ordenActual = 'identificador'

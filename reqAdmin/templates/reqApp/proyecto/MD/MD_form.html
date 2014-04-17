@@ -1,8 +1,8 @@
 {% extends "reqApp/proyecto/element_form.html" %}
 {% block campos %}
-    <div>Nombre: {{ form.nombre }}</div>
+    <div>*Nombre: {{ form.nombre }}</div>
     <div class="top">Descripción:</div> <div class="top">{{ form.descripcion }}</div>
     <div><div class="top">RS asociados: </div><div class="top">{{ form.requisitosSoftware }}</div>(presionar "Ctrl" para seleccionar)</div>
-    <div>Prioridad: {{ form.prioridad }}</div>
+    <div>*Prioridad: {{ form.prioridad }}</div>
     <div>Costo: {{ form.costo }}</div>
 {% endblock %}

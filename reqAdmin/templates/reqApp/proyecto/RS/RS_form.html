@@ -1,14 +1,14 @@
 {% extends "reqApp/proyecto/element_form.html" %}
 {% block campos %}
-    <div>Nombre: {{ form.nombre }}</div>
-    <div class="top">Descripción:</div> <div class="top">{{ form.descripcion }}</div>
-    <div>Hito: {{ form.hito }}</div>
+    <div>*Nombre: {{ form.nombre }}</div>
+    <div class="top">*Descripción:</div> <div class="top">{{ form.descripcion }}</div>
+    <div>*Hito: {{ form.hito }}</div>
     <div><div class="top">RU asociados: </div><div class="top">{{ form.requisitosUsuario }}</div>(presionar "Ctrl" para seleccionar)</div>
     <div><div class="top">Usuarios asociados: </div><div class="top">{{ form.tiposUsuario }}</div>(presionar "Ctrl" para seleccionar)</div>
-    <div>Prioridad: {{ form.prioridad }}</div>
-    <div>Estabilidad: {{ form.estabilidad }}</div>
-    <div>Tipo: {{ form.tipo }}</div>
-    <div>Fuente: {{ form.fuente }}</div>
-    <div>Estado: {{ form.estado }}</div>
+    <div>*Prioridad: {{ form.prioridad }}</div>
+    <div>*Estabilidad: {{ form.estabilidad }}</div>
+    <div>*Tipo: {{ form.tipo }}</div>
+    <div>*Fuente: {{ form.fuente }}</div>
+    <div>*Estado: {{ form.estado }}</div>
     <div>Costo: {{ form.costo }}</div>
 {% endblock %}

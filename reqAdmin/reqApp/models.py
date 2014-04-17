@@ -124,14 +124,6 @@ class Bitacora(models.Model):
         
         # guardar en base de datos
         self.bitacorarElemento(usuario)
-    """
-    def campos(self):
-        return [
-            self.identificador,
-            self.nombre,
-            self.descripcion,
-        ]
-    """
 
 class Hito(Bitacora):
     fechaInicio = models.DateTimeField(default=timezone.now)
@@ -146,8 +138,8 @@ class Hito(Bitacora):
         return 'reqApp/proyecto/HT/HT.html'
     
 class TipoUsuario(Bitacora):
-    cantidad = models.PositiveIntegerField(default=1)
-    usuariosContactables = models.CharField(max_length=200) # TODO en realidad es mejor una lista
+    cantidad = models.PositiveIntegerField(default=1, blank=True)
+    usuariosContactables = models.CharField(max_length=200, default='', blank=True) # TODO en realidad es mejor una lista
     
     objects = BitacoraManager()
     
