@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 import json
 
 from django.http import HttpResponse
+from django.http import Http404
 
 ################ Proyecto ################
 
@@ -306,5 +307,62 @@ def consistencia(request):
     return herrView(request, navbar)
     
 def bitacora(request):
+    TIPOS_CHOICES = [
+        ("ht", "Hitos"),
+        ("tu", "Tipos de Usuario"),
+        ("ru", "Requisitos de Usuario"),
+        ("rs", "Requisitos de Software"),
+        ("md", "Módulos"),
+        ("cp", "Casos de Prueba"),
+    ]
+    IDENTIFICADOR_CHOICES = [
+        (0, "Todos"),
+    ]
+    models = {
+        "ht": Hito,
+        "tu": TipoUsuario,
+        "ru": RequisitoUsuario,
+        "rs": RequisitoSoftware,
+        "md": Modulo,
+        "cp": CasoPrueba,
+    }
+    
+    usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
+    proyecto = proyectoDeUsuario(usuario)
     navbar = {'1':'herramientas', '2':'bitacora'}
-    return herrView(request, navbar)
+    
+    if request.method == 'GET':
+        tipo =  request.GET.get('tipo', 'ru')
+        
+        identificador = int(request.GET.get('identificador', 0))
+        
+        # generar el listado de textos identificadores de elementos del tipo seleccionado
+        identificadoresDict = {}
+        elementos = models[tipo].objects.bitacorados(proyecto)
+        for elemento in reversed(elementos):
+            # el nombre correspondiente al identificador es el más reciente
+            identificadoresDict.update({elemento.identificador: elemento.textoIdentificador()+" "+elemento.nombre})
+        
+        for key in sorted(identificadoresDict):
+            IDENTIFICADOR_CHOICES.append((key, identificadoresDict[key]))
+            
+        if identificador > 0:
+            # mostrar la evolucion del elemento con ese identificador
+            elementos = models[tipo].objects.bitacorados(proyecto, identificador)
+        
+        # generar la lista de elementos
+        listaElementos = []
+        for elemento in elementos:
+            listaElementos.append({'elemento':elemento, 'template':elemento.htmlTemplate(), 'actual':False, 'borrado':False})
+    else:
+        raise Http404
+    
+    context = {
+        'navbar':navbar,
+        'elementos':listaElementos,
+        'TIPOS_CHOICES':TIPOS_CHOICES,
+        'IDENTIFICADOR_CHOICES':IDENTIFICADOR_CHOICES,
+        'tipo':tipo,
+        'identificador':identificador,
+    }
+    return render(request, 'reqApp/herramientas/bitacora/bitacora.html', context)

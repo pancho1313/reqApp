@@ -40,6 +40,14 @@ class BitacoraManager(models.Manager):
         return super(BitacoraManager, self).get_queryset().filter(proyecto=proyecto)
         
     """
+    def bitacorados(self, proyecto, identificador=None):
+        if identificador ==  None:
+            # todos los registros ordenados descendentemente por fecha
+            return self.model.objects.filter(proyecto=proyecto).order_by('-fecha')
+        else:
+            # todos los registros ordenados descendentemente por fecha
+            return self.model.objects.filter(proyecto=proyecto).filter(identificador=identificador).order_by('-fecha')
+    
     def vigentes(self, proyecto, order='identificador'):
         return self.model.objects.filter(proyecto=proyecto).filter(vigencia=True).order_by(order)
         
@@ -54,7 +62,7 @@ class BitacoraManager(models.Manager):
         elementos = self.model.objects.all().filter(proyecto=proyecto)
         
         if elementos.count() > 0:
-            return elementos.aggregate(Max('identificador'))['identificador__max'] + 1
+            return elementos.aggregate(Max('identificador'))['identificador__max'] + 1 # TODO: esto tiene problemas de concurrencia!
         return 1
 
 class Bitacora(models.Model):
@@ -85,12 +93,21 @@ class Bitacora(models.Model):
             print "ERROR"
         # https://docs.djangoproject.com/en/1.6/topics/db/queries/#copying-model-instances
         m2mVigentes = elementoPrevio.m2mVigentes()
-        elementoPrevio.id = None # para luego crear un registro nuevo en la bitacora
-        elementoPrevio.pk = None # para luego crear un registro nuevo en la bitacora
-        elementoPrevio.save() # obtener nuevo id para el nuevo registro
+        
+        if self.__class__ == RequisitoUsuario or self.__class__ == RequisitoSoftware:
+            # esto fue necesario para obtener un nuevo ID y PK dado el modelo de herencia de los requisitos
+            elementoPrevio = elementoPrevio.dummyCopy()
+        else:
+            elementoPrevio.pk = None # para luego crear un registro nuevo en la bitacora
+            elementoPrevio.id = None # para luego crear un registro nuevo en la bitacora
+            elementoPrevio.save() # obtener nuevo id para el nuevo registro
+            
         elementoPrevio.copiarM2MVigentes(m2mVigentes)
         elementoPrevio.vigencia = False
         elementoPrevio.save() # guardar el estado del elemento previo
+        
+        
+        print "class=",self.__class__,"bitacorarCopiaDeElemento.id,pk=",elementoPrevio.id,elementoPrevio.pk
     
     def bitacorarElemento(self, usuario):
         #registrar usuario responsable
@@ -101,6 +118,7 @@ class Bitacora(models.Model):
         
         # guardar en base de datos
         self.save()
+        print "bitacorarElemento.id,pk=",self.id,self.pk
      
     def bitacorarNuevoElemento(self, proyecto, usuario):
         # identificador nuevo
@@ -200,6 +218,30 @@ class RequisitoUsuario(Requisito):
         
     def htmlTemplate(self):
         return 'reqApp/proyecto/RU/RU.html'
+        
+    def dummyCopy(self):
+        # crea un registro nuevo en base a self, necesario para bitacorarCopiaDeElemento()
+        dummy = RequisitoUsuario()
+        
+        dummy.nombre = self.nombre
+        dummy.identificador = self.identificador
+        dummy.descripcion = self.descripcion
+        dummy.proyecto = self.proyecto
+        dummy.fecha = self.fecha
+        dummy.usuario = self.usuario
+        dummy.vigencia = False
+        
+        dummy.fuente = self.fuente
+        dummy.costo = self.costo
+        dummy.estabilidad = self.estabilidad
+        dummy.tipo = self.tipo
+        dummy.prioridad = self.prioridad
+        dummy.estado = self.estado
+        dummy.hito = self.hito
+        
+        dummy.save()
+        
+        return dummy
     
 class RequisitoSoftware(Requisito):
     fuente = models.CharField(max_length=140)
@@ -236,6 +278,30 @@ class RequisitoSoftware(Requisito):
         
     def htmlTemplate(self):
         return 'reqApp/proyecto/RS/RS.html'
+        
+    def dummyCopy(self):
+        # crea un registro nuevo en base a self, necesario para bitacorarCopiaDeElemento()
+        dummy = RequisitoSoftware()
+        
+        dummy.nombre = self.nombre
+        dummy.identificador = self.identificador
+        dummy.descripcion = self.descripcion
+        dummy.proyecto = self.proyecto
+        dummy.fecha = self.fecha
+        dummy.usuario = self.usuario
+        dummy.vigencia = False
+        
+        dummy.fuente = self.fuente
+        dummy.costo = self.costo
+        dummy.estabilidad = self.estabilidad
+        dummy.tipo = self.tipo
+        dummy.prioridad = self.prioridad
+        dummy.estado = self.estado
+        dummy.hito = self.hito
+        
+        dummy.save()
+        
+        return dummy
 
 class CasoPrueba(Bitacora):
     resultadoAceptable = models.CharField(max_length=140)
