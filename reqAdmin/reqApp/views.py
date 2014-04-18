@@ -24,7 +24,7 @@ def ajax_form_valid(form, validado):
         response_dict = {'server_response': "FAIL", 'errores':errores}
         return HttpResponse(json.dumps(response_dict), content_type='application/json')
 
-def elementView(request, mensajes, modelFormClass, formTemplate, modelClass, listaAtributos, navbar):
+def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate, modelClass, listaAtributos, navbar):
     usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
     proyecto = proyectoDeUsuario(usuario)
     if request.method == 'POST':
@@ -70,11 +70,12 @@ def elementView(request, mensajes, modelFormClass, formTemplate, modelClass, lis
     
     listaElementos = []
     for elemento in elementos:
-        listaElementos.append({'elemento':elemento, 'template':elemento.htmlTemplate(), 'form':modelFormClass(instance=elemento).asignarProyecto(elemento.proyecto)})
+        listaElementos.append({'elemento':elemento, 'form':modelFormClass(instance=elemento).asignarProyecto(elemento.proyecto)})
     
     context = {
         'mensajes': mensajes,
         'elementos': listaElementos,
+        'template':elementTemplate,
         'form': modelFormClass().asignarProyecto(proyecto),
         'form_template': formTemplate,# TODO: enviar solo si el usuario tiene permisos de edicion
         'barra_orden_elementos': 'reqApp/orden_elementos.html',
@@ -94,7 +95,7 @@ def viewTU(request):
     
     navbar = {'1':'proyecto', '2':'TU'}
     
-    return elementView(request, mensajes, TUForm, 'reqApp/proyecto/TU/TU_form.html', TipoUsuario, listaAtributos, navbar)
+    return elementView(request, mensajes, TUForm, 'reqApp/proyecto/TU/TU.html', 'reqApp/proyecto/TU/TU_form.html', TipoUsuario, listaAtributos, navbar)
 
 def viewRU(request):
     mensajes = []
@@ -111,7 +112,7 @@ def viewRU(request):
     
     navbar = {'1':'proyecto', '2':'RU'}
     
-    return elementView(request, mensajes, RUForm, 'reqApp/proyecto/RU/RU_form.html', RequisitoUsuario, listaAtributos, navbar)
+    return elementView(request, mensajes, RUForm, 'reqApp/proyecto/RU/RU.html', 'reqApp/proyecto/RU/RU_form.html', RequisitoUsuario, listaAtributos, navbar)
 
 def viewRS(request):
     mensajes = []
@@ -128,7 +129,7 @@ def viewRS(request):
     
     navbar = {'1':'proyecto', '2':'RS'}
     
-    return elementView(request, mensajes, RSForm, 'reqApp/proyecto/RS/RS_form.html', RequisitoSoftware, listaAtributos, navbar)
+    return elementView(request, mensajes, RSForm, 'reqApp/proyecto/RS/RS.html', 'reqApp/proyecto/RS/RS_form.html', RequisitoSoftware, listaAtributos, navbar)
 
 def viewMD(request):
     mensajes = []
@@ -142,7 +143,7 @@ def viewMD(request):
     
     navbar = {'1':'proyecto', '2':'MD'}
     
-    return elementView(request, mensajes, MDForm, 'reqApp/proyecto/MD/MD_form.html', Modulo, listaAtributos, navbar)
+    return elementView(request, mensajes, MDForm, 'reqApp/proyecto/MD/MD.html', 'reqApp/proyecto/MD/MD_form.html', Modulo, listaAtributos, navbar)
 
 def viewCP(request):
     mensajes = []    
@@ -156,7 +157,7 @@ def viewCP(request):
     
     navbar = {'1':'proyecto', '2':'CP'}
     
-    return elementView(request, mensajes, CPForm, 'reqApp/proyecto/CP/CP_form.html', CasoPrueba, listaAtributos, navbar)
+    return elementView(request, mensajes, CPForm, 'reqApp/proyecto/CP/CP.html', 'reqApp/proyecto/CP/CP_form.html', CasoPrueba, listaAtributos, navbar)
     
 def viewHT(request):
     mensajes = []    
@@ -168,7 +169,7 @@ def viewHT(request):
     
     navbar = {'1':'proyecto', '2':'HT'}
     
-    return elementView(request, mensajes, HTForm, 'reqApp/proyecto/HT/HT_form.html', Hito, listaAtributos, navbar)
+    return elementView(request, mensajes, HTForm, 'reqApp/proyecto/HT/HT.html', 'reqApp/proyecto/HT/HT_form.html', Hito, listaAtributos, navbar)
     
 ################################# Documentos #############################
 def docView(request, navbar):
@@ -326,6 +327,14 @@ def bitacora(request):
         "md": Modulo,
         "cp": CasoPrueba,
     }
+    templates = {
+        "ht": 'reqApp/proyecto/HT/HT.html',
+        "tu": 'reqApp/proyecto/TU/TU.html',
+        "ru": 'reqApp/proyecto/RU/RU.html',
+        "rs": 'reqApp/proyecto/RS/RS.html',
+        "md": 'reqApp/proyecto/MD/MD.html',
+        "cp": 'reqApp/proyecto/CP/CP.html',    
+    }
     
     usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
     proyecto = proyectoDeUsuario(usuario)
@@ -353,13 +362,14 @@ def bitacora(request):
         # generar la lista de elementos
         listaElementos = []
         for elemento in elementos:
-            listaElementos.append({'elemento':elemento, 'template':elemento.htmlTemplate(), 'actual':False, 'borrado':False})
+            listaElementos.append({'elemento':elemento, 'borrado':False})
     else:
         raise Http404
     
     context = {
         'navbar':navbar,
         'elementos':listaElementos,
+        'template':templates[tipo],
         'TIPOS_CHOICES':TIPOS_CHOICES,
         'IDENTIFICADOR_CHOICES':IDENTIFICADOR_CHOICES,
         'tipo':tipo,

@@ -23,7 +23,7 @@
     {% for e in elementos %}
         <div class="contenedorElemento">
             <div id="{{ e.elemento.textoIdentificador }}">
-                {% include e.template with elemento=e.elemento %}
+                {% include template with elemento=e.elemento %}
             </div>
             {% if form_template %}
                 {% include form_template with form=e.form identificador=e.elemento.identificador textoIdentificador=e.elemento.textoIdentificador %}

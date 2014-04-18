@@ -151,9 +151,6 @@ class Hito(Bitacora):
     
     def textoIdentificador(self):
         return u'HT%04d' % self.identificador
-        
-    def htmlTemplate(self):
-        return 'reqApp/proyecto/HT/HT.html'
     
 class TipoUsuario(Bitacora):
     cantidad = models.PositiveIntegerField(default=1)
@@ -166,9 +163,6 @@ class TipoUsuario(Bitacora):
        
     def textoIdentificador(self):
         return u'TU%04d' % self.identificador
-        
-    def htmlTemplate(self):
-        return 'reqApp/proyecto/TU/TU.html'
 
 
 class Requisito(Bitacora):
@@ -215,9 +209,6 @@ class RequisitoUsuario(Requisito):
     def copiarM2MVigentes(self, m2mVigentesDicc):
         # aca se realiza la copia de las referencias m2m que son vigentes
         self.tiposUsuario = m2mVigentesDicc['tiposUsuario']
-        
-    def htmlTemplate(self):
-        return 'reqApp/proyecto/RU/RU.html'
         
     def dummyCopy(self):
         # crea un registro nuevo en base a self, necesario para bitacorarCopiaDeElemento()
@@ -276,9 +267,6 @@ class RequisitoSoftware(Requisito):
         self.tiposUsuario = m2mVigentesDicc['tiposUsuario']
         self.requisitosUsuario = m2mVigentesDicc['requisitosUsuario']
         
-    def htmlTemplate(self):
-        return 'reqApp/proyecto/RS/RS.html'
-        
     def dummyCopy(self):
         # crea un registro nuevo en base a self, necesario para bitacorarCopiaDeElemento()
         dummy = RequisitoSoftware()
@@ -330,9 +318,6 @@ class CasoPrueba(Bitacora):
         # aca se realiza la copia de las referencias m2m que son vigentes
         self.tiposUsuario = m2mVigentesDicc['tiposUsuario']
         
-    def htmlTemplate(self):
-        return 'reqApp/proyecto/CP/CP.html'
-        
 class Modulo(Bitacora):
     costo = models.IntegerField(default=0)
     
@@ -357,6 +342,3 @@ class Modulo(Bitacora):
     def copiarM2MVigentes(self, m2mVigentesDicc):
         # aca se realiza la copia de las referencias m2m que son vigentes
         self.requisitosSoftware = m2mVigentesDicc['requisitosSoftware']
-        
-    def htmlTemplate(self):
-        return 'reqApp/proyecto/MD/MD.html'

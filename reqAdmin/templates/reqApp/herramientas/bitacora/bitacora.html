@@ -17,13 +17,19 @@
     </div>
 </div>
 
+<div>
+<a style="display: inline-block;width:auto;" href='#' class="boton_azul" onclick='abrirTodos()'>(+)Abrir todos</a>
+<a style="display: inline-block;width:auto;" href='#' class="boton_azul" onclick='cerrarTodos()'>(--)Cerrar todos</a>
+<div style="display: inline-block;width:20%;"></div>
+</div>
+
 {% ifequal elementos|length 0 %}
     <p class="centrado">--------------- Lista Vacía ---------------</p>
 {% else %}
     {% for e in elementos %}
         <div class="contenedorElemento">
             <div id="{{ e.elemento.textoIdentificador }}">
-                {% include e.template with elemento=e.elemento %}
+                {% include template with elemento=e.elemento %}
             </div>
         </div>
     {% endfor %}

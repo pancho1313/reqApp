@@ -62,5 +62,7 @@
         </div>
     </div>
     
-    <button class="boton_azul" onclick="editarElemento('{{ elemento.textoIdentificador }}')">Editar</button>
+    {% if form_template %}
+        <button class="boton_azul" onclick="editarElemento('{{ elemento.textoIdentificador }}')">Editar</button>
+    {% endif %}
 </div>
