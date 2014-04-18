@@ -2,7 +2,7 @@
 <div>
     <div class="tituloElemento">
         <div style="display: inline-block;width:43%;vertical-align:top;">
-            <a onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_contenido')" href="#" name="{{ elemento.textoIdentificador }}">
+            <a onclick="expandirContraerElemento('{{ elemento.id }}_contenido')" href="#" name="{{ elemento.textoIdentificador }}">
                 <b class="{{ elemento.estado }}">{{ elemento }}</b>
             </a>
         </div>
@@ -28,7 +28,7 @@
 
 
 
-<div id="{{ elemento.textoIdentificador }}_contenido" name="elemento_contenido" style="display:none;">
+<div id="{{ elemento.id }}_contenido" name="elemento_contenido" style="display:none;">
     <div class="{{ elemento.estado }}">{{ elemento|estado }}</div>
     <br/>
     <div>
@@ -42,8 +42,8 @@
         </div>
         <div style="display: inline-block;width:30%;vertical-align:top;">
             <ul>
-            <li><button class="sublista" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_tiposUsuario')">Usuarios asociados({{elemento.tiposUsuario|enlistarVigentes|largoLista}})</button></li>
-            <ul id="{{ elemento.textoIdentificador }}_tiposUsuario" style="display:none;">
+            <li><button class="sublista" onclick="expandirContraerElemento('{{ elemento.id }}_tiposUsuario')">Usuarios asociados({{elemento.tiposUsuario|enlistarVigentes|largoLista}})</button></li>
+            <ul id="{{ elemento.id }}_tiposUsuario" style="display:none;">
             {% for tu in elemento.tiposUsuario|enlistarVigentes %}
                 <li>{{tu}}</li>
             {% endfor %}
@@ -52,8 +52,8 @@
         </div>
         <div style="display: inline-block;width:30%;vertical-align:top;">
             <ul>
-            <li><button class="sublista" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_requisitosUsuario')">RU asociados({{elemento.requisitosUsuario|enlistarVigentes|largoLista}})</button></li>
-            <ul id="{{ elemento.textoIdentificador }}_requisitosUsuario" style="display:none;">
+            <li><button class="sublista" onclick="expandirContraerElemento('{{ elemento.id }}_requisitosUsuario')">RU asociados({{elemento.requisitosUsuario|enlistarVigentes|largoLista}})</button></li>
+            <ul id="{{ elemento.id }}_requisitosUsuario" style="display:none;">
             {% for ru in elemento.requisitosUsuario|enlistarVigentes %}
                 <li class="{{ ru.estado }}">{{ru}}</li>
             {% endfor %}

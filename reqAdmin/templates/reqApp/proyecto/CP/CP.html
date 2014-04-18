@@ -2,7 +2,7 @@
 <div>
     <div class="tituloElemento">
         <div style="display: inline-block;width:43%;vertical-align:top;">
-            <a onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_contenido')" href="#" name="{{ elemento.textoIdentificador }}">
+            <a onclick="expandirContraerElemento('{{ elemento.id }}_contenido')" href="#" name="{{ elemento.textoIdentificador }}">
                 <b class="{{ elemento.estado }}">{{ elemento }}</b>
             </a>
         </div>
@@ -19,7 +19,7 @@
 
 
 
-<div id="{{ elemento.textoIdentificador }}_contenido" name="elemento_contenido" style="display:none;">
+<div id="{{ elemento.id }}_contenido" name="elemento_contenido" style="display:none;">
     <div class="{{ elemento.estado }}">{{ elemento|estado }}</div>
     <br/>
     <div>
@@ -38,8 +38,8 @@
         <div style="display: inline-block;width:50%;vertical-align:top;"></div>
         <div style="display: inline-block;width:30%;vertical-align:top;">
             <ul>
-            <li><button class="sublista" onclick="expandirContraerElemento('{{ elemento.textoIdentificador }}_tiposUsuario')">Usuarios asociados({{elemento.tiposUsuario|enlistarVigentes|largoLista}})</button></li>
-            <ul id="{{ elemento.textoIdentificador }}_tiposUsuario" style="display:none;">
+            <li><button class="sublista" onclick="expandirContraerElemento('{{ elemento.id }}_tiposUsuario')">Usuarios asociados({{elemento.tiposUsuario|enlistarVigentes|largoLista}})</button></li>
+            <ul id="{{ elemento.id }}_tiposUsuario" style="display:none;">
             {% for tu in elemento.tiposUsuario|enlistarVigentes %}
                 <li>{{tu}}</li>
             {% endfor %}
@@ -47,6 +47,6 @@
             </ul>
         </div>
     </div>
-    {# TODO: mostrar el boton editar solo si tiene permisos #}
+    {# TODO: mostrar el boton editar solo si tiene permisos y si no es bitacora #}
     <button class="boton_azul" onclick="editarElemento('{{ elemento.textoIdentificador }}')">Editar</button>
 </div>
