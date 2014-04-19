@@ -32,6 +32,10 @@ def estado(elemento):
 def enlistarVigentes(queryList):
     return queryList.filter(vigencia=True).order_by('identificador')
     
+@register.filter(name="enlistarRegistrados")
+def enlistarRegistrados(queryList):
+    return queryList.order_by('identificador')
+    
 @register.filter(name="largoLista")
 def largoLista(lista):
     return len(lista)

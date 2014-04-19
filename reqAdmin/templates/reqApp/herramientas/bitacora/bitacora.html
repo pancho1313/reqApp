@@ -22,6 +22,7 @@
 <a style="display: inline-block;width:auto;" href='#' class="boton_azul" onclick='cerrarTodos()'>(--)Cerrar todos</a>
 <div style="display: inline-block;width:20%;"></div>
 </div>
+<br/>
 
 {% ifequal elementos|length 0 %}
     <p class="centrado">--------------- Lista Vacía ---------------</p>
@@ -29,7 +30,7 @@
     {% for e in elementos %}
         <div class="contenedorElemento">
             <div id="{{ e.elemento.textoIdentificador }}">
-                {% include template with elemento=e.elemento %}
+                {% include template with elemento=e.elemento bitacora=True actual=e.actual borrado=e.borrado nuevo=e.nuevo %}
             </div>
         </div>
     {% endfor %}

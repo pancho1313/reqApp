@@ -13,6 +13,9 @@
         A
         </div>
     </div>
+    {% if bitacora %}
+        {% include "reqApp/herramientas/bitacora/registro_bitacora.html" with actual=actual borrado=borrado nuevo=nuevo %}
+    {% endif %}
 </div>
 
 
@@ -38,11 +41,31 @@
         <div style="display: inline-block;width:50%;vertical-align:top;"></div>
         <div style="display: inline-block;width:30%;vertical-align:top;">
             <ul>
-            <li><button class="sublista" onclick="expandirContraerElemento('{{ elemento.id }}_tiposUsuario')">Usuarios asociados({{elemento.tiposUsuario|enlistarVigentes|largoLista}})</button></li>
+            <li>
+                <button class="sublista" onclick="expandirContraerElemento('{{ elemento.id }}_tiposUsuario')">
+                    Usuarios asociados(
+                        {% if bitacora %}
+                            {{elemento.tiposUsuario|enlistarRegistrados|largoLista}}
+                        {% else %}
+                            {{elemento.tiposUsuario|enlistarVigentes|largoLista}}
+                        {% endif %}
+                    )
+                </button>
+            </li>
             <ul id="{{ elemento.id }}_tiposUsuario" style="display:none;">
-            {% for tu in elemento.tiposUsuario|enlistarVigentes %}
-                <li>{{tu}}</li>
-            {% endfor %}
+            {% if bitacora %}
+                {% for tu in elemento.tiposUsuario|enlistarRegistrados %}
+                    {% if tu.vigencia %}
+                        <li>{{tu}}</li>
+                    {% else %}
+                        <li style="color:Gray;" >{{tu}} (borrado)</li>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {% for tu in elemento.tiposUsuario|enlistarVigentes %}
+                    <li>{{tu}}</li>
+                {% endfor %}
+            {% endif %}
             </ul>
             </ul>
         </div>

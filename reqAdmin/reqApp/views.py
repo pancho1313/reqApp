@@ -361,8 +361,27 @@ def bitacora(request):
         
         # generar la lista de elementos
         listaElementos = []
+        elementosDic = {}
+        i = 0
         for elemento in elementos:
-            listaElementos.append({'elemento':elemento, 'borrado':False})
+            borrado = False
+            clave = elemento.textoIdentificador()
+            if (clave not in elementosDic) and (elemento.vigencia == False):
+                borrado = True
+            elementosDic.update({clave:i})
+            listaElementos.append({'elemento':elemento, 'actual':elemento.vigencia, 'borrado':borrado, 'nuevo':False})
+            i = i + 1
+        
+        for key in elementosDic:
+            listaElementos[elementosDic[key]]['nuevo'] = True
+        
+        """
+        if len(elementos)>0:
+            listaElementos[-1]['nuevo'] = True
+            if (listaElementos[0]['actual'])==False:
+                listaElementos[0]['borrado'] = True
+        """
+        
     else:
         raise Http404
     
