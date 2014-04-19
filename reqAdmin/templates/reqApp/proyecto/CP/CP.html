@@ -7,7 +7,11 @@
             </a>
         </div>
         <div style="display: inline-block;width:50%;vertical-align:top;">
-            <div class="{{ elemento.requisito.estado }}">{{ elemento.requisito }}</div>
+            {% if elemento.requisito.vigencia %}
+                <div class="{{ elemento.requisito.estado }}">{{ elemento.requisito }}</div>
+            {% else %}
+                <div style="color:Gray;">{{ elemento.requisito }} (borrado)</div>
+            {% endif %}
         </div>
         <div style="display: inline-block;width:3%;vertical-align:top;">
         A
@@ -71,6 +75,7 @@
         </div>
     </div>
     {% if form_template %}
+        <br/>
         <button class="boton_azul" onclick="editarElemento('{{ elemento.textoIdentificador }}')">Editar</button>
     {% endif %}
 </div>

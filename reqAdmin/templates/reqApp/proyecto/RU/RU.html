@@ -16,7 +16,11 @@
             {{ elemento|tipoRU }}
         </div>
         <div style="display: inline-block;width:20%;vertical-align:top;">
-            {{ elemento.hito }}
+            {% if elemento.hito.vigencia %}
+                <div>{{ elemento.hito }}</div>
+            {% else %}
+                <div style="color:Gray;">{{ elemento.hito }} (borrado)</div>
+            {% endif %}
         </div>
         <div style="display: inline-block;width:3%;vertical-align:top;">
         A
@@ -56,7 +60,7 @@
                 </li>
                 <ul id="{{ elemento.id }}_tiposUsuario" style="display:none;">
                     {% if bitacora %}
-                        {% for tu in elemento.tiposUsuario|enlistarVigentes %}
+                        {% for tu in elemento.tiposUsuario|enlistarRegistrados %}
                             {% if tu.vigencia %}
                                 <li>{{tu}}</li>
                             {% else %}

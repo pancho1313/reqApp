@@ -16,7 +16,11 @@
             {{ elemento|tipoRS }}
         </div>
         <div style="display: inline-block;width:20%;vertical-align:top;">
-            {{ elemento.hito }}
+            {% if elemento.hito.vigencia %}
+                <div>{{ elemento.hito }}</div>
+            {% else %}
+                <div style="color:Gray;">{{ elemento.hito }} (borrado)</div>
+            {% endif %}
         </div>
         <div style="display: inline-block;width:3%;vertical-align:top;">
         A
