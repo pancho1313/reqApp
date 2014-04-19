@@ -16,6 +16,9 @@
         A
         </div>
     </div>
+    {% if bitacora %}
+        {% include "reqApp/herramientas/bitacora/registro_bitacora.html" with actual=actual borrado=borrado nuevo=nuevo %}
+    {% endif %}
 </div>
 
 
@@ -33,12 +36,32 @@
         <div style="display: inline-block;width:30%;vertical-align:top;"></div>
         <div style="display: inline-block;width:30%;vertical-align:top;">
             <ul>
-            <li><button class="sublista" onclick="expandirContraerElemento('{{ elemento.id }}_requisitosSoftware')">RS asociados({{elemento.requisitosSoftware|enlistarVigentes|largoLista}})</button></li>
-            <ul id="{{ elemento.id }}_requisitosSoftware" style="display:none;">
-            {% for rs in elemento.requisitosSoftware|enlistarVigentes %}
-                <li class="{{ rs.estado }}">{{rs}}</li>
-            {% endfor %}
-            </ul>
+                <li>
+                    <button class="sublista" onclick="expandirContraerElemento('{{ elemento.id }}_requisitosSoftware')">
+                        RS asociados(
+                        {% if bitacora %}
+                            {{elemento.requisitosSoftware|enlistarRegistrados|largoLista}}
+                        {% else %}
+                            {{elemento.requisitosSoftware|enlistarVigentes|largoLista}}
+                        {% endif %}
+                        )
+                    </button>
+                </li>
+                <ul id="{{ elemento.id }}_requisitosSoftware" style="display:none;">
+                {% if bitacora %}
+                    {% for rs in elemento.requisitosSoftware|enlistarRegistrados %}
+                        {% if rs.vigencia %}
+                            <li class="{{ rs.estado }}">{{rs}}</li>
+                        {% else %}
+                            <li class="{{ rs.estado }}" style="color:Gray;">{{rs}} (borrado)</li>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {% for rs in elemento.requisitosSoftware|enlistarVigentes %}
+                        <li class="{{ rs.estado }}">{{rs}}</li>
+                    {% endfor %}
+                {% endif %}
+                </ul>
             </ul>
         </div>
     </div>
