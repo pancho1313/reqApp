@@ -1,3 +1,36 @@
+{% extends "reqApp/proyecto/elemento_proyecto.html" %}
+
+{% block encabezado %}
+    <div style="display: inline-block;width:95%;vertical-align:top;">
+        <a onclick="expandirContraerElemento('{{ elemento.id }}_contenido')" href="#" name="{{ elemento.textoIdentificador }}">
+            <b>{{ elemento }}</b>
+        </a>
+    </div>
+{% endblock %}
+
+{% block contenido %}
+    <br/>
+    <div>
+        {{ elemento.descripcion }}
+    </div>
+    <br/>
+    <div>
+        <div style="display: inline-block;width:40%;vertical-align:top;">
+            Cantidad de usuarios: {{ elemento.cantidad }}
+        </div>
+        <div style="display: inline-block;width:40%;vertical-align:top;">
+            Usuarios contactables: {{ elemento.usuariosContactables }}
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
+
+
+
+{% comment %}
 <div>
     <div class="tituloElemento">
         <a onclick="expandirContraerElemento('{{ elemento.id }}_contenido')" href="#" name="{{ elemento.textoIdentificador }}">
@@ -31,3 +64,4 @@
         <button class="boton_azul" onclick="editarElemento('{{ elemento.textoIdentificador }}')">Editar</button>
     {% endif %}
 </div>
+{% endcomment %}

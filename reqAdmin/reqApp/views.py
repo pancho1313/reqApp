@@ -83,7 +83,7 @@ def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate
         'orden_actual': ordenActual,
         'navbar':navbar,
     }
-    return render(request, 'reqApp/lista_expandible.html', context)
+    return render(request, 'reqApp/proyecto/lista_expandible.html', context)
 
 def viewTU(request):
     mensajes = []

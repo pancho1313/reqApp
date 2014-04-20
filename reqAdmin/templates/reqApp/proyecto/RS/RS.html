@@ -1,4 +1,113 @@
+{% extends "reqApp/proyecto/elemento_proyecto.html" %}
 {% load reqApp_tags %}
+
+
+{% block encabezado %}
+    <div style="display: inline-block;width:43%;vertical-align:top;">
+        <a onclick="expandirContraerElemento('{{ elemento.id }}_contenido')" href="#" name="{{ elemento.textoIdentificador }}">
+            <b class="{{ elemento.estado }}">{{ elemento }}</b>
+        </a>
+    </div>
+    <div style="display: inline-block;width:2%;vertical-align:top;">
+        {{ elemento.costo }}
+    </div>
+    <div style="display: inline-block;width:11%;vertical-align:top;">
+        {{ elemento|prioridad }}
+    </div>
+    <div style="display: inline-block;width:17%;vertical-align:top;">
+        {{ elemento|tipoRS }}
+    </div>
+    <div style="display: inline-block;width:20%;vertical-align:top;">
+        {% if elemento.hito.vigencia %}
+            <div>{{ elemento.hito }}</div>
+        {% else %}
+            <div style="color:Gray;">{{ elemento.hito }} (borrado)</div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+{% block contenido %}
+    <div class="{{ elemento.estado }}">{{ elemento|estado }}</div>
+    <br/>
+    <div>
+        {{ elemento.descripcion }}
+    </div>
+    <br/>
+    <div>
+        <div style="display: inline-block;width:30%;vertical-align:top;">
+            <div>Fuente: {{ elemento.fuente }}</div>
+            <div>Estabilidad: {{ elemento.estabilidad }}</div>
+        </div>
+        <div style="display: inline-block;width:30%;vertical-align:top;">
+            <ul>
+                <li>
+                    <button class="sublista" onclick="expandirContraerElemento('{{ elemento.id }}_tiposUsuario')">
+                        Usuarios asociados(
+                        {% if bitacora %}
+                            {{elemento.tiposUsuario|enlistarRegistrados|largoLista}}
+                        {% else %}
+                            {{elemento.tiposUsuario|enlistarVigentes|largoLista}}
+                        {% endif %}
+                        )
+                    </button>
+                </li>
+                <ul id="{{ elemento.id }}_tiposUsuario" style="display:none;">
+                    {% if bitacora %}
+                        {% for tu in elemento.tiposUsuario|enlistarRegistrados %}
+                            {% if tu.vigencia %}
+                                <li>{{tu}}</li>
+                            {% else %}
+                                <li style="color:Gray;" >{{tu}} (borrado)</li>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        {% for tu in elemento.tiposUsuario|enlistarVigentes %}
+                            <li>{{tu}}</li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </ul>
+        </div>
+        <div style="display: inline-block;width:30%;vertical-align:top;">
+            <ul>
+                <li>
+                    <button class="sublista" onclick="expandirContraerElemento('{{ elemento.id }}_requisitosUsuario')">
+                        RU asociados(
+                        {% if bitacora %}
+                            {{elemento.requisitosUsuario|enlistarRegistrados|largoLista}}
+                        {% else %}
+                            {{elemento.requisitosUsuario|enlistarVigentes|largoLista}}
+                        {% endif %}
+                        )
+                    </button>
+                </li>
+                <ul id="{{ elemento.id }}_requisitosUsuario" style="display:none;">
+                    {% if bitacora %}
+                        {% for ru in elemento.requisitosUsuario|enlistarRegistrados %}
+                            {% if ru.vigencia %}
+                                <li class="{{ ru.estado }}">{{ru}}</li>
+                            {% else %}
+                                <li class="{{ ru.estado }}" style="color:Gray;">{{ru}} (borrado)</li>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        {% for ru in elemento.requisitosUsuario|enlistarVigentes %}
+                            <li class="{{ ru.estado }}">{{ru}}</li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
+
+
+{% comment %}
 <div>
     <div class="tituloElemento">
         <div style="display: inline-block;width:43%;vertical-align:top;">
@@ -113,3 +222,4 @@
         <button class="boton_azul" onclick="editarElemento('{{ elemento.textoIdentificador }}')">Editar</button>
     {% endif %}
 </div>
+{% endcomment %}
