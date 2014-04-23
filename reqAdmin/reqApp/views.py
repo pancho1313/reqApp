@@ -88,6 +88,7 @@ def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate
 def viewTU(request):
     mensajes = []
     
+    # la 'posicion' corresponde al ancho(%) dentro del div (ver 'reqApp/orden_elementos.html')
     listaAtributos = [
         {'orden': 'identificador', 'posicion': 15,},
         {'orden': 'nombre', 'posicion': 9,},
@@ -100,11 +101,12 @@ def viewTU(request):
 def viewRU(request):
     mensajes = []
     
+    # la 'posicion' corresponde al ancho(%) dentro del div (ver 'reqApp/orden_elementos.html')
     listaAtributos = [
         {'orden': 'identificador', 'posicion': 15,},
         {'orden': 'nombre', 'posicion': 9,},
-        {'orden': 'estado', 'posicion': 13,},
-        {'orden': 'costo', 'posicion': 6,},
+        {'orden': 'estado', 'posicion': 15,},
+        {'orden': 'costo', 'posicion': 5,},
         {'orden': 'prioridad', 'posicion': 13,},
         {'orden': 'tipo', 'posicion': 18,},
         {'orden': 'hito', 'posicion': 10,},
@@ -117,14 +119,15 @@ def viewRU(request):
 def viewRS(request):
     mensajes = []
     
+    # la 'posicion' corresponde al ancho(%) dentro del div (ver 'reqApp/orden_elementos.html')
     listaAtributos = [
         {'orden': 'identificador', 'posicion': 15,},
         {'orden': 'nombre', 'posicion': 9,},
-        {'orden': 'estado', 'posicion': 13,},
-        {'orden': 'costo', 'posicion': 6,},
+        {'orden': 'estado', 'posicion': 15,},
+        {'orden': 'costo', 'posicion': 5,},
         {'orden': 'prioridad', 'posicion': 13,},
         {'orden': 'tipo', 'posicion': 18,},
-        {'orden': 'hito', 'posicion': 10,},
+        {'orden': 'hito', 'posicion': 15,},
     ]  
     
     navbar = {'1':'proyecto', '2':'RS'}
@@ -134,9 +137,10 @@ def viewRS(request):
 def viewMD(request):
     mensajes = []
     
+    # la 'posicion' corresponde al ancho(%) dentro del div (ver 'reqApp/orden_elementos.html')
     listaAtributos = [
         {'orden': 'identificador', 'posicion': 15,},
-        {'orden': 'nombre', 'posicion': 41,},
+        {'orden': 'nombre', 'posicion': 44,},
         {'orden': 'costo', 'posicion': 8,},
         {'orden': 'prioridad', 'posicion': 10,},
     ]
@@ -148,6 +152,7 @@ def viewMD(request):
 def viewCP(request):
     mensajes = []    
     
+    # la 'posicion' corresponde al ancho(%) dentro del div (ver 'reqApp/orden_elementos.html')
     listaAtributos = [
         {'orden': 'identificador', 'posicion': 15,},
         {'orden': 'nombre', 'posicion': 9,},
@@ -162,6 +167,7 @@ def viewCP(request):
 def viewHT(request):
     mensajes = []    
     
+    # la 'posicion' corresponde al ancho(%) dentro del div (ver 'reqApp/orden_elementos.html')
     listaAtributos = [
         {'orden': 'identificador', 'posicion': 15,},
         {'orden': 'nombre', 'posicion': 9,},

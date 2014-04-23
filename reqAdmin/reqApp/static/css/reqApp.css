@@ -138,11 +138,18 @@ vertical-align:top;
 }
 
 /* barra para ordenar lista de elementos */
-.barra_orden
+div.barra_orden
 {
 background-color:#D6D6D6;
 border-radius:5px;
 padding:5px;
+margin: 0px;
+}
+
+.barra_orden div
+{
+margin:0px;
+padding:0px;
 }
 
 a.barra_orden:link, a.barra_orden:visited

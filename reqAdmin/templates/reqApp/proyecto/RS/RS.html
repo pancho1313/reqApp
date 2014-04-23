@@ -3,12 +3,12 @@
 
 
 {% block encabezado %}
-    <div style="display: inline-block;width:43%;vertical-align:top;">
+    <div style="display: inline-block;width:41%;vertical-align:top;">
         <a onclick="expandirContraerElemento('{{ elemento.id }}_contenido')" href="#" name="{{ elemento.textoIdentificador }}">
             <b class="{{ elemento.estado }}">{{ elemento }}</b>
         </a>
     </div>
-    <div style="display: inline-block;width:2%;vertical-align:top;">
+    <div style="display: inline-block;width:4%;vertical-align:top;">
         {{ elemento.costo }}
     </div>
     <div style="display: inline-block;width:11%;vertical-align:top;">

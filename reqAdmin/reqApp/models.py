@@ -106,8 +106,6 @@ class Bitacora(models.Model):
         elementoPrevio.vigencia = False
         elementoPrevio.save() # guardar el estado del elemento previo
         
-        
-        print "class=",self.__class__,"bitacorarCopiaDeElemento.id,pk=",elementoPrevio.id,elementoPrevio.pk
     
     def bitacorarElemento(self, usuario):
         #registrar usuario responsable
@@ -118,7 +116,6 @@ class Bitacora(models.Model):
         
         # guardar en base de datos
         self.save()
-        print "bitacorarElemento.id,pk=",self.id,self.pk
      
     def bitacorarNuevoElemento(self, proyecto, usuario):
         # identificador nuevo
