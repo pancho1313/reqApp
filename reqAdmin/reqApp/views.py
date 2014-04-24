@@ -269,14 +269,19 @@ def estadisticas(request):
                 'cantidad':qq.count(),
             }
             estado.append(dic)
-            
-            
-        extras.append({
-            'Sin RS asoc.':0,
-            'Sin TU asoc.':0,
-            'Costo total':ru_q.aggregate(Sum('costo'))
-        })
         
+        extras.append({
+            'nombre':'Sin RS asoc.',
+            'cantidad':0
+        })
+        extras.append({
+            'nombre':'Sin TU asoc.',
+            'cantidad':0
+        })
+        extras.append({
+            'nombre':'Costo total',
+            'cantidad':ru_q.aggregate(Sum('costo'))['costo__sum']
+        })
         
         ru.update({'prioridad':prioridad})
         ru.update({'estabilidad':estabilidad})
