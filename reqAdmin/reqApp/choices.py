@@ -2,8 +2,8 @@
 """ *_CHOICES: Se definen aqui y de forma estatica para evitar que
 modificaciones indeseadas en la base de datos arruinen el codigo. """
 ESTABILIDAD_CHOICES = [
-    ("transable", "transable"),
     ("intransable", "intransable"),
+    ("transable", "transable"),
 ]
 
 TIPO_RU_CHOICES = [

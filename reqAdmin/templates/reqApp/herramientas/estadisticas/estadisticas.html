@@ -1,0 +1,55 @@
+{% extends "reqApp/base.html" %}
+{% block body %}
+<br/>
+<div>
+    Hito: 
+    <select onchange="location = this.options[this.selectedIndex].value;">
+        {% for key,val in HT_CHOICES %}
+            <option value="?hito={{key}}"{% ifequal hito key %}selected{% endifequal %}>{{val}}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<br/>
+
+<div>
+    <div>
+    {% for p in RU.prioridad %}
+        <div>{{ p.nombre }}</div>
+        <div>{{ p.cumple }}</div>
+        <div>{{ p.no_cumple }}</div>
+        <div>{{ p.ambiguo }}</div>
+    {% endfor %}
+    </div>
+    <div>
+    {% for e in RU.estabilidad %}
+        <div>{{ e.nombre }}</div>
+        <div>{{ e.cumple }}</div>
+        <div>{{ e.no_cumple }}</div>
+        <div>{{ e.ambiguo }}</div>
+    {% endfor %}
+    </div>
+    <div>
+    {% for t in RU.tipo %}
+        <div>{{ t.nombre }}</div>
+        <div>{{ t.cumple }}</div>
+        <div>{{ t.no_cumple }}</div>
+        <div>{{ t.ambiguo }}</div>
+    {% endfor %}
+    </div>
+    {% for e in RU.estado %}
+        <div>{{ e.nombre }}</div>
+        <div>{{ e.cantidad }}</div>
+    {% endfor %}
+    </div>
+    <div>
+    {% for e in RU.extras %}
+        <div>{{ e.nombre }}</div>
+        <div>{{ e.cantidad }}</div>
+    {% endfor %}
+    </div>
+    <div>
+        Total RU:{{ RU.total }}
+    </div>
+</div>
+{% endblock %}

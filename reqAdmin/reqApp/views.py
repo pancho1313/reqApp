@@ -9,6 +9,8 @@ import json
 from django.http import HttpResponse
 from django.http import Http404
 
+from django.db.models import Sum
+
 ################ Proyecto ################
 
 def ajax_form_valid(form, validado):
@@ -212,8 +214,86 @@ def tareas(request):
     return herrView(request, navbar)
     
 def estadisticas(request):
+    HT_CHOICES = [
+        (0, "Todos"),
+    ]
+
+    usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
+    proyecto = proyectoDeUsuario(usuario)
     navbar = {'1':'herramientas', '2':'estadisticas'}
-    return herrView(request, navbar)
+    
+    if request.method == 'GET':
+        hito = int(request.GET.get('hito', 0))
+        hitos = Hito.objects.vigentes(proyecto)
+        for ht in hitos:
+            HT_CHOICES.append((ht.identificador,ht.nombre))
+        if hito > 0:
+            ht = hitos.get(identificador=hito)
+        
+        # estadisticas de requisitos de usuario
+        ru_q = RequisitoUsuario.objects.vigentes(proyecto)
+        if hito > 0:
+            ru_q = ru_q.filter(hito=ht)
+        ru = {}
+        prioridad = []
+        estabilidad = []
+        tipo = []
+        estado = []
+        extras = []
+        
+        for key, nombre in PRIORIDAD_CHOICES:
+            dic = {'nombre':nombre,}
+            qq = ru_q.filter(prioridad=key)
+            for e, anastasia in ESTADO_CHOICES:
+                dic.update({e:qq.filter(estado=e).count()})
+            prioridad.append(dic)
+            
+        for key, nombre in ESTABILIDAD_CHOICES:
+            dic = {'nombre':nombre,}
+            qq = ru_q.filter(estabilidad=key)
+            for e, anastasia in ESTADO_CHOICES:
+                dic.update({e:qq.filter(estado=e).count()})
+            estabilidad.append(dic)
+            
+        for key, nombre in TIPO_RU_CHOICES:
+            dic = {'nombre':nombre,}
+            qq = ru_q.filter(tipo=key)
+            for e, anastasia in ESTADO_CHOICES:
+                dic.update({e:qq.filter(estado=e).count()})
+            tipo.append(dic)
+            
+        for key, nombre in ESTADO_CHOICES:
+            qq = ru_q.filter(estado=key)
+            dic = {
+                'nombre':nombre,
+                'cantidad':qq.count(),
+            }
+            estado.append(dic)
+            
+            
+        extras.append({
+            'Sin RS asoc.':0,
+            'Sin TU asoc.':0,
+            'Costo total':ru_q.aggregate(Sum('costo'))
+        })
+        
+        
+        ru.update({'prioridad':prioridad})
+        ru.update({'estabilidad':estabilidad})
+        ru.update({'tipo':tipo})
+        ru.update({'estado':estado})
+        ru.update({'extras':extras})
+        ru.update({'total':ru_q.count()})
+        
+    else:
+        raise Http404
+    context = {
+        'navbar':navbar,
+        'HT_CHOICES':HT_CHOICES,
+        'hito':hito,
+        'RU':ru,
+    }
+    return render(request, 'reqApp/herramientas/estadisticas/estadisticas.html', context)
     
 def matrixMatch(elemento1, elemento2, proyecto):
     
@@ -380,14 +460,6 @@ def bitacora(request):
         
         for key in elementosDic:
             listaElementos[elementosDic[key]]['nuevo'] = True
-        
-        """
-        if len(elementos)>0:
-            listaElementos[-1]['nuevo'] = True
-            if (listaElementos[0]['actual'])==False:
-                listaElementos[0]['borrado'] = True
-        """
-        
     else:
         raise Http404
     
