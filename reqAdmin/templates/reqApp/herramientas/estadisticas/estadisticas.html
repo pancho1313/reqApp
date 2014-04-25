@@ -1,4 +1,6 @@
 {% extends "reqApp/base.html" %}
+{% load reqApp_tags %}
+
 {% block body %}
 <br/>
 <div>
@@ -12,6 +14,66 @@
 
 <br/>
 
+<table>
+    <tr>
+        <th>RU</th>
+        <th></th>
+        <th>cumple</th>
+        <th>no cumple</th>
+        <th>ambiguo</th>
+        <th>total</th>
+    </tr>
+    {% for atributo in RU.atributos %}
+        {% for tr in atributo %}
+            <tr>
+                <td>{{ tr.atributo }}</td>
+                <td>{{ tr.nombre }}</td>
+                <td>{{ tr.cumple }}</td>
+                <td>{{ tr.no_cumple }}</td>
+                <td>{{ tr.ambiguo }}</td>
+                <td>{{ tr.total }}</td>
+            </tr>
+        {% endfor %}
+    {% endfor %}
+    <tr>
+        <td></td>
+        <td></td>
+        <td>{{ RU.estado.cumple }}</td>
+        <td>{{ RU.estado.no_cumple }}</td>
+        <td>{{ RU.estado.ambiguo }}</td>
+        <td>{{ RU.total }}</td>
+    </tr>
+        {% for e in RU.extras %}
+        <tr>
+            <td>{{ e.nombre }}</td>
+            <td>{{ e.cantidad }}</td>
+        </tr>
+        {% endfor %}
+    
+    {% comment %}
+    {% for tr in RU.estabilidad %}
+        <tr>
+            <td>{{ tr.atributo }}</td>
+            <td>{{ tr.nombre }}</td>
+            <td>{{ tr.cumple }}</td>
+            <td>{{ tr.no_cumple }}</td>
+            <td>{{ tr.ambiguo }}</td>
+            <td>0</td>
+        </tr>
+    {% endfor %}
+    {% for tr in RU.tipo %}
+        <tr>
+            <td>{{ tr.atributo }}</td>
+            <td>{{ tr.nombre }}</td>
+            <td>{{ tr.cumple }}</td>
+            <td>{{ tr.no_cumple }}</td>
+            <td>{{ tr.ambiguo }}</td>
+            <td>0</td>
+        </tr>
+    {% endfor %}
+    {% endcomment %}
+</table>
+{% comment %}
 <div>
     <div>
     {% for p in RU.prioridad %}
@@ -52,4 +114,5 @@
         Total RU:{{ RU.total }}
     </div>
 </div>
+{% endcomment %}
 {% endblock %}

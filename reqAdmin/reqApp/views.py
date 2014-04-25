@@ -213,6 +213,11 @@ def tareas(request):
     navbar = {'1':'herramientas', '2':'tareas'}
     return herrView(request, navbar)
     
+def myFilter(s,val):
+    # para la generacion de tablas (estadisticas)
+    dic = {}
+    dic[s] = val
+    return dic
 def estadisticas(request):
     HT_CHOICES = [
         (0, "Todos"),
@@ -238,37 +243,74 @@ def estadisticas(request):
         prioridad = []
         estabilidad = []
         tipo = []
-        estado = []
+        estado = {}
         extras = []
         
+        tabla_ru = [
+            ('prioridad', 'prioridad', PRIORIDAD_CHOICES, prioridad),
+            ('estabilidad', 'estabilidad', ESTABILIDAD_CHOICES, estabilidad),
+            ('tipo', 'tipo', TIPO_RU_CHOICES, tipo),
+        ]
+        
+        for atributo, s, choices, arreglo in tabla_ru:
+            for key, nombre in choices:
+                dic = {'atributo':atributo,'nombre':nombre,}
+                atributo = ''
+                qq = ru_q.filter(**myFilter(s,key))
+                total = 0
+                for e, wanda in ESTADO_CHOICES:
+                    c = qq.filter(estado=e).count()
+                    dic.update({e:c})
+                    total = total + c
+                dic.update({'total':total})
+                arreglo.append(dic)
+        
+        
+        
+        """
+        atributo = 'prioridad'
         for key, nombre in PRIORIDAD_CHOICES:
-            dic = {'nombre':nombre,}
+            dic = {'atributo':atributo,'nombre':nombre,}
+            atributo = ''
             qq = ru_q.filter(prioridad=key)
-            for e, anastasia in ESTADO_CHOICES:
-                dic.update({e:qq.filter(estado=e).count()})
+            total = 0
+            for e, wanda in ESTADO_CHOICES:
+                c = qq.filter(estado=e).count()
+                dic.update({e:c})
+                total = total + c
+            dic.update({'total':total})
             prioridad.append(dic)
-            
+         
+        atributo = 'estabilidad'
         for key, nombre in ESTABILIDAD_CHOICES:
-            dic = {'nombre':nombre,}
+            dic = {'atributo':atributo,'nombre':nombre,}
+            atributo = ''
             qq = ru_q.filter(estabilidad=key)
+            total = 0
             for e, anastasia in ESTADO_CHOICES:
-                dic.update({e:qq.filter(estado=e).count()})
+                c = qq.filter(estado=e).count()
+                dic.update({e:c})
+                total = total + c
+            dic.update({'total':total})
             estabilidad.append(dic)
             
+        atributo = 'tipo'
         for key, nombre in TIPO_RU_CHOICES:
-            dic = {'nombre':nombre,}
+            dic = {'atributo':atributo,'nombre':nombre,}
+            atributo = ''
             qq = ru_q.filter(tipo=key)
+            total = 0
             for e, anastasia in ESTADO_CHOICES:
-                dic.update({e:qq.filter(estado=e).count()})
+                c = qq.filter(estado=e).count()
+                dic.update({e:c})
+                total = total + c
+            dic.update({'total':total})
             tipo.append(dic)
+        """
             
-        for key, nombre in ESTADO_CHOICES:
-            qq = ru_q.filter(estado=key)
-            dic = {
-                'nombre':nombre,
-                'cantidad':qq.count(),
-            }
-            estado.append(dic)
+        for e, nombre in ESTADO_CHOICES:
+            qq = ru_q.filter(estado=e)
+            estado.update({e:qq.count()})
         
         extras.append({
             'nombre':'Sin RS asoc.',
@@ -283,9 +325,7 @@ def estadisticas(request):
             'cantidad':ru_q.aggregate(Sum('costo'))['costo__sum']
         })
         
-        ru.update({'prioridad':prioridad})
-        ru.update({'estabilidad':estabilidad})
-        ru.update({'tipo':tipo})
+        ru.update({'atributos':[prioridad,estabilidad,tipo]})
         ru.update({'estado':estado})
         ru.update({'extras':extras})
         ru.update({'total':ru_q.count()})

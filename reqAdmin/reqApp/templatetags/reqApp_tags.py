@@ -39,3 +39,8 @@ def enlistarRegistrados(queryList):
 @register.filter(name="largoLista")
 def largoLista(lista):
     return len(lista)
+    
+# TODO no funciona
+@register.filter(name="porcentaje")
+def porcentaje(parte, total):
+    return "%10.4f%" % (100*parte/total)
