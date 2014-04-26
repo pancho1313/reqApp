@@ -43,76 +43,128 @@
         <td>{{ RU.estado.ambiguo }}</td>
         <td>{{ RU.total }}</td>
     </tr>
-        {% for e in RU.extras %}
+    {% for e in RU.extras %}
         <tr>
             <td>{{ e.nombre }}</td>
             <td>{{ e.cantidad }}</td>
         </tr>
-        {% endfor %}
-    
-    {% comment %}
-    {% for tr in RU.estabilidad %}
-        <tr>
-            <td>{{ tr.atributo }}</td>
-            <td>{{ tr.nombre }}</td>
-            <td>{{ tr.cumple }}</td>
-            <td>{{ tr.no_cumple }}</td>
-            <td>{{ tr.ambiguo }}</td>
-            <td>0</td>
-        </tr>
     {% endfor %}
-    {% for tr in RU.tipo %}
-        <tr>
-            <td>{{ tr.atributo }}</td>
-            <td>{{ tr.nombre }}</td>
-            <td>{{ tr.cumple }}</td>
-            <td>{{ tr.no_cumple }}</td>
-            <td>{{ tr.ambiguo }}</td>
-            <td>0</td>
-        </tr>
-    {% endfor %}
-    {% endcomment %}
 </table>
-{% comment %}
+
+<br/>
+
+<table>
+    <tr>
+        <th>RS</th>
+        <th></th>
+        <th>cumple</th>
+        <th>no cumple</th>
+        <th>ambiguo</th>
+        <th>total</th>
+    </tr>
+    {% for atributo in RS.atributos %}
+        {% for tr in atributo %}
+            <tr>
+                <td>{{ tr.atributo }}</td>
+                <td>{{ tr.nombre }}</td>
+                <td>{{ tr.cumple }}</td>
+                <td>{{ tr.no_cumple }}</td>
+                <td>{{ tr.ambiguo }}</td>
+                <td>{{ tr.total }}</td>
+            </tr>
+        {% endfor %}
+    {% endfor %}
+    <tr>
+        <td></td>
+        <td></td>
+        <td>{{ RS.estado.cumple }}</td>
+        <td>{{ RS.estado.no_cumple }}</td>
+        <td>{{ RS.estado.ambiguo }}</td>
+        <td>{{ RS.total }}</td>
+    </tr>
+    {% for e in RS.extras %}
+        <tr>
+            <td>{{ e.nombre }}</td>
+            <td>{{ e.cantidad }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<br/>
+
+<table>
+    <tr>
+        <th>CP</th>
+        <th></th>
+        <th>cumple</th>
+        <th>no cumple</th>
+        <th>ambiguo</th>
+        <th>total</th>
+    </tr>
+    {% for atributo in CP.atributos %}
+        {% for tr in atributo %}
+            <tr>
+                <td>{{ tr.atributo }}</td>
+                <td>{{ tr.nombre }}</td>
+                <td>{{ tr.cumple }}</td>
+                <td>{{ tr.no_cumple }}</td>
+                <td>{{ tr.ambiguo }}</td>
+                <td>{{ tr.total }}</td>
+            </tr>
+        {% endfor %}
+    {% endfor %}
+    <tr>
+        <td></td>
+        <td></td>
+        <td>{{ CP.estado.cumple }}</td>
+        <td>{{ CP.estado.no_cumple }}</td>
+        <td>{{ CP.estado.ambiguo }}</td>
+        <td>{{ CP.total }}</td>
+    </tr>
+    {% for e in CP.extras %}
+        <tr>
+            <td>{{ e.nombre }}</td>
+            <td>{{ e.cantidad }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<br/>
+
+<table>
+    <tr>
+        <th>MD</th>
+        <th></th>
+        <th>total</th>
+    </tr>
+    {% for atributo in MD.atributos %}
+        {% for tr in atributo %}
+            <tr>
+                <td>{{ tr.atributo }}</td>
+                <td>{{ tr.nombre }}</td>
+                <td>{{ tr.total }}</td>
+            </tr>
+        {% endfor %}
+    {% endfor %}
+    <tr>
+        <td></td>
+        <td></td>
+        <td>{{ MD.total }}</td>
+    </tr>
+    {% for e in MD.extras %}
+        <tr>
+            <td>{{ e.nombre }}</td>
+            <td>{{ e.cantidad }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<br/>
+
 <div>
-    <div>
-    {% for p in RU.prioridad %}
-        <div>{{ p.nombre }}</div>
-        <div>{{ p.cumple }}</div>
-        <div>{{ p.no_cumple }}</div>
-        <div>{{ p.ambiguo }}</div>
-    {% endfor %}
-    </div>
-    <div>
-    {% for e in RU.estabilidad %}
-        <div>{{ e.nombre }}</div>
-        <div>{{ e.cumple }}</div>
-        <div>{{ e.no_cumple }}</div>
-        <div>{{ e.ambiguo }}</div>
-    {% endfor %}
-    </div>
-    <div>
-    {% for t in RU.tipo %}
-        <div>{{ t.nombre }}</div>
-        <div>{{ t.cumple }}</div>
-        <div>{{ t.no_cumple }}</div>
-        <div>{{ t.ambiguo }}</div>
-    {% endfor %}
-    </div>
-    {% for e in RU.estado %}
-        <div>{{ e.nombre }}</div>
-        <div>{{ e.cantidad }}</div>
-    {% endfor %}
-    </div>
-    <div>
-    {% for e in RU.extras %}
-        <div>{{ e.nombre }}</div>
-        <div>{{ e.cantidad }}</div>
-    {% endfor %}
-    </div>
-    <div>
-        Total RU:{{ RU.total }}
-    </div>
+    *Los Módulos no se encuentran asociados a un Hito específico, en esta gráfica se muestran todos los MD asociados al proyecto.
 </div>
-{% endcomment %}
+<div>
+    **No se contabilizan elementos con conflictos (sin Hito asociado o con referencias caducadas)
+</div>
 {% endblock %}

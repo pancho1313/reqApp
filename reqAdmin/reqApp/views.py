@@ -209,10 +209,12 @@ def herrView(request, navbar):
     }
     return render(request, 'reqApp/herramientas.html', context)
 
+##############################  TAREAS
 def tareas(request):
     navbar = {'1':'herramientas', '2':'tareas'}
     return herrView(request, navbar)
-    
+
+##############################  ESTADISTICAS
 def myFilter(s,val):
     # para la generacion de tablas (estadisticas)
     dic = {}
@@ -236,9 +238,9 @@ def estadisticas(request):
             ht = hitos.get(identificador=hito)
         
         # estadisticas de requisitos de usuario
-        ru_q = RequisitoUsuario.objects.vigentes(proyecto)
+        q = RequisitoUsuario.objects.vigentes(proyecto).filter(hito__vigencia=True)
         if hito > 0:
-            ru_q = ru_q.filter(hito=ht)
+            q = q.filter(hito=ht)
         ru = {}
         prioridad = []
         estabilidad = []
@@ -246,17 +248,17 @@ def estadisticas(request):
         estado = {}
         extras = []
         
-        tabla_ru = [
+        tabla = [
             ('prioridad', 'prioridad', PRIORIDAD_CHOICES, prioridad),
             ('estabilidad', 'estabilidad', ESTABILIDAD_CHOICES, estabilidad),
             ('tipo', 'tipo', TIPO_RU_CHOICES, tipo),
         ]
         
-        for atributo, s, choices, arreglo in tabla_ru:
+        for atributo, s, choices, arreglo in tabla:
             for key, nombre in choices:
                 dic = {'atributo':atributo,'nombre':nombre,}
                 atributo = ''
-                qq = ru_q.filter(**myFilter(s,key))
+                qq = q.filter(**myFilter(s,key))
                 total = 0
                 for e, wanda in ESTADO_CHOICES:
                     c = qq.filter(estado=e).count()
@@ -264,72 +266,158 @@ def estadisticas(request):
                     total = total + c
                 dic.update({'total':total})
                 arreglo.append(dic)
-        
-        
-        
-        """
-        atributo = 'prioridad'
-        for key, nombre in PRIORIDAD_CHOICES:
-            dic = {'atributo':atributo,'nombre':nombre,}
-            atributo = ''
-            qq = ru_q.filter(prioridad=key)
-            total = 0
-            for e, wanda in ESTADO_CHOICES:
-                c = qq.filter(estado=e).count()
-                dic.update({e:c})
-                total = total + c
-            dic.update({'total':total})
-            prioridad.append(dic)
-         
-        atributo = 'estabilidad'
-        for key, nombre in ESTABILIDAD_CHOICES:
-            dic = {'atributo':atributo,'nombre':nombre,}
-            atributo = ''
-            qq = ru_q.filter(estabilidad=key)
-            total = 0
-            for e, anastasia in ESTADO_CHOICES:
-                c = qq.filter(estado=e).count()
-                dic.update({e:c})
-                total = total + c
-            dic.update({'total':total})
-            estabilidad.append(dic)
-            
-        atributo = 'tipo'
-        for key, nombre in TIPO_RU_CHOICES:
-            dic = {'atributo':atributo,'nombre':nombre,}
-            atributo = ''
-            qq = ru_q.filter(tipo=key)
-            total = 0
-            for e, anastasia in ESTADO_CHOICES:
-                c = qq.filter(estado=e).count()
-                dic.update({e:c})
-                total = total + c
-            dic.update({'total':total})
-            tipo.append(dic)
-        """
-            
+                     
         for e, nombre in ESTADO_CHOICES:
-            qq = ru_q.filter(estado=e)
+            qq = q.filter(estado=e)
             estado.update({e:qq.count()})
         
         extras.append({
             'nombre':'Sin RS asoc.',
-            'cantidad':0
+            'cantidad':0#TODO
         })
         extras.append({
             'nombre':'Sin TU asoc.',
-            'cantidad':0
+            'cantidad':0#TODO
         })
         extras.append({
             'nombre':'Costo total',
-            'cantidad':ru_q.aggregate(Sum('costo'))['costo__sum']
+            'cantidad':q.aggregate(Sum('costo'))['costo__sum']
         })
         
         ru.update({'atributos':[prioridad,estabilidad,tipo]})
         ru.update({'estado':estado})
         ru.update({'extras':extras})
-        ru.update({'total':ru_q.count()})
+        ru.update({'total':q.count()})
         
+        # estadisticas de requisitos de software
+        q = RequisitoSoftware.objects.vigentes(proyecto).filter(hito__vigencia=True)
+        if hito > 0:
+            q = q.filter(hito=ht)
+        rs = {}
+        prioridad = []
+        estabilidad = []
+        tipo = []
+        estado = {}
+        extras = []
+        
+        tabla = [
+            ('prioridad', 'prioridad', PRIORIDAD_CHOICES, prioridad),
+            ('estabilidad', 'estabilidad', ESTABILIDAD_CHOICES, estabilidad),
+            ('tipo', 'tipo', TIPO_RS_CHOICES, tipo),
+        ]
+        
+        for atributo, s, choices, arreglo in tabla:
+            for key, nombre in choices:
+                dic = {'atributo':atributo,'nombre':nombre,}
+                atributo = ''
+                qq = q.filter(**myFilter(s,key))
+                total = 0
+                for e, wanda in ESTADO_CHOICES:
+                    c = qq.filter(estado=e).count()
+                    dic.update({e:c})
+                    total = total + c
+                dic.update({'total':total})
+                arreglo.append(dic)
+                 
+        for e, nombre in ESTADO_CHOICES:
+            qq = q.filter(estado=e)
+            estado.update({e:qq.count()})
+        
+        extras.append({
+            'nombre':'Sin RU asoc.',
+            'cantidad':0#TODO
+        })
+        extras.append({
+            'nombre':'Sin TU asoc.',
+            'cantidad':0#TODO
+        })
+        costo = q.aggregate(Sum('costo'))['costo__sum']
+        if costo == None:
+            costo = 0
+        extras.append({
+            'nombre':'Costo total',
+            'cantidad':costo
+        })
+        
+        rs.update({'atributos':[prioridad,estabilidad,tipo]})
+        rs.update({'estado':estado})
+        rs.update({'extras':extras})
+        rs.update({'total':q.count()})
+        
+        # estadisticas de casos de prueba
+        q = CasoPrueba.objects.vigentes(proyecto).filter(requisito__vigencia=True)
+        q_ru = q.filter(requisito__requisitousuario__hito__vigencia=True)
+        q_rs = q.filter(requisito__requisitosoftware__hito__vigencia=True)
+        
+        if hito > 0:
+            q_ru = q_ru.filter(requisito__requisitousuario__hito=ht)
+            q_rs = q_rs.filter(requisito__requisitosoftware__hito=ht)
+        cp = {}
+        tipo = []
+        estado = {}
+        extras = []
+                 
+        dic_asoc_RU = {'nombre':'asoc. a RU','total':0}
+        dic_asoc_RS = {'nombre':'asoc. a RS','total':0}
+        for e, wanda in ESTADO_CHOICES:
+            casos_ru = q_ru.filter(estado=e).count()
+            casos_rs = q_rs.filter(estado=e).count()
+            
+            dic_asoc_RU.update({e:casos_ru})
+            dic_asoc_RU.update({'total':dic_asoc_RU['total']+casos_ru})
+            
+            dic_asoc_RS.update({e:casos_rs})
+            dic_asoc_RS.update({'total':dic_asoc_RS['total']+casos_rs})
+            
+            estado.update({e:casos_ru + casos_rs})
+            
+        tipo.append(dic_asoc_RU)
+        tipo.append(dic_asoc_RS)
+        
+        extras.append({
+            'nombre':'Sin TU asoc.',
+            'cantidad':0#TODO
+        })
+        
+        cp.update({'atributos':[tipo]})
+        cp.update({'estado':estado})
+        cp.update({'extras':extras})
+        cp.update({'total':q_ru.count()+q_rs.count()})
+        
+        # estadisticas de modulos
+        q = Modulo.objects.vigentes(proyecto).filter(requisitosSoftware__vigencia=True).distinct()
+        md = {}
+        prioridad = []
+        extras = []
+        
+        tabla = [
+            ('prioridad', 'prioridad', PRIORIDAD_CHOICES, prioridad),
+        ]
+        
+        for atributo, s, choices, arreglo in tabla:
+            for key, nombre in choices:
+                dic = {'atributo':atributo,'nombre':nombre,}
+                atributo = ''
+                qq = q.filter(prioridad=key)
+                total = qq.count()
+                dic.update({'total':total})
+                arreglo.append(dic)
+        
+        extras.append({
+            'nombre':'Sin RS asoc.',
+            'cantidad':0#TODO
+        })
+        costo = 0
+        for dic in q.values('costo'):
+            costo = costo + dic['costo']
+        extras.append({
+            'nombre':'Costo total',
+            'cantidad':costo
+        })
+        
+        md.update({'atributos':[prioridad]})
+        md.update({'extras':extras})
+        md.update({'total':q.count()})
     else:
         raise Http404
     context = {
@@ -337,11 +425,15 @@ def estadisticas(request):
         'HT_CHOICES':HT_CHOICES,
         'hito':hito,
         'RU':ru,
+        'RS':rs,
+        'MD':md,
+        'CP':cp,
     }
     return render(request, 'reqApp/herramientas/estadisticas/estadisticas.html', context)
-    
+
+##############################  MATRICES DE TRAZADO
+
 def matrixMatch(elemento1, elemento2, proyecto):
-    
     return len(RequisitoSoftware.objects.vigentes(proyecto).filter(id=requisitoSoftware.id).filter(requisitosUsuario=self))>0
     
 def matrices(request):
@@ -433,11 +525,13 @@ def matrices(request):
         'tipo':tipo,
     }
     return render(request, 'reqApp/herramientas/matrices/matrices.html', context)
-    
+
+##############################  CONSISTENCIA
 def consistencia(request):
     navbar = {'1':'herramientas', '2':'consistencia'}
     return herrView(request, navbar)
-    
+
+##############################  BITACORA
 def bitacora(request):
     TIPOS_CHOICES = [
         ("ht", "Hitos"),
