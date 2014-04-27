@@ -281,11 +281,31 @@ background-color: #ffdddd;
 }
 
 /* tabla de estadisticas */
-table.estadisticas, .estadisticas td, .estadisticas th
+table.estadisticas
 {
 border-collapse:collapse;
 border-spacing: 0px;
-border: 1px solid Black;
+border:none;
 margin:0px;
 padding:0px;
+}
+.estadisticas th
+{
+border-collapse:collapse;
+border-spacing: 0px;
+border: 1px solid LightGray;
+padding:4px;
+margin:0px;
+}
+.estadisticas td
+{
+border-collapse:collapse;
+border-spacing: 0px;
+border: 1px solid LightGray;
+padding:2px;
+margin:0px;
+}
+tr.estadisticas
+{
+border-top: 3px solid LightGray;
 }

@@ -24,10 +24,12 @@
     </tr>
     {% for atributo in RU.atributos %}
         {% for tr in atributo %}
+            {% if tr.atributo %}
+            <tr class="estadisticas">
+                <th rowspan={{ tr.atributos }}>{{ tr.atributo }}</th>
+            {% else %}
             <tr>
-                {% if tr.atributo %}
-                    <th rowspan={{ tr.atributos }}>{{ tr.atributo }}</th>
-                {% endif %}
+            {% endif %}
                 <td>{{ tr.nombre }}</td>
                 <td>{{ tr.cumple }}</td>
                 <td>{{ tr.no_cumple }}</td>
@@ -36,12 +38,12 @@
             </tr>
         {% endfor %}
     {% endfor %}
-    <tr>
+    <tr class="estadisticas">
         <td colspan=2></td>
         <td>{{ RU.estado.cumple }}</td>
         <td>{{ RU.estado.no_cumple }}</td>
         <td>{{ RU.estado.ambiguo }}</td>
-        <td>{{ RU.total }}</td>
+        <td><b>{{ RU.total }}</b></td>
     </tr>
     {% for e in RU.extras %}
         <tr>
@@ -63,10 +65,12 @@
     </tr>
     {% for atributo in RS.atributos %}
         {% for tr in atributo %}
+            {% if tr.atributo %}
+            <tr class="estadisticas">
+                <th rowspan={{ tr.atributos }}>{{ tr.atributo }}</th>
+            {% else %}
             <tr>
-                {% if tr.atributo %}
-                    <th rowspan={{ tr.atributos }}>{{ tr.atributo }}</th>
-                {% endif %}
+            {% endif %}
                 <td>{{ tr.nombre }}</td>
                 <td>{{ tr.cumple }}</td>
                 <td>{{ tr.no_cumple }}</td>
@@ -75,12 +79,12 @@
             </tr>
         {% endfor %}
     {% endfor %}
-    <tr>
+    <tr class="estadisticas">
         <td colspan=2></td>
         <td>{{ RS.estado.cumple }}</td>
         <td>{{ RS.estado.no_cumple }}</td>
         <td>{{ RS.estado.ambiguo }}</td>
-        <td>{{ RS.total }}</td>
+        <td><b>{{ RS.total }}</b></td>
     </tr>
     {% for e in RS.extras %}
         <tr>
@@ -102,7 +106,7 @@
     </tr>
     {% for atributo in CP.atributos %}
         {% for tr in atributo %}
-            <tr>
+            <tr class="estadisticas">
                 <th colspan=2>{{ tr.nombre }}</th>
                 <td>{{ tr.cumple }}</td>
                 <td>{{ tr.no_cumple }}</td>
@@ -111,12 +115,12 @@
             </tr>
         {% endfor %}
     {% endfor %}
-    <tr>
+    <tr class="estadisticas">
         <td colspan=2></td>
         <td>{{ CP.estado.cumple }}</td>
         <td>{{ CP.estado.no_cumple }}</td>
         <td>{{ CP.estado.ambiguo }}</td>
-        <td>{{ CP.total }}</td>
+        <td><b>{{ CP.total }}</b></td>
     </tr>
     {% for e in CP.extras %}
         <tr>
@@ -135,18 +139,20 @@
     </tr>
     {% for atributo in MD.atributos %}
         {% for tr in atributo %}
+            {% if tr.atributo %}
+            <tr class="estadisticas">
+                <th rowspan={{ tr.atributos }}>{{ tr.atributo }}</th>
+            {% else %}
             <tr>
-                {% if tr.atributo %}
-                    <th rowspan={{ tr.atributos }}>{{ tr.atributo }}</th>
-                {% endif %}
+            {% endif %}
                 <td>{{ tr.nombre }}</td>
                 <td>{{ tr.total }}</td>
             </tr>
         {% endfor %}
     {% endfor %}
-    <tr>
+    <tr class="estadisticas">
         <td colspan=2></td>
-        <td>{{ MD.total }}</td>
+        <td><b>{{ MD.total }}</b></td>
     </tr>
     {% for e in MD.extras %}
         <tr>
