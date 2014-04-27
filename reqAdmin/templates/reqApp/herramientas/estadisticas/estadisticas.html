@@ -1,5 +1,4 @@
 {% extends "reqApp/base.html" %}
-{% load reqApp_tags %}
 
 {% block body %}
 <br/>
@@ -17,10 +16,10 @@
 <table class="estadisticas">
     <tr>
         <th colspan=2>RU</th>
-        <th>cumple</th>
-        <th>no cumple</th>
-        <th>ambiguo</th>
-        <th>total</th>
+        <th class="estadisticas">cumple</th>
+        <th class="estadisticas">no cumple</th>
+        <th class="estadisticas">ambiguo</th>
+        <th class="estadisticas">total</th>
     </tr>
     {% for atributo in RU.atributos %}
         {% for tr in atributo %}
@@ -34,16 +33,16 @@
                 <td>{{ tr.cumple }}</td>
                 <td>{{ tr.no_cumple }}</td>
                 <td>{{ tr.ambiguo }}</td>
-                <td>{{ tr.total }}</td>
+                <td>{{ tr.total }}{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=RU.total parte=tr.total %}</td>
             </tr>
         {% endfor %}
     {% endfor %}
     <tr class="estadisticas">
         <td colspan=2></td>
-        <td>{{ RU.estado.cumple }}</td>
-        <td>{{ RU.estado.no_cumple }}</td>
-        <td>{{ RU.estado.ambiguo }}</td>
-        <td><b>{{ RU.total }}</b></td>
+        <td>{{ RU.estado.cumple }}{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=RU.total parte=RU.estado.cumple %}</td>
+        <td>{{ RU.estado.no_cumple }}{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=RU.total parte=RU.estado.no_cumple %}</td>
+        <td>{{ RU.estado.ambiguo }}{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=RU.total parte=RU.estado.ambiguo %}</td>
+        <td><b>{{ RU.total }}</b>{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=RU.total parte=RU.total %}</td>
     </tr>
     {% for e in RU.extras %}
         <tr>
@@ -58,10 +57,10 @@
 <table class="estadisticas">
     <tr>
         <th colspan=2>RS</th>
-        <th>cumple</th>
-        <th>no cumple</th>
-        <th>ambiguo</th>
-        <th>total</th>
+        <th class="estadisticas">cumple</th>
+        <th class="estadisticas">no cumple</th>
+        <th class="estadisticas">ambiguo</th>
+        <th class="estadisticas">total</th>
     </tr>
     {% for atributo in RS.atributos %}
         {% for tr in atributo %}
@@ -75,16 +74,16 @@
                 <td>{{ tr.cumple }}</td>
                 <td>{{ tr.no_cumple }}</td>
                 <td>{{ tr.ambiguo }}</td>
-                <td>{{ tr.total }}</td>
+                <td>{{ tr.total }}{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=RS.total parte=tr.total %}</td>
             </tr>
         {% endfor %}
     {% endfor %}
     <tr class="estadisticas">
         <td colspan=2></td>
-        <td>{{ RS.estado.cumple }}</td>
-        <td>{{ RS.estado.no_cumple }}</td>
-        <td>{{ RS.estado.ambiguo }}</td>
-        <td><b>{{ RS.total }}</b></td>
+        <td>{{ RS.estado.cumple }}{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=RS.total parte=RS.estado.cumple %}</td>
+        <td>{{ RS.estado.no_cumple }}{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=RS.total parte=RS.estado.no_cumple %}</td>
+        <td>{{ RS.estado.ambiguo }}{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=RS.total parte=RS.estado.ambiguo %}</td>
+        <td><b>{{ RS.total }}</b>{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=RS.total parte=RS.total %}</td>
     </tr>
     {% for e in RS.extras %}
         <tr>
@@ -99,10 +98,10 @@
 <table class="estadisticas">
     <tr>
         <th colspan=2>CP</th>
-        <th>cumple</th>
-        <th>no cumple</th>
-        <th>ambiguo</th>
-        <th>total</th>
+        <th class="estadisticas">cumple</th>
+        <th class="estadisticas">no cumple</th>
+        <th class="estadisticas">ambiguo</th>
+        <th class="estadisticas">total</th>
     </tr>
     {% for atributo in CP.atributos %}
         {% for tr in atributo %}
@@ -111,16 +110,16 @@
                 <td>{{ tr.cumple }}</td>
                 <td>{{ tr.no_cumple }}</td>
                 <td>{{ tr.ambiguo }}</td>
-                <td>{{ tr.total }}</td>
+                <td>{{ tr.total }}{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=CP.total parte=tr.total %}</td>
             </tr>
         {% endfor %}
     {% endfor %}
     <tr class="estadisticas">
         <td colspan=2></td>
-        <td>{{ CP.estado.cumple }}</td>
-        <td>{{ CP.estado.no_cumple }}</td>
-        <td>{{ CP.estado.ambiguo }}</td>
-        <td><b>{{ CP.total }}</b></td>
+        <td>{{ CP.estado.cumple }}{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=CP.total parte=CP.estado.cumple %}</td>
+        <td>{{ CP.estado.no_cumple }}{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=CP.total parte=CP.estado.no_cumple %}</td>
+        <td>{{ CP.estado.ambiguo }}{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=CP.total parte=CP.estado.ambiguo %}</td>
+        <td><b>{{ CP.total }}</b>{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=CP.total parte=CP.total %}</td>
     </tr>
     {% for e in CP.extras %}
         <tr>
@@ -135,7 +134,7 @@
 <table class="estadisticas">
     <tr>
         <th colspan=2>MD</th>
-        <th>total</th>
+        <th class="estadisticas">total</th>
     </tr>
     {% for atributo in MD.atributos %}
         {% for tr in atributo %}
@@ -146,13 +145,13 @@
             <tr>
             {% endif %}
                 <td>{{ tr.nombre }}</td>
-                <td>{{ tr.total }}</td>
+                <td>{{ tr.total }}{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=MD.total parte=tr.total %}</td>
             </tr>
         {% endfor %}
     {% endfor %}
     <tr class="estadisticas">
         <td colspan=2></td>
-        <td><b>{{ MD.total }}</b></td>
+        <td><b>{{ MD.total }}</b>{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=MD.total parte=MD.total %}</td>
     </tr>
     {% for e in MD.extras %}
         <tr>

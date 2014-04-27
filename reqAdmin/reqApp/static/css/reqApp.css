@@ -302,10 +302,14 @@ margin:0px;
 border-collapse:collapse;
 border-spacing: 0px;
 border: 1px solid LightGray;
-padding:2px;
+padding:3px;
 margin:0px;
 }
 tr.estadisticas
 {
 border-top: 3px solid LightGray;
+}
+th.estadisticas
+{
+width:6em;
 }
