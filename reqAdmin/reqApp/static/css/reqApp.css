@@ -279,3 +279,13 @@ background-color:#1464F6;
 {
 background-color: #ffdddd;
 }
+
+/* tabla de estadisticas */
+table.estadisticas, .estadisticas td, .estadisticas th
+{
+border-collapse:collapse;
+border-spacing: 0px;
+border: 1px solid Black;
+margin:0px;
+padding:0px;
+}

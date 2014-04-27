@@ -14,10 +14,9 @@
 
 <br/>
 
-<table>
+<table class="estadisticas">
     <tr>
-        <th>RU</th>
-        <th></th>
+        <th colspan=2>RU</th>
         <th>cumple</th>
         <th>no cumple</th>
         <th>ambiguo</th>
@@ -26,7 +25,9 @@
     {% for atributo in RU.atributos %}
         {% for tr in atributo %}
             <tr>
-                <td>{{ tr.atributo }}</td>
+                {% if tr.atributo %}
+                    <th rowspan={{ tr.atributos }}>{{ tr.atributo }}</th>
+                {% endif %}
                 <td>{{ tr.nombre }}</td>
                 <td>{{ tr.cumple }}</td>
                 <td>{{ tr.no_cumple }}</td>
@@ -36,8 +37,7 @@
         {% endfor %}
     {% endfor %}
     <tr>
-        <td></td>
-        <td></td>
+        <td colspan=2></td>
         <td>{{ RU.estado.cumple }}</td>
         <td>{{ RU.estado.no_cumple }}</td>
         <td>{{ RU.estado.ambiguo }}</td>
@@ -45,7 +45,7 @@
     </tr>
     {% for e in RU.extras %}
         <tr>
-            <td>{{ e.nombre }}</td>
+            <th>{{ e.nombre }}</th>
             <td>{{ e.cantidad }}</td>
         </tr>
     {% endfor %}
@@ -53,10 +53,9 @@
 
 <br/>
 
-<table>
+<table class="estadisticas">
     <tr>
-        <th>RS</th>
-        <th></th>
+        <th colspan=2>RS</th>
         <th>cumple</th>
         <th>no cumple</th>
         <th>ambiguo</th>
@@ -65,7 +64,9 @@
     {% for atributo in RS.atributos %}
         {% for tr in atributo %}
             <tr>
-                <td>{{ tr.atributo }}</td>
+                {% if tr.atributo %}
+                    <th rowspan={{ tr.atributos }}>{{ tr.atributo }}</th>
+                {% endif %}
                 <td>{{ tr.nombre }}</td>
                 <td>{{ tr.cumple }}</td>
                 <td>{{ tr.no_cumple }}</td>
@@ -75,8 +76,7 @@
         {% endfor %}
     {% endfor %}
     <tr>
-        <td></td>
-        <td></td>
+        <td colspan=2></td>
         <td>{{ RS.estado.cumple }}</td>
         <td>{{ RS.estado.no_cumple }}</td>
         <td>{{ RS.estado.ambiguo }}</td>
@@ -84,7 +84,7 @@
     </tr>
     {% for e in RS.extras %}
         <tr>
-            <td>{{ e.nombre }}</td>
+            <th>{{ e.nombre }}</th>
             <td>{{ e.cantidad }}</td>
         </tr>
     {% endfor %}
@@ -92,10 +92,9 @@
 
 <br/>
 
-<table>
+<table class="estadisticas">
     <tr>
-        <th>CP</th>
-        <th></th>
+        <th colspan=2>CP</th>
         <th>cumple</th>
         <th>no cumple</th>
         <th>ambiguo</th>
@@ -104,8 +103,7 @@
     {% for atributo in CP.atributos %}
         {% for tr in atributo %}
             <tr>
-                <td>{{ tr.atributo }}</td>
-                <td>{{ tr.nombre }}</td>
+                <th colspan=2>{{ tr.nombre }}</th>
                 <td>{{ tr.cumple }}</td>
                 <td>{{ tr.no_cumple }}</td>
                 <td>{{ tr.ambiguo }}</td>
@@ -114,8 +112,7 @@
         {% endfor %}
     {% endfor %}
     <tr>
-        <td></td>
-        <td></td>
+        <td colspan=2></td>
         <td>{{ CP.estado.cumple }}</td>
         <td>{{ CP.estado.no_cumple }}</td>
         <td>{{ CP.estado.ambiguo }}</td>
@@ -123,7 +120,7 @@
     </tr>
     {% for e in CP.extras %}
         <tr>
-            <td>{{ e.nombre }}</td>
+            <th>{{ e.nombre }}</th>
             <td>{{ e.cantidad }}</td>
         </tr>
     {% endfor %}
@@ -131,29 +128,29 @@
 
 <br/>
 
-<table>
+<table class="estadisticas">
     <tr>
-        <th>MD</th>
-        <th></th>
+        <th colspan=2>MD</th>
         <th>total</th>
     </tr>
     {% for atributo in MD.atributos %}
         {% for tr in atributo %}
             <tr>
-                <td>{{ tr.atributo }}</td>
+                {% if tr.atributo %}
+                    <th rowspan={{ tr.atributos }}>{{ tr.atributo }}</th>
+                {% endif %}
                 <td>{{ tr.nombre }}</td>
                 <td>{{ tr.total }}</td>
             </tr>
         {% endfor %}
     {% endfor %}
     <tr>
-        <td></td>
-        <td></td>
+        <td colspan=2></td>
         <td>{{ MD.total }}</td>
     </tr>
     {% for e in MD.extras %}
         <tr>
-            <td>{{ e.nombre }}</td>
+            <th>{{ e.nombre }}</th>
             <td>{{ e.cantidad }}</td>
         </tr>
     {% endfor %}
@@ -165,6 +162,9 @@
     *Los Módulos no se encuentran asociados a un Hito específico, en esta gráfica se muestran todos los MD asociados al proyecto.
 </div>
 <div>
-    **No se contabilizan elementos con conflictos (sin Hito asociado o con referencias caducadas)
+    **No se contabilizan RU ni RS sin Hito asociado.
+</div>
+<div>
+    ***Se contabilizan sólo los CP asociados a los requisitos contabilizados aquí.
 </div>
 {% endblock %}
