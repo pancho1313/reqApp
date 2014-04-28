@@ -3,6 +3,8 @@ from django import forms
 from reqApp.models import *
 from django.utils import timezone
 
+from tinymce.widgets import TinyMCE
+
 class ProyectoForm(forms.ModelForm):
     class Meta:
         model = Proyecto
@@ -193,3 +195,12 @@ class HTForm(BitacoraForm):
             'descripcion': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
             'nombre': forms.TextInput(attrs={'size': 80}),
         }
+        
+        
+        
+class FlatPageForm(forms.ModelForm):
+    class Meta:
+        model = MCEModel
+        fields = [
+            'my_mce',
+        ]

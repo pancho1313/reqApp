@@ -20,4 +20,6 @@ urlpatterns = patterns('',
     url(r'^herramientas/matrices/$', views.matrices, name='matrices'),
     url(r'^herramientas/consistencia/$', views.consistencia, name='consistencia'),
     url(r'^herramientas/bitacora/$', views.bitacora, name='bitacora'),
+    
+    url(r'^mce/$', views.viewMCE, name='TinyMCE'),
 )

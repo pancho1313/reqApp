@@ -620,3 +620,10 @@ def bitacora(request):
         'identificador':identificador,
     }
     return render(request, 'reqApp/herramientas/bitacora/bitacora.html', context)
+    
+############################### MCE ##########################
+def viewMCE(request):
+    context = {
+        'form':FlatPageForm(),
+    }
+    return render(request, 'reqApp/mce.html', context)

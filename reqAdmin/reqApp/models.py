@@ -6,6 +6,8 @@ from django.db.models.signals import post_save
 from reqApp.choices import *
 from django.utils import timezone
 
+from tinymce import models as tinymce_models
+
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=64)
     descripcion = models.CharField(max_length=140)
@@ -345,3 +347,7 @@ class Modulo(Bitacora):
     def copiarM2MVigentes(self, m2mVigentesDicc):
         # aca se realiza la copia de las referencias m2m que son vigentes
         self.requisitosSoftware = m2mVigentesDicc['requisitosSoftware']
+        
+# Tiny-mce
+class MCEModel(models.Model):
+    my_mce = tinymce_models.HTMLField()
