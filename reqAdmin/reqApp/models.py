@@ -351,3 +351,4 @@ class Modulo(Bitacora):
 # Tiny-mce
 class MCEModel(models.Model):
     my_mce = tinymce_models.HTMLField()
+    #my_mce = models.TextField()

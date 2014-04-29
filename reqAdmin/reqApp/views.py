@@ -623,7 +623,17 @@ def bitacora(request):
     
 ############################### MCE ##########################
 def viewMCE(request):
+    instance = None
+    if request.method == 'POST':
+        form = FlatPageForm(request.POST)
+        if form.is_valid():
+            for mce in MCEModel.objects.all():
+                mce.delete()
+            instance = form.save().my_mce
+    elif request.method == 'GET':
+        form = FlatPageForm()
     context = {
-        'form':FlatPageForm(),
+        'form':form,
+        'instance':instance
     }
     return render(request, 'reqApp/mce.html', context)

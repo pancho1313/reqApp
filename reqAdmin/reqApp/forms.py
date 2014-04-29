@@ -204,3 +204,6 @@ class FlatPageForm(forms.ModelForm):
         fields = [
             'my_mce',
         ]
+        widgets = {
+            'my_mce': TinyMCE(attrs={'cols': 80, 'rows': 30})
+        }
