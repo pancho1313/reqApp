@@ -358,4 +358,4 @@ class MCEModel(models.Model):
 # redactor
 from redactor.fields import RedactorField
 class RedactorModel(models.Model):
-    short_text = RedactorField(verbose_name=u'texto')
+    short_text = RedactorField(verbose_name=u'texto',redactor_options={'lang': 'en'})

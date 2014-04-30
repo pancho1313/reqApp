@@ -101,7 +101,7 @@ TINYMCE_JS_URL = os.path.join(STATIC_URL, "js/tiny_mce/tiny_mce.js")
 TINYMCE_JS_ROOT = os.path.join(STATIC_URL, "js/tiny_mce/")
 """
 
-# redactor
-JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'#STATIC_URL + 'js/jquery.js'
+# redactor (con JQuery >= 1.9 hay problemas con propiedades deprecadas como $.browser)
+JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js'#STATIC_URL + 'js/jquery.js'
 REDACTOR_OPTIONS = {'lang': 'en'}
 REDACTOR_UPLOAD = 'uploads/'
