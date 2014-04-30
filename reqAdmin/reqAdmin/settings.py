@@ -37,7 +37,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'reqApp',
-    'tinymce',
+    #'tinymce',
+    #'filebrowser',
+    'redactor',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -88,8 +90,18 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = '/static/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
-# 
+"""
+# Tiny-mce
 TINYMCE_JS_URL = os.path.join(STATIC_URL, "js/tiny_mce/tiny_mce.js")
 TINYMCE_JS_ROOT = os.path.join(STATIC_URL, "js/tiny_mce/")
+"""
+
+# redactor
+JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'#STATIC_URL + 'js/jquery.js'
+REDACTOR_OPTIONS = {'lang': 'en'}
+REDACTOR_UPLOAD = 'uploads/'

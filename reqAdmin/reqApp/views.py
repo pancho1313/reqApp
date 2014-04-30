@@ -622,6 +622,8 @@ def bitacora(request):
     return render(request, 'reqApp/herramientas/bitacora/bitacora.html', context)
     
 ############################### MCE ##########################
+"""
+# Tiny-mce
 def viewMCE(request):
     instance = None
     if request.method == 'POST':
@@ -637,3 +639,20 @@ def viewMCE(request):
         'instance':instance
     }
     return render(request, 'reqApp/mce.html', context)
+"""
+# redactor
+def viewRedactor(request):
+    instance = None
+    if request.method == 'POST':
+        form = RedactorForm(request.POST)
+        if form.is_valid():
+            for mce in RedactorModel.objects.all():
+                mce.delete()
+            instance = form.save().my_mce
+    elif request.method == 'GET':
+        form = RedactorForm()
+    context = {
+        'form':form,
+        'instance':instance
+    }
+    return render(request, 'reqApp/redactor.html', context)

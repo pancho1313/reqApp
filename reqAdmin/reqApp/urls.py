@@ -21,5 +21,6 @@ urlpatterns = patterns('',
     url(r'^herramientas/consistencia/$', views.consistencia, name='consistencia'),
     url(r'^herramientas/bitacora/$', views.bitacora, name='bitacora'),
     
-    url(r'^mce/$', views.viewMCE, name='TinyMCE'),
+    #url(r'^mce/$', views.viewMCE, name='TinyMCE'),
+    url(r'^mce/$', views.viewRedactor, name='MyRedactor'),
 )

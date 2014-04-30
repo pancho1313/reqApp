@@ -197,7 +197,8 @@ class HTForm(BitacoraForm):
         }
         
         
-        
+"""
+# TinyMCE
 class FlatPageForm(forms.ModelForm):
     class Meta:
         model = MCEModel
@@ -205,5 +206,13 @@ class FlatPageForm(forms.ModelForm):
             'my_mce',
         ]
         widgets = {
-            'my_mce': TinyMCE(attrs={'cols': 80, 'rows': 30})
+            'my_mce': TinyMCE(attrs={'cols': 80, 'rows': 30},mce_attrs={'plugins':'image'})
         }
+"""
+
+class RedactorForm(forms.ModelForm):
+    class Meta:
+        model=RedactorModel
+        fields = [
+            'short_text',
+        ]
