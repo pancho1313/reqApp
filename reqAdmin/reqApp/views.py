@@ -648,7 +648,7 @@ def viewRedactor(request):
         if form.is_valid():
             for mce in RedactorModel.objects.all():
                 mce.delete()
-            instance = form.save().my_mce
+            instance = form.save().short_text
     elif request.method == 'GET':
         form = RedactorForm()
     context = {

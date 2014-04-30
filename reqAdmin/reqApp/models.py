@@ -358,4 +358,16 @@ class MCEModel(models.Model):
 # redactor
 from redactor.fields import RedactorField
 class RedactorModel(models.Model):
-    short_text = RedactorField(verbose_name=u'texto',redactor_options={'lang': 'en'})
+    short_text = RedactorField(
+        verbose_name=u'texto',
+        # http://imperavi.com/redactor/docs/settings
+        redactor_options={
+            'lang': 'en',
+            'boldTag':'b',
+            'focus':True,
+            'imageTabLink':False,
+            'italicTag':'i',
+            'linebreaks':False,
+            'pastePlainText':True,
+        }
+    )
