@@ -1,0 +1,18 @@
+{% extends "reqApp/base.html" %}
+{% block body %}
+
+<br/>
+<div>
+    <div style="display: inline-block;width:auto;background-color:Red">
+        <div class="parrafos">
+            <ul>
+            {% for pa in parrafos %}
+                <li><a name="parrafo" {% ifequal parrafo pa.0 %} class="selec" {% endifequal %} href="?parrafo={{ pa.0 }}">{{ pa.1 }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div style="display: inline-block;width:auto;background-color:Green">p</div>
+</div>
+
+{% endblock %}

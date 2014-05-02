@@ -181,10 +181,15 @@ def viewHT(request):
     
 ################################# Documentos #############################
 def docView(request, navbar):
+    parrafo =  request.GET.get('parrafo', PARRAFOS_CHOICES[0][0])
+    
     context = {
         'navbar':navbar,
+        'parrafos':PARRAFOS_CHOICES,
+        'parrafo':parrafo,
     }
-    return render(request, 'reqApp/documentos.html', context)
+    
+    return render(request, 'reqApp/documentos/documentos.html', context)
 
 def docRequisitos(request):
     navbar = {'1':'documentos', '2':'requisitos'}

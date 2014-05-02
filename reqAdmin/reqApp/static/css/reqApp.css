@@ -313,3 +313,38 @@ th.estadisticas
 {
 width:6em;
 }
+
+/* barra de navegación de párrafos de Documentos */
+.parrafos ul
+{
+list-style-type:none;
+margin:0;
+padding:0;
+overflow:hidden;
+}
+
+.parrafos li
+{
+}
+
+.parrafos a:link, .parrafos a:visited
+{
+display:block;
+width:auto;
+color:Black;
+background-color:White;
+text-align:center;
+padding:1px;
+text-decoration:none;
+border: 1px solid LightGray;
+}
+
+.parrafos a:hover, .parrafos  a:active
+{
+background-color:#F7F6F6;
+}
+
+a.selec[name='parrafo']
+{
+background-color:#D6D6D6;
+}

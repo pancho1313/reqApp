@@ -38,3 +38,24 @@ ESTADO_CHOICES = [
     ("no_cumple", "no cumple"),
     ("ambiguo", "ambiguo"),
 ]
+
+PARRAFOS_CHOICES = [
+    ("introduccion", "Introducción"),
+    ("proposito", "Propósito"),
+    ("alcance", "Alcance"),
+    ("contexto", "Contexto"),
+    ("definiciones", "Definiciones"),
+    ("referencias", "Referencias"),
+    ("descripcion_general", "Descripción General"),
+    ("usuarios", "Usuarios"),
+    ("producto", "Producto"),
+    ("ambiente", "Ambiente"),
+    ("proyectos_relacionados", "Proyectos Relacionados"),
+    ("modelo", "Modelo"),
+    ("diseno", "Diseño"),
+    ("arquitectura_fisica", "Arquitectura Física"),
+    ("arquitectura_logica", "Arquitectura Lógica"),
+    ("detalle_modulos", "Detalle Módulos"),
+    ("navegacion", "Navegación"),
+    ("interfaz", "Interfaz"),
+]
