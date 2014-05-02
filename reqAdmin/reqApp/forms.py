@@ -216,3 +216,13 @@ class RedactorForm(forms.ModelForm):
         fields = [
             'short_text',
         ]
+        
+class DocForm(forms.ModelForm):
+    def registrarDocumento(self, proyecto, usuario, tipoParrafo):
+        (self.save(commit=False)).registrarDocumento(proyecto, usuario, tipoParrafo)
+        
+    class Meta:
+        model=Documento
+        fields = [
+            'parrafo',
+        ]

@@ -360,7 +360,7 @@ class MCEModel(models.Model):
 from redactor.fields import RedactorField
 class RedactorModel(models.Model):
     short_text = RedactorField(
-        #verbose_name=u'texto',
+        #verbose_name=u'texto', # nombre del campo usando el tag {{form}}
         # http://imperavi.com/redactor/docs/settings
         redactor_options={
             'lang': 'en',
@@ -373,11 +373,22 @@ class RedactorModel(models.Model):
         }
     )
     
+class DocsManager(models.Manager):
+    def versiones(self, proyecto, tipoParrafo):
+        return self.model.objects.filter(proyecto=proyecto).filter(tipo=tipoParrafo).order_by('-fecha')
+        
+    def vigente(self, proyecto, tipoParrafo):
+        try:
+            resp = self.model.objects.filter(proyecto=proyecto).filter(tipo=tipoParrafo).order_by('-fecha')[:1].get()
+        except self.model.DoesNotExist:
+            resp = None
+        return resp
+
 class Documento(models.Model):
     parrafo = RedactorField(
         # http://imperavi.com/redactor/docs/settings
         redactor_options={
-            'lang': 'en',
+            'lang':'en',
             'boldTag':'b',
             'focus':True,
             'imageTabLink':False,
@@ -386,3 +397,17 @@ class Documento(models.Model):
             'pastePlainText':True,
         }
     )
+    proyecto = models.ForeignKey(Proyecto, null=False)
+    fecha = models.DateTimeField()
+    usuario = models.ForeignKey(User) # TODO referenciar al User correcto
+    tipo = models.CharField(max_length=30, choices=PARRAFOS_CHOICES)
+    
+    objects = DocsManager()
+    
+    def registrarDocumento(self, proyecto, usuario, tipoParrafo):
+        self.proyecto = proyecto
+        self.usuario = usuario
+        self.tipo = tipoParrafo
+        self.fecha = timezone.now()
+        
+        self.save()

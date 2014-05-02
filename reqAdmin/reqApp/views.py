@@ -181,18 +181,36 @@ def viewHT(request):
     
 ################################# Documentos #############################
 def docView(request, navbar, activos):
-    parrafo =  request.GET.get('parrafo', PARRAFOS_CHOICES[0][0])
+    usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
+    proyecto = proyectoDeUsuario(usuario)
+
+    parrafo =  request.GET.get('parrafo', PARRAFOS_CHOICES[0][0]) # TODO valor por defecto si no corresponde a ningun tipo de parrafo conocido
     parrafos = []
     for pa in PARRAFOS_CHOICES:
         activo = False
         if pa[0] in activos:
             activo = True
         parrafos.append({'tipo':pa[0], 'nombre':pa[1], 'activo':activo})
+    
     context = {
         'navbar':navbar,
         'parrafos':parrafos,
         'parrafo':parrafo,
     }
+    
+    if request.method == 'POST':
+        form = DocForm(request.POST)
+        if form.is_valid():
+            form.registrarDocumento(proyecto, usuario, parrafo)
+            
+    vigente = Documento.objects.vigente(proyecto, parrafo)
+    if vigente != None:
+        form = DocForm(instance=vigente)
+        context.update({'vigente':vigente,})
+    else:
+        form = DocForm()
+        
+    context.update({'form':form,})
     
     return render(request, 'reqApp/documentos/documentos.html', context)
 
@@ -208,15 +226,33 @@ def docRequisitos(request):
     
 def docDiseno(request):
     navbar = {'1':'documentos', '2':'diseno'}
-    return docView(request, navbar)
+    parrafos = [
+        'introduccion',
+        'proposito',
+        'alcance',
+        'contexto',
+    ]
+    return docView(request, navbar, parrafos)
     
 def docCP(request):
     navbar = {'1':'documentos', '2':'cp'}
-    return docView(request, navbar)
+    parrafos = [
+        'introduccion',
+        'proposito',
+        'alcance',
+        'contexto',
+    ]
+    return docView(request, navbar, parrafos)
 
 def docHistorico(request):
     navbar = {'1':'documentos', '2':'historico'}
-    return docView(request, navbar)
+    parrafos = [
+        'introduccion',
+        'proposito',
+        'alcance',
+        'contexto',
+    ]
+    return docView(request, navbar, parrafos)
 
 ############################### Herramientas ##########################
 def herrView(request, navbar):
