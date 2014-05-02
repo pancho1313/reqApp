@@ -348,3 +348,15 @@ a.selec[name='parrafo']
 {
 background-color:#D6D6D6;
 }
+
+.parrafos span
+{
+display:block;
+width:auto;
+color:Gray;
+background-color:White;
+text-align:center;
+padding:1px;
+text-decoration:none;
+border: 1px solid LightGray;
+}

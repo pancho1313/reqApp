@@ -3,11 +3,15 @@
 
 <br/>
 <div>
-    <div style="display: inline-block;width:auto;background-color:Red">
+    <div style="display: inline-block;width:auto;">
         <div class="parrafos">
             <ul>
             {% for pa in parrafos %}
-                <li><a name="parrafo" {% ifequal parrafo pa.0 %} class="selec" {% endifequal %} href="?parrafo={{ pa.0 }}">{{ pa.1 }}</a></li>
+                {% if pa.activo %}
+                    <li><a name="parrafo" {% ifequal parrafo pa.tipo %} class="selec" {% endifequal %} href="?parrafo={{ pa.tipo }}">{{ pa.nombre }}</a></li>
+                {% else %}
+                    <li><span>{{ pa.nombre }}</span></li>
+                {% endif %}
             {% endfor %}
             </ul>
         </div>

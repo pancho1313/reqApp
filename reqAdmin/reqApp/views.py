@@ -180,12 +180,17 @@ def viewHT(request):
     return elementView(request, mensajes, HTForm, 'reqApp/proyecto/HT/HT.html', 'reqApp/proyecto/HT/HT_form.html', Hito, listaAtributos, navbar)
     
 ################################# Documentos #############################
-def docView(request, navbar):
+def docView(request, navbar, activos):
     parrafo =  request.GET.get('parrafo', PARRAFOS_CHOICES[0][0])
-    
+    parrafos = []
+    for pa in PARRAFOS_CHOICES:
+        activo = False
+        if pa[0] in activos:
+            activo = True
+        parrafos.append({'tipo':pa[0], 'nombre':pa[1], 'activo':activo})
     context = {
         'navbar':navbar,
-        'parrafos':PARRAFOS_CHOICES,
+        'parrafos':parrafos,
         'parrafo':parrafo,
     }
     
@@ -193,7 +198,13 @@ def docView(request, navbar):
 
 def docRequisitos(request):
     navbar = {'1':'documentos', '2':'requisitos'}
-    return docView(request, navbar)
+    parrafos = [
+        'introduccion',
+        'proposito',
+        'alcance',
+        'contexto',
+    ]
+    return docView(request, navbar, parrafos)
     
 def docDiseno(request):
     navbar = {'1':'documentos', '2':'diseno'}

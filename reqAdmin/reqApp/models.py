@@ -348,6 +348,7 @@ class Modulo(Bitacora):
         # aca se realiza la copia de las referencias m2m que son vigentes
         self.requisitosSoftware = m2mVigentesDicc['requisitosSoftware']
         
+############ Documentos #############
 """
 # Tiny-mce
 class MCEModel(models.Model):
@@ -359,7 +360,21 @@ class MCEModel(models.Model):
 from redactor.fields import RedactorField
 class RedactorModel(models.Model):
     short_text = RedactorField(
-        verbose_name=u'texto',
+        #verbose_name=u'texto',
+        # http://imperavi.com/redactor/docs/settings
+        redactor_options={
+            'lang': 'en',
+            'boldTag':'b',
+            'focus':True,
+            'imageTabLink':False,
+            'italicTag':'i',
+            'linebreaks':False,
+            'pastePlainText':True,
+        }
+    )
+    
+class Documento(models.Model):
+    parrafo = RedactorField(
         # http://imperavi.com/redactor/docs/settings
         redactor_options={
             'lang': 'en',
