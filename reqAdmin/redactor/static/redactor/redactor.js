@@ -348,7 +348,7 @@ var RTOOLBAR = {};
 			this.$editor.focus();
 		},
 		syncCode: function()
-		{
+		{console.log('syncCode!');
 			var html = this.formating(this.$editor.html());
 		
 			this.$el.val(html);
@@ -403,6 +403,7 @@ var RTOOLBAR = {};
 		// OBSERVERS		
 		observeImages: function()
 		{
+		    
 			if ($.browser.mozilla) this.doc.execCommand("enableObjectResizing", false, "false");	
 			
 			$(this.doc).find('img').attr('unselectable', 'on').each($.proxy(function(i,s)
@@ -410,7 +411,7 @@ var RTOOLBAR = {};
 				this.resizeImage(s);
 				
 			}, this));
-		
+		    
 		},	
 		observeScroll: function()
 		{
@@ -1261,7 +1262,7 @@ var RTOOLBAR = {};
 			
 			$(resize).click($.proxy(function(e)
 			{			
-				if (clicker) this.imageEdit(e);
+				/*if (clicker) this.imageEdit(e);*/
 	
 			}, this));		
 									
@@ -1275,6 +1276,7 @@ var RTOOLBAR = {};
 					var mouse_y = Math.round(e.pageY - $(this).eq(0).offset().top) - start_y;
 					
 					var div_h = $(resize).height();
+					var div_w = $(resize).width();
 					
 					var new_h = parseInt(div_h)+mouse_y;	
 					var new_w = new_h*ratio;

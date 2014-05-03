@@ -2,6 +2,8 @@
 {% block body %}
 
 <br/>
+<button class="boton_azul" onclick="expandirContraerElemento('parrafo');expandirContraerElemento('preview');">Editar</button>
+<br/>
 <div>
     <div style="display: inline-block;width:7em;vertical-align:top;">
         <div class="parrafos">
@@ -16,7 +18,11 @@
             </ul>
         </div>
     </div>
-    <div style="display: inline-block;width:auto;background-color:Green;vertical-align:top;">{% include "reqApp/documentos/docForm.html" %}</div>
+    <div style="display: inline-block;width:auto;background-color:Green;vertical-align:top;">
+        <div>{{ vigente.fecha }} :: {{ vigente.usuario }}</div>
+        <div style='' id='parrafo'>{% include "reqApp/documentos/docForm.html" %}</div>
+        <div id='preview'>{{ vigente.parrafo|safe }}</div>
+    </div>
 </div>
 
 {% endblock %}

@@ -395,6 +395,7 @@ class Documento(models.Model):
             'italicTag':'i',
             'linebreaks':False,
             'pastePlainText':True,
+            'toolbar':'reduced',
         }
     )
     proyecto = models.ForeignKey(Proyecto, null=False)

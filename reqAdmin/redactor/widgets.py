@@ -16,7 +16,7 @@ INIT_JS = """<script type="text/javascript">
     """
 
 redactor_js = [
-    'redactor/redactor.min.js',
+    'redactor/redactor.js',#'redactor/redactor.min.js',
 ]
 
 if JQUERY_URL:

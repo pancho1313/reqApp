@@ -30,6 +30,7 @@ var RLANG = {
 	indent: 'Indent',
 	redo: 'Redo',
 	undo: 'Undo',
+	underline: 'Underline',
 	cut: 'Cut',
 	cancel: 'Cancel',	
 	insert: 'Insert',

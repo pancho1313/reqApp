@@ -1,9 +1,8 @@
 {{ form.media }}
-{{ vigente.fecha }} :: {{ vigente.usuario }}
+<div>
 <form action="" method="post">
 {% csrf_token %}
 {{form.parrafo}}
 <div><button class="boton_azul" type="submit">Guardar</button></div>
 </form>
-<br/>
-{{ vigente.parrafo|safe }}
+</div>
