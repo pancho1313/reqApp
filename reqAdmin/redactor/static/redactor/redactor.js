@@ -1271,17 +1271,22 @@ var RTOOLBAR = {};
 				if (clicked)
 				{
 					clicker = false;
-				
+				    /*
 					var mouse_x = Math.round(e.pageX - $(this).eq(0).offset().left) - start_x;
 					var mouse_y = Math.round(e.pageY - $(this).eq(0).offset().top) - start_y;
 					
 					var div_h = $(resize).height();
-					var div_w = $(resize).width();
 					
 					var new_h = parseInt(div_h)+mouse_y;	
 					var new_w = new_h*ratio;
+					*/
+					var div_h = $(resize).height();
+					var end_x = Math.round(e.pageX - $(this).eq(0).offset().left);
+					var end_y = Math.round(e.pageY - $(this).eq(0).offset().top);
+					var scl = ((end_x*end_x)+(end_y*end_y))/((start_x*start_x)+(start_y*start_y));
 					
-							
+					var new_h = parseInt(div_h)*scl;	
+					var new_w = new_h*ratio;
 					
 					if(x==1 || (typeof(x) == "number" && new_w < x && new_w > min_w) ){ $(resize).width(new_w); }
 					if(y==1 || (typeof(y) == "number" && new_h < y && new_h > min_h) ){ $(resize).height(new_h); }
