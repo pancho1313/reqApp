@@ -454,7 +454,7 @@ var RTOOLBAR = {};
 		
 		// EXECCOMMAND		
 		execCommand: function(cmd, param)
-		{		
+		{
 			if (this.opts.visual && this.doc)
 			{
 
@@ -467,6 +467,7 @@ var RTOOLBAR = {};
 	    			else   			
 					{											
 						this.doc.execCommand(cmd, false, param);
+						console.log('execCommand: ');
 					}
 					
 					this.syncCode();
