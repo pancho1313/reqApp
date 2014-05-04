@@ -674,7 +674,7 @@ def bitacora(request):
     return render(request, 'reqApp/herramientas/bitacora/bitacora.html', context)
     
 ############################### MCE ##########################
-"""
+
 # Tiny-mce
 def viewMCE(request):
     instance = None
@@ -708,3 +708,4 @@ def viewRedactor(request):
         'instance':instance
     }
     return render(request, 'reqApp/redactor.html', context)
+"""

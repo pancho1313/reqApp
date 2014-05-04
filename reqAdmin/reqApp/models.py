@@ -6,7 +6,6 @@ from django.db.models.signals import post_save
 from reqApp.choices import *
 from django.utils import timezone
 
-#from tinymce import models as tinymce_models
 
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=64)
@@ -349,13 +348,14 @@ class Modulo(Bitacora):
         self.requisitosSoftware = m2mVigentesDicc['requisitosSoftware']
         
 ############ Documentos #############
-"""
+
 # Tiny-mce
+from tinymce import models as tinymce_models
 class MCEModel(models.Model):
     my_mce = tinymce_models.HTMLField()
     #my_mce = models.TextField()
-"""
 
+"""
 # redactor
 from redactor.fields import RedactorField
 class RedactorModel(models.Model):
@@ -372,7 +372,8 @@ class RedactorModel(models.Model):
             'pastePlainText':True,
         }
     )
-    
+"""
+
 class DocsManager(models.Manager):
     def versiones(self, proyecto, tipoParrafo):
         return self.model.objects.filter(proyecto=proyecto).filter(tipo=tipoParrafo).order_by('-fecha')
@@ -385,6 +386,8 @@ class DocsManager(models.Manager):
         return resp
 
 class Documento(models.Model):
+    """
+    #redactor
     parrafo = RedactorField(
         # http://imperavi.com/redactor/docs/settings
         redactor_options={
@@ -398,6 +401,7 @@ class Documento(models.Model):
             'toolbar':'reduced',
         }
     )
+    """
     proyecto = models.ForeignKey(Proyecto, null=False)
     fecha = models.DateTimeField()
     usuario = models.ForeignKey(User) # TODO referenciar al User correcto

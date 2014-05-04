@@ -197,7 +197,7 @@ class HTForm(BitacoraForm):
         }
         
         
-"""
+
 # TinyMCE
 class FlatPageForm(forms.ModelForm):
     class Meta:
@@ -206,17 +206,18 @@ class FlatPageForm(forms.ModelForm):
             'my_mce',
         ]
         widgets = {
-            'my_mce': TinyMCE(attrs={'cols': 80, 'rows': 30},mce_attrs={'plugins':'image'})
+            'my_mce': TinyMCE(attrs={'cols': 80, 'rows': 30},mce_attrs={'theme':'advanced'})#TinyMCE(attrs={'cols': 80, 'rows': 30},mce_attrs={'plugins':'image'})
         }
 """
-
+# redactor
 class RedactorForm(forms.ModelForm):
     class Meta:
         model=RedactorModel
         fields = [
             'short_text',
         ]
-        
+"""
+"""
 class DocForm(forms.ModelForm):
     def registrarDocumento(self, proyecto, usuario, tipoParrafo):
         (self.save(commit=False)).registrarDocumento(proyecto, usuario, tipoParrafo)
@@ -226,3 +227,4 @@ class DocForm(forms.ModelForm):
         fields = [
             'parrafo',
         ]
+"""
