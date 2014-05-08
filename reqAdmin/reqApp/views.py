@@ -676,6 +676,7 @@ def bitacora(request):
 ############################### MCE ##########################
 
 # Tiny-mce
+from redactor.forms import ImageForm
 def viewMCE(request):
     instance = None
     if request.method == 'POST':
@@ -688,6 +689,7 @@ def viewMCE(request):
         form = FlatPageForm()
     context = {
         'form':form,
+        'imgForm':ImageForm(),
         'instance':instance
     }
     return render(request, 'reqApp/mce.html', context)

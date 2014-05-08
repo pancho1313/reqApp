@@ -25,4 +25,8 @@ def redactor_upload(request, upload_to=None, form_class=ImageForm, response=lamb
         return HttpResponse(
             response(file_.name, os.path.join(settings.MEDIA_URL, real_path))
         )
-    return HttpResponse(status=403)
+    else:
+        return HttpResponse(
+            form.errors
+        )
+    #return HttpResponse(status=403)
