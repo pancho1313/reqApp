@@ -385,8 +385,9 @@ class DocsManager(models.Manager):
             resp = None
         return resp
 
+from redactor.fields import RedactorField
 class Documento(models.Model):
-    """
+    
     #redactor
     parrafo = RedactorField(
         # http://imperavi.com/redactor/docs/settings
@@ -401,7 +402,9 @@ class Documento(models.Model):
             'toolbar':'reduced',
         }
     )
-    """
+    
+    
+    
     proyecto = models.ForeignKey(Proyecto, null=False)
     fecha = models.DateTimeField()
     usuario = models.ForeignKey(User) # TODO referenciar al User correcto

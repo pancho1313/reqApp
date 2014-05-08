@@ -39,7 +39,7 @@ INSTALLED_APPS = (
     'reqApp',
     'tinymce',
     #'filebrowser',
-    #'redactor',
+    'redactor',
     'mce_filebrowser',
     'sorl.thumbnail',
 )
@@ -105,9 +105,9 @@ TINYMCE_DEFAULT_CONFIG = {
   'file_browser_callback': 'mce_filebrowser'
 }
 
-"""
+
 # redactor (con JQuery >= 1.9 hay problemas con propiedades deprecadas como $.browser)
 JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js'#STATIC_URL + 'js/jquery.js'
 REDACTOR_OPTIONS = {'lang': 'en'}
 REDACTOR_UPLOAD = 'uploads/'
-"""
+

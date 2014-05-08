@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     #url(r'^admin/filebrowser/', include(site.urls)),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^tinymce/', include('tinymce.urls')),
-    #url(r'^redactor/', include('redactor.urls')),
+    url(r'^redactor/', include('redactor.urls')),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': False}),
     url(r'^mce_filebrowser/', include('mce_filebrowser.urls')),
 )
