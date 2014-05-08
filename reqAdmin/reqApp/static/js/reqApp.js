@@ -74,7 +74,7 @@ function validForm(event,button){
     var form = button.form;
     button.disabled = true; // deshabilitar el boton submit
 
-    event = event || window.event // cross browser
+    event = event || window.event; // cross browser
     event.preventDefault(); // para evitar recargar la pagina completa
 
     // agregar marca al post ajax
@@ -199,18 +199,19 @@ function addImgExperimental(src){
 }
 
 // ajax para insertar img en mce
-function insertMceImg(event,form){
+function insertMceImg(input,url,csrf){
 
-    event = event || window.event // cross browser
-    event.preventDefault(); // para evitar recargar la pagina completa
+    //event = event || window.event; // cross browser
+    //event.preventDefault(); // para evitar recargar la pagina completa
     
-    var file = form.elements['file'].files[0]//event.dataTransfer.files[0];
+    var file = input.files[0];//$('#imgUp')[0].files[0];
     var fd = new FormData();		        
     fd.append('file', file);
+    fd.append('csrfmiddlewaretoken', csrf);
     
     $.ajax({
-        url: "/redactor/upload/image/",
-        data: fd,//$(form).serialize(),
+        url: url,//"/upload/image/",
+        data: fd,
         type: "POST",
         cache: false,
 	    contentType: false,
@@ -225,28 +226,5 @@ function insertMceImg(event,form){
     });
     
     // evitar que se recargue la pagina
-    return false;
-    
-    /*
-    var file = event.dataTransfer.files[0];
-
-			  		var fd = new FormData();		        
-	 				fd.append('file', file); 
-	 				
-					$.ajax({
-						dataType: 'html',
-					    url: this.opts.url,
-					    data: fd,
-					    //xhr: provider,
-					    cache: false,
-					    contentType: false,
-					    processData: false,
-					    type: 'POST',
-					    success: $.proxy(function(data)
-					    {
-					    	if (this.opts.success !== false) this.opts.success(data);
-					    	if (this.opts.preview === true) this.dropareabox.html(data);
-					    }, this)
-					});	
-    */	
+    return false;	
 }

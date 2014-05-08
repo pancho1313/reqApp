@@ -239,3 +239,5 @@ class DocForm(forms.ModelForm):
             'parrafo',
         ]
 
+class MceImageForm(forms.Form):
+    file = forms.ImageField()

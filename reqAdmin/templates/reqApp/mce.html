@@ -11,10 +11,6 @@
 <br/>
 {{ instance|safe }}
 
-<button class="boton_azul" onclick="addImgExperimental('http://anakena.dcc.uchile.cl/anakena.jpg')">addIMG Test</button>
+<button class="boton_azul" onclick="addImgExperimental('/media/uploads/default.png')">addIMG Test</button>
 
-<form action="#" method="post" enctype="multipart/form-data" onsubmit="return insertMceImg(event,this)">
-    {% csrf_token %}
-    {{imgForm.file}}
-    <button class="boton_azul" type="submit">insertar</button>
-</form>
+<input type="file" onchange="insertMceImg(this, '{% url 'reqApp:mce_upload_image' %}', '{{ csrf_token }}')">

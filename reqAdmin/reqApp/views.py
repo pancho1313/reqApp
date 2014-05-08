@@ -676,7 +676,6 @@ def bitacora(request):
 ############################### MCE ##########################
 
 # Tiny-mce
-from redactor.forms import ImageForm
 def viewMCE(request):
     instance = None
     if request.method == 'POST':
@@ -689,7 +688,6 @@ def viewMCE(request):
         form = FlatPageForm()
     context = {
         'form':form,
-        'imgForm':ImageForm(),
         'instance':instance
     }
     return render(request, 'reqApp/mce.html', context)
@@ -711,3 +709,23 @@ def viewRedactor(request):
     }
     return render(request, 'reqApp/redactor.html', context)
 """
+
+import os
+from django.conf import settings
+from django.core.files.storage import default_storage
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+
+#@csrf_exempt
+@require_POST
+def imgUpload(request):
+    UPLOAD_PATH = getattr(settings, 'REDACTOR_UPLOAD', 'redactor/')
+    form = MceImageForm(request.POST, request.FILES)
+    if form.is_valid():
+        file_ = form.cleaned_data['file']
+        path = os.path.join(UPLOAD_PATH, file_.name)
+        real_path = default_storage.save(path, file_)
+        return HttpResponse(
+            os.path.join(settings.MEDIA_URL, real_path)
+        )
+    return HttpResponse(status=403)
