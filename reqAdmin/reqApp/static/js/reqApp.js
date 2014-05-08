@@ -143,3 +143,57 @@ function post_to_url(path, params, method) {
     document.body.appendChild(form);
     form.submit();
 }
+
+
+/* para probar la adicion de imagenes a tinymce */
+function addImgExperimental(src){
+    var /*f = document.forms[0], nl = f.elements,*/ ed = tinymce.EditorManager.activeEditor, args = {}, el;
+
+	//tinyMCEPopup.restoreSelection(); // IE fix boo!
+
+	if (src === '') {
+		if (ed.selection.getNode().nodeName == 'IMG') {
+			ed.dom.remove(ed.selection.getNode());
+			ed.execCommand('mceRepaint');
+		}
+
+		//tinyMCEPopup.close();
+		return;
+	}
+
+	if (!ed.settings.inline_styles) {
+		args = tinymce.extend(args, {
+			//vspace : nl.vspace.value,
+			//hspace : nl.hspace.value,
+			//border : nl.border.value,
+			//align : getSelectValue(f, 'align')
+		});
+	} else
+		args.style = this.styleVal;
+
+	tinymce.extend(args, {
+		src : src.replace(/ /g, '%20'),
+		//alt : f.alt.value,
+		//width : f.width.value,
+		//height : f.height.value
+	});
+
+	el = ed.selection.getNode();
+
+	if (el && el.nodeName == 'IMG') {
+		ed.dom.setAttribs(el, args);
+		ed.execCommand('mceRepaint');
+		ed.focus();
+	} else {
+		tinymce.each(args, function(value, name) {
+			if (value === "") {
+				delete args[name];
+			}
+		});
+
+		ed.execCommand('mceInsertContent', false, ed.dom.createHTML('img', args), {skip_undo : 1});
+		ed.undoManager.add();
+	}
+
+	//tinyMCEPopup.close();
+}

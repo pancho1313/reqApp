@@ -1,5 +1,6 @@
 var ImageDialog = {
 	preInit : function() {
+	console.log('preInit');
 		var url;
 
 		tinyMCEPopup.requireLangPack();
@@ -9,6 +10,7 @@ var ImageDialog = {
 	},
 
 	init : function() {
+	console.log('init');
 		var f = document.forms[0], ed = tinyMCEPopup.editor;
 
 		// Setup browse button
@@ -37,6 +39,7 @@ var ImageDialog = {
 	},
 
 	fillFileList : function(id, l) {
+	console.log('fillFileList');
 		var dom = tinyMCEPopup.dom, lst = dom.get(id), v, cl;
 
 		l = typeof(l) === 'function' ? l() : window[l];
@@ -52,6 +55,7 @@ var ImageDialog = {
 	},
 
 	update : function() {
+	console.log('update');
 		var f = document.forms[0], nl = f.elements, ed = tinyMCEPopup.editor, args = {}, el;
 
 		tinyMCEPopup.restoreSelection();
@@ -104,6 +108,7 @@ var ImageDialog = {
 	},
 
 	updateStyle : function() {
+	console.log('updateStyle');
 		var dom = tinyMCEPopup.dom, st = {}, v, f = document.forms[0];
 
 		if (tinyMCEPopup.editor.settings.inline_styles) {
@@ -165,6 +170,7 @@ var ImageDialog = {
 	},
 
 	getAttrib : function(e, at) {
+	console.log('getAttrib');
 		var ed = tinyMCEPopup.editor, dom = ed.dom, v, v2;
 
 		if (ed.settings.inline_styles) {
@@ -224,12 +230,14 @@ var ImageDialog = {
 	},
 
 	resetImageData : function() {
+	console.log('resetImageData');
 		var f = document.forms[0];
 
 		f.width.value = f.height.value = "";	
 	},
 
 	updateImageData : function() {
+	console.log('updateImageData');
 		var f = document.forms[0], t = ImageDialog;
 
 		if (f.width.value == "")
@@ -240,6 +248,7 @@ var ImageDialog = {
 	},
 
 	getImageData : function() {
+	console.log('getImageData');
 		var f = document.forms[0];
 
 		this.preloadImg = new Image();
@@ -251,3 +260,11 @@ var ImageDialog = {
 
 ImageDialog.preInit();
 tinyMCEPopup.onInit.add(ImageDialog.init, ImageDialog);
+/*
+preinit
+init
+filelist
+getimagedata
+updateimagedata
+update (on submit)
+*/

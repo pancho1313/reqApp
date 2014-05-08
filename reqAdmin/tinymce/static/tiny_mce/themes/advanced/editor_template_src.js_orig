@@ -1424,7 +1424,7 @@
 			// Internal image object like a flash placeholder
 			if (ed.dom.getAttrib(ed.selection.getNode(), 'class', '').indexOf('mceItem') != -1)
 				return;
-
+            console.log('ed.windowManager.open');
 			ed.windowManager.open({
 				url : this.url + '/image.htm',
 				width : 355 + parseInt(ed.getLang('advanced.image_delta_width', 0)),
