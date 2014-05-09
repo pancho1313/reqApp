@@ -360,3 +360,21 @@ padding:1px;
 text-decoration:none;
 border: 1px solid LightGray;
 }
+
+/* input file/image tinymce */
+div.tinymceImg
+{
+width: 18px;
+height: 18px;
+overflow: hidden;
+}
+
+div.tinymceImg input
+{
+display: block !important;
+width: 18px !important;
+height: 18px !important;
+opacity: 0 !important;
+overflow: hidden !important;
+cursor: pointer;
+}

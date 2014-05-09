@@ -1,6 +1,6 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/reqApp.js"></script>
-
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/reqApp.css" />
 
 <!-- fergklnñerg -->
 <script type="text/javascript" src="{{ STATIC_URL }}tiny_mce/tiny_mce.js"></script>
@@ -12,7 +12,7 @@
         var tooltip = $(id_tooltip).html();
         var _url = "{% url 'reqApp:mce_upload_image' %}";
         var _csrf = "{{ csrf_token }}";
-        $(id).replaceWith('<input id="'+id+'" title="'+tooltip+'" type="file" accept="image/*" onchange="insertMceImg(this, \''+_url+'\', \''+_csrf+'\')">');
+        $(id).replaceWith('<div class="tinymceImg" style="background:url({{ STATIC_URL }}tiny_mce/plugins/yenimg/img/smiley-cool.gif);"><input id="'+id+'" title="'+tooltip+'" type="file" accept="image/*" onchange="insertMceImg(this, \''+_url+'\', \''+_csrf+'\')"></div>');
     });
 </script>
 
