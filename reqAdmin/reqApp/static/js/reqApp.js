@@ -145,37 +145,26 @@ function post_to_url(path, params, method) {
 }
 
 
-/* para probar la adicion de imagenes a tinymce */
-function addImgExperimental(src){
-    var /*f = document.forms[0], nl = f.elements,*/ ed = tinymce.EditorManager.activeEditor, args = {}, el;
-
-	//tinyMCEPopup.restoreSelection(); // IE fix boo!
+/* adicion de imagenes a tinymce */
+function addMCEImg(src){
+    var ed = tinymce.EditorManager.activeEditor, args = {}, el;
 
 	if (src === '') {
 		if (ed.selection.getNode().nodeName == 'IMG') {
 			ed.dom.remove(ed.selection.getNode());
 			ed.execCommand('mceRepaint');
 		}
-
-		//tinyMCEPopup.close();
 		return;
 	}
 
 	if (!ed.settings.inline_styles) {
 		args = tinymce.extend(args, {
-			//vspace : nl.vspace.value,
-			//hspace : nl.hspace.value,
-			//border : nl.border.value,
-			//align : getSelectValue(f, 'align')
 		});
 	} else
 		args.style = this.styleVal;
 
 	tinymce.extend(args, {
 		src : src.replace(/ /g, '%20'),
-		//alt : f.alt.value,
-		//width : f.width.value,
-		//height : f.height.value
 	});
 
 	el = ed.selection.getNode();
@@ -194,23 +183,17 @@ function addImgExperimental(src){
 		ed.execCommand('mceInsertContent', false, ed.dom.createHTML('img', args), {skip_undo : 1});
 		ed.undoManager.add();
 	}
-
-	//tinyMCEPopup.close();
 }
 
 // ajax para insertar img en mce
 function insertMceImg(input,url,csrf){
-
-    //event = event || window.event; // cross browser
-    //event.preventDefault(); // para evitar recargar la pagina completa
-    
-    var file = input.files[0];//$('#imgUp')[0].files[0];
+    var file = input.files[0];
     var fd = new FormData();		        
     fd.append('file', file);
     fd.append('csrfmiddlewaretoken', csrf);
     
     $.ajax({
-        url: url,//"/upload/image/",
+        url: url,
         data: fd,
         type: "POST",
         cache: false,
@@ -218,13 +201,18 @@ function insertMceImg(input,url,csrf){
 	    processData: false,
         success: function(data){
             if(data != ""){
-                alert(data);
+                addMCEImg(data);
             }else{
-                alert('error');
+                alert('ERROR: insertMceImg()');
             }
        }
     });
-    
-    // evitar que se recargue la pagina
-    return false;	
+}
+
+//prompt para añadir img al mce por su url
+function promptImgURL(){
+    var url = prompt("Insert image url:", "http://anakena.dcc.uchile.cl/anakena.jpg");
+    if (url!=null) {
+        addMCEImg(url);
+    }
 }

@@ -1,7 +1,20 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}tiny_mce/tiny_mce.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}mce_filebrowser/js/filebrowser_init.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/reqApp.js"></script>
+
+
+<!-- fergklnñerg -->
+<script type="text/javascript" src="{{ STATIC_URL }}tiny_mce/tiny_mce.js"></script>
+<script>
+    // reemplazamos el boton de tinymce por nuestro input file
+    $(window).bind("load", function() {
+        var id = '#' + $('textarea')[0].id + '_browseimg';
+        var id_tooltip = id + '_voice';
+        var tooltip = $(id_tooltip).html();
+        var _url = "{% url 'reqApp:mce_upload_image' %}";
+        var _csrf = "{{ csrf_token }}";
+        $(id).replaceWith('<input id="'+id+'" title="'+tooltip+'" type="file" accept="image/*" onchange="insertMceImg(this, \''+_url+'\', \''+_csrf+'\')">');
+    });
+</script>
 
 <form action="" method="post">
 {% csrf_token %}
@@ -11,6 +24,7 @@
 <br/>
 {{ instance|safe }}
 
-<button class="boton_azul" onclick="addImgExperimental('/media/uploads/default.png')">addIMG Test</button>
-
-<input type="file" onchange="insertMceImg(this, '{% url 'reqApp:mce_upload_image' %}', '{{ csrf_token }}')">
+{% comment %}
+<input type="file" accept="image/*" onchange="insertMceImg(this, '{% url 'reqApp:mce_upload_image' %}', '{{ csrf_token }}')">
+<button class="boton_azul" onclick="promptImgURL()">URLimg</button>
+{% endcomment %}

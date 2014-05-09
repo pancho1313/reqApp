@@ -211,10 +211,10 @@ class FlatPageForm(forms.ModelForm):
                 mce_attrs={
                     'theme':'advanced',
                     'dialog_type': 'modal',
-                    #'plugins':'jbimages',
-                    #'theme_advanced_buttons1':"separator,insertdate,inserttime,preview,zoom,separator,forecolor,backcolor",
-                    #'theme_advanced_buttons2':"bullist,numlist,separator,outdent,indent,separator,undo,redo,separator",
-                    #'theme_advanced_buttons3' : "hr,removeformat,visualaid,separator,sub,sup,separator,charmap,jbimages",
+                    'plugins':'yenimg',
+                    'theme_advanced_buttons1':"separator,insertdate,inserttime,preview,zoom,separator,forecolor,backcolor",
+                    'theme_advanced_buttons2':"bullist,numlist,separator,outdent,indent,separator,undo,redo,separator",
+                    'theme_advanced_buttons3' : "hr,removeformat,visualaid,separator,sub,sup,separator,charmap,       imgurl,browseimg",
                     #'relative_urls': False,
                     #'file_browser_callback': 'filebrowser',
                     })#TinyMCE(attrs={'cols': 80, 'rows': 30},mce_attrs={'plugins':'image'})
