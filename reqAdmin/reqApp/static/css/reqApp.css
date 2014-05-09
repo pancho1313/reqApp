@@ -364,16 +364,16 @@ border: 1px solid LightGray;
 /* input file/image tinymce */
 div.tinymceImg
 {
-width: 18px;
-height: 18px;
+width: 20px;
+height: 20px;
 overflow: hidden;
 }
 
 div.tinymceImg input
 {
 display: block !important;
-width: 18px !important;
-height: 18px !important;
+width: 20px !important;
+height: 20px !important;
 opacity: 0 !important;
 overflow: hidden !important;
 cursor: pointer;

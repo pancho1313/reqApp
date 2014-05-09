@@ -203,7 +203,7 @@ function insertMceImg(input,url,csrf){
             if(data != ""){
                 addMCEImg(data);
             }else{
-                alert('ERROR: insertMceImg()');
+                alert('ERROR: archivo de imagen inválido!');
             }
        }
     });
@@ -211,7 +211,7 @@ function insertMceImg(input,url,csrf){
 
 //prompt para añadir img al mce por su url
 function promptImgURL(){
-    var url = prompt("Insert image url:", "http://anakena.dcc.uchile.cl/anakena.jpg");
+    var url = prompt("Insert Image By URL:", "http://anakena.dcc.uchile.cl/anakena.jpg");
     if (url!=null) {
         addMCEImg(url);
     }

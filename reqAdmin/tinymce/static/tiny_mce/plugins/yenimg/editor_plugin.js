@@ -3,16 +3,16 @@
 		init : function(ed, url) {
 
 			ed.addButton('imgurl', {
-                title : 'image by url',
-                image : url+'/img/smiley-cool.gif',
+                title : 'Insert Image URL',
+                image : url+'/img/img3.png',
                 onclick : function() {
                     promptImgURL();
                 }
             });
             
             ed.addButton('browseimg', {
-                title : 'browse image file',
-                image : url+'/img/smiley-wink.gif',
+                title : 'Insert Image File',
+                image : url+'/img/img2.png',
                 onclick : function() {}
             });
 		},

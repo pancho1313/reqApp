@@ -728,4 +728,4 @@ def imgUpload(request):
         return HttpResponse(
             os.path.join(settings.MEDIA_URL, real_path)
         )
-    return HttpResponse(status=403)
+    return HttpResponse('')
