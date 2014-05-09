@@ -209,36 +209,42 @@ class FlatPageForm(forms.ModelForm):
             'my_mce': TinyMCE(
                 mce_attrs={
                     'theme':'advanced',
-                    'width':'500',#px
-                    'height':'500',#px
-                    'plugins':'yenimg',
+                    'width':'500',# px
+                    'height':'500',# px
+                    'plugins':'yenimg',# plugin propio para incorporar imagenes en el mce.
                     'theme_advanced_statusbar_location':None,
-                    'theme_advanced_blockformats':"p,h2,h3,h4,h5,h6",
+                    'theme_advanced_blockformats':"p,h2,h3,h4,h5,h6",# no incluye h1 para poder usarlo en el documento final.
                     'theme_advanced_buttons1':
                         "formatselect,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,|,outdent,indent,|,bullist,numlist,|,browseimg,imgurl,|,undo,redo",
                     'theme_advanced_buttons2':"",
                     'theme_advanced_buttons3':"",
                     })
         }
-"""
-# redactor
-class RedactorForm(forms.ModelForm):
-    class Meta:
-        model=RedactorModel
-        fields = [
-            'short_text',
-        ]
-"""
 
 class DocForm(forms.ModelForm):
     def registrarDocumento(self, proyecto, usuario, tipoParrafo):
         (self.save(commit=False)).registrarDocumento(proyecto, usuario, tipoParrafo)
         
     class Meta:
-        model=Documento
+        model = Documento
         fields = [
             'parrafo',
         ]
+        widgets = {
+            'parrafo': TinyMCE(
+                mce_attrs={
+                    'theme':'advanced',
+                    'width':'500',# px
+                    'height':'500',# px
+                    'plugins':'yenimg',# plugin propio para incorporar imagenes en el mce.
+                    'theme_advanced_statusbar_location':None,
+                    'theme_advanced_blockformats':"p,h2,h3,h4,h5,h6",# no incluye h1 para poder usarlo en el documento final.
+                    'theme_advanced_buttons1':
+                        "formatselect,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,|,outdent,indent,|,bullist,numlist,|,browseimg,imgurl,|,undo,redo",
+                    'theme_advanced_buttons2':"",
+                    'theme_advanced_buttons3':"",
+                    })
+        }
 
 class MceImageForm(forms.Form):
     file = forms.ImageField()

@@ -22,7 +22,6 @@ urlpatterns = patterns('',
     url(r'^herramientas/bitacora/$', views.bitacora, name='bitacora'),
     
     url(r'^mce/$', views.viewMCE, name='TinyMCE'),
-    #url(r'^mce/$', views.viewRedactor, name='MyRedactor'),
     
     url('^upload/img/$', views.imgUpload, name='mce_upload_image'),
 )

@@ -353,26 +353,6 @@ class Modulo(Bitacora):
 from tinymce import models as tinymce_models
 class MCEModel(models.Model):
     my_mce = tinymce_models.HTMLField()
-    #my_mce = models.TextField()
-
-"""
-# redactor
-from redactor.fields import RedactorField
-class RedactorModel(models.Model):
-    short_text = RedactorField(
-        #verbose_name=u'texto', # nombre del campo usando el tag {{form}}
-        # http://imperavi.com/redactor/docs/settings
-        redactor_options={
-            'lang': 'en',
-            'boldTag':'b',
-            'focus':True,
-            'imageTabLink':False,
-            'italicTag':'i',
-            'linebreaks':False,
-            'pastePlainText':True,
-        }
-    )
-"""
 
 class DocsManager(models.Manager):
     def versiones(self, proyecto, tipoParrafo):
@@ -385,25 +365,8 @@ class DocsManager(models.Manager):
             resp = None
         return resp
 
-from redactor.fields import RedactorField
 class Documento(models.Model):
-    
-    #redactor
-    parrafo = RedactorField(
-        # http://imperavi.com/redactor/docs/settings
-        redactor_options={
-            'lang':'en',
-            'boldTag':'b',
-            'focus':True,
-            'imageTabLink':False,
-            'italicTag':'i',
-            'linebreaks':False,
-            'pastePlainText':True,
-            'toolbar':'reduced',
-        }
-    )
-    
-    
+    parrafo = tinymce_models.HTMLField()
     
     proyecto = models.ForeignKey(Proyecto, null=False)
     fecha = models.DateTimeField()

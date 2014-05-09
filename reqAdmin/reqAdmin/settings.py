@@ -38,10 +38,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'reqApp',
     'tinymce',
-    #'filebrowser',
-    'redactor',
-    'mce_filebrowser',
-    'sorl.thumbnail',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -101,13 +97,6 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 # Tiny-mce
 TINYMCE_JS_URL = os.path.join(STATIC_URL, "js/tiny_mce/tiny_mce.js")
 TINYMCE_JS_ROOT = os.path.join(STATIC_URL, "tiny_mce/")
-TINYMCE_DEFAULT_CONFIG = {
-  'file_browser_callback': 'mce_filebrowser'
-}
 
-
-# redactor (con JQuery >= 1.9 hay problemas con propiedades deprecadas como $.browser)
-JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js'#STATIC_URL + 'js/jquery.js'
-REDACTOR_OPTIONS = {'lang': 'en'}
-REDACTOR_UPLOAD = 'uploads/'
-
+# doc. img. upload folder
+IMAGES_UPLOAD = 'uploads/'

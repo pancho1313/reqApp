@@ -713,17 +713,17 @@ def viewRedactor(request):
 import os
 from django.conf import settings
 from django.core.files.storage import default_storage
-from django.views.decorators.csrf import csrf_exempt
+#from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 #@csrf_exempt
 @require_POST
 def imgUpload(request):
-    UPLOAD_PATH = getattr(settings, 'REDACTOR_UPLOAD', 'redactor/')
+    upload_path = getattr(settings, 'IMAGES_UPLOAD', 'uploads/')
     form = MceImageForm(request.POST, request.FILES)
     if form.is_valid():
         file_ = form.cleaned_data['file']
-        path = os.path.join(UPLOAD_PATH, file_.name)
+        path = os.path.join(upload_path, file_.name)
         real_path = default_storage.save(path, file_)
         return HttpResponse(
             os.path.join(settings.MEDIA_URL, real_path)
