@@ -2,24 +2,35 @@
 {% block body %}
 
 <script>
+/* este script es para prevenir perder cambios sin guardar en el documento */
+var cambiosSinGuardar = function(){
+    $('#parrafoSelect').val("?parrafo={{parrafo}}");//reasignar valor al select del parrafo
+    return 'Are you sure you want to leave?';
+};
 function editar(){
     expandirContraerElemento('parrafo');
     expandirContraerElemento('preview');
     expandirContraerElemento('editar');
     expandirContraerElemento('edicion');
+    $(window).bind('beforeunload', cambiosSinGuardar);
 }
 function cancelar(){
     expandirContraerElemento('parrafo');
     expandirContraerElemento('preview');
     expandirContraerElemento('editar');
     expandirContraerElemento('edicion');
+    $(window).unbind('beforeunload', cambiosSinGuardar);
+}
+function guardar(){
+    $(window).unbind('beforeunload', cambiosSinGuardar);
+    $('#id_mce').submit();
 }
 </script>
 <br/>
 <div>
     <div style="display:inline-block;width:auto;">Sección:</div>
     <div style="display:inline-block;width:auto;">
-        <select onchange="location = this.options[this.selectedIndex].value;">
+        <select id="parrafoSelect" onchange="location = this.options[this.selectedIndex].value;">
             {% for pa in parrafos %}
                     <option value="?parrafo={{pa.tipo}}"{% ifequal parrafo pa.tipo %}selected{% endifequal %}{% if not pa.activo %}disabled{% endif %}>{{ pa.nombre }}</option>
             {% endfor %}
@@ -30,7 +41,7 @@ function cancelar(){
             <button class="boton_azul" onclick="editar()">Editar</button>
         </div>
         <div id="edicion" style="display:none;">
-            <button class="boton_azul" onclick="$('#id_mce').submit();">Guardar</button>
+            <button class="boton_azul" onclick="guardar()">Guardar</button>
             <button class="boton_azul" onclick="cancelar()">Cancelar</button>
         </div>
     </div>
