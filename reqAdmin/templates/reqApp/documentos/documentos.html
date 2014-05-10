@@ -2,7 +2,7 @@
 {% block body %}
 
 <script>
-/* este script es para prevenir perder cambios sin guardar en el documento */
+/* este script es para prevenir perder cambios sin guardar en el documento al cambiar de pagina */
 var cambiosSinGuardar = function(){
     $('#parrafoSelect').val("?parrafo={{parrafo}}");//reasignar valor al select del parrafo
     return 'Are you sure you want to leave?';
@@ -12,6 +12,8 @@ function editar(){
     expandirContraerElemento('preview');
     expandirContraerElemento('editar');
     expandirContraerElemento('edicion');
+    expandirContraerElemento('version');
+    expandirContraerElemento('versionSelect');
     $(window).bind('beforeunload', cambiosSinGuardar);
 }
 function cancelar(){
@@ -19,6 +21,8 @@ function cancelar(){
     expandirContraerElemento('preview');
     expandirContraerElemento('editar');
     expandirContraerElemento('edicion');
+    expandirContraerElemento('version');
+    expandirContraerElemento('versionSelect');
     $(window).unbind('beforeunload', cambiosSinGuardar);
 }
 function guardar(){
@@ -46,12 +50,31 @@ function guardar(){
         </div>
     </div>
     <div style="display:inline-block;width:auto;">
-        {{ vigente.fecha }} :: {{ vigente.usuario }}
+        <div id="version" style="display:block;">
+            {% if vigente %}
+                {{ vigente.fecha }} [{{ vigente.usuario }}]
+            {% endif %}
+        </div>
+        <div id="versionSelect" style="display:none;">
+            {% if versiones %}
+                <select>
+                    {% for version in versiones %}
+                        <option value="?parrafo={{ parrafo }}&id={{version.id}}">{{ version.fecha }} [{{version.usuario}}]</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+        </div>
     </div>
 </div>
 <br/>
 <div>
     <div style='display:none;' id='parrafo'>{% include "reqApp/documentos/mce.html" with form_id='id_mce' %}</div>
-    <div style='display:block;' id='preview'><hr/>{{ vigente.parrafo|safe }}<hr/></div>
+    <div style='display:block;' id='preview'><hr/>
+    {% if vigente %}
+        {{ vigente.parrafo|safe }}
+    {% else %}
+        <p style="text-align:center">---------------- Sección Vacía ----------------</p>
+    {% endif %}
+    <hr/></div>
 </div>
 {% endblock %}

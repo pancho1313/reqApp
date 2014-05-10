@@ -355,12 +355,17 @@ class MCEModel(models.Model):
     my_mce = tinymce_models.HTMLField()
 
 class DocsManager(models.Manager):
-    def versiones(self, proyecto, tipoParrafo):
-        return self.model.objects.filter(proyecto=proyecto).filter(tipo=tipoParrafo).order_by('-fecha')
-        
+    def versiones(self, proyecto, tipoParrafo, limite=-1):
+        if limite < 0:
+            # todos los registros
+            return self.model.objects.filter(proyecto=proyecto).filter(tipo=tipoParrafo).order_by('-id')
+        else:
+            # cantidad de registros limitada por limite
+            return self.model.objects.filter(proyecto=proyecto).filter(tipo=tipoParrafo).order_by('-id')[:limite]
+    
     def vigente(self, proyecto, tipoParrafo):
         try:
-            resp = self.model.objects.filter(proyecto=proyecto).filter(tipo=tipoParrafo).order_by('-fecha')[:1].get()
+            resp = self.model.objects.filter(proyecto=proyecto).filter(tipo=tipoParrafo).order_by('-id')[:1].get()
         except self.model.DoesNotExist:
             resp = None
         return resp

@@ -205,11 +205,13 @@ def docView(request, navbar, activos):
         form = DocForm(request.POST)
         if form.is_valid():
             form.registrarDocumento(proyecto, usuario, parrafo)
-            
-    vigente = Documento.objects.vigente(proyecto, parrafo)
-    if vigente != None:
+    
+    
+    versiones = Documento.objects.versiones(proyecto, parrafo, 10)# solo se muestran las ultimas 10 versiones (<0 para mostrar todas)
+    if len(versiones) > 0:
+        vigente = versiones[0]
         form = DocForm(instance=vigente)
-        context.update({'vigente':vigente,})
+        context.update({'vigente':vigente,'versiones':versiones})
     else:
         form = DocForm()
         
