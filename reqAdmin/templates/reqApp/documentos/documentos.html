@@ -1,6 +1,20 @@
 {% extends "reqApp/base.html" %}
 {% block body %}
 
+<script>
+function editar(){
+    expandirContraerElemento('parrafo');
+    expandirContraerElemento('preview');
+    expandirContraerElemento('editar');
+    expandirContraerElemento('edicion');
+}
+function cancelar(){
+    expandirContraerElemento('parrafo');
+    expandirContraerElemento('preview');
+    expandirContraerElemento('editar');
+    expandirContraerElemento('edicion');
+}
+</script>
 <br/>
 <div>
     <div style="display:inline-block;width:auto;">Sección:</div>
@@ -12,9 +26,13 @@
         </select>
     </div>
     <div style="display:inline-block;width:30%;">
-        <button class="boton_azul" onclick="expandirContraerElemento('parrafo');expandirContraerElemento('preview');">Editar</button>
-        <button class="boton_azul" onclick="$('#id_mce').submit();">Guardar</button>
-        <button class="boton_azul">Cancelar</button>
+        <div id="editar" style="display:block">
+            <button class="boton_azul" onclick="editar()">Editar</button>
+        </div>
+        <div id="edicion" style="display:none;">
+            <button class="boton_azul" onclick="$('#id_mce').submit();">Guardar</button>
+            <button class="boton_azul" onclick="cancelar()">Cancelar</button>
+        </div>
     </div>
     <div style="display:inline-block;width:auto;">
         {{ vigente.fecha }} :: {{ vigente.usuario }}
@@ -22,7 +40,7 @@
 </div>
 <br/>
 <div>
-    <div style='' id='parrafo'>{% include "reqApp/documentos/mce.html" with form_id='id_mce' %}</div>
-    <div id='preview'>{{ vigente.parrafo|safe }}</div>
+    <div style='display:none;' id='parrafo'>{% include "reqApp/documentos/mce.html" with form_id='id_mce' %}</div>
+    <div style='display:block;' id='preview'><hr/>{{ vigente.parrafo|safe }}<hr/></div>
 </div>
 {% endblock %}
