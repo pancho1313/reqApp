@@ -184,7 +184,10 @@ def docView(request, navbar, activos):
     usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
     proyecto = proyectoDeUsuario(usuario)
 
-    parrafo =  request.GET.get('parrafo', PARRAFOS_CHOICES[0][0]) # TODO valor por defecto si no corresponde a ningun tipo de parrafo conocido
+    parrafo =  request.GET.get('parrafo', activos[0]) # valor por defecto si no corresponde a ningun tipo de parrafo conocido
+    if parrafo not in activos:
+        parrafo = activos[0]
+        
     parrafos = []
     for pa in PARRAFOS_CHOICES:
         activo = False
