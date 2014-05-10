@@ -2,27 +2,27 @@
 {% block body %}
 
 <br/>
-<button class="boton_azul" onclick="expandirContraerElemento('parrafo');expandirContraerElemento('preview');">Editar</button>
-<br/>
 <div>
-    <div style="display: inline-block;width:7em;vertical-align:top;">
-        <div class="parrafos">
-            <ul>
+    <div style="display:inline-block;width:auto;">Sección:</div>
+    <div style="display:inline-block;width:auto;">
+        <select onchange="location = this.options[this.selectedIndex].value;">
             {% for pa in parrafos %}
-                {% if pa.activo %}
-                    <li><a name="parrafo" {% ifequal parrafo pa.tipo %} class="selec" {% endifequal %} href="?parrafo={{ pa.tipo }}">{{ pa.nombre }}</a></li>
-                {% else %}
-                    <li><span>{{ pa.nombre }}</span></li>
-                {% endif %}
+                    <option value="?parrafo={{pa.tipo}}"{% ifequal parrafo pa.tipo %}selected{% endifequal %}{% if not pa.activo %}disabled{% endif %}>{{ pa.nombre }}</option>
             {% endfor %}
-            </ul>
-        </div>
+        </select>
     </div>
-    <div style="display: inline-block;width:auto;background-color:Green;vertical-align:top;">
-        <div>{{ vigente.fecha }} :: {{ vigente.usuario }}</div>
-        <div style='' id='parrafo'>{% include "reqApp/documentos/mce.html" %}</div>
-        <div id='preview'>{{ vigente.parrafo|safe }}</div>
+    <div style="display:inline-block;width:30%;">
+        <button class="boton_azul" onclick="expandirContraerElemento('parrafo');expandirContraerElemento('preview');">Editar</button>
+        <button class="boton_azul" onclick="$('#id_mce').submit();">Guardar</button>
+        <button class="boton_azul">Cancelar</button>
+    </div>
+    <div style="display:inline-block;width:auto;">
+        {{ vigente.fecha }} :: {{ vigente.usuario }}
     </div>
 </div>
-
+<br/>
+<div>
+    <div style='' id='parrafo'>{% include "reqApp/documentos/mce.html" with form_id='id_mce' %}</div>
+    <div id='preview'>{{ vigente.parrafo|safe }}</div>
+</div>
 {% endblock %}

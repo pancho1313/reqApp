@@ -4,7 +4,7 @@
 
 			ed.addButton('imgurl', {
                 title : 'Insert Image URL',
-                image : url+'/img/img3.png',
+                image : url+'/img/img3.gif',
                 onclick : function() {
                     promptImgURL();
                 }
@@ -12,7 +12,7 @@
             
             ed.addButton('browseimg', {
                 title : 'Insert Image File',
-                image : url+'/img/img2.png',
+                image : url+'/img/img2.gif',
                 onclick : function() {}
             });
 		},

@@ -234,7 +234,7 @@ class DocForm(forms.ModelForm):
             'parrafo': TinyMCE(
                 mce_attrs={
                     'theme':'advanced',
-                    'width':'500',# px
+                    'width':'800',# px
                     'height':'500',# px
                     'plugins':'yenimg',# plugin propio para incorporar imagenes en el mce.
                     'theme_advanced_statusbar_location':None,
