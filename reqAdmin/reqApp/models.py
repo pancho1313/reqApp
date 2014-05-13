@@ -348,11 +348,7 @@ class Modulo(Bitacora):
         self.requisitosSoftware = m2mVigentesDicc['requisitosSoftware']
         
 ############ Documentos #############
-
-# Tiny-mce
 from tinymce import models as tinymce_models
-class MCEModel(models.Model):
-    my_mce = tinymce_models.HTMLField()
 
 class DocsManager(models.Manager):
     def versiones(self, proyecto, tipoParrafo, limite=-1):

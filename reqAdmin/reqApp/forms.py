@@ -196,30 +196,6 @@ class HTForm(BitacoraForm):
             'nombre': forms.TextInput(attrs={'size': 80}),
         }
         
-        
-
-# TinyMCE
-class FlatPageForm(forms.ModelForm):
-    class Meta:
-        model = MCEModel
-        fields = [
-            'my_mce',
-        ]
-        widgets = {
-            'my_mce': TinyMCE(
-                mce_attrs={
-                    'theme':'advanced',
-                    'width':'500',# px
-                    'height':'500',# px
-                    'plugins':'yenimg',# plugin propio para incorporar imagenes en el mce.
-                    'theme_advanced_statusbar_location':None,
-                    'theme_advanced_blockformats':"p,h2,h3,h4,h5,h6",# no incluye h1 para poder usarlo en el documento final.
-                    'theme_advanced_buttons1':
-                        "formatselect,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,|,outdent,indent,|,bullist,numlist,|,browseimg,imgurl,|,undo,redo",
-                    'theme_advanced_buttons2':"",
-                    'theme_advanced_buttons3':"",
-                    })
-        }
 
 class DocForm(forms.ModelForm):
     def registrarDocumento(self, proyecto, usuario, tipoParrafo):

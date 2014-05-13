@@ -27,7 +27,7 @@ def ajax_form_valid(form, validado):
         return HttpResponse(json.dumps(response_dict), content_type='application/json')
 
 def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate, modelClass, listaAtributos, navbar):
-    usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
+    usuario = get_user_or_none(request) # TODO is None?
     proyecto = proyectoDeUsuario(usuario)
     if request.method == 'POST':
         if 'identificador' in request.POST:# editar o borrar
@@ -181,7 +181,7 @@ def viewHT(request):
     
 ################################# Documentos #############################
 def docView(request, navbar, activos):
-    usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
+    usuario = get_user_or_none(request) # TODO is None?
     proyecto = proyectoDeUsuario(usuario)
 
     parrafo =  request.GET.get('parrafo', activos[0]) # valor por defecto si no corresponde a ningun tipo de parrafo conocido
@@ -298,7 +298,7 @@ def estadisticas(request):
         (0, "Todos"),
     ]
 
-    usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
+    usuario = get_user_or_none(request) # TODO is None?
     proyecto = proyectoDeUsuario(usuario)
     navbar = {'1':'herramientas', '2':'estadisticas'}
     
@@ -525,7 +525,7 @@ def matrices(request):
         ("rscp", "RS/CP"),
     ]
 
-    usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
+    usuario = get_user_or_none(request) # TODO is None?
     proyecto = proyectoDeUsuario(usuario)
     navbar = {'1':'herramientas', '2':'matrices'}
     
@@ -642,7 +642,7 @@ def bitacora(request):
         "cp": 'reqApp/proyecto/CP/CP.html',    
     }
     
-    usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
+    usuario = get_user_or_none(request) # TODO is None?
     proyecto = proyectoDeUsuario(usuario)
     navbar = {'1':'herramientas', '2':'bitacora'}
     
@@ -695,24 +695,6 @@ def bitacora(request):
     return render(request, 'reqApp/herramientas/bitacora/bitacora.html', context)
     
 ############################### MCE ##########################
-
-# Tiny-mce
-def viewMCE(request):
-    instance = None
-    if request.method == 'POST':
-        form = FlatPageForm(request.POST)
-        if form.is_valid():
-            for mce in MCEModel.objects.all():
-                mce.delete()
-            instance = form.save().my_mce
-    elif request.method == 'GET':
-        form = FlatPageForm()
-    context = {
-        'form':form,
-        'instance':instance
-    }
-    return render(request, 'reqApp/mce.html', context)
-
 import os
 from django.conf import settings
 from django.core.files.storage import default_storage
@@ -722,7 +704,7 @@ from django.views.decorators.http import require_POST
 #@csrf_exempt
 @require_POST
 def imgUpload(request):
-    usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
+    usuario = get_user_or_none(request) # TODO is None?
     proyecto = proyectoDeUsuario(usuario)
     
     upload_path = getattr(settings, 'IMAGES_UPLOAD', 'uploads/') + str(proyecto.id) +'/'
