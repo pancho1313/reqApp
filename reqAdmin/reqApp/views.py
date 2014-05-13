@@ -712,24 +712,6 @@ def viewMCE(request):
         'instance':instance
     }
     return render(request, 'reqApp/mce.html', context)
-"""
-# redactor
-def viewRedactor(request):
-    instance = None
-    if request.method == 'POST':
-        form = RedactorForm(request.POST)
-        if form.is_valid():
-            for mce in RedactorModel.objects.all():
-                mce.delete()
-            instance = form.save().short_text
-    elif request.method == 'GET':
-        form = RedactorForm()
-    context = {
-        'form':form,
-        'instance':instance
-    }
-    return render(request, 'reqApp/redactor.html', context)
-"""
 
 import os
 from django.conf import settings
@@ -740,7 +722,10 @@ from django.views.decorators.http import require_POST
 #@csrf_exempt
 @require_POST
 def imgUpload(request):
-    upload_path = getattr(settings, 'IMAGES_UPLOAD', 'uploads/')
+    usuario = User.objects.get(username='alejandro') #TODO#get_user_or_none(request)
+    proyecto = proyectoDeUsuario(usuario)
+    
+    upload_path = getattr(settings, 'IMAGES_UPLOAD', 'uploads/') + str(proyecto.id) +'/'
     form = MceImageForm(request.POST, request.FILES)
     if form.is_valid():
         file_ = form.cleaned_data['file']

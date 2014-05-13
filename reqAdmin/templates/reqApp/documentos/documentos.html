@@ -22,13 +22,8 @@ var editar = function(){
     $(window).bind('beforeunload', cambiosSinGuardar);
 };
 var cancelar = function(){
-    expandirContraerElemento('parrafo');
-    expandirContraerElemento('preview');
-    expandirContraerElemento('editar');
-    expandirContraerElemento('edicion');
-    expandirContraerElemento('version');
-    expandirContraerElemento('versionSelect');
     $(window).unbind('beforeunload', cambiosSinGuardar);
+    location = "?parrafo={{ parrafo }}";
 };
 var guardar = function(){
     $(window).unbind('beforeunload', cambiosSinGuardar);
@@ -39,11 +34,9 @@ var guardar = function(){
 $(window).bind("load", function() {
     $('#btn_guardar').click(guardar);
     $('#btn_cancelar').click(cancelar);
+    $('#btn_editar').click(editar);
     {% if id_version %}
     editar();
-    $('#btn_editar').click(function(){location='?parrafo={{ parrafo }}{% if vigente %}&id={{vigente.id}}{% endif %}';});
-    {% else %}
-    $('#btn_editar').click(editar);
     {% endif %}
 });
 </script>
@@ -51,7 +44,7 @@ $(window).bind("load", function() {
 <div>
     <div style="display:inline-block;width:auto;">Sección:</div>
     <div style="display:inline-block;width:auto;">
-        <select id="parrafoSelect" onchange="location = this.options[this.selectedIndex].value;">
+        <select id="parrafoSelect" title="Seleccionar sección del documento" onchange="location = this.options[this.selectedIndex].value;">
             {% for pa in parrafos %}
                     <option value="?parrafo={{pa.tipo}}"{% ifequal parrafo pa.tipo %}selected{% endifequal %}{% if not pa.activo %}disabled{% endif %}>{{ pa.nombre }}</option>
             {% endfor %}
@@ -74,7 +67,7 @@ $(window).bind("load", function() {
         </div>
         <div id="versionSelect" style="display:none;">
             {% if versiones %}
-                <select id="selectVersion" onchange="location = this.options[this.selectedIndex].value;">
+                <select id="selectVersion" title="Revisar versiones anteriores" onchange="location = this.options[this.selectedIndex].value;">
                     {% for version in versiones %}
                         <option value="?parrafo={{ parrafo }}&id={{version.id}}" {% if id_version %}{% ifequal version.id id_version %}selected{% endifequal %}{% endif %}>{{ version.fecha }} [{{version.usuario}}]{% ifequal version.id vigente.id %} (actual){% endifequal %}</option>
                     {% endfor %}
