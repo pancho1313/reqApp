@@ -5,9 +5,14 @@
 /* este script es para prevenir perder cambios sin guardar en el documento al cambiar de pagina */
 var cambiosSinGuardar = function(){
     $('#parrafoSelect').val("?parrafo={{parrafo}}");//reasignar valor al select del parrafo
+    {% if id_version %}
+        $('#selectVersion').val("?parrafo={{ parrafo }}&id={{id_version}}");
+    {% elif vigente %}
+        $('#selectVersion').val("?parrafo={{ parrafo }}&id={{vigente.id}}");
+    {% endif %}
     return 'Are you sure you want to leave?';
 };
-function editar(){
+var editar = function(){
     expandirContraerElemento('parrafo');
     expandirContraerElemento('preview');
     expandirContraerElemento('editar');
@@ -15,8 +20,8 @@ function editar(){
     expandirContraerElemento('version');
     expandirContraerElemento('versionSelect');
     $(window).bind('beforeunload', cambiosSinGuardar);
-}
-function cancelar(){
+};
+var cancelar = function(){
     expandirContraerElemento('parrafo');
     expandirContraerElemento('preview');
     expandirContraerElemento('editar');
@@ -24,11 +29,23 @@ function cancelar(){
     expandirContraerElemento('version');
     expandirContraerElemento('versionSelect');
     $(window).unbind('beforeunload', cambiosSinGuardar);
-}
-function guardar(){
+};
+var guardar = function(){
     $(window).unbind('beforeunload', cambiosSinGuardar);
     $('#id_mce').submit();
-}
+};
+
+
+$(window).bind("load", function() {
+    $('#btn_guardar').click(guardar);
+    $('#btn_cancelar').click(cancelar);
+    {% if id_version %}
+    editar();
+    $('#btn_editar').click(function(){location='?parrafo={{ parrafo }}{% if vigente %}&id={{vigente.id}}{% endif %}';});
+    {% else %}
+    $('#btn_editar').click(editar);
+    {% endif %}
+});
 </script>
 <br/>
 <div>
@@ -42,11 +59,11 @@ function guardar(){
     </div>
     <div style="display:inline-block;width:30%;">
         <div id="editar" style="display:block">
-            <button class="boton_azul" onclick="editar()">Editar</button>
+            <button id="btn_editar" class="boton_azul">Editar</button>
         </div>
         <div id="edicion" style="display:none;">
-            <button class="boton_azul" onclick="guardar()">Guardar</button>
-            <button class="boton_azul" onclick="cancelar()">Cancelar</button>
+            <button id="btn_guardar" class="boton_azul">Guardar</button>
+            <button id="btn_cancelar" class="boton_azul">Cancelar</button>
         </div>
     </div>
     <div style="display:inline-block;width:auto;">
@@ -57,9 +74,9 @@ function guardar(){
         </div>
         <div id="versionSelect" style="display:none;">
             {% if versiones %}
-                <select>
+                <select id="selectVersion" onchange="location = this.options[this.selectedIndex].value;">
                     {% for version in versiones %}
-                        <option value="?parrafo={{ parrafo }}&id={{version.id}}">{{ version.fecha }} [{{version.usuario}}]</option>
+                        <option value="?parrafo={{ parrafo }}&id={{version.id}}" {% if id_version %}{% ifequal version.id id_version %}selected{% endifequal %}{% endif %}>{{ version.fecha }} [{{version.usuario}}]{% ifequal version.id vigente.id %} (actual){% endifequal %}</option>
                     {% endfor %}
                 </select>
             {% endif %}

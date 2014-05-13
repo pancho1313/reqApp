@@ -201,19 +201,35 @@ def docView(request, navbar, activos):
         'parrafo':parrafo,
     }
     
+    id_version = -1 # sin version seleccionada para edición
     if request.method == 'POST':
         form = DocForm(request.POST)
         if form.is_valid():
-            form.registrarDocumento(proyecto, usuario, parrafo)
+            form.registrarDocumento(proyecto, usuario, parrafo) # guardar cambios
+    elif request.method == 'GET':
+        id_version =  int(request.GET.get('id', -1))# version seleccionada para edición
     
-    
-    versiones = Documento.objects.versiones(proyecto, parrafo, 10)# solo se muestran las ultimas 10 versiones (<0 para mostrar todas)
+    versiones = Documento.objects.versiones(proyecto, parrafo, 10)# solo se muestran las ultimas 10 versiones de la sección/párrafo (<0 para mostrar todas)
     if len(versiones) > 0:
         vigente = versiones[0]
-        form = DocForm(instance=vigente)
         context.update({'vigente':vigente,'versiones':versiones})
+        
+        if id_version >= 0: # si desea obtener una version en particular
+            version = None
+            for vers in versiones:
+                if vers.id == id_version:
+                    version = vers
+                    break
+                
+            if version is not None: # si la version solicitada está presente en las versiones consideradas aquí
+                form = DocForm(instance=version) # cargamos el editor mce con la versión solicitada
+                context.update({'id_version':id_version})
+            else: # si no se encontró la versión solocitada
+                form = DocForm(instance=vigente) # se carga la versión actual (vigente)
+        else:
+            form = DocForm(instance=vigente) # se carga la versión actual (vigente)
     else:
-        form = DocForm()
+        form = DocForm() # si no hay versiones registradas anteriormente para esta sección/párrafo
         
     context.update({'form':form,})
     
