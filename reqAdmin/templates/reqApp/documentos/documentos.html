@@ -60,7 +60,7 @@ $(window).bind("load", function() {
         </div>
     </div>
     <div style="display:inline-block;width:auto;">
-        <div id="version" style="display:block;">
+        <div id="version" style="display:block;color:Gray;">
             {% if vigente %}
                 {{ vigente.fecha }} [{{ vigente.usuario }}]
             {% endif %}
@@ -83,7 +83,7 @@ $(window).bind("load", function() {
     {% if vigente %}
         {{ vigente.parrafo|safe }}
     {% else %}
-        <p style="text-align:center">---------------- Sección Vacía ----------------</p>
+        <p style="text-align:center">---------------- Sección No Editada ----------------</p>
     {% endif %}
     <hr/></div>
 </div>

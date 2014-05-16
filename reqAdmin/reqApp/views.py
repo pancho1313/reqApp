@@ -242,6 +242,14 @@ def docRequisitos(request):
         'proposito',
         'alcance',
         'contexto',
+        'definiciones',
+        'referencias',
+        'descripcion_general',
+        
+        'usuarios',
+        'producto',
+        'ambiente',
+        'proyectos_relacionados',
     ]
     return docView(request, navbar, parrafos)
     
@@ -252,6 +260,17 @@ def docDiseno(request):
         'proposito',
         'alcance',
         'contexto',
+        'definiciones',
+        'referencias',
+        'descripcion_general',
+        
+        'diseno',
+        'arquitectura_fisica',
+        'arquitectura_logica',
+        'modelo',
+        'detalle_modulos',
+        'navegacion',
+        'interfaz',
     ]
     return docView(request, navbar, parrafos)
     
@@ -262,6 +281,14 @@ def docCP(request):
         'proposito',
         'alcance',
         'contexto',
+        'definiciones',
+        'referencias',
+        'descripcion_general',
+        
+        'usuarios',
+        'producto',
+        'ambiente',
+        'proyectos_relacionados',
     ]
     return docView(request, navbar, parrafos)
 
@@ -272,6 +299,22 @@ def docHistorico(request):
         'proposito',
         'alcance',
         'contexto',
+        'definiciones',
+        'referencias',
+        'descripcion_general',
+        
+        'usuarios',
+        'producto',
+        'ambiente',
+        'proyectos_relacionados',
+        
+        'diseno',
+        'arquitectura_fisica',
+        'arquitectura_logica',
+        'modelo',
+        'detalle_modulos',
+        'navegacion',
+        'interfaz',
     ]
     return docView(request, navbar, parrafos)
 
