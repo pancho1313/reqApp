@@ -146,7 +146,8 @@ function post_to_url(path, params, method) {
 
 
 /* adicion de imagenes a tinymce */
-function addMCEImg(src){
+function addMCEImg(src, pre_src){
+    pre_src = pre_src || "";
     var ed = tinymce.EditorManager.activeEditor, args = {}, el;
 
 	if (src === '') {
@@ -164,7 +165,11 @@ function addMCEImg(src){
 		args.style = this.styleVal;
 
 	tinymce.extend(args, {
-		src : src.replace(/ /g, '%20'),
+		src : pre_src + src.replace(/ /g, '%20'),
+		'data-mce-src' : pre_src + src.replace(/ /g, '%20'), // hack to avoid src-replace after save-mce
+		alt : "ERROR_IMG_NOT_FOUND: " + pre_src + src.replace(/ /g, '%20'),
+		//width : 100, // set default size??
+		//height : 100 // set default size??
 	});
 
 	el = ed.selection.getNode();
@@ -186,7 +191,7 @@ function addMCEImg(src){
 }
 
 // ajax para insertar img en mce
-function insertMceImg(input,url,csrf){
+function insertMceImg(input,url,csrf,host){
     var file = input.files[0];
     var fd = new FormData();		        
     fd.append('file', file);
@@ -201,7 +206,7 @@ function insertMceImg(input,url,csrf){
 	    processData: false,
         success: function(data){
             if(data != ""){
-                addMCEImg(data);
+                addMCEImg(data, host);//"http://localhost:8000");
             }else{
                 alert('ERROR: archivo de imagen inválido!');
             }

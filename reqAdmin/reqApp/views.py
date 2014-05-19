@@ -233,6 +233,8 @@ def docView(request, navbar, activos):
         
     context.update({'form':form,})
     
+    context.update({'host':request.build_absolute_uri("/")[:-1]})# http://localhost:8000 -->  reqApp/Documentos/mce.html --> static/js/reqApp.js/insertMceImg(input,url,csrf,host);
+    
     return render(request, 'reqApp/documentos/documentos.html', context)
 
 def docRequisitos(request):
@@ -768,6 +770,7 @@ import xhtml2pdf.pisa as pisa
 import cStringIO as StringIO
 
 def pdfIndex(request):
+    #print request.build_absolute_uri("/") # --> http://127.0.0.1:8000/download/
     return HttpResponse("""
         <html><body>
             <h1>Example 1</h1>
@@ -784,6 +787,7 @@ def pdfIndex(request):
         """)
 @csrf_exempt
 def pdfDownload(request):
+    #print request.build_absolute_uri() # --> http://127.0.0.1:8000/download/
     if request.POST:
         result = StringIO.StringIO()
         pdf = pisa.CreatePDF(
@@ -803,7 +807,7 @@ def render_to_pdf(template_src, context_dict):
     context = Context(context_dict)
     html  = template.render(context)
     result = StringIO.StringIO()
-    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), result)#html.encode("ISO-8859-1")), result)
+    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), result)# ..."ISO-8859-1"...
     if not pdf.err:
         return HttpResponse(result.getvalue(), mimetype='application/pdf')
     return HttpResponse('We had some errors!')

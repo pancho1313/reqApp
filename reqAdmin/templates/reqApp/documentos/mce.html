@@ -7,7 +7,7 @@
         var tooltip = $(id_tooltip).html();
         var _url = "{% url 'reqApp:mce_upload_image' %}";
         var _csrf = "{{ csrf_token }}";
-        $(id).replaceWith('<div class="tinymceImg" style="background:url({{ STATIC_URL }}tiny_mce/plugins/yenimg/img/img2.gif) no-repeat center;"><input id="'+id+'" title="'+tooltip+'" type="file" accept="image/*" onchange="insertMceImg(this, \''+_url+'\', \''+_csrf+'\')"></div>');
+        $(id).replaceWith('<div class="tinymceImg" style="background:url({{ STATIC_URL }}tiny_mce/plugins/yenimg/img/img2.gif) no-repeat center;"><input id="'+id+'" title="'+tooltip+'" type="file" accept="image/*" onchange="insertMceImg(this, \''+_url+'\', \''+_csrf+'\',\'{{ host }}\')"></div>');
     });
 </script>
 

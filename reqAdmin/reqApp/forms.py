@@ -219,6 +219,7 @@ class DocForm(forms.ModelForm):
                         "formatselect,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,|,outdent,indent,|,bullist,numlist,|,browseimg,imgurl,|,undo,redo",
                     'theme_advanced_buttons2':"",
                     'theme_advanced_buttons3':"",
+                    'relative_urls':False,
                     })
         }
 
