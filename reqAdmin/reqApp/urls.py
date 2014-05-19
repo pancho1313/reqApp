@@ -22,4 +22,8 @@ urlpatterns = patterns('',
     url(r'^herramientas/bitacora/$', views.bitacora, name='bitacora'),
     
     url('^upload/img/$', views.imgUpload, name='mce_upload_image'),
+    
+    url(r'pedeefe/$', views.pdfIndex),
+    url(r'^download/$', views.pdfDownload),
+    url(r'^ezpdf_sample/$', views.ezpdf_sample),
 )

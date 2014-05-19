@@ -741,7 +741,7 @@ def bitacora(request):
 import os
 from django.conf import settings
 from django.core.files.storage import default_storage
-#from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 #@csrf_exempt
@@ -760,3 +760,63 @@ def imgUpload(request):
             os.path.join(settings.MEDIA_URL, real_path)
         )
     return HttpResponse('')
+    
+############################### PDF ##########################
+from django.template.loader import get_template
+from django.template import Context
+import xhtml2pdf.pisa as pisa
+import cStringIO as StringIO
+
+def pdfIndex(request):
+    return HttpResponse("""
+        <html><body>
+            <h1>Example 1</h1>
+            Please enter some HTML code:
+            <form action="/download/" method="post" enctype="multipart/form-data">
+            <textarea name="data">Hello <strong>World</strong></textarea>
+            <br />
+            <input type="submit" value="Convert HTML to PDF" />
+            </form>
+            <hr>
+            <h1>Example 2</h1>
+            <p><a href="/ezpdf_sample">Example with template</a></p>
+        </body></html>
+        """)
+@csrf_exempt
+def pdfDownload(request):
+    if request.POST:
+        result = StringIO.StringIO()
+        pdf = pisa.CreatePDF(
+            StringIO.StringIO(request.POST["data"].encode("UTF-8")),
+            result
+            )
+
+        if not pdf.err:
+            return HttpResponse(
+                result.getvalue(),
+                mimetype='application/pdf')
+
+    return HttpResponse('We had some errors')
+
+def render_to_pdf(template_src, context_dict):
+    template = get_template(template_src)
+    context = Context(context_dict)
+    html  = template.render(context)
+    result = StringIO.StringIO()
+    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), result)#html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), mimetype='application/pdf')
+    return HttpResponse('We had some errors!')
+
+def ezpdf_sample(request):
+    blog_entries = []
+    for i in range(1,10):
+        blog_entries.append({
+            'id': i,
+            'title':'Playing with pisa 3.0.16 and dJango Template Engine',
+            'body':'This is a simple example..'
+            })
+    return render_to_pdf('reqApp/pdf/entries.html',{
+        'pagesize':'A4',
+        'title':'My amazing blog',
+        'blog_entries':blog_entries})
