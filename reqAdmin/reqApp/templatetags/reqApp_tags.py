@@ -43,3 +43,8 @@ def largoLista(lista):
 @register.filter(name="porcentaje")
 def porcentaje(total, parte):
     return ("%3.0f" % (100*parte/total)) + "%"
+    
+@register.filter(name="agregarHostALosSrc")
+def agregarHostALosSrc(htmlCode,host):
+    # agrega el host a los src de las imagenes y otros recursos
+    return htmlCode.replace('src="/','src="'+host+'/').replace("src='/","src='"+host+"/")

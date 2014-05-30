@@ -1,42 +1,49 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <title>
 {%block title%}	
 {%endblock%}
 </title>
+<!--
+-pdf-frame-border: 1;
+-->
 <style type="text/css">
 {% block style %}
-	@page {
-		size: {{pagesize}};
-		margin: 1cm;
-		@frame footer {
-    		-pdf-frame-content: footerContent;
-    		bottom: 1cm;
-    		margin-left: 1cm;
-    		margin-right: 1cm;
-    		height: 1cm;
-		}
-	}
+    @page portada {
+        size: {{pagesize}};
+        margin: 1cm;
+        bottom: 1cm;
+    }
+    @page documento {
+        size: {{pagesize}};
+        margin: 1cm;
+        bottom: 1cm;
+        @frame footer {
+            -pdf-frame-content: footerContent;
+            bottom: 1cm;
+            margin-left: 1cm;
+            margin-right: 1cm;
+            height: 1cm;
+        }
+    }
+    img {
+        zoom: 80%;
+    }
+    body{
+        font-size: 1.5em;
+    }
 {%endblock%}	
 </style>
 </head>
 <body>
-<div>
-{%block page_header%}
-   <div>
-   		<h1>pisa html<span style="color: #FC0000;">to</span>pdf</h1>
-   		<h2>Python module for HTML/CSS to PDF conversion - Ezpdf example</h2>
-   </div>
-	<hr />
-{%endblock%}
-{%block content%}
-{%endblock%}
-</div>
 <div id="footerContent">
 {%block page_foot%}
-		<pdf:pagenumber>
+		<pdf:pagenumber/>
+		de <pdf:pagecount>
 {%endblock%}
 </div>
+<pdf:nexttemplate name="portada"/>
+{%block content%}{%endblock%}
 </body>
 </html>

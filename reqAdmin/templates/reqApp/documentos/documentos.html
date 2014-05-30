@@ -50,7 +50,7 @@ $(window).bind("load", function() {
             {% endfor %}
         </select>
     </div>
-    <div style="display:inline-block;width:30%;">
+    <div style="display:inline-block;width:auto;">
         <div id="editar" style="display:block">
             <button id="btn_editar" class="boton_azul">Editar</button>
         </div>
@@ -59,7 +59,10 @@ $(window).bind("load", function() {
             <button id="btn_cancelar" class="boton_azul">Cancelar</button>
         </div>
     </div>
-    <div style="text-align: right;">
+    <div style="display:inline-block;width:auto;float:right;">
+        <a class="boton_azul" href="{% url 'reqApp:pdf' %}?tipo=docReq" target="_blank">PDF</a>
+    </div>
+    <div style="text-align:right;">
         <div id="version" style="display:block;color:Gray;">
             {% if vigente %}
                 {{ vigente.fecha }} [{{ vigente.usuario }}]

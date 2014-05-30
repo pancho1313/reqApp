@@ -233,7 +233,7 @@ def docView(request, navbar, activos):
         
     context.update({'form':form,})
     
-    context.update({'host':request.build_absolute_uri("/")[:-1]})# http://localhost:8000 -->  reqApp/Documentos/mce.html --> static/js/reqApp.js/insertMceImg(input,url,csrf,host);
+    #context.update({'host':request.build_absolute_uri("/")[:-1]})# http://localhost:8000 -->  reqApp/Documentos/mce.html --> static/js/reqApp.js/insertMceImg(input,url,csrf,host);
     
     return render(request, 'reqApp/documentos/documentos.html', context)
 
@@ -824,3 +824,35 @@ def ezpdf_sample(request):
         'pagesize':'A4',
         'title':'My amazing blog',
         'blog_entries':blog_entries})
+        
+def pdf(request):
+    usuario = get_user_or_none(request) # TODO is None?
+    proyecto = proyectoDeUsuario(usuario)
+    context = {
+        'pagesize':'A4',
+        'title':'Amazing pdf',
+        'host':request.build_absolute_uri("/")[:-1],# http://localhost:8000
+    }
+    if request.method == 'GET':
+        tipo =  request.GET.get('tipo', '')
+        if tipo == 'docReq':
+            template = 'reqApp/pdf/documentos/requisitos.html'
+            secciones = [
+                {'titulo':'Introducción','contenido':Documento.objects.vigente(proyecto,'introduccion')},
+                {'titulo':'Propósito','contenido':Documento.objects.vigente(proyecto,'proposito')},
+                {'titulo':'Alcance','contenido':Documento.objects.vigente(proyecto,'alcance')},
+                {'titulo':'Contexto','contenido':Documento.objects.vigente(proyecto,'contexto')},
+                {'titulo':'Definiciones','contenido':Documento.objects.vigente(proyecto,'definiciones')},
+                {'titulo':'Referencias','contenido':Documento.objects.vigente(proyecto,'referencias')},
+                {'titulo':'Descripción General','contenido':Documento.objects.vigente(proyecto,'descripcion_general')},
+                {'titulo':'Usuarios','contenido':Documento.objects.vigente(proyecto,'usuarios')},
+                {'titulo':'Producto','contenido':Documento.objects.vigente(proyecto,'producto')},
+                {'titulo':'Ambiente','contenido':Documento.objects.vigente(proyecto,'ambiente')},
+                {'titulo':'Proyectos Relacionados','contenido':Documento.objects.vigente(proyecto,'proyectos_relacionados')},
+            ]
+            context.update({'secciones':secciones})
+        else:
+            raise Http404
+    else:
+        raise Http404
+    return render_to_pdf(template,context)

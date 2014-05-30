@@ -1,0 +1,20 @@
+{% extends "reqApp/pdf/base.html" %}
+{% load reqApp_tags %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+    portada
+    <pdf:nexttemplate name="documento"/>
+    <pdf:nextpage/>
+    
+	{% for seccion in secciones %}
+    	<h1>{{ seccion.titulo }}<!-- á --></h1>
+    	{{ seccion.contenido.parrafo|agregarHostALosSrc:host|safe }}
+	{% endfor %}
+{% endblock %}
+
+{%block page_foot%}
+	{{block.super}}
+{%endblock%}
+

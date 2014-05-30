@@ -149,8 +149,7 @@ function post_to_url(path, params, method) {
 
 
 /* adicion de imagenes a tinymce */
-function addMCEImg(src, pre_src){
-    pre_src = pre_src || "";
+function addMCEImg(src){
     var ed = tinymce.EditorManager.activeEditor, args = {}, el;
 
 	if (src === '') {
@@ -168,9 +167,9 @@ function addMCEImg(src, pre_src){
 		args.style = this.styleVal;
 
 	tinymce.extend(args, {
-		src : pre_src + src.replace(/ /g, '%20'),
-		'data-mce-src' : pre_src + src.replace(/ /g, '%20'), // hack to avoid src-replace after save-mce
-		alt : "ERROR_IMG_NOT_FOUND: " + pre_src + src.replace(/ /g, '%20'),
+		src : src.replace(/ /g, '%20'),
+		//'data-mce-src' : pre_src + src.replace(/ /g, '%20'), // hack to avoid src-replace after save-mce
+		alt : "ERROR_IMG_NOT_FOUND: " + src.replace(/ /g, '%20'),
 		//width : 100, // set default size??
 		//height : 100 // set default size??
 	});
