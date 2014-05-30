@@ -15,11 +15,27 @@
         <div><div style="display:inline-block;width:5em;">Columna:</div><div style="display:inline-block;width:auto;" id='columna'>------------------</div></div>
     </div>
 </div>
-{% for fila in filas %}
-    <div style="position:relative;">
-    {% for e in fila %}
-        <div style="left:{{e.col}}0px;top:{{e.fila}}0px;" class="{% if e.match %}matr_match{% elif e.no_intersec %}matr_no_intersec{% else %}matr_no_match{% endif %}" name="elemento_matriz" elFila="{{e.elFila.textoIdentificador}}" elCol="{{e.elCol.textoIdentificador}}" onClick="mostrarElementosDeMatrizDeTrazado('{{e.elFila}}','{{ e.elFila.estado }}', '{{e.elCol}}','{{ e.elCol.estado }}');"></div>
+<div id="matr" style="position:relative;width:auto;height:auto;">
+    {% for fila in filas %}
+        {% for e in fila %}
+            <div style="left:{{e.col}}0px;top:{{e.fila}}0px;"
+                {% if e.match %}
+                    title="intersección"
+                    class="matr_match"
+                {% elif e.no_intersec %}
+                    title="nunca intersecta!"
+                    class="matr_no_intersec"
+                {% else %}
+                    title="no intersecta"
+                    class="matr_no_match"
+                {% endif %}
+                name="elemento_matriz"
+                elFila="{{e.elFila.textoIdentificador}}"
+                elCol="{{e.elCol.textoIdentificador}}"
+                onClick="mostrarElementosDeMatrizDeTrazado(this,'{{e.elFila}}','{{ e.elFila.estado }}','{{ e.elFila.tipo }}','{{e.elCol}}','{{ e.elCol.estado }}','{{ e.elCol.tipo }}');">
+            </div>
+        {% endfor %}
     {% endfor %}
-    </div>
-{% endfor %}
+    <div id="matr_selec" class="matr_selec"></div>
+</div>
 {% endblock %}

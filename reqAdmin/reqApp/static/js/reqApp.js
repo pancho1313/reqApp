@@ -64,9 +64,12 @@ function cerrarTodos(){
 }
 
 // mostrar elementos de fila y columna seleccionada en la matriz de trazado
-function mostrarElementosDeMatrizDeTrazado(elFila, elFilaEstado, elCol, elColEstado){
-    document.getElementById('fila').innerHTML = "<div class="+elFilaEstado+">"+elFila+"</div>";
-    document.getElementById('columna').innerHTML = "<div href='#' class="+elColEstado+">"+elCol+"</div>";
+function mostrarElementosDeMatrizDeTrazado(el, elFila, elFilaEstado, elFilaTipo, elCol, elColEstado, elColTipo){
+    elFilaTipo = (elFilaTipo!='')?('title="tipo: '+elFilaTipo+'"'):'';
+    elColTipo = (elColTipo!='')?('title="tipo: '+elColTipo+'"'):'';
+    $('#fila').html("<div class='"+elFilaEstado+"' "+elFilaTipo+">"+elFila+"</div>");
+    $('#columna').html("<div class='"+elColEstado+"' "+elColTipo+">"+elCol+"</div>");
+    $('#matr_selec').css({'left': el.style.left, 'top': el.style.top});
 }
 
 // ajax para verificacion de formularios

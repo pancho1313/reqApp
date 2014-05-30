@@ -97,7 +97,6 @@ border-radius:5px;
 padding:10px;
 }
 
-/*display: inline-block;*/
 
 /* titulo elemento */
 .tituloElemento a:link, .tituloElemento  a:visited
@@ -229,6 +228,16 @@ text-decoration:underline;
 }
 
 /* botones de las matrices de trazado */
+div.matr_selec
+{
+border: 3px solid #1464F6;
+position: absolute;
+left: -1000px;
+top: -1000px; 
+width: 4px;
+height: 4px;
+}
+
 div.matr_match
 {
 background-color:Black;
@@ -238,6 +247,7 @@ left: 100px;
 top: 100px; 
 width: 9px;
 height: 9px; 
+cursor:pointer;
 }
 div.matr_match:hover
 {
@@ -252,7 +262,8 @@ position: absolute;
 left: 100px;
 top: 100px; 
 width: 9px;
-height: 9px; 
+height: 9px;
+cursor:pointer;
 }
 div.matr_no_match:hover
 {
@@ -261,13 +272,14 @@ background-color:#1464F6;
 
 div.matr_no_intersec
 {
-background-color:Gray;
+background-color:#D6D6D6;
 border: 1px solid Black;
 position: absolute;
 left: 100px;
 top: 100px; 
 width: 9px;
-height: 9px; 
+height: 9px;
+cursor:pointer;
 }
 div.matr_no_intersec:hover
 {
