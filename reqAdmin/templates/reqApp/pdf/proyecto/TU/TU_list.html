@@ -1,0 +1,16 @@
+{% load reqApp_tags %}
+
+{% include "reqApp/pdf/proyecto/css.html" %}
+
+{% for tu in TUs %}
+    <div class="contenedorElemento">
+        <b>{{tu}}</b><br/>
+        <div>
+        <i>Descripción: </i>{{ tu.descripcion }}<br/>
+        <i>Cantidad de usuarios: </i>{{ tu.cantidad }}<br/>
+        <i>Usuarios contactables: </i>{{ tu.usuariosContactables }}<br/>
+        <i>Fecha Actualización: </i>{{ tu.fecha|date:"d-m-Y H:i" }}
+        </div>
+	</div>
+	<hr/>
+{% endfor %}

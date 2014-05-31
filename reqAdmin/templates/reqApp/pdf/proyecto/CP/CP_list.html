@@ -1,0 +1,27 @@
+{% load reqApp_tags %}
+
+{% include "reqApp/pdf/proyecto/css.html" %}
+
+{% for cp in CPs %}
+    <div class="contenedorElemento">
+        <b>{{cp}}</b><br/>
+        <div>
+        {% if cp.requisito.vigencia %}
+            <i>Requisito asociado: </i>{{ cp.requisito }}<br/>
+        {% else %}
+            <i>Requisito asociado: {{ cp.requisito }} (borrado)</i><br/>
+        {% endif %}
+        <i>Descripción: </i>{{ cp.descripcion }}<br/>
+        <i>Resultado aceptable: </i>{{ cp.resultadoAceptable }}<br/>
+        <i>Resultado óptimo: </i>{{ cp.resultadoOptimo }}<br/>
+        <i>Estado: </i><b class="{{ cp.estado }}">{{ cp|estado }}</b><br/>
+        <i>Tipos de Usuarios asociados: </i>
+            {% for tu in cp.tiposUsuario|enlistarVigentes %}
+                {{tu}}, 
+            {% endfor %}
+        <br/>
+        <i>Fecha Actualización: </i>{{ cp.fecha|date:"d-m-Y H:i" }}
+        </div>
+	</div>
+	<hr/>
+{% endfor %}

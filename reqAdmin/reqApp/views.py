@@ -99,7 +99,7 @@ def viewTU(request):
     
     navbar = {'1':'proyecto', '2':'TU'}
     
-    return elementView(request, mensajes, TUForm, 'reqApp/proyecto/TU/TU.html', 'reqApp/proyecto/TU/TU_form.html', TipoUsuario, listaAtributos, navbar)
+    return elementView(request, mensajes, TUForm, 'reqApp/proyecto/TU/TU.html', 'reqApp/proyecto/TU/TU_form.html', TipoUsuario, listaAtributos, navbar, 'TU')
 
 def viewRU(request):
     mensajes = []
@@ -150,7 +150,7 @@ def viewMD(request):
     
     navbar = {'1':'proyecto', '2':'MD'}
     
-    return elementView(request, mensajes, MDForm, 'reqApp/proyecto/MD/MD.html', 'reqApp/proyecto/MD/MD_form.html', Modulo, listaAtributos, navbar)
+    return elementView(request, mensajes, MDForm, 'reqApp/proyecto/MD/MD.html', 'reqApp/proyecto/MD/MD_form.html', Modulo, listaAtributos, navbar, 'MD')
 
 def viewCP(request):
     mensajes = []    
@@ -165,7 +165,7 @@ def viewCP(request):
     
     navbar = {'1':'proyecto', '2':'CP'}
     
-    return elementView(request, mensajes, CPForm, 'reqApp/proyecto/CP/CP.html', 'reqApp/proyecto/CP/CP_form.html', CasoPrueba, listaAtributos, navbar)
+    return elementView(request, mensajes, CPForm, 'reqApp/proyecto/CP/CP.html', 'reqApp/proyecto/CP/CP_form.html', CasoPrueba, listaAtributos, navbar, 'CP')
     
 def viewHT(request):
     mensajes = []    
@@ -178,7 +178,7 @@ def viewHT(request):
     
     navbar = {'1':'proyecto', '2':'HT'}
     
-    return elementView(request, mensajes, HTForm, 'reqApp/proyecto/HT/HT.html', 'reqApp/proyecto/HT/HT_form.html', Hito, listaAtributos, navbar)
+    return elementView(request, mensajes, HTForm, 'reqApp/proyecto/HT/HT.html', 'reqApp/proyecto/HT/HT_form.html', Hito, listaAtributos, navbar, 'HT')
     
 ################################# Documentos #############################
 def docView(request, navbar, activos):
@@ -868,6 +868,30 @@ def pdf(request):
             context.update({
                 'titulo':'Requisitos de Software',
                 'RSs':RequisitoSoftware.objects.vigentes(proyecto,'tipo'),
+            })
+        elif tipo == 'TU':
+            template = 'reqApp/pdf/proyecto/TU/TU.html'
+            context.update({
+                'titulo':'Tipos de Usuario',
+                'TUs':TipoUsuario.objects.vigentes(proyecto),
+            })
+        elif tipo == 'MD':
+            template = 'reqApp/pdf/proyecto/MD/MD.html'
+            context.update({
+                'titulo':'Módulos',
+                'MDs':Modulo.objects.vigentes(proyecto),
+            })
+        elif tipo == 'CP':
+            template = 'reqApp/pdf/proyecto/CP/CP.html'
+            context.update({
+                'titulo':'Casos de Prueba',
+                'CPs':CasoPrueba.objects.vigentes(proyecto),
+            })
+        elif tipo == 'HT':
+            template = 'reqApp/pdf/proyecto/HT/HT.html'
+            context.update({
+                'titulo':'Hitos',
+                'HTs':Hito.objects.vigentes(proyecto),
             })
         else:
             raise Http404

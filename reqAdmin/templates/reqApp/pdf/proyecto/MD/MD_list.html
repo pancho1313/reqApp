@@ -1,0 +1,21 @@
+{% load reqApp_tags %}
+
+{% include "reqApp/pdf/proyecto/css.html" %}
+
+{% for md in MDs %}
+    <div class="contenedorElemento">
+        <b>{{md}}</b><br/>
+        <div>
+        <i>Descripción: </i>{{ md.descripcion }}<br/>
+        <i>Prioridad: </i>{{ md|prioridad }}<br/>
+        <i>Costo: </i>{{ md.costo }}<br/>
+        <i>Requisitos de Software asociados: </i>
+            {% for rs in md.requisitosSoftware|enlistarVigentes %}
+                {{rs}}, 
+            {% endfor %}
+        <br/>
+        <i>Fecha Actualización: </i>{{ md.fecha|date:"d-m-Y H:i" }}
+        </div>
+	</div>
+	<hr/>
+{% endfor %}
