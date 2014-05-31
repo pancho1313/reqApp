@@ -829,7 +829,7 @@ def pdf(request):
     usuario = get_user_or_none(request) # TODO is None?
     proyecto = proyectoDeUsuario(usuario)
     context = {
-        'pagesize':'A4',
+        'pagesize':'letter',
         'title':'Amazing pdf',
         'host':request.build_absolute_uri("/")[:-1],# http://localhost:8000
     }
@@ -850,7 +850,11 @@ def pdf(request):
                 {'titulo':'Ambiente','contenido':Documento.objects.vigente(proyecto,'ambiente')},
                 {'titulo':'Proyectos Relacionados','contenido':Documento.objects.vigente(proyecto,'proyectos_relacionados')},
             ]
-            context.update({'secciones':secciones})
+            context.update({
+                'secciones':secciones,
+                'proyecto':proyecto,
+                'hoy':timezone.now(),
+            })
         else:
             raise Http404
     else:

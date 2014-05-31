@@ -73,7 +73,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC' #TODO
+TIME_ZONE = 'Chile/Continental'#'UTC' #TODO
 
 USE_I18N = True
 
