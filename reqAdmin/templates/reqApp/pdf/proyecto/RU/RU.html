@@ -1,14 +1,5 @@
 {% extends "reqApp/pdf/base.html" %}
 
-{%block style%}
-	{{block.super}}
-	
-{%endblock%}
-
 {% block content %}
-	{% for ru in RUs %}
-	    <div>
-    	    {{ ru }}
-    	</div>
-	{% endfor %}
+    {% include "reqApp/pdf/proyecto/RU/RU_list.html" with RUs=RUs %}
 {% endblock %}

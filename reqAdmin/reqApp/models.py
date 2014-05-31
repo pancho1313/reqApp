@@ -50,7 +50,7 @@ class BitacoraManager(models.Manager):
             return self.model.objects.filter(proyecto=proyecto).filter(identificador=identificador).order_by('-fecha')
     
     def vigentes(self, proyecto, order='identificador'):
-        return self.model.objects.filter(proyecto=proyecto).filter(vigencia=True).order_by(order)
+        return self.model.objects.filter(proyecto=proyecto).filter(vigencia=True).order_by(order,'identificador')
         
     def vigente(self, proyecto, identificador):
         try:

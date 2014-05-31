@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8"><!-- muy importante para la visualización pdf! -->
+<meta charset="UTF-8"/><!-- muy importante para la visualización pdf! -->
 <title>
 {{titulo}}
 </title>
@@ -40,13 +40,13 @@
 </head>
 <body>
 <div id="footerContent">
-{%block page_foot%}
-		<pdf:pagenumber/>
-		de <pdf:pagecount>
-{%endblock%}
+    {%block page_foot%}
+		    <pdf:pagenumber/>
+		    de <pdf:pagecount>
+    {%endblock%}
 </div>
-<pdf:nexttemplate name="portada"/>
 
+<pdf:nexttemplate name="portada"/>
 <div>
     <!-- Portada-->
     <img style="zoom:100%;" src="{{host}}/media/documentos/img/fcfm.png"><img/>

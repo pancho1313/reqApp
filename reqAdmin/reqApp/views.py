@@ -860,8 +860,8 @@ def pdf(request):
         elif tipo == 'RU':
             template = 'reqApp/pdf/proyecto/RU/RU.html'
             context.update({
-                'titulo':'Documento de Especificación de Requisitos de Usuario/Software',
-                'RUs':RequisitoUsuario.objects.vigentes(proyecto),
+                'titulo':'Requisitos de Usuario',
+                'RUs':RequisitoUsuario.objects.vigentes(proyecto,'tipo'),
             })
         else:
             raise Http404
