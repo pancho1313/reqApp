@@ -559,24 +559,16 @@ def estadisticas(request):
     return render(request, 'reqApp/herramientas/estadisticas/estadisticas.html', context)
 
 ##############################  MATRICES DE TRAZADO
-
+MATRIZ_CHOICES = [
+    ("rurs", "RU/RS"),
+    ("mdrs", "MD/RS"),
+    ("rucp", "RU/CP"),
+    ("rscp", "RS/CP"),
+]
 def matrixMatch(elemento1, elemento2, proyecto):
     return len(RequisitoSoftware.objects.vigentes(proyecto).filter(id=requisitoSoftware.id).filter(requisitosUsuario=self))>0
-    
-def matrices(request):
-    MATRIZ_CHOICES = [
-        ("rurs", "RU/RS"),
-        ("mdrs", "MD/RS"),
-        ("rucp", "RU/CP"),
-        ("rscp", "RS/CP"),
-    ]
 
-    usuario = get_user_or_none(request) # TODO is None?
-    proyecto = proyectoDeUsuario(usuario)
-    navbar = {'1':'herramientas', '2':'matrices'}
-    
-    tipo =  request.GET.get('tipo', 'rurs')
-    
+def matriz(tipo, proyecto):
     if tipo == 'rurs':
         m1s = RequisitoUsuario.objects.vigentes(proyecto)
         m2s = RequisitoSoftware.objects.vigentes(proyecto)
@@ -644,7 +636,15 @@ def matrices(request):
                 'match':match,
                 'no_intersec':((len(m2idsmatchs[fila])==0)or(colNoIntersec[col])),
                 })
+    return filas
+
+def matrices(request):
+    usuario = get_user_or_none(request) # TODO is None?
+    proyecto = proyectoDeUsuario(usuario)
+    navbar = {'1':'herramientas', '2':'matrices'}
     
+    tipo =  request.GET.get('tipo', 'rurs')
+    filas = matriz(tipo, proyecto)
     context = {
         'navbar':navbar,
         'filas':filas,
@@ -892,6 +892,18 @@ def pdf(request):
             context.update({
                 'titulo':'Hitos',
                 'HTs':Hito.objects.vigentes(proyecto),
+            })
+        elif tipo == 'MT':
+            template = 'reqApp/pdf/herramientas/matrices/MT.html'
+            matrices = []
+            for tipo,nombre in MATRIZ_CHOICES:
+                matrices.append({
+                    'nombre':nombre,
+                    'filas':matriz(tipo,proyecto)
+                })
+            context.update({
+                'titulo':'Matrices de Trazado',
+                'MTs':matrices,
             })
         else:
             raise Http404

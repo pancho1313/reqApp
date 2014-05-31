@@ -14,6 +14,9 @@
         <div><div style="display:inline-block;width:5em;">Fila:</div><div style="display:inline-block;width:auto;" id='fila'>------------------</div></div>
         <div><div style="display:inline-block;width:5em;">Columna:</div><div style="display:inline-block;width:auto;" id='columna'>------------------</div></div>
     </div>
+    <div style="display:inline-block;position:relative;float:right;">
+        <a class="boton_azul" href="{% url 'reqApp:pdf' %}?tipo=MT" target="_blank">PDF</a>
+    </div>
 </div>
 <div id="matr" style="position:relative;width:auto;height:auto;">
     {% for fila in filas %}
@@ -32,7 +35,14 @@
                 name="elemento_matriz"
                 elFila="{{e.elFila.textoIdentificador}}"
                 elCol="{{e.elCol.textoIdentificador}}"
-                onClick="mostrarElementosDeMatrizDeTrazado(this,'{{e.elFila}}','{{ e.elFila.estado }}','{{ e.elFila.tipo }}','{{e.elCol}}','{{ e.elCol.estado }}','{{ e.elCol.tipo }}');">
+                onClick="mostrarElementosDeMatrizDeTrazado(
+                                this,
+                                '{{ e.elFila }}',
+                                '{{ e.elFila.estado }}',
+                                '{{ e.elFila.tipo }}',
+                                '{{ e.elCol }}',
+                                '{{ e.elCol.estado }}',
+                                '{{ e.elCol.tipo }}');">
             </div>
         {% endfor %}
     {% endfor %}
