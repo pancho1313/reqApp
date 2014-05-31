@@ -1,39 +1,29 @@
 {% load reqApp_tags %}
-<style>
-/* color estado de cumplimiento de elemento */
-/* IMPORTANTE: estas clases deben corresponder con el nombre del estado especificado en choices.py */
-.no_cumple{
-    color:Red;
-}
 
-.cumple{
-    color:Green;
-}
+{% include "reqApp/pdf/proyecto/css.html" %}
 
-.ambiguo{
-    color:Purple;
-}
-    
-/* contenedor de elemento de lista */
-div.contenedorElemento{
-    padding:0px;
-    margin:0px;
-}
-
-.contenedorElemento div{
-    padding-left: 20px;
-    padding-bottom: 0px;
-    margin:0px;
-}
-</style>
 {% for ru in RUs %}
     <div class="contenedorElemento">
         <b>{{ru}}</b><br/>
         <div>
-        <i style="color:Gray;">Descripción: </i>{{ ru.descripcion }}<br/>
-        <i style="color:Gray;">Estado: </i><b class="{{ ru.estado }}">{{ ru|estado }}</b><br/>
-        <i style="color:Gray;">Tipo: </i>{{ ru|tipoRU }}<br/>
-        <i style="color:Gray;">Fecha: </i>{{ ru.fecha|date:"d-m-Y h:m" }}
+        <i>Descripción: </i>{{ ru.descripcion }}<br/>
+        <i>Estado: </i><b class="{{ ru.estado }}">{{ ru|estado }}</b><br/>
+        <i>Tipo: </i>{{ ru|tipoRU }}<br/>
+        {% if ru.hito.vigencia %}
+            <i>Hito: </i>{{ ru.hito }}<br/>
+        {% else %}
+            <i>Hito: {{ ru.hito }} (borrado)</i><br/>
+        {% endif %}
+        <i>Prioridad: </i>{{ ru|prioridad }}<br/>
+        <i>Estabilidad: </i>{{ ru.estabilidad }}<br/>
+        <i>Costo: </i>{{ ru.costo }}<br/>
+        <i>Tipos de Usuarios asociados: </i>
+            {% for tu in ru.tiposUsuario|enlistarVigentes %}
+                {{tu}}, 
+            {% endfor %}
+        <br/>
+        <i>Fuente: </i>{{ ru.fuente }}<br/>
+        <i>Fecha: </i>{{ ru.fecha|date:"d-m-Y h:m" }}
         </div>
 	</div>
 	<hr/>

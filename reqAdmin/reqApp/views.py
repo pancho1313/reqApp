@@ -135,7 +135,7 @@ def viewRS(request):
     
     navbar = {'1':'proyecto', '2':'RS'}
     
-    return elementView(request, mensajes, RSForm, 'reqApp/proyecto/RS/RS.html', 'reqApp/proyecto/RS/RS_form.html', RequisitoSoftware, listaAtributos, navbar)
+    return elementView(request, mensajes, RSForm, 'reqApp/proyecto/RS/RS.html', 'reqApp/proyecto/RS/RS_form.html', RequisitoSoftware, listaAtributos, navbar, 'RS')
 
 def viewMD(request):
     mensajes = []
@@ -862,6 +862,12 @@ def pdf(request):
             context.update({
                 'titulo':'Requisitos de Usuario',
                 'RUs':RequisitoUsuario.objects.vigentes(proyecto,'tipo'),
+            })
+        elif tipo == 'RS':
+            template = 'reqApp/pdf/proyecto/RS/RS.html'
+            context.update({
+                'titulo':'Requisitos de Software',
+                'RSs':RequisitoSoftware.objects.vigentes(proyecto,'tipo'),
             })
         else:
             raise Http404
