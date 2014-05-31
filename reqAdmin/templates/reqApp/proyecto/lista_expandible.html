@@ -9,11 +9,17 @@
 <br/>
 
 <div>
-<a style="display: inline-block;width:auto;" href='#' class="boton_azul" onclick='abrirTodos()'>(+)Abrir todos</a>
-<a style="display: inline-block;width:auto;" href='#' class="boton_azul" onclick='cerrarTodos()'>(--)Cerrar todos</a>
-<div style="display: inline-block;width:20%;"></div>
-<a style="display: inline-block;width:auto;" href='#nuevo' class="boton_azul" onclick='editarNuevoElemento()'>Nuevo</a>
+    <a style="display: inline-block;width:auto;" href='#' class="boton_azul" onclick='abrirTodos()'>(+)Abrir todos</a>
+    <a style="display: inline-block;width:auto;" href='#' class="boton_azul" onclick='cerrarTodos()'>(--)Cerrar todos</a>
+    <div style="display: inline-block;width:20%;"></div>
+    <a style="display: inline-block;width:auto;" href='#nuevo' class="boton_azul" onclick='editarNuevoElemento()'>Nuevo</a>
+    {% if pdfLink %}
+        <div style="display:inline-block;position:relative;float:right;">
+            <a class="boton_azul" href="{% url 'reqApp:pdf' %}?tipo={{ pdfLink }}" target="_blank">PDF</a>
+        </div>
+    {% endif %}
 </div>
+
 <br/>
 {% include barra_orden_elementos with atributos=atributos_ordenables %}
 

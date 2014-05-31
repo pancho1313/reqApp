@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8"><!-- muy importante para la visualización pdf! -->
 <title>
-{%block title%}	
-{%endblock%}
+{{titulo}}
 </title>
 <!--
 -pdf-frame-border: 1;
@@ -11,14 +11,14 @@
 <style type="text/css">
 {% block style %}
     @page portada {
-        size: {{pagesize}};
+        size: {{hoja}};
         margin-left: 1.5cm;
         margin-right: 1.5cm;
         top: 1.5cm;
         bottom: 1.5cm;
     }
     @page documento {
-        size: {{pagesize}};
+        size: {{hoja}};
         margin: 1.5cm;
         bottom: 1cm;
         @frame footer {
@@ -46,6 +46,25 @@
 {%endblock%}
 </div>
 <pdf:nexttemplate name="portada"/>
+
+<div>
+    <!-- Portada-->
+    <img style="zoom:100%;" src="{{host}}/media/documentos/img/fcfm.png"><img/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <div>
+        <p style="font-size:2.5em;text-align:center;"><b>{{titulo}}</b></p>
+    </div>
+    <div>
+        <p style="font-size:2.5em;text-align:center;">{{proyecto}}</p>
+    </div>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <div style="font-size:1.2em;text-align:right;">
+        <p>Fecha: {{hoy|date:"d-m-Y"}}</p>
+    </div>
+</div>
+<pdf:nexttemplate name="documento"/>
+<pdf:nextpage/>
+
 {%block content%}{%endblock%}
 </body>
 </html>

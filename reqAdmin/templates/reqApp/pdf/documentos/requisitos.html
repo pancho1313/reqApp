@@ -1,36 +1,9 @@
 {% extends "reqApp/pdf/base.html" %}
 {% load reqApp_tags %}
 
-{% block title %}{{title}}{% endblock %}
-
 {% block content %}
-    <div>
-        <!-- Portada -->
-        <img style="zoom:100%;" src="{{host}}/media/documentos/img/fcfm.png"><img/>
-        <br/><br/><br/><br/><br/><br/>
-        <div>
-            <p style="font-size:2.5em;text-align:center;"><b>Documento de Especificación de Requisitos de Usuario/Software</b></p>
-        </div>
-        <div>
-            <p style="font-size:2.5em;text-align:center;">{{proyecto}}</p>
-        </div>
-        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-        <div style="font-size:1.2em;text-align:right;">
-            <p>Fecha: {{hoy|date:"d-m-Y"}}</p>
-        </div>
-    </div>
-    
-    <!-- Documento -->
-    <pdf:nexttemplate name="documento"/>
-    <pdf:nextpage/>
-    
 	{% for seccion in secciones %}
-    	<h1>{{ seccion.titulo }}<!-- á --></h1>
+    	<h1>{{ seccion.titulo }}</h1>
     	{{ seccion.contenido.parrafo|agregarHostALosSrc:host|safe }}
 	{% endfor %}
 {% endblock %}
-
-{%block page_foot%}
-	{{block.super}}
-{%endblock%}
-

@@ -26,7 +26,7 @@ def ajax_form_valid(form, validado):
         response_dict = {'server_response': "FAIL", 'errores':errores}
         return HttpResponse(json.dumps(response_dict), content_type='application/json')
 
-def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate, modelClass, listaAtributos, navbar):
+def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate, modelClass, listaAtributos, navbar, pdfLink=None):
     usuario = get_user_or_none(request) # TODO is None?
     proyecto = proyectoDeUsuario(usuario)
     if request.method == 'POST':
@@ -84,6 +84,7 @@ def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate
         'atributos_ordenables': listaAtributos,
         'orden_actual': ordenActual,
         'navbar':navbar,
+        'pdfLink':pdfLink,
     }
     return render(request, 'reqApp/proyecto/lista_expandible.html', context)
 
@@ -116,7 +117,7 @@ def viewRU(request):
     
     navbar = {'1':'proyecto', '2':'RU'}
     
-    return elementView(request, mensajes, RUForm, 'reqApp/proyecto/RU/RU.html', 'reqApp/proyecto/RU/RU_form.html', RequisitoUsuario, listaAtributos, navbar)
+    return elementView(request, mensajes, RUForm, 'reqApp/proyecto/RU/RU.html', 'reqApp/proyecto/RU/RU_form.html', RequisitoUsuario, listaAtributos, navbar, 'RU')
 
 def viewRS(request):
     mensajes = []
@@ -807,7 +808,7 @@ def render_to_pdf(template_src, context_dict):
     context = Context(context_dict)
     html  = template.render(context)
     result = StringIO.StringIO()
-    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), result)# ..."ISO-8859-1"...
+    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), result)# ...ISO-8859-1...UTF-8...latin-1... html.encode("ISO-8859-1")
     if not pdf.err:
         return HttpResponse(result.getvalue(), mimetype='application/pdf')
     return HttpResponse('We had some errors!')
@@ -829,31 +830,38 @@ def pdf(request):
     usuario = get_user_or_none(request) # TODO is None?
     proyecto = proyectoDeUsuario(usuario)
     context = {
-        'pagesize':'letter',
-        'title':'Amazing pdf',
+        'hoja':'letter',
+        'titulo':'',
         'host':request.build_absolute_uri("/")[:-1],# http://localhost:8000
+        'proyecto':proyecto,
+        'hoy':timezone.now(),
     }
     if request.method == 'GET':
         tipo =  request.GET.get('tipo', '')
         if tipo == 'docReq':
             template = 'reqApp/pdf/documentos/requisitos.html'
             secciones = [
-                {'titulo':'Introducción','contenido':Documento.objects.vigente(proyecto,'introduccion')},
-                {'titulo':'Propósito','contenido':Documento.objects.vigente(proyecto,'proposito')},
-                {'titulo':'Alcance','contenido':Documento.objects.vigente(proyecto,'alcance')},
-                {'titulo':'Contexto','contenido':Documento.objects.vigente(proyecto,'contexto')},
-                {'titulo':'Definiciones','contenido':Documento.objects.vigente(proyecto,'definiciones')},
-                {'titulo':'Referencias','contenido':Documento.objects.vigente(proyecto,'referencias')},
-                {'titulo':'Descripción General','contenido':Documento.objects.vigente(proyecto,'descripcion_general')},
-                {'titulo':'Usuarios','contenido':Documento.objects.vigente(proyecto,'usuarios')},
-                {'titulo':'Producto','contenido':Documento.objects.vigente(proyecto,'producto')},
-                {'titulo':'Ambiente','contenido':Documento.objects.vigente(proyecto,'ambiente')},
-                {'titulo':'Proyectos Relacionados','contenido':Documento.objects.vigente(proyecto,'proyectos_relacionados')},
+                {'titulo':'1. Introducción','contenido':Documento.objects.vigente(proyecto,'introduccion')},
+                {'titulo':'1.1. Propósito','contenido':Documento.objects.vigente(proyecto,'proposito')},
+                {'titulo':'1.2. Alcance','contenido':Documento.objects.vigente(proyecto,'alcance')},
+                {'titulo':'1.3. Contexto','contenido':Documento.objects.vigente(proyecto,'contexto')},
+                {'titulo':'1.4. Definiciones','contenido':Documento.objects.vigente(proyecto,'definiciones')},
+                {'titulo':'1.5. Referencias','contenido':Documento.objects.vigente(proyecto,'referencias')},
+                {'titulo':'2. Descripción General','contenido':Documento.objects.vigente(proyecto,'descripcion_general')},
+                {'titulo':'2.1. Usuarios','contenido':Documento.objects.vigente(proyecto,'usuarios')},
+                {'titulo':'2.2. Producto','contenido':Documento.objects.vigente(proyecto,'producto')},
+                {'titulo':'2.3. Ambiente','contenido':Documento.objects.vigente(proyecto,'ambiente')},
+                {'titulo':'2.4. Proyectos Relacionados','contenido':Documento.objects.vigente(proyecto,'proyectos_relacionados')},
             ]
             context.update({
+                'titulo':'Documento de Especificación de Requisitos de Usuario/Software',
                 'secciones':secciones,
-                'proyecto':proyecto,
-                'hoy':timezone.now(),
+            })
+        elif tipo == 'RU':
+            template = 'reqApp/pdf/proyecto/RU/RU.html'
+            context.update({
+                'titulo':'Documento de Especificación de Requisitos de Usuario/Software',
+                'RUs':RequisitoUsuario.objects.vigentes(proyecto),
             })
         else:
             raise Http404
