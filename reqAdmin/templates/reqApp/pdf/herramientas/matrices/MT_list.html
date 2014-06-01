@@ -68,6 +68,8 @@ border-spacing: 0px;
 border:none;
 margin:0px;
 padding:0px;
+width:5cm;
+-pdf-keep-in-frame-mode: truncate;
 }
 .matriz th
 {
@@ -82,8 +84,9 @@ margin:0px;
 border-collapse:collapse;
 border-spacing: 0px;
 border: 1px solid LightGray;
-padding:3px;
+padding:0px;
 margin:0px;
+width:1cm;
 }
 tr.estadisticas
 {
@@ -93,8 +96,40 @@ th.estadisticas
 {
 width:6em;
 }
-</style>
 
+p.draw{
+font-family:"Courier New", Courier, monospace;
+font-size: 1.0em;
+line-height: auto;
+display:block;
+}
+</style>
+{% comment %}
+<table class="matriz draw">
+    {% for fila in MTs %}
+        <tr>
+            {% for c in fila %}
+                <td>{{ c }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
+{% endcomment %}
+<p class="draw">
+    ·······|<span>{% for c in MTs.0 %}R{% endfor %}</span><br/>
+    ·······|<span>{% for c in MTs.0 %}S{% endfor %}</span><br/>
+    ·······|<span>{% for c in MTs.0 %}0{% endfor %}</span><br/>
+    ·······|<span>{% for c in MTs.0 %}0{% endfor %}</span><br/>
+    ·······|<span>{% for c in MTs.0 %}2{% endfor %}</span><br/>
+    ·······|<span>{% for c in MTs.0 %}4{% endfor %}</span><br/>
+    -------|<span>{% for c in MTs.0 %}-{% endfor %}</span><br/>
+    {% for fila in MTs %}
+            <!--RU0023 |{% for c in fila %}<b>O</b>·{% endfor %}<br/>-->
+            RU0023 |{% for c in fila %}·{% endfor %}<br/>
+    {% endfor %}
+</p>
+
+{% comment %}
 {% for mt in MTs %}
     <p>{{mt.nombre}}</p>
     <table class="matriz">
@@ -102,6 +137,21 @@ width:6em;
         <tr>
         {% for e in fila %}
             <td>
+            {% if e.match %}
+                +
+            {% elif e.no_intersec %}
+                -
+            {% else %}
+                .
+            {% endif %}
+            </td>
+        {% endfor %}
+        </tr>
+    {% endfor %}
+    </table>
+{% endfor %}
+{% endcomment %}
+
             {% comment %}
                 <div style="left:{{e.col}}0px;top:{{e.fila}}0px;"
                     {% if e.match %}
@@ -127,51 +177,3 @@ width:6em;
                                     '{{ e.elCol.tipo }}');">.
                 </div>
             {% endcomment %}
-            {% if e.match %}
-                +
-            {% elif e.no_intersec %}
-                -
-            {% else %}
-                .
-            {% endif %}
-            </td>
-        {% endfor %}
-        </tr>
-    {% endfor %}
-    </table>
-{% endfor %}
-
-{% comment %}
-{% for mt in MTs %}
-    <p>{{mt.nombre}}</p>
-    <div id="matr" style="position:relative;width:auto;height:auto;">
-    {% for fila in mt.filas %}
-        {% for e in fila %}
-            <div style="left:{{e.col}}0px;top:{{e.fila}}0px;"
-                {% if e.match %}
-                    title="intersección"
-                    class="matr_match"
-                {% elif e.no_intersec %}
-                    title="nunca intersecta!"
-                    class="matr_no_intersec"
-                {% else %}
-                    title="no intersecta"
-                    class="matr_no_match"
-                {% endif %}
-                name="elemento_matriz"
-                elFila="{{e.elFila.textoIdentificador}}"
-                elCol="{{e.elCol.textoIdentificador}}"
-                onClick="mostrarElementosDeMatrizDeTrazado(
-                                this,
-                                '{{ e.elFila }}',
-                                '{{ e.elFila.estado }}',
-                                '{{ e.elFila.tipo }}',
-                                '{{ e.elCol }}',
-                                '{{ e.elCol.estado }}',
-                                '{{ e.elCol.tipo }}');">.
-            </div>
-        {% endfor %}
-    {% endfor %}
-    </div>
-{% endfor %}
-{% endcomment %}

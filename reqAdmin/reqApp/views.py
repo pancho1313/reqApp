@@ -901,9 +901,18 @@ def pdf(request):
                     'nombre':nombre,
                     'filas':matriz(tipo,proyecto)
                 })
+            
+            #
+            MTs = []
+            for f in range(0, 68):
+                fila = []
+                for c in range(0, 69):
+                    fila.append(c)
+                MTs.append(fila)
+            #
             context.update({
                 'titulo':'Matrices de Trazado',
-                'MTs':matrices,
+                'MTs':MTs#matrices,TODO
             })
         else:
             raise Http404
