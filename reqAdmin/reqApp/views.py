@@ -930,6 +930,7 @@ def pdf(request):
             matrices = []
             
             # ancho y largo maximo en caracteres de la tabla generada antes de ser particionada para ajustarse en la pag .pdf
+            # WARNING: estos valores deberían ser reajustados ante un cambio de "pagesize" (letter, A4, ...)
             ancho = 3
             largo = 3
             
