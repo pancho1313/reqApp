@@ -928,13 +928,18 @@ def pdf(request):
         elif tipo == 'MT':
             template = 'reqApp/pdf/herramientas/matrices/MT.html'
             matrices = []
+            
+            # ancho y largo maximo en caracteres de la tabla generada antes de ser particionada para ajustarse en la pag .pdf
+            ancho = 3
+            largo = 3
+            
             for tipo,nombre in MATRIZ_CHOICES:
                 matrices.append({
                     'nombre':nombre,
-                    'subMTs':matrixSplit(matriz(tipo,proyecto),3,3)
+                    'subMTs':matrixSplit(matriz(tipo,proyecto), largo, ancho)
                 })
             
-            #
+            ##########TODO: delete
             mTs = []
             
             myFilas = []
@@ -958,7 +963,7 @@ def pdf(request):
                 'nombre':'FUAA/WEE',
                 'subMTs':matrixSplit(myFilas, 10, 10),
             })
-            #
+            ##############
             context.update({
                 'titulo':'Matrices de Trazado',
                 'MTs':matrices,#mTs, matrices, TODO

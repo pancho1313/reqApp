@@ -23,13 +23,13 @@
         {% for e in fila %}
             <div style="left:{{e.col}}0px;top:{{e.fila}}0px;"
                 {% if e.match %}
-                    title="intersección"
+                    title="intersección&#013;[--]  {{e.elFila.textoIdentificador}}&#013;[ | ]  {{e.elCol.textoIdentificador}}"
                     class="matr_match"
                 {% elif e.no_intersec %}
-                    title="nunca intersecta!"
+                    title="nunca intersecta!&#013;[--]  {{e.elFila.textoIdentificador}}&#013;[ | ]  {{e.elCol.textoIdentificador}}"
                     class="matr_no_intersec"
                 {% else %}
-                    title="no intersecta"
+                    title="no intersecta&#013;[--]  {{e.elFila.textoIdentificador}}&#013;[ | ]  {{e.elCol.textoIdentificador}}"
                     class="matr_no_match"
                 {% endif %}
                 name="elemento_matriz"
