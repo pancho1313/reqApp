@@ -181,7 +181,7 @@ def viewHT(request):
     return elementView(request, mensajes, HTForm, 'reqApp/proyecto/HT/HT.html', 'reqApp/proyecto/HT/HT_form.html', Hito, listaAtributos, navbar, 'HT')
     
 ################################# Documentos #############################
-def docView(request, navbar, activos):
+def docView(request, navbar, activos, pdfLink):
     usuario = get_user_or_none(request) # TODO is None?
     proyecto = proyectoDeUsuario(usuario)
 
@@ -200,6 +200,7 @@ def docView(request, navbar, activos):
         'navbar':navbar,
         'parrafos':parrafos,
         'parrafo':parrafo,
+        'pdfLink':pdfLink,
     }
     
     id_version = -1 # sin version seleccionada para edición
@@ -234,7 +235,6 @@ def docView(request, navbar, activos):
         
     context.update({'form':form,})
     
-    #context.update({'host':request.build_absolute_uri("/")[:-1]})# http://localhost:8000 -->  reqApp/Documentos/mce.html --> static/js/reqApp.js/insertMceImg(input,url,csrf,host);
     
     return render(request, 'reqApp/documentos/documentos.html', context)
 
@@ -254,7 +254,7 @@ def docRequisitos(request):
         'ambiente',
         'proyectos_relacionados',
     ]
-    return docView(request, navbar, parrafos)
+    return docView(request, navbar, parrafos, 'docReq')
     
 def docDiseno(request):
     navbar = {'1':'documentos', '2':'diseno'}
@@ -275,7 +275,7 @@ def docDiseno(request):
         'navegacion',
         'interfaz',
     ]
-    return docView(request, navbar, parrafos)
+    return docView(request, navbar, parrafos, 'docDis')
     
 def docCP(request):
     navbar = {'1':'documentos', '2':'cp'}
@@ -293,7 +293,7 @@ def docCP(request):
         'ambiente',
         'proyectos_relacionados',
     ]
-    return docView(request, navbar, parrafos)
+    return docView(request, navbar, parrafos, 'docCP')
 
 def docHistorico(request):
     navbar = {'1':'documentos', '2':'historico'}
@@ -319,7 +319,7 @@ def docHistorico(request):
         'navegacion',
         'interfaz',
     ]
-    return docView(request, navbar, parrafos)
+    return docView(request, navbar, parrafos, 'docHis')
 
 ############################### Herramientas ##########################
 def herrView(request, navbar):
@@ -802,39 +802,6 @@ from django.template import Context
 import xhtml2pdf.pisa as pisa
 import cStringIO as StringIO
 
-def pdfIndex(request):
-    #print request.build_absolute_uri("/") # --> http://127.0.0.1:8000/download/
-    return HttpResponse("""
-        <html><body>
-            <h1>Example 1</h1>
-            Please enter some HTML code:
-            <form action="/download/" method="post" enctype="multipart/form-data">
-            <textarea name="data">Hello <strong>World</strong></textarea>
-            <br />
-            <input type="submit" value="Convert HTML to PDF" />
-            </form>
-            <hr>
-            <h1>Example 2</h1>
-            <p><a href="/ezpdf_sample">Example with template</a></p>
-        </body></html>
-        """)
-@csrf_exempt
-def pdfDownload(request):
-    #print request.build_absolute_uri() # --> http://127.0.0.1:8000/download/
-    if request.POST:
-        result = StringIO.StringIO()
-        pdf = pisa.CreatePDF(
-            StringIO.StringIO(request.POST["data"].encode("UTF-8")),
-            result
-            )
-
-        if not pdf.err:
-            return HttpResponse(
-                result.getvalue(),
-                mimetype='application/pdf')
-
-    return HttpResponse('We had some errors')
-
 def render_to_pdf(template_src, context_dict):
     template = get_template(template_src)
     context = Context(context_dict)
@@ -844,19 +811,6 @@ def render_to_pdf(template_src, context_dict):
     if not pdf.err:
         return HttpResponse(result.getvalue(), mimetype='application/pdf')
     return HttpResponse('We had some errors!')
-
-def ezpdf_sample(request):
-    blog_entries = []
-    for i in range(1,10):
-        blog_entries.append({
-            'id': i,
-            'title':'Playing with pisa 3.0.16 and dJango Template Engine',
-            'body':'This is a simple example..'
-            })
-    return render_to_pdf('reqApp/pdf/entries.html',{
-        'pagesize':'A4',
-        'title':'My amazing blog',
-        'blog_entries':blog_entries})
         
 def pdf(request):
     usuario = get_user_or_none(request) # TODO is None?
@@ -868,26 +822,143 @@ def pdf(request):
         'proyecto':proyecto,
         'hoy':timezone.now(),
     }
+    
+    # ancho y largo maximo en caracteres de la tabla generada antes de ser particionada para ajustarse en la pag .pdf
+    # WARNING: estos valores deberían ser reajustados ante un cambio de "pagesize" (letter, A4, ...)
+    ANCHO_MTs = 50
+    LARGO_MTs = 50
+    
     if request.method == 'GET':
         tipo =  request.GET.get('tipo', '')
         if tipo == 'docReq':
             template = 'reqApp/pdf/documentos/requisitos.html'
             secciones = [
-                {'titulo':'1. Introducción','contenido':Documento.objects.vigente(proyecto,'introduccion')},
-                {'titulo':'1.1. Propósito','contenido':Documento.objects.vigente(proyecto,'proposito')},
-                {'titulo':'1.2. Alcance','contenido':Documento.objects.vigente(proyecto,'alcance')},
-                {'titulo':'1.3. Contexto','contenido':Documento.objects.vigente(proyecto,'contexto')},
-                {'titulo':'1.4. Definiciones','contenido':Documento.objects.vigente(proyecto,'definiciones')},
-                {'titulo':'1.5. Referencias','contenido':Documento.objects.vigente(proyecto,'referencias')},
-                {'titulo':'2. Descripción General','contenido':Documento.objects.vigente(proyecto,'descripcion_general')},
-                {'titulo':'2.1. Usuarios','contenido':Documento.objects.vigente(proyecto,'usuarios')},
-                {'titulo':'2.2. Producto','contenido':Documento.objects.vigente(proyecto,'producto')},
-                {'titulo':'2.3. Ambiente','contenido':Documento.objects.vigente(proyecto,'ambiente')},
-                {'titulo':'2.4. Proyectos Relacionados','contenido':Documento.objects.vigente(proyecto,'proyectos_relacionados')},
+                {'titulo':'<h1>1. Introducción</h1>',            'contenido':Documento.objects.vigente(proyecto,'introduccion')},
+                {'titulo':'<h2>1.1. Propósito</h2>',             'contenido':Documento.objects.vigente(proyecto,'proposito')},
+                {'titulo':'<h2>1.2. Alcance</h2>',               'contenido':Documento.objects.vigente(proyecto,'alcance')},
+                {'titulo':'<h2>1.3. Contexto</h2>',              'contenido':Documento.objects.vigente(proyecto,'contexto')},
+                {'titulo':'<h2>1.4. Definiciones</h2>',          'contenido':Documento.objects.vigente(proyecto,'definiciones')},
+                {'titulo':'<h2>1.5. Referencias</h2>',           'contenido':Documento.objects.vigente(proyecto,'referencias')},
+                {'titulo':'<h1>2. Descripción General</h1>',     'contenido':Documento.objects.vigente(proyecto,'descripcion_general')},
+                {'titulo':'<h2>2.1. Usuarios</h2>',              'contenido':Documento.objects.vigente(proyecto,'usuarios')},
+                {'titulo':'<h2>2.2. Producto</h2>',              'contenido':Documento.objects.vigente(proyecto,'producto')},
+                {'titulo':'<h2>2.3. Ambiente</h2>',              'contenido':Documento.objects.vigente(proyecto,'ambiente')},
+                {'titulo':'<h2>2.4. Proyectos Relacionados</h2>','contenido':Documento.objects.vigente(proyecto,'proyectos_relacionados')},
             ]
+            
+            
             context.update({
                 'titulo':'Documento de Especificación de Requisitos de Usuario/Software',
                 'secciones':secciones,
+                'RUs':RequisitoUsuario.objects.vigentes(proyecto,'tipo'),
+                'RSs':RequisitoSoftware.objects.vigentes(proyecto,'tipo'),
+                'MTs':[{
+                    'nombre':'RU/RS',
+                    'subMTs':matrixSplit(matriz('rurs',proyecto), LARGO_MTs, ANCHO_MTs)
+                    }],
+            })
+        elif tipo == 'docDis':
+            template = 'reqApp/pdf/documentos/diseno.html'
+            secciones = [
+                {'titulo':'<h1>1. Introducción</h1>',            'contenido':Documento.objects.vigente(proyecto,'introduccion')},
+                {'titulo':'<h2>1.1. Propósito</h2>',             'contenido':Documento.objects.vigente(proyecto,'proposito')},
+                {'titulo':'<h2>1.2. Alcance</h2>',               'contenido':Documento.objects.vigente(proyecto,'alcance')},
+                {'titulo':'<h2>1.3. Contexto</h2>',              'contenido':Documento.objects.vigente(proyecto,'contexto')},
+                {'titulo':'<h2>1.4. Definiciones</h2>',          'contenido':Documento.objects.vigente(proyecto,'definiciones')},
+                {'titulo':'<h2>1.5. Referencias</h2>',           'contenido':Documento.objects.vigente(proyecto,'referencias')},
+                {'titulo':'<h1>2. Descripción General</h1>',     'contenido':Documento.objects.vigente(proyecto,'descripcion_general')},
+                
+                {'titulo':'<h1>3. Diseño</h1>',                  'contenido':Documento.objects.vigente(proyecto,'diseno')},
+                {'titulo':'<h2>3.1. Arquitectura Física</h2>',   'contenido':Documento.objects.vigente(proyecto,'arquitectura_fisica')},
+                {'titulo':'<h2>3.2. Arquitectura Lógica</h2>',   'contenido':Documento.objects.vigente(proyecto,'arquitectura_logica')},
+                {'titulo':'<h2>3.3. Modelo de Datos</h2>',       'contenido':Documento.objects.vigente(proyecto,'modelo')},
+                
+                {'titulo':'<h2>3.4. Detalle Módulos</h2>',       'contenido':Documento.objects.vigente(proyecto,'detalle_modulos')},
+                {'titulo':'<h2>3.5. Navegación</h2>',            'contenido':Documento.objects.vigente(proyecto,'navegacion')},
+                {'titulo':'<h2>3.6. Interfaz</h2>',              'contenido':Documento.objects.vigente(proyecto,'interfaz')},
+            ]
+            
+            context.update({
+                'titulo':'Documento de Diseño',
+                'secciones':secciones,
+                'MDs':Modulo.objects.vigentes(proyecto),
+                'MTs':[{
+                    'nombre':'MD/RS',
+                    'subMTs':matrixSplit(matriz('mdrs',proyecto), LARGO_MTs, ANCHO_MTs)
+                    }],
+            })
+        elif tipo == 'docCP':
+            template = 'reqApp/pdf/documentos/cp.html'
+            secciones = [
+                {'titulo':'<h1>1. Introducción</h1>',            'contenido':Documento.objects.vigente(proyecto,'introduccion')},
+                {'titulo':'<h2>1.1. Propósito</h2>',             'contenido':Documento.objects.vigente(proyecto,'proposito')},
+                {'titulo':'<h2>1.2. Alcance</h2>',               'contenido':Documento.objects.vigente(proyecto,'alcance')},
+                {'titulo':'<h2>1.3. Contexto</h2>',              'contenido':Documento.objects.vigente(proyecto,'contexto')},
+                {'titulo':'<h2>1.4. Definiciones</h2>',          'contenido':Documento.objects.vigente(proyecto,'definiciones')},
+                {'titulo':'<h2>1.5. Referencias</h2>',           'contenido':Documento.objects.vigente(proyecto,'referencias')},
+                {'titulo':'<h1>2. Descripción General</h1>',     'contenido':Documento.objects.vigente(proyecto,'descripcion_general')},
+                {'titulo':'<h2>2.1. Usuarios</h2>',              'contenido':Documento.objects.vigente(proyecto,'usuarios')},
+                {'titulo':'<h2>2.2. Producto</h2>',              'contenido':Documento.objects.vigente(proyecto,'producto')},
+                {'titulo':'<h2>2.3. Ambiente</h2>',              'contenido':Documento.objects.vigente(proyecto,'ambiente')},
+                {'titulo':'<h2>2.4. Proyectos Relacionados</h2>','contenido':Documento.objects.vigente(proyecto,'proyectos_relacionados')},
+            ]
+            
+            
+            context.update({
+                'titulo':'Documento de Casos de Prueba',
+                'secciones':secciones,
+                'RUs':RequisitoUsuario.objects.vigentes(proyecto,'tipo'),
+                'RSs':RequisitoSoftware.objects.vigentes(proyecto,'tipo'),
+                'CPs':CasoPrueba.objects.vigentes(proyecto),
+                'MTs':[{
+                    'nombre':'RU/RS',
+                    'subMTs':matrixSplit(matriz('rurs',proyecto), LARGO_MTs, ANCHO_MTs)
+                    },{
+                    'nombre':'RU/CP',
+                    'subMTs':matrixSplit(matriz('rucp',proyecto), LARGO_MTs, ANCHO_MTs)
+                    },{
+                    'nombre':'RS/CP',
+                    'subMTs':matrixSplit(matriz('rscp',proyecto), LARGO_MTs, ANCHO_MTs)
+                    }],
+            })
+        elif tipo == 'docHis':
+            template = 'reqApp/pdf/documentos/historico.html'
+            secciones = [
+                {'titulo':'<h1>1. Introducción</h1>',            'contenido':Documento.objects.vigente(proyecto,'introduccion')},
+                {'titulo':'<h2>1.1. Propósito</h2>',             'contenido':Documento.objects.vigente(proyecto,'proposito')},
+                {'titulo':'<h2>1.2. Alcance</h2>',               'contenido':Documento.objects.vigente(proyecto,'alcance')},
+                {'titulo':'<h2>1.3. Contexto</h2>',              'contenido':Documento.objects.vigente(proyecto,'contexto')},
+                {'titulo':'<h2>1.4. Definiciones</h2>',          'contenido':Documento.objects.vigente(proyecto,'definiciones')},
+                {'titulo':'<h2>1.5. Referencias</h2>',           'contenido':Documento.objects.vigente(proyecto,'referencias')},
+                {'titulo':'<h1>2. Descripción General</h1>',     'contenido':Documento.objects.vigente(proyecto,'descripcion_general')},
+                {'titulo':'<h2>2.1. Usuarios</h2>',              'contenido':Documento.objects.vigente(proyecto,'usuarios')},
+                {'titulo':'<h2>2.2. Producto</h2>',              'contenido':Documento.objects.vigente(proyecto,'producto')},
+                {'titulo':'<h2>2.3. Ambiente</h2>',              'contenido':Documento.objects.vigente(proyecto,'ambiente')},
+                {'titulo':'<h2>2.4. Proyectos Relacionados</h2>','contenido':Documento.objects.vigente(proyecto,'proyectos_relacionados')},
+                {'titulo':'<h1>3. Diseño</h1>',                  'contenido':Documento.objects.vigente(proyecto,'diseno')},
+                {'titulo':'<h2>3.1. Arquitectura Física</h2>',   'contenido':Documento.objects.vigente(proyecto,'arquitectura_fisica')},
+                {'titulo':'<h2>3.2. Arquitectura Lógica</h2>',   'contenido':Documento.objects.vigente(proyecto,'arquitectura_logica')},
+                {'titulo':'<h2>3.3. Modelo de Datos</h2>',       'contenido':Documento.objects.vigente(proyecto,'modelo')},
+                {'titulo':'<h2>3.4. Detalle Módulos</h2>',       'contenido':Documento.objects.vigente(proyecto,'detalle_modulos')},
+                {'titulo':'<h2>3.5. Navegación</h2>',            'contenido':Documento.objects.vigente(proyecto,'navegacion')},
+                {'titulo':'<h2>3.6. Interfaz</h2>',              'contenido':Documento.objects.vigente(proyecto,'interfaz')},
+            ]
+            
+            matrices = []
+            for tipo,nombre in MATRIZ_CHOICES:
+                matrices.append({
+                    'nombre':nombre,
+                    'subMTs':matrixSplit(matriz(tipo,proyecto), LARGO_MTs, ANCHO_MTs)
+                })
+                
+            context.update({
+                'titulo':'Documento de Histórico',
+                'secciones':secciones,
+                'RUs':RequisitoUsuario.objects.vigentes(proyecto,'tipo'),
+                'RSs':RequisitoSoftware.objects.vigentes(proyecto,'tipo'),
+                'CPs':CasoPrueba.objects.vigentes(proyecto),
+                'MDs':Modulo.objects.vigentes(proyecto),
+                'MTs':matrices,
             })
         elif tipo == 'RU':
             template = 'reqApp/pdf/proyecto/RU/RU.html'
@@ -929,15 +1000,10 @@ def pdf(request):
             template = 'reqApp/pdf/herramientas/matrices/MT.html'
             matrices = []
             
-            # ancho y largo maximo en caracteres de la tabla generada antes de ser particionada para ajustarse en la pag .pdf
-            # WARNING: estos valores deberían ser reajustados ante un cambio de "pagesize" (letter, A4, ...)
-            ancho = 3
-            largo = 3
-            
             for tipo,nombre in MATRIZ_CHOICES:
                 matrices.append({
                     'nombre':nombre,
-                    'subMTs':matrixSplit(matriz(tipo,proyecto), largo, ancho)
+                    'subMTs':matrixSplit(matriz(tipo,proyecto), LARGO_MTs, ANCHO_MTs)
                 })
             
             ##########TODO: delete
@@ -950,7 +1016,6 @@ def pdf(request):
                     sol = 'CL%04d' % c
                     fila.append({
                         "fila":'FL%04d' % f,
-                        "col":sol,
                         "col0":sol[0],
                         "col1":sol[1],
                         "col2":sol[2],

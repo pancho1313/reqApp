@@ -23,10 +23,5 @@ urlpatterns = patterns('',
     
     url('^upload/img/$', views.imgUpload, name='mce_upload_image'),
     
-    
     url(r'pdf/$', views.pdf, name='pdf'),
-    
-    url(r'pedeefe/$', views.pdfIndex),
-    url(r'^download/$', views.pdfDownload),
-    url(r'^ezpdf_sample/$', views.ezpdf_sample),
 )

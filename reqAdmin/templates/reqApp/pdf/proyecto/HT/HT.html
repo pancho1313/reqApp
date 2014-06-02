@@ -1,5 +1,8 @@
 {% extends "reqApp/pdf/base.html" %}
 
+{% block indice %}{% endblock %}
+
 {% block content %}
+    <h1>Hitos del Proyecto</h1>
     {% include "reqApp/pdf/proyecto/HT/HT_list.html" with HTs=HTs %}
 {% endblock %}

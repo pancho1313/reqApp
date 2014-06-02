@@ -60,7 +60,7 @@ $(window).bind("load", function() {
         </div>
     </div>
     <div style="display:inline-block;width:auto;float:right;">
-        <a class="boton_azul" href="{% url 'reqApp:pdf' %}?tipo=docReq" target="_blank">PDF</a>
+        <a class="boton_azul" href="{% url 'reqApp:pdf' %}?tipo={{ pdfLink }}" target="_blank">PDF</a>
     </div>
     <div style="text-align:right;">
         <div id="version" style="display:block;color:Gray;">

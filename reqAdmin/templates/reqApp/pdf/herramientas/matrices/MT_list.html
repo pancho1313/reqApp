@@ -1,102 +1,6 @@
 {% load reqApp_tags %}
 
 <style>
-div.matr_selec
-{
-border: 3px solid #1464F6;
-position: absolute;
-left: -1000px;
-top: -1000px; 
-width: 4px;
-height: 4px;
-}
-
-div.matr_match
-{
-background-color:Black;
-border: 1px solid Black;
-position: absolute;
-left: 100px;
-top: 100px; 
-width: 9px;
-height: 9px; 
-cursor:pointer;
-}
-div.matr_match:hover
-{
-background-color:#1464F6;
-}
-
-div.matr_no_match
-{
-background-color:White;
-border: 1px solid Black;
-position: absolute;
-left: 100px;
-top: 100px; 
-width: 9px;
-height: 9px;
-cursor:pointer;
-}
-div.matr_no_match:hover
-{
-background-color:#1464F6;
-}
-
-div.matr_no_intersec
-{
-background-color:#D6D6D6;
-border: 1px solid Black;
-position: absolute;
-left: 100px;
-top: 100px; 
-width: 9px;
-height: 9px;
-cursor:pointer;
-}
-div.matr_no_intersec:hover
-{
-background-color:#1464F6;
-}
-
-
-/* tabla de matriz */
-table.matriz
-{
-border-collapse:collapse;
-border-spacing: 0px;
-border:none;
-margin:0px;
-padding:0px;
-width:5cm;
--pdf-keep-in-frame-mode: truncate;
-}
-.matriz th
-{
-border-collapse:collapse;
-border-spacing: 0px;
-border: 1px solid LightGray;
-padding:4px;
-margin:0px;
-}
-.matriz td
-{
-border-collapse:collapse;
-border-spacing: 0px;
-border: 1px solid LightGray;
-padding:0px;
-margin:0px;
-width:1cm;
-}
-tr.estadisticas
-{
-border-top: 3px solid LightGray;
-}
-th.estadisticas
-{
-width:6em;
-}
-
 p.draw{
 font-family:"Courier New", Courier, monospace;
 font-size: 1.0em;
@@ -106,7 +10,7 @@ display:block;
 </style>
 {% comment %}
 {% for mt in MTs %}
-    <h3>Matriz de Trazado: {{ mt.nombre }}</h3>
+    <h2>{{ mt.nombre }}</h2>
     {% for subMT in mt.subMTs %}
         <p class="draw">
             <span style="color:White;">······</span>|{% for c in subMT.0 %}{{c.col0}}{% endfor %}<br/>
@@ -126,7 +30,7 @@ display:block;
 {% endcomment %}
 
 {% for mt in MTs %}
-    <h3>Matriz de Trazado: {{ mt.nombre }}</h3>
+    <h2>{{ mt.nombre }}</h2>
     {% for subMT in mt.subMTs %}
         <p class="draw">
             {{ subMT|textTableHorizHeaders|safe }}
@@ -137,52 +41,3 @@ display:block;
         <pdf:nextpage/>
     {% endfor %}
 {% endfor %}
-
-{% comment %}
-{% for mt in MTs %}
-<h3>Matriz de Trazado: {{ mt.nombre }}</h3>
-<p class="draw">
-    <!--
-    ······|{% for c in MTs.0 %}R{% endfor %}<br/>
-    ······|{% for c in MTs.0 %}S{% endfor %}<br/>
-    ······|{% for c in MTs.0 %}0{% endfor %}<br/>
-    ······|{% for c in MTs.0 %}0{% endfor %}<br/>
-    ······|{% for c in MTs.0 %}2{% endfor %}<br/>
-    ······|{% for c in MTs.0 %}4{% endfor %}<br/>
-    ------|{% for c in MTs.0 %}-{% endfor %}<br/>
-    -->
-    {{ mt.filas|textTableHorizHeaders|safe }}
-    {% for fila in mt.filas %}
-            <!--RU0023|{% for c in fila %}<b>O</b>·{% endfor %}<br/>-->
-            {{ fila.0.elFila.textoIdentificador }}|{% for c in fila %}{% if c.match %}<b style="color:Black;">+</b>{% else %}<span style="color:#CCCCCC;">·</span>{% endif %}{% endfor %}<br/>
-    {% endfor %}
-</p>
-<br/>
-{% endfor %}
-{% endcomment %}
-
-            {% comment %}
-                <div style="left:{{e.col}}0px;top:{{e.fila}}0px;"
-                    {% if e.match %}
-                        title="intersección"
-                        class="matr_match"
-                    {% elif e.no_intersec %}
-                        title="nunca intersecta!"
-                        class="matr_no_intersec"
-                    {% else %}
-                        title="no intersecta"
-                        class="matr_no_match"
-                    {% endif %}
-                    name="elemento_matriz"
-                    elFila="{{e.elFila.textoIdentificador}}"
-                    elCol="{{e.elCol.textoIdentificador}}"
-                    onClick="mostrarElementosDeMatrizDeTrazado(
-                                    this,
-                                    '{{ e.elFila }}',
-                                    '{{ e.elFila.estado }}',
-                                    '{{ e.elFila.tipo }}',
-                                    '{{ e.elCol }}',
-                                    '{{ e.elCol.estado }}',
-                                    '{{ e.elCol.tipo }}');">.
-                </div>
-            {% endcomment %}

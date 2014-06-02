@@ -214,7 +214,7 @@ class DocForm(forms.ModelForm):
                     'height':'600px',# css
                     'plugins':'yenimg',# plugin propio para incorporar imagenes en el mce.
                     'theme_advanced_statusbar_location':None,
-                    'theme_advanced_blockformats':"p,h2,h3,h4,h5,h6",# no incluye h1 para poder usarlo en el documento final.
+                    'theme_advanced_blockformats':"p,h3,h4,h5,h6",# no incluye h1 ni h2 para poder usarlo en el documento final.
                     'theme_advanced_buttons1':
                         "formatselect,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,|,outdent,indent,|,bullist,numlist,|,browseimg,imgurl,|,undo,redo",
                     'theme_advanced_buttons2':"",

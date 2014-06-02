@@ -29,20 +29,24 @@
             height: 1cm;
         }
     }
-    img {
-        zoom: 80%;
-    }
-    body{
-        font-size: 1.5em;
-    }
+    pdftoc.pdftoclevel0{margin-left:0.7cm;}
+    pdftoc.pdftoclevel1{margin-left:1.4cm;}
+    pdftoc.pdftoclevel2{margin-left:2.1cm;}
+    pdftoc.pdftoclevel3{margin-left:2.8cm;}
+    pdftoc.pdftoclevel4{margin-left:3.5cm;}
+    pdftoc.pdftoclevel5{margin-left:4.2cm;}
+    img {zoom: 80%;}
+    body{font-size: 1.5em;}
 {%endblock%}	
 </style>
 </head>
 <body>
 <div id="footerContent">
     {%block page_foot%}
+        <div style="text-align:right;">
 		    <pdf:pagenumber/>
 		    de <pdf:pagecount>
+		</div>
     {%endblock%}
 </div>
 
@@ -61,6 +65,12 @@
     <div style="font-size:1.2em;text-align:right;">
         <p>Fecha: {{hoy|date:"d-m-Y"}}</p>
     </div>
+    {% block indice %}
+        <pdf:nextpage/>
+        <!-- Indice -->
+        <p style="font-size:1.8em;">Indice</p>
+        <pdf:toc />
+    {% endblock %}
 </div>
 <pdf:nexttemplate name="documento"/>
 <pdf:nextpage/>

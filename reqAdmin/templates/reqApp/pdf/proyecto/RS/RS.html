@@ -1,5 +1,8 @@
 {% extends "reqApp/pdf/base.html" %}
 
+{% block indice %}{% endblock %}
+
 {% block content %}
+    <h1>Requisitos de Software</h1>
     {% include "reqApp/pdf/proyecto/RS/RS_list.html" with RSs=RSs %}
 {% endblock %}

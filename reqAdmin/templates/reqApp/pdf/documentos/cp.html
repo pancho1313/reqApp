@@ -15,8 +15,11 @@
 	<br/>
 	<h2>3.2. Requisitos de Software</h2>
 	{% include "reqApp/pdf/proyecto/RS/RS_list.html" with RSs=RSs %}
+	<br/>
+	<h1>4. Casos de Prueba</h1>
+    {% include "reqApp/pdf/proyecto/CP/CP_list.html" with CPs=CPs %}
 	
 	<pdf:nextpage/>
-	<h1>4. Matrices de Trazado</h1>
+	<h1>5. Matrices de Trazado</h1>
 	{% include "reqApp/pdf/herramientas/matrices/MT_list.html" with MTs=MTs %}
 {% endblock %}

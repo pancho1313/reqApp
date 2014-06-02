@@ -9,14 +9,20 @@
 	{% endfor %}
 	
 	<pdf:nextpage/>
-	<h1>3. Requisitos del Sistema</h1>
-	<h2>3.1. Requisitos de Usuario</h2>
+	<h1>4. Requisitos del Sistema</h1>
+	<h2>4.1. Requisitos de Usuario</h2>
 	{% include "reqApp/pdf/proyecto/RU/RU_list.html" with RUs=RUs %}
 	<br/>
-	<h2>3.2. Requisitos de Software</h2>
+	<h2>4.2. Requisitos de Software</h2>
 	{% include "reqApp/pdf/proyecto/RS/RS_list.html" with RSs=RSs %}
+	<br/>
+	<h1>5. Módulos</h1>
+    {% include "reqApp/pdf/proyecto/MD/MD_list.html" with MDs=MDs %}
+    <br/>
+	<h1>6. Casos de Prueba</h1>
+    {% include "reqApp/pdf/proyecto/CP/CP_list.html" with CPs=CPs %}
 	
 	<pdf:nextpage/>
-	<h1>4. Matrices de Trazado</h1>
+	<h1>7. Matrices de Trazado</h1>
 	{% include "reqApp/pdf/herramientas/matrices/MT_list.html" with MTs=MTs %}
 {% endblock %}
