@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from django import template
 from reqApp.models import *
 from reqApp.choices import *
@@ -48,3 +49,32 @@ def porcentaje(total, parte):
 def agregarHostALosSrc(htmlCode,host):
     # agrega el host a los src de las imagenes y otros recursos
     return htmlCode.replace('src="/','src="'+host+'/').replace("src='/","src='"+host+"/")
+    
+@register.filter(name="textTableHorizHeaders")
+def textTableHorizHeaders(rows):
+    if len(rows)>0:
+        if len(rows[0])>0:
+            firstRow = rows[0]
+            pref = '|'
+            hr = '|'
+            rti = firstRow[0]['elFila'].textoIdentificador()
+            for x in range(0, len(rti)):
+                pref = '<span style="color:White;">o</span>'+pref#'·'+pref
+                hr = '-'+hr
+            hText = []
+            for c in firstRow[0]['elCol'].textoIdentificador():
+                hText.append('')
+            for e in firstRow:
+                for i,c in enumerate(e['elCol'].textoIdentificador()):
+                    hText[i] = hText[i] + c
+            out = ''
+            hrlen = 0
+            for r in hText:
+                hrlen = len(r)
+                out = (out + pref + r + '<br/>')
+            for x in range(0,hrlen):
+                hr = hr + '-'
+            out = out + hr + '<br/>'
+            
+            return out
+    return '---'

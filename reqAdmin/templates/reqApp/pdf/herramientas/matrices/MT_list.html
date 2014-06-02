@@ -104,51 +104,50 @@ line-height: auto;
 display:block;
 }
 </style>
-{% comment %}
-<table class="matriz draw">
-    {% for fila in MTs %}
-        <tr>
-            {% for c in fila %}
-                <td>{{ c }}</td>
+
+{% for mt in MTs %}
+    <h3>Matriz de Trazado: {{ mt.nombre }}</h3>
+    {% for subMT in mt.subMTs %}
+        <p class="draw">
+            <span style="color:White;">······</span>|{% for c in subMT.0 %}{{c.col0}}{% endfor %}<br/>
+            <span style="color:White;">······</span>|{% for c in subMT.0 %}{{c.col1}}{% endfor %}<br/>
+            <span style="color:White;">······</span>|{% for c in subMT.0 %}{{c.col2}}{% endfor %}<br/>
+            <span style="color:White;">······</span>|{% for c in subMT.0 %}{{c.col3}}{% endfor %}<br/>
+            <span style="color:White;">······</span>|{% for c in subMT.0 %}{{c.col4}}{% endfor %}<br/>
+            <span style="color:White;">······</span>|{% for c in subMT.0 %}{{c.col5}}{% endfor %}<br/>
+            ------|{% for c in subMT.0 %}-{% endfor %}<br/>
+            {% for fila in subMT %}
+                    {{ fila.0.fila }}|{% for c in fila %}·{% endfor %}<br/>
             {% endfor %}
-        </tr>
+        </p>
+        <pdf:nextpage/>
     {% endfor %}
-</table>
-{% endcomment %}
-<p class="draw">
-    ·······|<span>{% for c in MTs.0 %}R{% endfor %}</span><br/>
-    ·······|<span>{% for c in MTs.0 %}S{% endfor %}</span><br/>
-    ·······|<span>{% for c in MTs.0 %}0{% endfor %}</span><br/>
-    ·······|<span>{% for c in MTs.0 %}0{% endfor %}</span><br/>
-    ·······|<span>{% for c in MTs.0 %}2{% endfor %}</span><br/>
-    ·······|<span>{% for c in MTs.0 %}4{% endfor %}</span><br/>
-    -------|<span>{% for c in MTs.0 %}-{% endfor %}</span><br/>
-    {% for fila in MTs %}
-            <!--RU0023 |{% for c in fila %}<b>O</b>·{% endfor %}<br/>-->
-            RU0023 |{% for c in fila %}·{% endfor %}<br/>
-    {% endfor %}
-</p>
+{% endfor %}
+
+
+
+
 
 {% comment %}
 {% for mt in MTs %}
-    <p>{{mt.nombre}}</p>
-    <table class="matriz">
+<h3>Matriz de Trazado: {{ mt.nombre }}</h3>
+<p class="draw">
+    <!--
+    ······|{% for c in MTs.0 %}R{% endfor %}<br/>
+    ······|{% for c in MTs.0 %}S{% endfor %}<br/>
+    ······|{% for c in MTs.0 %}0{% endfor %}<br/>
+    ······|{% for c in MTs.0 %}0{% endfor %}<br/>
+    ······|{% for c in MTs.0 %}2{% endfor %}<br/>
+    ······|{% for c in MTs.0 %}4{% endfor %}<br/>
+    ------|{% for c in MTs.0 %}-{% endfor %}<br/>
+    -->
+    {{ mt.filas|textTableHorizHeaders|safe }}
     {% for fila in mt.filas %}
-        <tr>
-        {% for e in fila %}
-            <td>
-            {% if e.match %}
-                +
-            {% elif e.no_intersec %}
-                -
-            {% else %}
-                .
-            {% endif %}
-            </td>
-        {% endfor %}
-        </tr>
+            <!--RU0023|{% for c in fila %}<b>O</b>·{% endfor %}<br/>-->
+            {{ fila.0.elFila.textoIdentificador }}|{% for c in fila %}{% if c.match %}<b style="color:Black;">+</b>{% else %}<span style="color:#CCCCCC;">·</span>{% endif %}{% endfor %}<br/>
     {% endfor %}
-    </table>
+</p>
+<br/>
 {% endfor %}
 {% endcomment %}
 

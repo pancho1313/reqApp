@@ -565,6 +565,12 @@ MATRIZ_CHOICES = [
     ("rucp", "RU/CP"),
     ("rscp", "RS/CP"),
 ]
+
+def matrixSplit(rows, maxRows, maxCols):
+    # para subdividir la matriz en cuadrantes para la impresion en .pdf
+    # TODO
+    return [rows]
+
 def matrixMatch(elemento1, elemento2, proyecto):
     return len(RequisitoSoftware.objects.vigentes(proyecto).filter(id=requisitoSoftware.id).filter(requisitosUsuario=self))>0
 
@@ -830,7 +836,7 @@ def pdf(request):
     usuario = get_user_or_none(request) # TODO is None?
     proyecto = proyectoDeUsuario(usuario)
     context = {
-        'hoja':'letter',
+        'hoja':'letter',# https://github.com/chrisglass/xhtml2pdf/blob/master/doc/usage.rst#supported-page-properties-and-values
         'titulo':'',
         'host':request.build_absolute_uri("/")[:-1],# http://localhost:8000
         'proyecto':proyecto,
@@ -903,16 +909,33 @@ def pdf(request):
                 })
             
             #
-            MTs = []
-            for f in range(0, 68):
+            mTs = []
+            
+            myFilas = []
+            for f in range(0, 80):
                 fila = []
-                for c in range(0, 69):
-                    fila.append(c)
-                MTs.append(fila)
+                for c in range(0, 50):
+                    sol = 'CL%04d' % c
+                    fila.append({
+                        "fila":'FL%04d' % f,
+                        "col":sol,
+                        "col0":sol[0],
+                        "col1":sol[1],
+                        "col2":sol[2],
+                        "col3":sol[3],
+                        "col4":sol[4],
+                        "col5":sol[5],
+                    })
+                myFilas.append(fila)
+                
+            mTs.append({
+                'nombre':'FUAA/WEE',
+                'subMTs':matrixSplit(myFilas, 10, 10),
+            })
             #
             context.update({
                 'titulo':'Matrices de Trazado',
-                'MTs':MTs#matrices,TODO
+                'MTs':mTs,#mTs, matrices, TODO
             })
         else:
             raise Http404
