@@ -568,7 +568,33 @@ MATRIZ_CHOICES = [
 
 def matrixSplit(rows, maxRows, maxCols):
     # para subdividir la matriz en cuadrantes para la impresion en .pdf
-    # TODO
+    if len(rows)>0:
+        if len(rows[0])>0:
+            hiperRows = []
+            hrows = int(len(rows)/maxRows)
+            if len(rows)%maxRows > 0:
+                hrows = hrows + 1
+            
+            hcols = int(len(rows[0])/maxCols)
+            if len(rows[0])%maxCols > 0:
+                hcols = hcols + 1
+                
+            for x in range(0,hcols*hrows):
+                hiperRows.append([])
+                
+            for r,row in enumerate(rows):
+                fillingRow = []
+                for c,el in enumerate(row):
+                    # posicionar el elemento en la nueva fila
+                    fillingRow.append(el)
+                    
+                    # si completamos una fila o era el ultimo elemento de la fila
+                    if len(fillingRow)==maxCols or (c+1)==len(row):
+                        hiperRows[int((c)/maxCols)+(hcols*int((r)/maxRows))].append(fillingRow)
+                        fillingRow = []
+            
+            return hiperRows
+            
     return [rows]
 
 def matrixMatch(elemento1, elemento2, proyecto):
@@ -905,7 +931,7 @@ def pdf(request):
             for tipo,nombre in MATRIZ_CHOICES:
                 matrices.append({
                     'nombre':nombre,
-                    'filas':matriz(tipo,proyecto)
+                    'subMTs':matrixSplit(matriz(tipo,proyecto),3,3)
                 })
             
             #
@@ -935,7 +961,7 @@ def pdf(request):
             #
             context.update({
                 'titulo':'Matrices de Trazado',
-                'MTs':mTs,#mTs, matrices, TODO
+                'MTs':matrices,#mTs, matrices, TODO
             })
         else:
             raise Http404

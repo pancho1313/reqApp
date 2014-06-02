@@ -104,7 +104,7 @@ line-height: auto;
 display:block;
 }
 </style>
-
+{% comment %}
 {% for mt in MTs %}
     <h3>Matriz de Trazado: {{ mt.nombre }}</h3>
     {% for subMT in mt.subMTs %}
@@ -123,10 +123,20 @@ display:block;
         <pdf:nextpage/>
     {% endfor %}
 {% endfor %}
+{% endcomment %}
 
-
-
-
+{% for mt in MTs %}
+    <h3>Matriz de Trazado: {{ mt.nombre }}</h3>
+    {% for subMT in mt.subMTs %}
+        <p class="draw">
+            {{ subMT|textTableHorizHeaders|safe }}
+            {% for fila in subMT %}
+                    {{ fila.0.elFila.textoIdentificador }}|{% for c in fila %}{% if c.match %}<b style="color:Black;">+</b>{% else %}<span style="color:#CCCCCC;">·</span>{% endif %}{% endfor %}<br/>
+            {% endfor %}
+        </p>
+        <pdf:nextpage/>
+    {% endfor %}
+{% endfor %}
 
 {% comment %}
 {% for mt in MTs %}
