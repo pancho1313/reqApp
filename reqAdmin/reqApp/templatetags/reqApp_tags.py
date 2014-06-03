@@ -66,13 +66,13 @@ def textTableHorizHeaders(rows):
                 hText.append('')
             for e in firstRow:
                 for i,c in enumerate(e['elCol'].textoIdentificador()):
-                    hText[i] = hText[i] + c
+                    hText[i] = hText[i] + '<span class="' + e['elCol'].estado + '">' + c + '</span>'
             out = ''
             hrlen = 0
             for r in hText:
                 hrlen = len(r)
                 out = (out + pref + r + '<br/>')
-            for x in range(0,hrlen):
+            for x in range(0,len(firstRow)):
                 hr = hr + '-'
             out = out + hr + '<br/>'
             
