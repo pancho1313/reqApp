@@ -339,6 +339,205 @@ def myFilter(s,val):
     dic = {}
     dic[s] = val
     return dic
+    
+def estadisticasRU_RS_CP_MD(proyecto, ht=None):
+    # estadisticas de requisitos de usuario
+    q = RequisitoUsuario.objects.vigentes(proyecto).filter(hito__vigencia=True)
+    if ht is not None:
+        q = q.filter(hito=ht)
+    ru = {}
+    prioridad = []
+    estabilidad = []
+    tipo = []
+    estado = {}
+    extras = []
+    
+    tabla = [
+        ('Prioridad', 'prioridad', PRIORIDAD_CHOICES, prioridad),
+        ('Estabilidad', 'estabilidad', ESTABILIDAD_CHOICES, estabilidad),
+        ('Tipo', 'tipo', TIPO_RU_CHOICES, tipo),
+    ]
+    
+    for atributo, s, choices, arreglo in tabla:
+        dic = {'atributo':atributo,'atributos':len(choices)}
+        for key, nombre in choices:
+            dic.update({'nombre':nombre})
+            qq = q.filter(**myFilter(s,key))
+            total = 0
+            for e, wanda in ESTADO_CHOICES:
+                c = qq.filter(estado=e).count()
+                dic.update({e:c})
+                total = total + c
+            dic.update({'total':total})
+            arreglo.append(dic)
+            dic = {}
+                 
+    for e, nombre in ESTADO_CHOICES:
+        qq = q.filter(estado=e)
+        estado.update({e:qq.count()})
+    
+    total = q.count()
+    extras.append({
+        'nombre':'Sin RS asoc.',
+        'cantidad':total - q.filter(requisitosoftware__vigencia=True).distinct().count()
+    })
+    extras.append({
+        'nombre':'Sin TU asoc.',
+        'cantidad':total - q.filter(tiposUsuario__vigencia=True).distinct().count()
+    })
+    extras.append({
+        'nombre':'Costo total',
+        'cantidad':q.aggregate(Sum('costo'))['costo__sum']
+    })
+    
+    ru.update({'atributos':[prioridad,estabilidad,tipo]})
+    ru.update({'estado':estado})
+    ru.update({'extras':extras})
+    ru.update({'total':total})
+    
+    # estadisticas de requisitos de software
+    q = RequisitoSoftware.objects.vigentes(proyecto).filter(hito__vigencia=True)
+    if ht is not None:
+        q = q.filter(hito=ht)
+    rs = {}
+    prioridad = []
+    estabilidad = []
+    tipo = []
+    estado = {}
+    extras = []
+    
+    tabla = [
+        ('prioridad', 'prioridad', PRIORIDAD_CHOICES, prioridad),
+        ('estabilidad', 'estabilidad', ESTABILIDAD_CHOICES, estabilidad),
+        ('tipo', 'tipo', TIPO_RS_CHOICES, tipo),
+    ]
+    
+    for atributo, s, choices, arreglo in tabla:
+        dic = {'atributo':atributo,'atributos':len(choices)}
+        for key, nombre in choices:
+            dic.update({'nombre':nombre})
+            qq = q.filter(**myFilter(s,key))
+            total = 0
+            for e, wanda in ESTADO_CHOICES:
+                c = qq.filter(estado=e).count()
+                dic.update({e:c})
+                total = total + c
+            dic.update({'total':total})
+            arreglo.append(dic)
+            dic = {}
+             
+    for e, nombre in ESTADO_CHOICES:
+        qq = q.filter(estado=e)
+        estado.update({e:qq.count()})
+    
+    total = q.count()
+    extras.append({
+        'nombre':'Sin RU asoc.',
+        'cantidad':total - q.filter(requisitosUsuario__vigencia=True).distinct().count()
+    })
+    extras.append({
+        'nombre':'Sin TU asoc.',
+        'cantidad':total - q.filter(tiposUsuario__vigencia=True).distinct().count()
+    })
+    costo = q.aggregate(Sum('costo'))['costo__sum']
+    if costo == None:
+        costo = 0
+    extras.append({
+        'nombre':'Costo total',
+        'cantidad':costo
+    })
+    
+    rs.update({'atributos':[prioridad,estabilidad,tipo]})
+    rs.update({'estado':estado})
+    rs.update({'extras':extras})
+    rs.update({'total':total})
+    
+    # estadisticas de casos de prueba
+    q = CasoPrueba.objects.vigentes(proyecto).filter(requisito__vigencia=True)
+    q_ru = q.filter(requisito__requisitousuario__hito__vigencia=True)
+    q_rs = q.filter(requisito__requisitosoftware__hito__vigencia=True)
+    
+    if ht is not None:
+        q_ru = q_ru.filter(requisito__requisitousuario__hito=ht)
+        q_rs = q_rs.filter(requisito__requisitosoftware__hito=ht)
+    cp = {}
+    tipo = []
+    estado = {}
+    extras = []
+             
+    dic_asoc_RU = {'nombre':'asociados a RU','total':0}
+    dic_asoc_RS = {'nombre':'asociados a RS','total':0}
+    for e, wanda in ESTADO_CHOICES:
+        casos_ru = q_ru.filter(estado=e).count()
+        casos_rs = q_rs.filter(estado=e).count()
+        
+        dic_asoc_RU.update({e:casos_ru})
+        dic_asoc_RU.update({'total':dic_asoc_RU['total']+casos_ru})
+        
+        dic_asoc_RS.update({e:casos_rs})
+        dic_asoc_RS.update({'total':dic_asoc_RS['total']+casos_rs})
+        
+        estado.update({e:casos_ru + casos_rs})
+        
+    tipo.append(dic_asoc_RU)
+    tipo.append(dic_asoc_RS)
+    
+    total = q_ru.count()+q_rs.count()
+    
+    extras.append({
+        'nombre':'Sin TU asoc.',
+        'cantidad':total - q_ru.filter(tiposUsuario__vigencia=True).distinct().count() - q_rs.filter(tiposUsuario__vigencia=True).distinct().count()
+    })
+    
+    cp.update({'atributos':[tipo]})
+    cp.update({'estado':estado})
+    cp.update({'extras':extras})
+    cp.update({'total':total})
+    
+    # estadisticas de modulos
+    q = Modulo.objects.vigentes(proyecto)
+    md = {}
+    prioridad = []
+    extras = []
+    
+    tabla = [
+        ('prioridad', 'prioridad', PRIORIDAD_CHOICES, prioridad),
+    ]
+    
+    for atributo, s, choices, arreglo in tabla:
+        dic = {'atributo':atributo,'atributos':len(choices)}
+        for key, nombre in choices:
+            dic.update({'nombre':nombre})
+            qq = q.filter(prioridad=key)
+            total = qq.count()
+            dic.update({'total':total})
+            arreglo.append(dic)
+            dic = {}
+    
+    total = q.count()
+    extras.append({
+        'nombre':'Sin RS asoc.',
+        'cantidad':total - q.filter(requisitosSoftware__vigencia=True).distinct().count()
+    })
+    costo = 0
+    for dic in q.values('costo'):
+        costo = costo + dic['costo']
+    extras.append({
+        'nombre':'Costo total',
+        'cantidad':costo
+    })
+    
+    md.update({'atributos':[prioridad]})
+    md.update({'extras':extras})
+    md.update({'total':total})
+    
+    return {
+        'RU':ru,
+        'RS':rs,
+        'CP':cp,
+        'MD':md,
+    }
+    
 def estadisticas(request):
     HT_CHOICES = [
         (0, "Todos"),
@@ -355,206 +554,20 @@ def estadisticas(request):
             HT_CHOICES.append((ht.identificador,ht.nombre))
         if hito > 0:
             ht = hitos.get(identificador=hito)
-        
-        # estadisticas de requisitos de usuario
-        q = RequisitoUsuario.objects.vigentes(proyecto).filter(hito__vigencia=True)
-        if hito > 0:
-            q = q.filter(hito=ht)
-        ru = {}
-        prioridad = []
-        estabilidad = []
-        tipo = []
-        estado = {}
-        extras = []
-        
-        tabla = [
-            ('Prioridad', 'prioridad', PRIORIDAD_CHOICES, prioridad),
-            ('Estabilidad', 'estabilidad', ESTABILIDAD_CHOICES, estabilidad),
-            ('Tipo', 'tipo', TIPO_RU_CHOICES, tipo),
-        ]
-        
-        for atributo, s, choices, arreglo in tabla:
-            dic = {'atributo':atributo,'atributos':len(choices)}
-            for key, nombre in choices:
-                dic.update({'nombre':nombre})
-                qq = q.filter(**myFilter(s,key))
-                total = 0
-                for e, wanda in ESTADO_CHOICES:
-                    c = qq.filter(estado=e).count()
-                    dic.update({e:c})
-                    total = total + c
-                dic.update({'total':total})
-                arreglo.append(dic)
-                dic = {}
-                     
-        for e, nombre in ESTADO_CHOICES:
-            qq = q.filter(estado=e)
-            estado.update({e:qq.count()})
-        
-        total = q.count()
-        extras.append({
-            'nombre':'Sin RS asoc.',
-            'cantidad':total - q.filter(requisitosoftware__vigencia=True).distinct().count()
-        })
-        extras.append({
-            'nombre':'Sin TU asoc.',
-            'cantidad':total - q.filter(tiposUsuario__vigencia=True).distinct().count()
-        })
-        extras.append({
-            'nombre':'Costo total',
-            'cantidad':q.aggregate(Sum('costo'))['costo__sum']
-        })
-        
-        ru.update({'atributos':[prioridad,estabilidad,tipo]})
-        ru.update({'estado':estado})
-        ru.update({'extras':extras})
-        ru.update({'total':total})
-        
-        # estadisticas de requisitos de software
-        q = RequisitoSoftware.objects.vigentes(proyecto).filter(hito__vigencia=True)
-        if hito > 0:
-            q = q.filter(hito=ht)
-        rs = {}
-        prioridad = []
-        estabilidad = []
-        tipo = []
-        estado = {}
-        extras = []
-        
-        tabla = [
-            ('prioridad', 'prioridad', PRIORIDAD_CHOICES, prioridad),
-            ('estabilidad', 'estabilidad', ESTABILIDAD_CHOICES, estabilidad),
-            ('tipo', 'tipo', TIPO_RS_CHOICES, tipo),
-        ]
-        
-        for atributo, s, choices, arreglo in tabla:
-            dic = {'atributo':atributo,'atributos':len(choices)}
-            for key, nombre in choices:
-                dic.update({'nombre':nombre})
-                qq = q.filter(**myFilter(s,key))
-                total = 0
-                for e, wanda in ESTADO_CHOICES:
-                    c = qq.filter(estado=e).count()
-                    dic.update({e:c})
-                    total = total + c
-                dic.update({'total':total})
-                arreglo.append(dic)
-                dic = {}
-                 
-        for e, nombre in ESTADO_CHOICES:
-            qq = q.filter(estado=e)
-            estado.update({e:qq.count()})
-        
-        total = q.count()
-        extras.append({
-            'nombre':'Sin RU asoc.',
-            'cantidad':total - q.filter(requisitosUsuario__vigencia=True).distinct().count()
-        })
-        extras.append({
-            'nombre':'Sin TU asoc.',
-            'cantidad':total - q.filter(tiposUsuario__vigencia=True).distinct().count()
-        })
-        costo = q.aggregate(Sum('costo'))['costo__sum']
-        if costo == None:
-            costo = 0
-        extras.append({
-            'nombre':'Costo total',
-            'cantidad':costo
-        })
-        
-        rs.update({'atributos':[prioridad,estabilidad,tipo]})
-        rs.update({'estado':estado})
-        rs.update({'extras':extras})
-        rs.update({'total':total})
-        
-        # estadisticas de casos de prueba
-        q = CasoPrueba.objects.vigentes(proyecto).filter(requisito__vigencia=True)
-        q_ru = q.filter(requisito__requisitousuario__hito__vigencia=True)
-        q_rs = q.filter(requisito__requisitosoftware__hito__vigencia=True)
-        
-        if hito > 0:
-            q_ru = q_ru.filter(requisito__requisitousuario__hito=ht)
-            q_rs = q_rs.filter(requisito__requisitosoftware__hito=ht)
-        cp = {}
-        tipo = []
-        estado = {}
-        extras = []
-                 
-        dic_asoc_RU = {'nombre':'asociados a RU','total':0}
-        dic_asoc_RS = {'nombre':'asociados a RS','total':0}
-        for e, wanda in ESTADO_CHOICES:
-            casos_ru = q_ru.filter(estado=e).count()
-            casos_rs = q_rs.filter(estado=e).count()
+        else:# todos los Hitos
+            ht = None
             
-            dic_asoc_RU.update({e:casos_ru})
-            dic_asoc_RU.update({'total':dic_asoc_RU['total']+casos_ru})
-            
-            dic_asoc_RS.update({e:casos_rs})
-            dic_asoc_RS.update({'total':dic_asoc_RS['total']+casos_rs})
-            
-            estado.update({e:casos_ru + casos_rs})
-            
-        tipo.append(dic_asoc_RU)
-        tipo.append(dic_asoc_RS)
-        
-        total = q_ru.count()+q_rs.count()
-        
-        extras.append({
-            'nombre':'Sin TU asoc.',
-            'cantidad':total - q_ru.filter(tiposUsuario__vigencia=True).distinct().count() - q_rs.filter(tiposUsuario__vigencia=True).distinct().count()
-        })
-        
-        cp.update({'atributos':[tipo]})
-        cp.update({'estado':estado})
-        cp.update({'extras':extras})
-        cp.update({'total':total})
-        
-        # estadisticas de modulos
-        q = Modulo.objects.vigentes(proyecto)
-        md = {}
-        prioridad = []
-        extras = []
-        
-        tabla = [
-            ('prioridad', 'prioridad', PRIORIDAD_CHOICES, prioridad),
-        ]
-        
-        for atributo, s, choices, arreglo in tabla:
-            dic = {'atributo':atributo,'atributos':len(choices)}
-            for key, nombre in choices:
-                dic.update({'nombre':nombre})
-                qq = q.filter(prioridad=key)
-                total = qq.count()
-                dic.update({'total':total})
-                arreglo.append(dic)
-                dic = {}
-        
-        total = q.count()
-        extras.append({
-            'nombre':'Sin RS asoc.',
-            'cantidad':total - q.filter(requisitosSoftware__vigencia=True).distinct().count()
-        })
-        costo = 0
-        for dic in q.values('costo'):
-            costo = costo + dic['costo']
-        extras.append({
-            'nombre':'Costo total',
-            'cantidad':costo
-        })
-        
-        md.update({'atributos':[prioridad]})
-        md.update({'extras':extras})
-        md.update({'total':total})
+        estDic = estadisticasRU_RS_CP_MD(proyecto, ht)
     else:
         raise Http404
     context = {
         'navbar':navbar,
         'HT_CHOICES':HT_CHOICES,
         'hito':hito,
-        'RU':ru,
-        'RS':rs,
-        'MD':md,
-        'CP':cp,
+        'RU':estDic['RU'],
+        'RS':estDic['RS'],
+        'MD':estDic['MD'],
+        'CP':estDic['CP'],
     }
     return render(request, 'reqApp/herramientas/estadisticas/estadisticas.html', context)
 
