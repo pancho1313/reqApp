@@ -9,9 +9,9 @@
     </div>
     <div style="display: inline-block;width:50%;vertical-align:top;">
         {% if elemento.requisito.vigencia %}
-            <div class="{{ elemento.requisito.estado }}">{{ elemento.requisito }}</div>
+            <div title="Requisito Asociado" class="{{ elemento.requisito.estado }}">{{ elemento.requisito }}</div>
         {% else %}
-            <div style="color:Gray;">{{ elemento.requisito }} (borrado)</div>
+            <div title="Requisito Asociado" style="color:Gray;">{{ elemento.requisito }} (borrado)</div>
         {% endif %}
     </div>
 {% endblock %}

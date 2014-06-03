@@ -1,0 +1,33 @@
+<table class="estadisticas">
+    <tr>
+        <th colspan=2>CP</th>
+        <th class="estadisticas">cumple</th>
+        <th class="estadisticas">no cumple</th>
+        <th class="estadisticas">ambiguo</th>
+        <th class="estadisticas">total</th>
+    </tr>
+    {% for atributo in CP.atributos %}
+        {% for tr in atributo %}
+            <tr class="estadisticas">
+                <th colspan=2>{{ tr.nombre }}</th>
+                <td>{{ tr.cumple }}</td>
+                <td>{{ tr.no_cumple }}</td>
+                <td>{{ tr.ambiguo }}</td>
+                <td>{{ tr.total }}{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=CP.total parte=tr.total %}</td>
+            </tr>
+        {% endfor %}
+    {% endfor %}
+    <tr class="estadisticas">
+        <td colspan=2></td>
+        <td>{{ CP.estado.cumple }}{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=CP.total parte=CP.estado.cumple %}</td>
+        <td>{{ CP.estado.no_cumple }}{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=CP.total parte=CP.estado.no_cumple %}</td>
+        <td>{{ CP.estado.ambiguo }}{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=CP.total parte=CP.estado.ambiguo %}</td>
+        <td><b>{{ CP.total }}</b>{% include "reqApp/herramientas/estadisticas/porcentaje.html" with total=CP.total parte=CP.total %}</td>
+    </tr>
+    {% for e in CP.extras %}
+        <tr>
+            <th>{{ e.nombre }}</th>
+            <td>{{ e.cantidad }}</td>
+        </tr>
+    {% endfor %}
+</table>

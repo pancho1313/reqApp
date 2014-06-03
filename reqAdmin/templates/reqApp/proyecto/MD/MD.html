@@ -8,11 +8,11 @@
             <b>{{ elemento }}</b>
         </a>
     </div>
-    <div style="display: inline-block;width:2%;vertical-align:top;">
+    <div title="Costo" style="display: inline-block;width:2%;vertical-align:top;">
         {{ elemento.costo }}
     </div>
     <div style="display: inline-block;width:5%;vertical-align:top;"></div>
-    <div style="display: inline-block;width:16%;vertical-align:top;">{{ elemento|prioridad }}</div>
+    <div title="Prioridad" style="display: inline-block;width:16%;vertical-align:top;">{{ elemento|prioridad }}</div>
     <div style="display: inline-block;width:10%;vertical-align:top;"></div>
 {% endblock %}
 

@@ -3,7 +3,7 @@
 <br/>
 <div>
     <div style="display: inline-block;width:100px;vertical-align:top;">
-        <select title="Seleccionar Matriz de Trazado" onchange="location = this.options[this.selectedIndex].value;">
+        <select class="boton_azul" title="Seleccionar Matriz de Trazado" onchange="location = this.options[this.selectedIndex].value;">
             {% for key,val in MATRIZ_CHOICES %}
                 <option value="?tipo={{key}}"{% ifequal tipo key %}selected{% endifequal %}>{{val}}</option>
             {% endfor %}

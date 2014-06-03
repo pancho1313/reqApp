@@ -44,7 +44,7 @@ $(window).bind("load", function() {
 <div>
     <div style="display:inline-block;width:auto;">Sección:</div>
     <div style="display:inline-block;width:auto;">
-        <select id="parrafoSelect" title="Seleccionar sección del documento" onchange="location = this.options[this.selectedIndex].value;">
+        <select class="boton_azul" id="parrafoSelect" title="Seleccionar sección del documento" onchange="location = this.options[this.selectedIndex].value;">
             {% for pa in parrafos %}
                     <option value="?parrafo={{pa.tipo}}"{% ifequal parrafo pa.tipo %}selected{% endifequal %}{% if not pa.activo %}disabled{% endif %}>{{ pa.nombre }}</option>
             {% endfor %}

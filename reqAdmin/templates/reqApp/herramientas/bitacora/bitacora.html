@@ -3,12 +3,12 @@
 <br/>
 <div>
     <div style="display: inline-block;width:100px;vertical-align:top;">
-        <select id='tipoSelect' onchange="location = this.options[this.selectedIndex].value;">
+        <select class="boton_azul" title="Seleccionar Bitácora" id='tipoSelect' onchange="location = this.options[this.selectedIndex].value;">
             {% for key,val in TIPOS_CHOICES %}
                 <option value="?tipo={{key}}"{% ifequal tipo key %}selected{% endifequal %}>{{val}}</option>
             {% endfor %}
         </select>
-        <select onchange="location = document.getElementById('tipoSelect').options[document.getElementById('tipoSelect').selectedIndex].value + this.options[this.selectedIndex].value;">
+        <select class="boton_azul" title="Seleccionar Elemento" onchange="location = document.getElementById('tipoSelect').options[document.getElementById('tipoSelect').selectedIndex].value + this.options[this.selectedIndex].value;">
             {% for key,val in IDENTIFICADOR_CHOICES %}
                 <option value="&identificador={{key}}"{% ifequal identificador|stringformat:"s" key|stringformat:"s" %}selected{% endifequal %}>{{val}}</option>
             {% endfor %}
