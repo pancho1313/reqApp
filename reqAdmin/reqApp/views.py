@@ -1047,6 +1047,35 @@ def pdf(request):
                 'titulo':'Matrices de Trazado',
                 'MTs':matrices,#mTs, matrices, TODO
             })
+        elif tipo == 'ET': # estadisticas
+            template = 'reqApp/pdf/herramientas/estadisticas/estadisticas.html'
+            
+            hitos = Hito.objects.vigentes(proyecto)
+            eTs = []
+            
+            et = estadisticasRU_RS_CP_MD(proyecto)
+            eTs.append({
+                'titulo':'Estadísticas de Todo el Proyecto',
+                'RU':et['RU'],
+                'RS':et['RS'],
+                'CP':et['CP'],
+                'MD':et['MD'],
+            })
+            
+            for ht in hitos:
+                et = estadisticasRU_RS_CP_MD(proyecto, ht)
+                eTs.append({
+                    'titulo':u'Estadísticas '+ht.nombre,
+                    'RU':et['RU'],
+                    'RS':et['RS'],
+                    'CP':et['CP'],
+                    #'MD':et['MD'], # no lo considero porque no esta asociado a un Hito en particular
+                })
+            
+            context.update({
+                'titulo':'Estadísticas del Proyecto',
+                'ETs':eTs,
+            })
         else:
             raise Http404
     else:

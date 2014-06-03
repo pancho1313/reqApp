@@ -3,14 +3,19 @@
 {% block body %}
 <br/>
 <div>
-    Hito: 
-    <select class="boton_azul" title="Seleccionar Hito" onchange="location = this.options[this.selectedIndex].value;">
-        {% for key,val in HT_CHOICES %}
-            <option value="?hito={{key}}"{% ifequal hito key %}selected{% endifequal %}>{{val}}</option>
-        {% endfor %}
-    </select>
+    <div style="display:inline-block;">
+        Hito: 
+        <select class="boton_azul" title="Seleccionar Hito" onchange="location = this.options[this.selectedIndex].value;">
+            {% for key,val in HT_CHOICES %}
+                <option value="?hito={{key}}"{% ifequal hito key %}selected{% endifequal %}>{{val}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div style="display:inline-block;position:relative;float:right;">
+        <a class="boton_azul" href="{% url 'reqApp:pdf' %}?tipo=ET" target="_blank">PDF</a>
+    </div>
 </div>
-
+<br/>
 <br/>
 
 {% include "reqApp/herramientas/estadisticas/RU.html" with RU=RU %}
