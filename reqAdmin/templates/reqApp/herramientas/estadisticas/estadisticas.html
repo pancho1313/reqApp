@@ -16,20 +16,20 @@
     </div>
 </div>
 <br/>
-<br/>
 
+<h3>Requisitos de Usuario{% if nombreHito %}, {{ nombreHito }}{% endif %}</h3>
 {% include "reqApp/herramientas/estadisticas/RU.html" with RU=RU %}
 
 <br/>
-
+<h3>Requisitos de Software{% if nombreHito %}, {{ nombreHito }}{% endif %}</h3>
 {% include "reqApp/herramientas/estadisticas/RS.html" with RS=RS %}
 
 <br/>
-
+<h3>Casos de Prueba{% if nombreHito %}, {{ nombreHito }}{% endif %}</h3>
 {% include "reqApp/herramientas/estadisticas/CP.html" with CP=CP %}
 
 <br/>
-
+<h3>Módulos</h3>
 {% include "reqApp/herramientas/estadisticas/MD.html" with MD=MD %}
 
 <br/>

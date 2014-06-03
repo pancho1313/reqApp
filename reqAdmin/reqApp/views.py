@@ -549,9 +549,12 @@ def estadisticas(request):
     
     if request.method == 'GET':
         hito = int(request.GET.get('hito', 0))
+        nombreHito = ''
         hitos = Hito.objects.vigentes(proyecto)
         for ht in hitos:
             HT_CHOICES.append((ht.identificador,ht.nombre))
+            if ht.identificador == hito:
+                nombreHito = ht.nombre
         if hito > 0:
             ht = hitos.get(identificador=hito)
         else:# todos los Hitos
@@ -564,6 +567,7 @@ def estadisticas(request):
         'navbar':navbar,
         'HT_CHOICES':HT_CHOICES,
         'hito':hito,
+        'nombreHito':nombreHito,
         'RU':estDic['RU'],
         'RS':estDic['RS'],
         'MD':estDic['MD'],
