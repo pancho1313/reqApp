@@ -4,7 +4,7 @@
 
 {% block encabezado %}
     <div style="display: inline-block;width:41%;vertical-align:top;">
-        <a onclick="expandirContraerElemento('{{ elemento.id }}_contenido')" href="#" name="{{ elemento.textoIdentificador }}">
+        <a onclick="expandirContraerElemento('{{ elemento.id }}_contenido')" href="#{{ elemento.textoIdentificador }}" name="{{ elemento.textoIdentificador }}">
             <b class="{{ elemento.estado }}">{{ elemento }}</b>
         </a>
     </div>
@@ -27,7 +27,7 @@
 {% endblock %}
 
 {% block contenido %}
-    <div class="{{ elemento.estado }}">{{ elemento|estado }}</div>
+    <div><span style="color:Gray;">Estado: </span><span class="{{ elemento.estado }}">{{ elemento|estado }}</span></div>
     <br/>
     <div>
         {{ elemento.descripcion }}
@@ -35,8 +35,8 @@
     <br/>
     <div>
         <div style="display: inline-block;width:40%;vertical-align:top;">
-            <div>Fuente: {{ elemento.fuente }}</div>
-            <div>Estabilidad: {{ elemento.estabilidad }}</div>
+            <div><span style="color:Gray;">Fuente: </span>{{ elemento.fuente }}</div>
+            <div><span style="color:Gray;">Estabilidad: </span>{{ elemento.estabilidad }}</div>
         </div>
         <div style="display: inline-block;width:50%;vertical-align:top;">
             <ul>

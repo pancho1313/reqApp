@@ -1,0 +1,39 @@
+{% extends "reqApp/base.html" %}
+{% block body %}
+<br/>
+<div>
+    <div style="display: inline-block;width:100px;vertical-align:top;">
+        <select class="boton_azul" title="Seleccionar Bitácora" id='tipoSelect' onchange="location = this.options[this.selectedIndex].value;">
+            {% for key,val in TIPOS_CHOICES %}
+                <option value="?tipo={{key}}"{% ifequal tipo key %}selected{% endifequal %}>{{val}}</option>
+            {% endfor %}
+        </select>
+        <select class="boton_azul" title="Seleccionar Elemento" onchange="location = document.getElementById('tipoSelect').options[document.getElementById('tipoSelect').selectedIndex].value + this.options[this.selectedIndex].value;">
+            {% for key,val in IDENTIFICADOR_CHOICES %}
+                <option value="&identificador={{key}}"{% ifequal identificador|stringformat:"s" key|stringformat:"s" %}selected{% endifequal %}>{{val}}</option>
+            {% endfor %}
+        </select>
+        <div style="height: 30px;"></div>
+    </div>
+</div>
+
+<div>
+<a style="display: inline-block;width:auto;" href='#' class="boton_azul" onclick='abrirTodos()'>(+)Abrir todos</a>
+<a style="display: inline-block;width:auto;" href='#' class="boton_azul" onclick='cerrarTodos()'>(--)Cerrar todos</a>
+<div style="display: inline-block;width:20%;"></div>
+</div>
+<br/>
+
+{% ifequal elementos|length 0 %}
+    <p class="centrado">--------------- Lista Vacía ---------------</p>
+{% else %}
+    {% for e in elementos %}
+        <div class="contenedorElemento">
+            <div id="{{ e.elemento.textoIdentificador }}">
+                {% include template with elemento=e.elemento bitacora=True actual=e.actual borrado=e.borrado nuevo=e.nuevo %}
+            </div>
+        </div>
+    {% endfor %}
+{% endifequal %}
+
+{% endblock %}

@@ -3,7 +3,7 @@
 
 {% block encabezado %}
     <div style="display: inline-block;width:43%;vertical-align:top;">
-        <a onclick="expandirContraerElemento('{{ elemento.id }}_contenido')" href="#" name="{{ elemento.textoIdentificador }}">
+        <a onclick="expandirContraerElemento('{{ elemento.id }}_contenido')" href="#{{ elemento.textoIdentificador }}" name="{{ elemento.textoIdentificador }}">
             <b class="{{ elemento.estado }}">{{ elemento }}</b>
         </a>
     </div>
@@ -18,7 +18,7 @@
 
 
 {% block contenido %}
-    <div class="{{ elemento.estado }}">{{ elemento|estado }}</div>
+    <div><span style="color:Gray;">Estado: </span><span class="{{ elemento.estado }}">{{ elemento|estado }}</span></div>
     <br/>
     <div>
         {{ elemento.descripcion }}
@@ -27,10 +27,10 @@
     <div>
         <div>
             <div>
-                Resultado aceptable: {{ elemento.resultadoAceptable }}
+                <span style="color:Gray;">Resultado aceptable: </span>{{ elemento.resultadoAceptable }}
             </div>
             <div>
-                 Resultado óptimo: {{ elemento.resultadoOptimo }}
+                 <span style="color:Gray;">Resultado óptimo: </span>{{ elemento.resultadoOptimo }}
             </div>
         </div>
         <div style="display: inline-block;width:50%;vertical-align:top;"></div>

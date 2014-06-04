@@ -7,10 +7,13 @@ function expandirContraerElemento(id){
 
 // ocultar formulario de edición y volver a mostrar el elemento de lista
 function cancelarEdicionElemento(id){
+    /*
     var elemento_form = document.getElementById(id+"_form");
     var elemento = document.getElementById(id);
     elemento_form.style.display = 'none';
     elemento.style.display = 'block';
+    */
+    location.reload(true);
 }
 
 // ocultar el elemento de lista y mostrar el formulario de edición
@@ -23,8 +26,11 @@ function editarElemento(id){
 
 // ocultar edicion de nuevo elemento de lista
 function cancelarNuevoElemento(){
+    /*
     var elemento = document.getElementById('nuevoElemento');
     elemento.style.display = 'none';
+    */
+    location.reload(true);
 }
 
 // mostrar edicion de un nuevo elemento de lista

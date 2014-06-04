@@ -2,7 +2,7 @@
 
 {% block encabezado %}
     <div style="display: inline-block;width:95%;vertical-align:top;">
-        <a onclick="expandirContraerElemento('{{ elemento.id }}_contenido')" href="#" name="{{ elemento.textoIdentificador }}">
+        <a onclick="expandirContraerElemento('{{ elemento.id }}_contenido')" href="#{{ elemento.textoIdentificador }}" name="{{ elemento.textoIdentificador }}">
             <b>{{ elemento }}</b>
         </a>
     </div>
@@ -16,52 +16,10 @@
     <br/>
     <div>
         <div style="display: inline-block;width:40%;vertical-align:top;">
-            Cantidad de usuarios: {{ elemento.cantidad }}
+            <span style="color:Gray;">Cantidad de usuarios: </span>{{ elemento.cantidad }}
         </div>
         <div style="display: inline-block;width:40%;vertical-align:top;">
-            Usuarios contactables: {{ elemento.usuariosContactables }}
+            <span style="color:Gray;">Usuarios contactables: </span>{{ elemento.usuariosContactables }}
         </div>
     </div>
 {% endblock %}
-
-
-
-
-
-
-
-{% comment %}
-<div>
-    <div class="tituloElemento">
-        <a onclick="expandirContraerElemento('{{ elemento.id }}_contenido')" href="#" name="{{ elemento.textoIdentificador }}">
-            <b>{{ elemento }}</b>
-        </a>
-    </div>
-    {% if bitacora %}
-        {% include "reqApp/herramientas/bitacora/registro_bitacora.html" with actual=actual borrado=borrado nuevo=nuevo %}
-    {% endif %}
-</div>
-
-
-
-
-<div id="{{ elemento.id }}_contenido" name="elemento_contenido" style="display:none;">
-    <br/>
-    <div>
-        {{ elemento.descripcion }}
-    </div>
-    <br/>
-    <div>
-        <div style="display: inline-block;width:40%;vertical-align:top;">
-            Cantidad de usuarios: {{ elemento.cantidad }}
-        </div>
-        <div style="display: inline-block;width:40%;vertical-align:top;">
-            Usuarios contactables: {{ elemento.usuariosContactables }}
-        </div>
-    </div>
-    
-    {% if form_template %}
-        <button class="boton_azul" onclick="editarElemento('{{ elemento.textoIdentificador }}')">Editar</button>
-    {% endif %}
-</div>
-{% endcomment %}

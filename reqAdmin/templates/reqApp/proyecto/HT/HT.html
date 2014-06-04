@@ -4,7 +4,7 @@
 
 {% block encabezado %}
     <div style="display: inline-block;width:60%;vertical-align:top;">
-        <a onclick="expandirContraerElemento('{{ elemento.id }}_contenido')" href="#" name="{{ elemento.textoIdentificador }}">
+        <a onclick="expandirContraerElemento('{{ elemento.id }}_contenido')" href="#{{ elemento.textoIdentificador }}" name="{{ elemento.textoIdentificador }}">
             <b>{{ elemento.textoIdentificador }} {{ elemento }}</b>
         </a>
     </div>
@@ -17,9 +17,9 @@
     </div>
     <br/>
     <div>
-        <div style="display: inline-block;width:20%;">Fecha inicio: </div><div style="display: inline-block;">{{ elemento.fechaInicio }}</div>
+        <div style="display: inline-block;width:20%;"><span style="color:Gray;">Fecha inicio: </span></div><div style="display: inline-block;">{{ elemento.fechaInicio }}</div>
     </div>
     <div>
-        <div style="display: inline-block;width:20%;">Fecha fin: </div><div style="display: inline-block;">{{ elemento.fechaFin }}</div>
+        <div style="display: inline-block;width:20%;"><span style="color:Gray;">Fecha fin: </span></div><div style="display: inline-block;">{{ elemento.fechaFin }}</div>
     </div>
 {% endblock %}

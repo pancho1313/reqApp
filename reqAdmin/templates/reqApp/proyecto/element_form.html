@@ -13,12 +13,13 @@
         
     </div>
     <br/>
-	<button class="boton_azul" type="submit" onclick="return validForm(event,this)">Guardar</button>
+	
 	
 	{% if  textoIdentificador %}
-        <button class="boton_azul" type="button" onclick="cancelarEdicionElemento('{{ textoIdentificador }}')">Cancelar</button>
-	    <button class="boton_azul" type="button" onclick="borrarElemento({{ identificador }}, '{{csrf_token}}')" >Eliminar</button>
+        <button title="Cancelar Edición&#013;y Recargar Página" class="boton_azul" type="button" onclick="cancelarEdicionElemento('{{ textoIdentificador }}')">Cancelar</button>
+	    <button title="Eliminar {{textoIdentificador}}" style="margin-left:100px;" class="boton_azul" type="button" onclick="borrarElemento({{ identificador }}, '{{csrf_token}}')" >Eliminar</button>
 	{% else %}
-    	<button class="boton_azul" type="button" onclick="cancelarNuevoElemento()">Cancelar</button>
+    	<button title="Cancelar Edición&#013;y Recargar Página" class="boton_azul" type="button" onclick="cancelarNuevoElemento()">Cancelar</button>
 	{% endif %}
+	<button title="Guardar Cambios" style="margin-left:100px;" class="boton_azul" type="submit" onclick="return validForm(event,this)">Guardar</button>
 </form>
