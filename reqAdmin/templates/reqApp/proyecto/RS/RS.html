@@ -4,7 +4,7 @@
 
 {% block encabezado %}
     <div style="display: inline-block;width:41%;vertical-align:top;">
-        <a onclick="expandirContraerElemento('{{ elemento.id }}_contenido')" href="#{{ elemento.textoIdentificador }}" name="{{ elemento.textoIdentificador }}">
+        <a onclick="expandirContraerContenido(this)" style="cursor:pointer;" name="{{ elemento.textoIdentificador }}">
             <b class="{{ elemento.estado }}">{{ elemento }}</b>
         </a>
     </div>
@@ -42,17 +42,15 @@
         <div style="display: inline-block;width:30%;vertical-align:top;">
             <ul>
                 <li>
-                    <button class="sublista" onclick="expandirContraerElemento('{{ elemento.id }}_tiposUsuario')">
-                        Usuarios asociados(
+                    <button class="sublista" onclick="expandirContraerSubLista(this)">
                         {% if bitacora %}
-                            {{elemento.tiposUsuario|enlistarRegistrados|largoLista}}
+                            Usuarios asociados({{elemento.tiposUsuario|enlistarRegistrados|largoLista}})
                         {% else %}
-                            {{elemento.tiposUsuario|enlistarVigentes|largoLista}}
+                            Usuarios asociados({{elemento.tiposUsuario|enlistarVigentes|largoLista}})
                         {% endif %}
-                        )
                     </button>
                 </li>
-                <ul id="{{ elemento.id }}_tiposUsuario" style="display:none;">
+                <ul style="display:none;">
                     {% if bitacora %}
                         {% for tu in elemento.tiposUsuario|enlistarRegistrados %}
                             {% if tu.vigencia %}
@@ -72,17 +70,15 @@
         <div style="display: inline-block;width:30%;vertical-align:top;">
             <ul>
                 <li>
-                    <button class="sublista" onclick="expandirContraerElemento('{{ elemento.id }}_requisitosUsuario')">
-                        RU asociados(
+                    <button class="sublista" onclick="expandirContraerSubLista(this)">
                         {% if bitacora %}
-                            {{elemento.requisitosUsuario|enlistarRegistrados|largoLista}}
+                            RU asociados({{elemento.requisitosUsuario|enlistarRegistrados|largoLista}})
                         {% else %}
-                            {{elemento.requisitosUsuario|enlistarVigentes|largoLista}}
+                            RU asociados({{elemento.requisitosUsuario|enlistarVigentes|largoLista}})
                         {% endif %}
-                        )
                     </button>
                 </li>
-                <ul id="{{ elemento.id }}_requisitosUsuario" style="display:none;">
+                <ul style="display:none;">
                     {% if bitacora %}
                         {% for ru in elemento.requisitosUsuario|enlistarRegistrados %}
                             {% if ru.vigencia %}

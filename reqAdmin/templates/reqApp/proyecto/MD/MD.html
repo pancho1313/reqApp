@@ -4,7 +4,7 @@
 
 {% block encabezado %}
     <div style="display: inline-block;width:60%;vertical-align:top;">
-        <a onclick="expandirContraerElemento('{{ elemento.id }}_contenido')" href="#{{ elemento.textoIdentificador }}" name="{{ elemento.textoIdentificador }}">
+        <a onclick="expandirContraerContenido(this)" style="cursor:pointer;" name="{{ elemento.textoIdentificador }}">
             <b>{{ elemento }}</b>
         </a>
     </div>
@@ -28,7 +28,7 @@
         <div style="display: inline-block;width:30%;vertical-align:top;">
             <ul>
                 <li>
-                    <button class="sublista" onclick="expandirContraerElemento('{{ elemento.id }}_requisitosSoftware')">
+                    <button class="sublista" onclick="expandirContraerSubLista(this)">
                         RS asociados(
                         {% if bitacora %}
                             {{elemento.requisitosSoftware|enlistarRegistrados|largoLista}}
@@ -38,7 +38,7 @@
                         )
                     </button>
                 </li>
-                <ul id="{{ elemento.id }}_requisitosSoftware" style="display:none;">
+                <ul style="display:none;">
                 {% if bitacora %}
                     {% for rs in elemento.requisitosSoftware|enlistarRegistrados %}
                         {% if rs.vigencia %}

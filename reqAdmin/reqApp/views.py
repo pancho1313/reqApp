@@ -334,12 +334,6 @@ def tareas(request):
     return herrView(request, navbar)
 
 ##############################  ESTADISTICAS
-def myFilter(s,val):
-    # para la generacion de tablas (estadisticas)
-    dic = {}
-    dic[s] = val
-    return dic
-    
 def estadisticasRU_RS_CP_MD(proyecto, ht=None):
     # estadisticas de requisitos de usuario
     q = RequisitoUsuario.objects.vigentes(proyecto).filter(hito__vigencia=True)
@@ -585,6 +579,11 @@ MATRIZ_CHOICES = [
 
 def matrixSplit(rows, maxRows, maxCols):
     # para subdividir la matriz en cuadrantes para la impresion en .pdf
+    """
+                 |abcde|             |abc|  |de|
+    matrixSplit( |fghij| , 2, 3) --> |fgh|  |ij|  |klm|  |no|
+                 |klmno|
+    """
     if len(rows)>0:
         if len(rows[0])>0:
             hiperRows = []
@@ -703,8 +702,97 @@ def matrices(request):
     return render(request, 'reqApp/herramientas/matrices/matrices.html', context)
 
 ##############################  CONSISTENCIA
+def arbolDeRelaciones(model, subModel, prop, proyecto, identificador):
+    resp = []
+    element = model.objects.vigente(proyecto, identificador)
+    if element is not None:
+        elements = [element]
+    else:
+        elements = model.objects.vigentes(proyecto)
+    for e in elements:
+        subElementos = subModel.objects.vigentes(proyecto).filter(**myFilter(prop,e))
+        resp.append({'elemento':e,'subElementos':subElementos})
+    return resp
+
+def arbolDeRelaciones2(tipo, proyecto, identificador):
+    resp = []
+    if tipo == 'rurs':
+        ru = RequisitoUsuario.objects.vigente(proyecto, identificador)
+        if ru is not None:
+            rus = [ru]
+        else:
+            rus = RequisitoUsuario.objects.vigentes(proyecto)
+        for r in rus:
+            rss = RequisitoSoftware.objects.vigentes(proyecto).filter(requisitosUsuario=r)
+            resp.append({'elemento':r,'subElementos':rss})
+    elif tipo == 'rucp':
+        ru = RequisitoUsuario.objects.vigente(proyecto, identificador)
+        if ru is not None:
+            rus = [ru]
+        else:
+            rus = RequisitoUsuario.objects.vigentes(proyecto)
+        for r in rus:
+            cps = CasoPrueba.objects.vigentes(proyecto).filter(requisito=r)
+            resp.append({'elemento':r,'subElementos':cps})
+    elif tipo == 'rsru':
+        rs = RequisitoSoftware.objects.vigente(proyecto, identificador)
+        if rs is not None:
+            rss = [rs]
+        else:
+            rss = RequisitoSoftware.objects.vigentes(proyecto)
+        for r in rss:
+            rus = RequisitoUsuario.objects.vigentes(proyecto).filter(requisitosoftware=r)
+            resp.append({'elemento':r,'subElementos':rus})
+    elif tipo == 'rscp':
+        rs = RequisitoSoftware.objects.vigente(proyecto, identificador)
+        if rs is not None:
+            rss = [rs]
+        else:
+            rss = RequisitoSoftware.objects.vigentes(proyecto)
+        for r in rss:
+            cps = CasoPrueba.objects.vigentes(proyecto).filter(requisito=r)
+            resp.append({'elemento':r,'subElementos':cps})
+    elif tipo == 'rsmd':
+        rs = RequisitoSoftware.objects.vigente(proyecto, identificador)
+        if rs is not None:
+            rss = [rs]
+        else:
+            rss = RequisitoSoftware.objects.vigentes(proyecto)
+        for r in rss:
+            mds = Modulo.objects.vigentes(proyecto).filter(requisitosSoftware=r)
+            resp.append({'elemento':r,'subElementos':mds})
+    elif tipo == 'mdrs':
+        md = Modulo.objects.vigente(proyecto, identificador)
+        if md is not None:
+            mds = [md]
+        else:
+            mds = Modulo.objects.vigentes(proyecto)
+        for m in mds:
+            rss = RequisitoSoftware.objects.vigentes(proyecto).filter(modulo=m)
+            resp.append({'elemento':m,'subElementos':rss})
+    elif tipo == 'cpru':
+        cp = CasoPrueba.objects.vigente(proyecto, identificador)
+        if cp is not None:
+            cps = [cp]
+        else:
+            cps = CasoPrueba.objects.vigentes(proyecto)
+        for c in cps:
+            rus = RequisitoUsuario.objects.vigentes(proyecto).filter(casoprueba=c)
+            resp.append({'elemento':c,'subElementos':rus})
+    elif tipo == 'cprs':
+        cp = CasoPrueba.objects.vigente(proyecto, identificador)
+        if cp is not None:
+            cps = [cp]
+        else:
+            cps = CasoPrueba.objects.vigentes(proyecto)
+        for c in cps:
+            rss = RequisitoSoftware.objects.vigentes(proyecto).filter(casoprueba=c)
+            resp.append({'elemento':c,'subElementos':rss})
+    return resp
+
 def consistencia(request):
     #TODO pero si esto es una bitacora
+    """
     TIPOS_CHOICES = [
         ("ht", "Hitos"),
         ("tu", "Tipos de Usuario"),
@@ -712,6 +800,17 @@ def consistencia(request):
         ("rs", "Requisitos de Software"),
         ("md", "Módulos"),
         ("cp", "Casos de Prueba"),
+    ]
+    """
+    CONSISTENCIA_CHOICES = [
+        ("rurs", "RU/RS"),
+        ("rucp", "RU/CP"),
+        ("rsru", "RS/RU"),
+        ("rscp", "RS/CP"),
+        ("rsmd", "RS/MD"),
+        ("mdrs", "MD/RS"),
+        ("cpru", "CP/RU"),
+        ("cprs", "CP/RS"),
     ]
     IDENTIFICADOR_CHOICES = [
         (0, "Todos"),
@@ -725,12 +824,14 @@ def consistencia(request):
         "cp": CasoPrueba,
     }
     templates = {
-        "ht": 'reqApp/proyecto/HT/HT.html',
-        "tu": 'reqApp/proyecto/TU/TU.html',
-        "ru": 'reqApp/proyecto/RU/RU.html',
-        "rs": 'reqApp/proyecto/RS/RS.html',
-        "md": 'reqApp/proyecto/MD/MD.html',
-        "cp": 'reqApp/proyecto/CP/CP.html',    
+        "rurs":{'elemento':'reqApp/proyecto/RU/RU.html','subElemento':'reqApp/proyecto/RS/RS.html'},
+        "rucp":{'elemento':'reqApp/proyecto/RU/RU.html','subElemento':'reqApp/proyecto/CP/CP.html'},
+        "rsru":{'elemento':'reqApp/proyecto/RS/RS.html','subElemento':'reqApp/proyecto/RU/RU.html'},
+        "rscp":{'elemento':'reqApp/proyecto/RS/RS.html','subElemento':'reqApp/proyecto/CP/CP.html'},
+        "rsmd":{'elemento':'reqApp/proyecto/RS/RS.html','subElemento':'reqApp/proyecto/MD/MD.html'},
+        "mdrs":{'elemento':'reqApp/proyecto/MD/MD.html','subElemento':'reqApp/proyecto/RS/RS.html'},
+        "cpru":{'elemento':'reqApp/proyecto/CP/CP.html','subElemento':'reqApp/proyecto/RU/RU.html'},
+        "cprs":{'elemento':'reqApp/proyecto/CP/CP.html','subElemento':'reqApp/proyecto/RS/RS.html'},
     }
     
     usuario = get_user_or_none(request) # TODO is None?
@@ -738,52 +839,69 @@ def consistencia(request):
     navbar = {'1':'herramientas', '2':'consistencia'}
     
     if request.method == 'GET':
-        tipo =  request.GET.get('tipo', 'ru')
-        
+        consistencia =  request.GET.get('consistencia', 'rurs')
         identificador = int(request.GET.get('identificador', 0))
         
+        elementos = []
+        if consistencia == 'rurs':
+            modelo = RequisitoUsuario
+            subModelo = RequisitoSoftware
+            prop = 'requisitosUsuario'
+        elif consistencia == 'rucp':
+            modelo = RequisitoUsuario
+            subModelo = CasoPrueba
+            prop = 'requisito'
+        elif consistencia == 'rsru':
+            modelo = RequisitoSoftware
+            subModelo = RequisitoUsuario
+            prop = 'requisitosoftware'
+        elif consistencia == 'rscp':
+            modelo = RequisitoSoftware
+            subModelo = CasoPrueba
+            prop = 'requisito'
+        elif consistencia == 'rsmd':
+            modelo = RequisitoSoftware
+            subModelo = Modulo
+            prop = 'requisitosSoftware'
+        elif consistencia == 'mdrs':
+            modelo = Modulo
+            subModelo = RequisitoSoftware
+            prop = 'modulo'
+        elif consistencia == 'cpru':
+            modelo = CasoPrueba
+            subModelo = RequisitoUsuario
+            prop = 'casoprueba'
+        elif consistencia == 'cprs':
+            modelo = CasoPrueba
+            subModelo = RequisitoSoftware
+            prop = 'casoprueba'
+        else:
+            raise Http404
+            
         # generar el listado de textos identificadores de elementos del tipo seleccionado
         identificadoresDict = {}
-        elementos = models[tipo].objects.bitacorados(proyecto)
-        for elemento in reversed(elementos):
+        elementos = modelo.objects.vigentes(proyecto)
+        for elemento in elementos:
             # el nombre correspondiente al identificador es el más reciente
             identificadoresDict.update({elemento.identificador: elemento.textoIdentificador()+" "+elemento.nombre})
-        
         for key in sorted(identificadoresDict):
             IDENTIFICADOR_CHOICES.append((key, identificadoresDict[key]))
             
-        if identificador > 0:
-            # mostrar la evolucion del elemento con ese identificador
-            elementos = models[tipo].objects.bitacorados(proyecto, identificador)
+        elementos = arbolDeRelaciones(modelo, subModelo, prop, proyecto, identificador)
         
-        # generar la lista de elementos
-        listaElementos = []
-        elementosDic = {}
-        i = 0
-        for elemento in elementos:
-            borrado = False
-            clave = elemento.textoIdentificador()
-            if (clave not in elementosDic) and (elemento.vigencia == False):
-                borrado = True
-            elementosDic.update({clave:i})
-            listaElementos.append({'elemento':elemento, 'actual':elemento.vigencia, 'borrado':borrado, 'nuevo':False})
-            i = i + 1
-        
-        for key in elementosDic:
-            listaElementos[elementosDic[key]]['nuevo'] = True
     else:
         raise Http404
     
     context = {
         'navbar':navbar,
-        'elementos':listaElementos,
-        'template':templates[tipo],
-        'TIPOS_CHOICES':TIPOS_CHOICES,
+        'elementos':elementos,
+        'templates':templates[consistencia],
+        'CONSISTENCIA_CHOICES':CONSISTENCIA_CHOICES,
         'IDENTIFICADOR_CHOICES':IDENTIFICADOR_CHOICES,
-        'tipo':tipo,
+        'consistencia':consistencia,
         'identificador':identificador,
     }
-    return render(request, 'reqApp/herramientas/bitacora/bitacora.html', context)
+    return render(request, 'reqApp/herramientas/consistencia/consistencia.html', context)
 
 ##############################  BITACORA
 def bitacora(request):

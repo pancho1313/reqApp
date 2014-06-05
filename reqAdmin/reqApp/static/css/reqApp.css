@@ -217,6 +217,7 @@ color:#1464F6;
 background-color:White;
 text-decoration:none;
 border: none;
+cursor:pointer;
 }
 
 button.sublista:hover

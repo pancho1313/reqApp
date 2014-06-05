@@ -1,42 +1,53 @@
 // -*- encoding: utf-8 -*-
 // para expandir y contraer elementos
 function expandirContraerElemento(id){
-    var elemento_contenido = document.getElementById(id);
-    elemento_contenido.style.display = (elemento_contenido.style.display == 'block') ? 'none' : 'block';
+    var elemento = $('#'+id);
+    if(elemento.css('display') == 'block'){
+        elemento.hide('slow');
+    }else{
+        elemento.show('slow');
+    }
+}
+
+// para expandir y contraer sub-listas de elementos (ej: lista de TUs asociados a un RU)
+function expandirContraerSubLista(self){
+    var subLista = $(self).parent().next('ul');
+    if(subLista.css('display') == 'block'){
+        subLista.hide('slow');
+    }else{
+        subLista.show('slow');
+    }
+}
+
+// para expandir y contraer el contenido de los elementos de lista
+function expandirContraerContenido(self){
+    var elemento_contenido = $(self).parent().parent().parent().next('div[name=elemento_contenido]');
+    if(elemento_contenido.css('display') == 'block'){
+        elemento_contenido.hide('slow');
+    }else{
+        elemento_contenido.show('slow');
+    }
 }
 
 // ocultar formulario de edición y volver a mostrar el elemento de lista
 function cancelarEdicionElemento(id){
-    /*
-    var elemento_form = document.getElementById(id+"_form");
-    var elemento = document.getElementById(id);
-    elemento_form.style.display = 'none';
-    elemento.style.display = 'block';
-    */
     location.reload(true);
 }
 
 // ocultar el elemento de lista y mostrar el formulario de edición
 function editarElemento(id){
-    var elemento_form = document.getElementById(id+"_form");
-    var elemento = document.getElementById(id);
-    elemento_form.style.display = 'block';
-    elemento.style.display = 'none';
+    $('#'+id+'_form').show('slow');
+    $('#'+id).hide('slow');
 }
 
 // ocultar edicion de nuevo elemento de lista
 function cancelarNuevoElemento(){
-    /*
-    var elemento = document.getElementById('nuevoElemento');
-    elemento.style.display = 'none';
-    */
     location.reload(true);
 }
 
 // mostrar edicion de un nuevo elemento de lista
 function editarNuevoElemento(){
-    var elemento = document.getElementById('nuevoElemento');
-    elemento.style.display = 'block';
+    $('#nuevoElemento').show();
 }
 
 // borrar un elemento de lista
@@ -55,18 +66,14 @@ function borrarElemento(identificador, csrf){
 
 // abrir la descripcion de todos los elementos de lista
 function abrirTodos(){
-    var elementos = document.getElementsByName('elemento_contenido');
-    for(var i = 0; i < elementos.length; i++){
-        elementos[i].style.display = 'block';
-    }
+    var elementos = $('[name=elemento_contenido]');
+    elementos.show('slow');
 }
 
 // cerrar la descripcion de todos los elementos de lista
 function cerrarTodos(){
-    var elementos = document.getElementsByName('elemento_contenido');
-    for(var i = 0; i < elementos.length; i++){
-        elementos[i].style.display = 'none';
-    }
+    var elementos = $('[name=elemento_contenido]');
+    elementos.hide('slow');
 }
 
 // mostrar elementos de fila y columna seleccionada en la matriz de trazado

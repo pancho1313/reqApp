@@ -1,7 +1,7 @@
 <div>
     <div class="tituloElemento">
         {% block encabezado %}{% endblock %}
-        <div title="Alerta!" style="display: inline-block;width:1em;vertical-align:top;color:White;background-color:#0C59CF;text-align:center;cursor:pointer;" onclick="alert('una simple alerta:\n\ttienes poco tiempo\n\ty cada vez te queda menos');">
+        <div title="Alerta!" style="display: inline-block;float:right;margin-right:10px;width:1em;vertical-align:top;color:White;background-color:#0C59CF;text-align:center;cursor:pointer;" onclick="alert('una simple alerta:\n\ttienes poco tiempo\n\ty cada vez te queda menos');">
         {% if not bitacora %}
             {% comment %}
                 {% if elemento.alert %}

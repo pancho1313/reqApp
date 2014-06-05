@@ -2,7 +2,7 @@
 
 {% block encabezado %}
     <div style="display: inline-block;width:95%;vertical-align:top;">
-        <a onclick="expandirContraerElemento('{{ elemento.id }}_contenido')" href="#{{ elemento.textoIdentificador }}" name="{{ elemento.textoIdentificador }}">
+        <a onclick="expandirContraerContenido(this)" style="cursor:pointer;" name="{{ elemento.textoIdentificador }}">
             <b>{{ elemento }}</b>
         </a>
     </div>
