@@ -1,0 +1,25 @@
+{% load reqApp_tags %}
+
+<div class="contenedorElemento">
+    <b>{{elemento}}</b><br/>
+    <div>
+    <i>Descripción: </i>{{ elemento.descripcion }}<br/>
+    <i>Estado: </i><b class="{{ elemento.estado }}">{{ elemento|estado }}</b><br/>
+    <i>Tipo: </i>{{ elemento|tipoRU }}<br/>
+    {% if elemento.hito.vigencia %}
+        <i>Hito: </i>{{ elemento.hito }}<br/>
+    {% else %}
+        <i>Hito: {{ elemento.hito }} (borrado)</i><br/>
+    {% endif %}
+    <i>Prioridad: </i>{{ elemento|prioridad }}<br/>
+    <i>Estabilidad: </i>{{ elemento.estabilidad }}<br/>
+    <i>Costo: </i>{{ elemento.costo }}<br/>
+    <i>Tipos de Usuarios asociados: </i>
+        {% for tu in elemento.tiposUsuario|enlistarVigentes %}
+            {{tu}}, 
+        {% endfor %}
+    <br/>
+    <i>Fuente: </i>{{ elemento.fuente }}<br/>
+    <i>Fecha Actualización: </i>{{ elemento.fecha|date:"d-m-Y H:i" }}
+    </div>
+</div>

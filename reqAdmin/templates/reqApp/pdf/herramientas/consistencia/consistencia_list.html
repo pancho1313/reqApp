@@ -1,0 +1,13 @@
+{% include "reqApp/pdf/proyecto/css.html" %}
+
+{% for ct in CTs %}
+    <h2>{{ct.titulo}}</h2>
+    {% for e in ct.elementos %}
+        {% include ct.template1 with elemento=e.elemento %}
+        {% for subElemento in e.subElementos %}
+            <div class="contenedorSubElemento">{% include ct.template2 with elemento=subElemento %}</div>
+        {% endfor %}
+        <hr/>
+    {% endfor %}
+	<pdf:nextpage/>
+{% endfor %}

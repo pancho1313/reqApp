@@ -1,0 +1,16 @@
+{% load reqApp_tags %}
+
+<div class="contenedorElemento">
+    <b>{{elemento}}</b><br/>
+    <div>
+    <i>Descripción: </i>{{ elemento.descripcion }}<br/>
+    <i>Prioridad: </i>{{ elemento|prioridad }}<br/>
+    <i>Costo: </i>{{ elemento.costo }}<br/>
+    <i>Requisitos de Software asociados: </i>
+        {% for rs in elemento.requisitosSoftware|enlistarVigentes %}
+            {{rs}}, 
+        {% endfor %}
+    <br/>
+    <i>Fecha Actualización: </i>{{ elemento.fecha|date:"d-m-Y H:i" }}
+    </div>
+</div>

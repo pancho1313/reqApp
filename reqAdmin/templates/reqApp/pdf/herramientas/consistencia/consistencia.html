@@ -1,0 +1,6 @@
+{% extends "reqApp/pdf/base.html" %}
+
+{% block content %}
+    <h1>Consistencia de Relaciones entre Elementos del Proyecto</h1>
+    {% include "reqApp/pdf/herramientas/consistencia/consistencia_list.html" with CTs=CTs %}
+{% endblock %}

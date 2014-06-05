@@ -1,15 +1,6 @@
-{% load reqApp_tags %}
-
 {% include "reqApp/pdf/proyecto/css.html" %}
 
 {% for ht in HTs %}
-    <div class="contenedorElemento">
-        <b>{{ ht.textoIdentificador }} {{ ht }}</b><br/>
-        <div>
-        <i>Descripción: </i>{{ ht.descripcion }}<br/>
-        <i>Fecha Inicio: </i>{{ ht.fechaInicio|date:"d-m-Y H:i" }}<br/>
-        <i>Fecha Fin: </i>{{ ht.fechaFin|date:"d-m-Y H:i" }}
-        </div>
-	</div>
+    {% include "reqApp/pdf/proyecto/HT/ht.html" with elemento=ht %}
 	<hr/>
 {% endfor %}

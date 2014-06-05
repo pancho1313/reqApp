@@ -571,10 +571,10 @@ def estadisticas(request):
 
 ##############################  MATRICES DE TRAZADO
 MATRIZ_CHOICES = [
-    ("rurs", "RU/RS"),
-    ("mdrs", "MD/RS"),
-    ("rucp", "RU/CP"),
-    ("rscp", "RS/CP"),
+    ("rurs", "Matriz RU/RS"),
+    ("mdrs", "Matriz MD/RS"),
+    ("rucp", "Matriz RU/CP"),
+    ("rscp", "Matriz RS/CP"),
 ]
 
 def matrixSplit(rows, maxRows, maxCols):
@@ -714,103 +714,16 @@ def arbolDeRelaciones(model, subModel, prop, proyecto, identificador):
         resp.append({'elemento':e,'subElementos':subElementos})
     return resp
 
-def arbolDeRelaciones2(tipo, proyecto, identificador):
-    resp = []
-    if tipo == 'rurs':
-        ru = RequisitoUsuario.objects.vigente(proyecto, identificador)
-        if ru is not None:
-            rus = [ru]
-        else:
-            rus = RequisitoUsuario.objects.vigentes(proyecto)
-        for r in rus:
-            rss = RequisitoSoftware.objects.vigentes(proyecto).filter(requisitosUsuario=r)
-            resp.append({'elemento':r,'subElementos':rss})
-    elif tipo == 'rucp':
-        ru = RequisitoUsuario.objects.vigente(proyecto, identificador)
-        if ru is not None:
-            rus = [ru]
-        else:
-            rus = RequisitoUsuario.objects.vigentes(proyecto)
-        for r in rus:
-            cps = CasoPrueba.objects.vigentes(proyecto).filter(requisito=r)
-            resp.append({'elemento':r,'subElementos':cps})
-    elif tipo == 'rsru':
-        rs = RequisitoSoftware.objects.vigente(proyecto, identificador)
-        if rs is not None:
-            rss = [rs]
-        else:
-            rss = RequisitoSoftware.objects.vigentes(proyecto)
-        for r in rss:
-            rus = RequisitoUsuario.objects.vigentes(proyecto).filter(requisitosoftware=r)
-            resp.append({'elemento':r,'subElementos':rus})
-    elif tipo == 'rscp':
-        rs = RequisitoSoftware.objects.vigente(proyecto, identificador)
-        if rs is not None:
-            rss = [rs]
-        else:
-            rss = RequisitoSoftware.objects.vigentes(proyecto)
-        for r in rss:
-            cps = CasoPrueba.objects.vigentes(proyecto).filter(requisito=r)
-            resp.append({'elemento':r,'subElementos':cps})
-    elif tipo == 'rsmd':
-        rs = RequisitoSoftware.objects.vigente(proyecto, identificador)
-        if rs is not None:
-            rss = [rs]
-        else:
-            rss = RequisitoSoftware.objects.vigentes(proyecto)
-        for r in rss:
-            mds = Modulo.objects.vigentes(proyecto).filter(requisitosSoftware=r)
-            resp.append({'elemento':r,'subElementos':mds})
-    elif tipo == 'mdrs':
-        md = Modulo.objects.vigente(proyecto, identificador)
-        if md is not None:
-            mds = [md]
-        else:
-            mds = Modulo.objects.vigentes(proyecto)
-        for m in mds:
-            rss = RequisitoSoftware.objects.vigentes(proyecto).filter(modulo=m)
-            resp.append({'elemento':m,'subElementos':rss})
-    elif tipo == 'cpru':
-        cp = CasoPrueba.objects.vigente(proyecto, identificador)
-        if cp is not None:
-            cps = [cp]
-        else:
-            cps = CasoPrueba.objects.vigentes(proyecto)
-        for c in cps:
-            rus = RequisitoUsuario.objects.vigentes(proyecto).filter(casoprueba=c)
-            resp.append({'elemento':c,'subElementos':rus})
-    elif tipo == 'cprs':
-        cp = CasoPrueba.objects.vigente(proyecto, identificador)
-        if cp is not None:
-            cps = [cp]
-        else:
-            cps = CasoPrueba.objects.vigentes(proyecto)
-        for c in cps:
-            rss = RequisitoSoftware.objects.vigentes(proyecto).filter(casoprueba=c)
-            resp.append({'elemento':c,'subElementos':rss})
-    return resp
-
 def consistencia(request):
-    #TODO pero si esto es una bitacora
-    """
-    TIPOS_CHOICES = [
-        ("ht", "Hitos"),
-        ("tu", "Tipos de Usuario"),
-        ("ru", "Requisitos de Usuario"),
-        ("rs", "Requisitos de Software"),
-        ("md", "Módulos"),
-        ("cp", "Casos de Prueba"),
-    ]
-    """
     CONSISTENCIA_CHOICES = [
-        ("rurs", "RU/RS"),
-        ("rucp", "RU/CP"),
-        ("rsru", "RS/RU"),
-        ("rscp", "RS/CP"),
-        ("rsmd", "RS/MD"),
-        ("mdrs", "MD/RS"),
-        ("cpru", "CP/RU"),
-        ("cprs", "CP/RS"),
+        ("rurs", "Consistencia RU/RS"),
+        ("rucp", "Consistencia RU/CP"),
+        ("rsru", "Consistencia RS/RU"),
+        ("rscp", "Consistencia RS/CP"),
+        ("rsmd", "Consistencia RS/MD"),
+        ("mdrs", "Consistencia MD/RS"),
+        ("cpru", "Consistencia CP/RU"),
+        ("cprs", "Consistencia CP/RS"),
     ]
     IDENTIFICADOR_CHOICES = [
         (0, "Todos"),
@@ -1275,6 +1188,63 @@ def pdf(request):
             context.update({
                 'titulo':'Estadísticas del Proyecto',
                 'ETs':eTs,
+            })
+        elif tipo == 'CT':
+            template = 'reqApp/pdf/herramientas/consistencia/consistencia.html'
+            cTs = [
+                {# RU/RS
+                'titulo':'Consistencia RU/RS',
+                'template1':'reqApp/pdf/proyecto/RU/ru.html',
+                'template2':'reqApp/pdf/proyecto/RS/rs.html',
+                'elementos':arbolDeRelaciones(RequisitoUsuario, RequisitoSoftware, 'requisitosUsuario', proyecto, 0)
+                },
+                {# RU/CP
+                'titulo':'Consistencia RU/CP',
+                'template1':'reqApp/pdf/proyecto/RU/ru.html',
+                'template2':'reqApp/pdf/proyecto/CP/cp.html',
+                'elementos':arbolDeRelaciones(RequisitoUsuario, CasoPrueba, 'requisito', proyecto, 0)
+                },
+                {# RS/RU
+                'titulo':'Consistencia RS/RU',
+                'template1':'reqApp/pdf/proyecto/RS/rs.html',
+                'template2':'reqApp/pdf/proyecto/RU/ru.html',
+                'elementos':arbolDeRelaciones(RequisitoSoftware, RequisitoUsuario, 'requisitosoftware', proyecto, 0)
+                },
+                {# RS/CP
+                'titulo':'Consistencia RS/CP',
+                'template1':'reqApp/pdf/proyecto/RS/rs.html',
+                'template2':'reqApp/pdf/proyecto/CP/cp.html',
+                'elementos':arbolDeRelaciones(RequisitoSoftware, CasoPrueba, 'requisito', proyecto, 0)
+                },
+                {# RS/MD
+                'titulo':'Consistencia RS/MD',
+                'template1':'reqApp/pdf/proyecto/RS/rs.html',
+                'template2':'reqApp/pdf/proyecto/MD/md.html',
+                'elementos':arbolDeRelaciones(RequisitoSoftware, Modulo, 'requisitosSoftware', proyecto, 0)
+                },
+                {# MD/RS
+                'titulo':'Consistencia MD/RS',
+                'template1':'reqApp/pdf/proyecto/MD/md.html',
+                'template2':'reqApp/pdf/proyecto/RS/rs.html',
+                'elementos':arbolDeRelaciones(Modulo, RequisitoSoftware, 'modulo', proyecto, 0)
+                },
+                {# CP/RU
+                'titulo':'Consistencia CP/RU',
+                'template1':'reqApp/pdf/proyecto/CP/cp.html',
+                'template2':'reqApp/pdf/proyecto/RU/ru.html',
+                'elementos':arbolDeRelaciones(CasoPrueba, RequisitoUsuario, 'casoprueba', proyecto, 0)
+                },
+                {# CP/RS
+                'titulo':'Consistencia CP/RS',
+                'template1':'reqApp/pdf/proyecto/CP/cp.html',
+                'template2':'reqApp/pdf/proyecto/RS/rs.html',
+                'elementos':arbolDeRelaciones(CasoPrueba, RequisitoSoftware, 'casoprueba', proyecto, 0)
+                },
+            ]
+            
+            context.update({
+                'titulo':'Documento de Consistencia entre Elementos del Proyecto',
+                'CTs':cTs,
             })
         else:
             raise Http404

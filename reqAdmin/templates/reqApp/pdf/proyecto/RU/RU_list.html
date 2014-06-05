@@ -1,30 +1,6 @@
-{% load reqApp_tags %}
-
 {% include "reqApp/pdf/proyecto/css.html" %}
 
 {% for ru in RUs %}
-    <div class="contenedorElemento">
-        <b>{{ru}}</b><br/>
-        <div>
-        <i>Descripción: </i>{{ ru.descripcion }}<br/>
-        <i>Estado: </i><b class="{{ ru.estado }}">{{ ru|estado }}</b><br/>
-        <i>Tipo: </i>{{ ru|tipoRU }}<br/>
-        {% if ru.hito.vigencia %}
-            <i>Hito: </i>{{ ru.hito }}<br/>
-        {% else %}
-            <i>Hito: {{ ru.hito }} (borrado)</i><br/>
-        {% endif %}
-        <i>Prioridad: </i>{{ ru|prioridad }}<br/>
-        <i>Estabilidad: </i>{{ ru.estabilidad }}<br/>
-        <i>Costo: </i>{{ ru.costo }}<br/>
-        <i>Tipos de Usuarios asociados: </i>
-            {% for tu in ru.tiposUsuario|enlistarVigentes %}
-                {{tu}}, 
-            {% endfor %}
-        <br/>
-        <i>Fuente: </i>{{ ru.fuente }}<br/>
-        <i>Fecha Actualización: </i>{{ ru.fecha|date:"d-m-Y H:i" }}
-        </div>
-	</div>
+    {% include "reqApp/pdf/proyecto/RU/ru.html" with elemento=ru %}
 	<hr/>
 {% endfor %}

@@ -1,0 +1,22 @@
+{% load reqApp_tags %}
+
+<div class="contenedorElemento">
+    <b>{{elemento}}</b><br/>
+    <div>
+    {% if elemento.requisito.vigencia %}
+        <i>Requisito asociado: </i>{{ elemento.requisito }}<br/>
+    {% else %}
+        <i>Requisito asociado: {{ elemento.requisito }} (borrado)</i><br/>
+    {% endif %}
+    <i>Descripción: </i>{{ elemento.descripcion }}<br/>
+    <i>Resultado aceptable: </i>{{ elemento.resultadoAceptable }}<br/>
+    <i>Resultado óptimo: </i>{{ elemento.resultadoOptimo }}<br/>
+    <i>Estado: </i><b class="{{ elemento.estado }}">{{ elemento|estado }}</b><br/>
+    <i>Tipos de Usuarios asociados: </i>
+        {% for tu in elemento.tiposUsuario|enlistarVigentes %}
+            {{tu}}, 
+        {% endfor %}
+    <br/>
+    <i>Fecha Actualización: </i>{{ elemento.fecha|date:"d-m-Y H:i" }}
+    </div>
+</div>

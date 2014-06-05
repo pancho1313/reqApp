@@ -1,0 +1,10 @@
+{% load reqApp_tags %}
+
+<div class="contenedorElemento">
+    <b>{{ elemento.textoIdentificador }} {{ elemento }}</b><br/>
+    <div>
+    <i>Descripción: </i>{{ elemento.descripcion }}<br/>
+    <i>Fecha Inicio: </i>{{ elemento.fechaInicio|date:"d-m-Y H:i" }}<br/>
+    <i>Fecha Fin: </i>{{ elemento.fechaFin|date:"d-m-Y H:i" }}
+    </div>
+</div>
