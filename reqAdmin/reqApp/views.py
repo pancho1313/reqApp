@@ -1191,60 +1191,61 @@ def pdf(request):
             })
         elif tipo == 'CT':
             template = 'reqApp/pdf/herramientas/consistencia/consistencia.html'
-            cTs = [
-                {# RU/RS
-                'titulo':'Consistencia RU/RS',
+            
+            cTs = {
+                'rurs':{
+                'titulo':'RU/RS',
                 'template1':'reqApp/pdf/proyecto/RU/ru.html',
                 'template2':'reqApp/pdf/proyecto/RS/rs.html',
                 'elementos':arbolDeRelaciones(RequisitoUsuario, RequisitoSoftware, 'requisitosUsuario', proyecto, 0)
                 },
-                {# RU/CP
-                'titulo':'Consistencia RU/CP',
+                'rucp':{
+                'titulo':'RU/CP',
                 'template1':'reqApp/pdf/proyecto/RU/ru.html',
                 'template2':'reqApp/pdf/proyecto/CP/cp.html',
                 'elementos':arbolDeRelaciones(RequisitoUsuario, CasoPrueba, 'requisito', proyecto, 0)
                 },
-                {# RS/RU
-                'titulo':'Consistencia RS/RU',
+                'rsru':{
+                'titulo':'RS/RU',
                 'template1':'reqApp/pdf/proyecto/RS/rs.html',
                 'template2':'reqApp/pdf/proyecto/RU/ru.html',
                 'elementos':arbolDeRelaciones(RequisitoSoftware, RequisitoUsuario, 'requisitosoftware', proyecto, 0)
                 },
-                {# RS/CP
-                'titulo':'Consistencia RS/CP',
+                'rscp':{
+                'titulo':'RS/CP',
                 'template1':'reqApp/pdf/proyecto/RS/rs.html',
                 'template2':'reqApp/pdf/proyecto/CP/cp.html',
                 'elementos':arbolDeRelaciones(RequisitoSoftware, CasoPrueba, 'requisito', proyecto, 0)
                 },
-                {# RS/MD
-                'titulo':'Consistencia RS/MD',
+                'rsmd':{
+                'titulo':'RS/MD',
                 'template1':'reqApp/pdf/proyecto/RS/rs.html',
                 'template2':'reqApp/pdf/proyecto/MD/md.html',
                 'elementos':arbolDeRelaciones(RequisitoSoftware, Modulo, 'requisitosSoftware', proyecto, 0)
                 },
-                {# MD/RS
-                'titulo':'Consistencia MD/RS',
+                'mdrs':{
+                'titulo':'MD/RS',
                 'template1':'reqApp/pdf/proyecto/MD/md.html',
                 'template2':'reqApp/pdf/proyecto/RS/rs.html',
                 'elementos':arbolDeRelaciones(Modulo, RequisitoSoftware, 'modulo', proyecto, 0)
                 },
-                {# CP/RU
-                'titulo':'Consistencia CP/RU',
+                'cpru':{
+                'titulo':'CP/RU',
                 'template1':'reqApp/pdf/proyecto/CP/cp.html',
                 'template2':'reqApp/pdf/proyecto/RU/ru.html',
                 'elementos':arbolDeRelaciones(CasoPrueba, RequisitoUsuario, 'casoprueba', proyecto, 0)
                 },
-                {# CP/RS
-                'titulo':'Consistencia CP/RS',
+                'cprs':{
+                'titulo':'CP/RS',
                 'template1':'reqApp/pdf/proyecto/CP/cp.html',
                 'template2':'reqApp/pdf/proyecto/RS/rs.html',
                 'elementos':arbolDeRelaciones(CasoPrueba, RequisitoSoftware, 'casoprueba', proyecto, 0)
                 },
-            ]
-            
+            }
+            consistencia = request.GET.get('consistencia', 'rurs')
             context.update({
-                'titulo':'Documento de Consistencia entre Elementos del Proyecto',
-                'CTs':cTs,
+                'titulo':u'Documento de Consistencia '+cTs[consistencia]['titulo'],
+                'CTs':cTs[consistencia],
             })
         else:
             raise Http404
