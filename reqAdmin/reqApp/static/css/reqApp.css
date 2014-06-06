@@ -88,6 +88,11 @@ border-radius:5px;
 padding:10px;
 }
 
+.contenedorElemento:hover
+{
+border:1px solid Gray;
+}
+
 /* contenedor edicion de elemento */
 .contenedorEdicionElemento
 {
