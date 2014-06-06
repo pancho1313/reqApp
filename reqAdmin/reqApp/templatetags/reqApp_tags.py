@@ -43,6 +43,8 @@ def largoLista(lista):
 
 @register.filter(name="porcentaje")
 def porcentaje(total, parte):
+    if total == 0:
+        return "0%"
     return ("%3.0f" % (100*parte/total)) + "%"
     
 @register.filter(name="agregarHostALosSrc")
