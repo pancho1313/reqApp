@@ -108,6 +108,11 @@ border-radius:5px;
 padding:10px;
 }
 
+.contenedorNuevoElemento:hover
+{
+background-color:LightGray;
+}
+
 
 /* titulo elemento */
 .tituloElemento a:link, .tituloElemento  a:visited
