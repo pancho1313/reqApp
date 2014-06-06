@@ -35,11 +35,6 @@ class BitacoraManager(models.Manager):
     """
     def get_queryset(self):
         return super(BitacoraManager, self).get_queryset().filter(vigencia=True)
-    
-        
-    def todos(self, proyecto):
-        return super(BitacoraManager, self).get_queryset().filter(proyecto=proyecto)
-        
     """
     def bitacorados(self, proyecto, identificador=None):
         if identificador ==  None:
@@ -69,7 +64,7 @@ class BitacoraManager(models.Manager):
 class Bitacora(models.Model):
     nombre = models.CharField(max_length=100)
     identificador = models.PositiveIntegerField(default=0, blank=True, null=False)
-    descripcion = models.CharField(max_length=1000, blank=True)
+    descripcion = models.CharField(max_length=5000, blank=True)
     proyecto = models.ForeignKey(Proyecto, blank=True, null=False)
     fecha = models.DateTimeField()
     usuario = models.ForeignKey(User, null=True) # TODO referenciar al User correcto
