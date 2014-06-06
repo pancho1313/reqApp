@@ -51,9 +51,9 @@ function editarNuevoElemento(){
 }
 
 // borrar un elemento de lista
-function borrarElemento(identificador, csrf){
+function borrarElemento(textoId, identificador, csrf){
     // confirmar accion
-    if(!confirm("¿Desea eliminarlo de la lista?"))
+    if(!confirm("¿Desea eliminar "+textoId+" de la lista?"))
         return;
 
     var params = new Array();
