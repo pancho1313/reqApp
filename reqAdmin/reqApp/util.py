@@ -12,7 +12,7 @@ def get_user_or_none(request):
 
 def proyectoDeUsuario(usuario):
     # TODO: obtener el proyecto activo del usuario (en la sesion)
-    return Proyecto.objects.all()[0]
+    return Proyecto.objects.all()[1]
     
 def myFilter(s,val):
     # para la generacion de tablas (estadisticas)
