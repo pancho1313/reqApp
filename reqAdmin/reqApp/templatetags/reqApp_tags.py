@@ -2,8 +2,13 @@
 from django import template
 from reqApp.models import *
 from reqApp.choices import *
+from reqApp.util import *
 
 register = template.Library()
+
+@register.filter(name="proyecto")
+def proyecto(usuario):
+    return proyectoDeUsuario(usuario)
 
 @register.filter(name="prioridad")
 def prioridad(elemento):

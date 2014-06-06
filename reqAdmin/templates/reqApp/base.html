@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    {% include "reqApp/navbar.html" with proyecto=user %}
+    {% include "reqApp/navbar.html" with proyecto=user|proyecto %}
     
     {% block body %}{% endblock %}
 </body>
