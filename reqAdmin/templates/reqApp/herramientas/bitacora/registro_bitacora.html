@@ -9,6 +9,6 @@
         {% else %}
         Registro editado: 
         {% endif %}
-        {{ elemento.fecha }} [{{ elemento.usuario }}]
+        {{ elemento.fecha|date:"Y-m-d H:i" }} [{{ elemento.usuario }}]
     </div>
 </div>
