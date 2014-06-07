@@ -645,12 +645,7 @@ def matriz(tipo, proyecto):
             colNoIntersec.append(len(m1s.filter(requisitosSoftware=rs))==0)
     elif tipo == 'rucp':
         m1s = RequisitoUsuario.objects.vigentes(proyecto)
-        rucps = CasoPrueba.objects.vigentes(proyecto)
-        
-        m2s = []
-        for c in rucps:
-           if c.requisito.asoc_RU():
-            m2s.append(c)
+        m2s = CasoPrueba.objects.vigentes(proyecto).filter(asoc_RU=True)
         
         m2idsmatchs = []
         for fila in range(0,len(m1s)):
@@ -663,12 +658,7 @@ def matriz(tipo, proyecto):
             colNoIntersec.append(len(m1s.filter(casoprueba=cp))==0)
     elif tipo == 'rscp':
         m1s = RequisitoSoftware.objects.vigentes(proyecto)
-        rscps = CasoPrueba.objects.vigentes(proyecto)
-        
-        m2s = []
-        for c in rscps:
-           if not c.requisito.asoc_RU():
-            m2s.append(c)
+        m2s = CasoPrueba.objects.vigentes(proyecto)
         
         m2idsmatchs = []
         for fila in range(0,len(m1s)):
