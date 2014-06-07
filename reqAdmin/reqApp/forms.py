@@ -121,7 +121,7 @@ class RSForm(BitacoraForm):
         widgets = {
             'descripcion': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
             'nombre': forms.TextInput(attrs={'size': 80}),
-            'requisitosUsuario': forms.SelectMultiple(attrs={'size': 12})
+            'requisitosUsuario': forms.SelectMultiple(attrs={'size': 10}),
         }
         
 class CPForm(BitacoraForm):
@@ -180,6 +180,7 @@ class MDForm(BitacoraForm):
         widgets = {
             'descripcion': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
             'nombre': forms.TextInput(attrs={'size': 80}),
+            'requisitosSoftware': forms.SelectMultiple(attrs={'size': 10}),
         }
         
 class HTForm(BitacoraForm):
