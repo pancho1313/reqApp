@@ -121,6 +121,7 @@ class RSForm(BitacoraForm):
         widgets = {
             'descripcion': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
             'nombre': forms.TextInput(attrs={'size': 80}),
+            'requisitosUsuario': forms.SelectMultiple(attrs={'size': 12})
         }
         
 class CPForm(BitacoraForm):
