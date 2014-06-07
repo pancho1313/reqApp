@@ -649,7 +649,7 @@ def matriz(tipo, proyecto):
         
         m2s = []
         for c in rucps:
-           if c.asoc_RU():
+           if c.requisito.asoc_RU():
             m2s.append(c)
         
         m2idsmatchs = []
@@ -667,7 +667,7 @@ def matriz(tipo, proyecto):
         
         m2s = []
         for c in rscps:
-           if not c.asoc_RU():
+           if not c.requisito.asoc_RU():
             m2s.append(c)
         
         m2idsmatchs = []
