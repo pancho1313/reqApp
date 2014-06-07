@@ -645,7 +645,7 @@ def matriz(tipo, proyecto):
             colNoIntersec.append(len(m1s.filter(requisitosSoftware=rs))==0)
     elif tipo == 'rucp':
         m1s = RequisitoUsuario.objects.vigentes(proyecto)
-        m2s = CasoPrueba.objects.vigentes(proyecto).filter(asoc_RU=True)
+        m2s = CasoPrueba.objects.vigentes(proyecto).filter(requisito__in=m1s)
         
         m2idsmatchs = []
         for fila in range(0,len(m1s)):
