@@ -31,7 +31,7 @@ $(window).bind("load", function() {
         
         $('#fila').html(textoFila);
         $('#columna').html(textoColumna);
-        $('#matr_selec').css({'left': el.style.left, 'top': el.style.top});
+        $('#matr_selec').css({'left': el.css('left'), 'top': el.css('top')});
     });
 
     $('[name=elemento_matriz]').hover(function() {
