@@ -35,8 +35,8 @@ $('[name=elemento_matriz]').click(function(){
 $('[name=elemento_matriz]').hover(function() {
     var el = $(this);
     el.addClass("matr_hover");
-    $('#fila').html(textoMatriz(el.attr('elFila'), el.attr('elFilaEstado'), el.attr('elFilaTipo')););
-    $('#columna').html(textoMatriz(el.attr('elCol'), el.attr('elColEstado'), el.attr('elColTipo')););
+    $('#fila').html(textoMatriz(el.attr('elFila'), el.attr('elFilaEstado'), el.attr('elFilaTipo')));
+    $('#columna').html(textoMatriz(el.attr('elCol'), el.attr('elColEstado'), el.attr('elColTipo')));
 }, function() {
     $(this).removeClass("matr_hover");
     $('#fila').html(textoFila);
@@ -76,7 +76,7 @@ $('[name=elemento_matriz]').hover(function() {
                     class="matr_no_match"
                 {% endif %}
                 name="elemento_matriz"
-                elFila="{{ e.elFila }}"
+                elFila= "{{ e.elFila }}"
                 elFilaEstado = "{{ e.elFila.estado }}"
                 elFilaTipo = "{{ e.elFila.tipo }}"
                 elCol = "{{ e.elCol }}"
