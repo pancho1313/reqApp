@@ -792,7 +792,7 @@ def consistencia(request):
             
         # generar el listado de textos identificadores de elementos del tipo seleccionado
         identificadoresDict = {}
-        elementos = modelo.objects.vigentes(proyecto)
+        elementos = modelo
         for elemento in elementos:
             # el nombre correspondiente al identificador es el más reciente
             identificadoresDict.update({elemento.identificador: elemento.textoIdentificador()+" "+elemento.nombre})
