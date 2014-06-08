@@ -22,6 +22,7 @@ function textoMatriz(el, elEstado, elTipo){
 }
 
 $('[name=elemento_matriz]').click(function(){
+    console.log("click");
     var el = $(this);
     
     textoFila = textoMatriz(el.attr('elFila'), el.attr('elFilaEstado'), el.attr('elFilaTipo'));
@@ -33,11 +34,15 @@ $('[name=elemento_matriz]').click(function(){
 });
 
 $('[name=elemento_matriz]').hover(function() {
+    console.log("hover in");
+    
     var el = $(this);
     el.addClass("matr_hover");
     $('#fila').html(textoMatriz(el.attr('elFila'), el.attr('elFilaEstado'), el.attr('elFilaTipo')));
     $('#columna').html(textoMatriz(el.attr('elCol'), el.attr('elColEstado'), el.attr('elColTipo')));
 }, function() {
+    console.log("hover out");
+    
     $(this).removeClass("matr_hover");
     $('#fila').html(textoFila);
     $('#columna').html(textoColumna);
