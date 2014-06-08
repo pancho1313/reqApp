@@ -1,6 +1,7 @@
 {% extends "reqApp/base.html" %}
 {% block body %}
 <script>
+$(window).bind("load", function() {
 var textoFila = "------------------";
 var textoColumna = "------------------";
 /*
@@ -33,7 +34,7 @@ $('[name=elemento_matriz]').click(function(){
     $('#matr_selec').css({'left': el.style.left, 'top': el.style.top});
 });
 
-$('[name="elemento_matriz"]').hover(function() {
+$('[name=elemento_matriz]').hover(function() {
     console.log("hover in");
     
     var el = $(this);
@@ -46,6 +47,7 @@ $('[name="elemento_matriz"]').hover(function() {
     $(this).removeClass("matr_hover");
     $('#fila').html(textoFila);
     $('#columna').html(textoColumna);
+});
 });
 </script>
 <br/>
