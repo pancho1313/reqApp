@@ -48,11 +48,7 @@
 </style>
 </head>
 <body>
-<div id="footerDate">
-    <div style="font-size:1.2em;text-align:right;">
-        <p>Fecha: {{hoy|date:"Y-m-d"}}</p>
-    </div>
-</div>
+
 <div id="footerContent">
     {%block page_foot%}
         <div style="text-align:right;">
@@ -72,6 +68,11 @@
     </div>
     <div>
         <p style="font-size:2.5em;text-align:center;">{{proyecto}}</p>
+    </div>
+    <div id="footerDate">
+        <div style="font-size:1.2em;text-align:right;">
+            <p>Fecha: {{hoy|date:"Y-m-d"}}</p>
+        </div>
     </div>
     {% block indice %}
         <pdf:nextpage/>
