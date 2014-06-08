@@ -1283,7 +1283,7 @@ def pdf(request):
             consistencia = request.GET.get('consistencia', 'rurs')
             context.update({
                 'titulo':u'Documento de Consistencia '+cTs[consistencia]['titulo'],
-                'nombreArchivo':cTs['nombreArchivo'],
+                'nombreArchivo':cTs[consistencia]['nombreArchivo'],
                 'CTs':cTs[consistencia],
             })
         else:
