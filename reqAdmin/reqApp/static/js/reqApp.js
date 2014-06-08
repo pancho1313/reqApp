@@ -31,7 +31,7 @@ function expandirContraerContenido(self){
 
 // ocultar formulario de edición y volver a mostrar el elemento de lista
 function cancelarEdicionElemento(id){
-    //location.reload(true);
+    //location.reload(true); // problemas con reenvio de formularios
     window.location = window.location.href.split("#")[0];
 }
 
@@ -43,7 +43,7 @@ function editarElemento(id){
 
 // ocultar edicion de nuevo elemento de lista
 function cancelarNuevoElemento(){
-    //location.reload(true);
+    //location.reload(true); // problemas con reenvio de formularios
     window.location = window.location.href.split("#")[0];
 }
 
