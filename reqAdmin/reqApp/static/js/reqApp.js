@@ -76,6 +76,7 @@ function cerrarTodos(){
     elementos.hide('slow');
 }
 
+/* movido a /templates/reqApp/herramientas/matrices/matrices.html
 // mostrar elementos de fila y columna seleccionada en la matriz de trazado
 function mostrarElementosDeMatrizDeTrazado(el, elFila, elFilaEstado, elFilaTipo, elCol, elColEstado, elColTipo){
     elFilaTipo = (elFilaTipo!='')?('title="tipo: '+elFilaTipo+'"'):'';
@@ -84,6 +85,7 @@ function mostrarElementosDeMatrizDeTrazado(el, elFila, elFilaEstado, elFilaTipo,
     $('#columna').html("<div class='"+elColEstado+"' "+elColTipo+">"+elCol+"</div>");
     $('#matr_selec').css({'left': el.style.left, 'top': el.style.top});
 }
+*/
 
 // ajax para verificacion de formularios
 function validForm(event,button){
