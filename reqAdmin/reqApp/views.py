@@ -935,7 +935,7 @@ def render_to_pdf(template_src, context_dict):
     pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), result)# ...ISO-8859-1...UTF-8...latin-1... html.encode("ISO-8859-1")
     if not pdf.err:
         resp = HttpResponse(result.getvalue(), mimetype='application/pdf')
-        resp['Content-Disposition'] = 'attachment; filename=Client_Summary.pdf'
+        resp['Content-Disposition'] = 'filename=Client_Summary.pdf'
         return resp
     return HttpResponse('We had some errors!')
         
