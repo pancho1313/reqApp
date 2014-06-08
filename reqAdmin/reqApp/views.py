@@ -935,7 +935,7 @@ def render_to_pdf(template_src, context_dict):
     pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), result)# ...ISO-8859-1...UTF-8...latin-1... html.encode("ISO-8859-1")
     if not pdf.err:
         resp = HttpResponse(result.getvalue(), mimetype='application/pdf')
-        resp['Content-Disposition'] = 'filename=Client_Summary.pdf'
+        resp['Content-Disposition'] = u'filename='+context_dict['nombreArchivo']+u'.pdf'
         return resp
     return HttpResponse('We had some errors!')
         
@@ -945,6 +945,7 @@ def pdf(request):
     context = {
         'hoja':'letter',# https://github.com/chrisglass/xhtml2pdf/blob/master/doc/usage.rst#supported-page-properties-and-values
         'titulo':'',
+        'nombreArchivo':'',
         'host':request.build_absolute_uri("/")[:-1],# http://localhost:8000
         'proyecto':proyecto,
         'hoy':timezone.now(),
@@ -976,6 +977,7 @@ def pdf(request):
             
             context.update({
                 'titulo':'Documento de Especificación de Requisitos de Usuario/Software',
+                'nombreArchivo':'Documento_de_Requisitos',
                 'secciones':secciones,
                 'RUs':RequisitoUsuario.objects.vigentes(proyecto,'tipo'),
                 'RSs':RequisitoSoftware.objects.vigentes(proyecto,'tipo'),
@@ -1007,6 +1009,7 @@ def pdf(request):
             
             context.update({
                 'titulo':'Documento de Diseño',
+                'nombreArchivo':'Documento_de_Diseno',
                 'secciones':secciones,
                 'MDs':Modulo.objects.vigentes(proyecto),
                 'MTs':[{
@@ -1033,6 +1036,7 @@ def pdf(request):
             
             context.update({
                 'titulo':'Documento de Casos de Prueba',
+                'nombreArchivo':'Documento_Casos_de_Prueba',
                 'secciones':secciones,
                 'RUs':RequisitoUsuario.objects.vigentes(proyecto,'tipo'),
                 'RSs':RequisitoSoftware.objects.vigentes(proyecto,'tipo'),
@@ -1079,7 +1083,8 @@ def pdf(request):
                 })
                 
             context.update({
-                'titulo':'Documento de Histórico',
+                'titulo':'Documento Histórico',
+                'nombreArchivo':'Documento_Historico',
                 'secciones':secciones,
                 'RUs':RequisitoUsuario.objects.vigentes(proyecto,'tipo'),
                 'RSs':RequisitoSoftware.objects.vigentes(proyecto,'tipo'),
@@ -1091,36 +1096,42 @@ def pdf(request):
             template = 'reqApp/pdf/proyecto/RU/RU.html'
             context.update({
                 'titulo':'Requisitos de Usuario',
+                'nombreArchivo':'Lista_Requisitos_de_Usuario',
                 'RUs':RequisitoUsuario.objects.vigentes(proyecto,'tipo'),
             })
         elif tipo == 'RS':
             template = 'reqApp/pdf/proyecto/RS/RS.html'
             context.update({
                 'titulo':'Requisitos de Software',
+                'nombreArchivo':'Lista_Requisitos_de_Software',
                 'RSs':RequisitoSoftware.objects.vigentes(proyecto,'tipo'),
             })
         elif tipo == 'TU':
             template = 'reqApp/pdf/proyecto/TU/TU.html'
             context.update({
                 'titulo':'Tipos de Usuario',
+                'nombreArchivo':'Lista_Tipos_de_Usuario',
                 'TUs':TipoUsuario.objects.vigentes(proyecto),
             })
         elif tipo == 'MD':
             template = 'reqApp/pdf/proyecto/MD/MD.html'
             context.update({
                 'titulo':'Módulos',
+                'nombreArchivo':'Lista_Modulos',
                 'MDs':Modulo.objects.vigentes(proyecto),
             })
         elif tipo == 'CP':
             template = 'reqApp/pdf/proyecto/CP/CP.html'
             context.update({
                 'titulo':'Casos de Prueba',
+                'nombreArchivo':'Lista_Casos_de_Prueba',
                 'CPs':CasoPrueba.objects.vigentes(proyecto),
             })
         elif tipo == 'HT':
             template = 'reqApp/pdf/proyecto/HT/HT.html'
             context.update({
                 'titulo':'Hitos',
+                'nombreArchivo':'Lista_Hitos',
                 'HTs':Hito.objects.vigentes(proyecto),
             })
         elif tipo == 'MT':
@@ -1159,6 +1170,7 @@ def pdf(request):
             ##############
             context.update({
                 'titulo':'Matrices de Trazado',
+                'nombreArchivo':'Matrices_de_Trazado',
                 'MTs':matrices,#mTs, matrices, TODO
             })
         elif tipo == 'ET': # estadisticas
@@ -1188,6 +1200,7 @@ def pdf(request):
             
             context.update({
                 'titulo':'Estadísticas del Proyecto',
+                'nombreArchivo':'Estadisticas',
                 'ETs':eTs,
             })
         elif tipo == 'CT':
@@ -1196,6 +1209,7 @@ def pdf(request):
             cTs = {
                 'rurs':{
                 'titulo':'RU/RS',
+                'nombreArchivo':'Documento_de_Consistencia_RU-RS',
                 'template1':'reqApp/pdf/proyecto/RU/ru.html',
                 'template2':'reqApp/pdf/proyecto/RS/rs.html',
                 'elementos':arbolDeRelaciones(RequisitoUsuario.objects.vigentes(proyecto)
@@ -1204,6 +1218,7 @@ def pdf(request):
                 },
                 'rucp':{
                 'titulo':'RU/CP',
+                'nombreArchivo':'Documento_de_Consistencia_RU-CP',
                 'template1':'reqApp/pdf/proyecto/RU/ru.html',
                 'template2':'reqApp/pdf/proyecto/CP/cp.html',
                 'elementos':arbolDeRelaciones(RequisitoUsuario.objects.vigentes(proyecto)
@@ -1212,6 +1227,7 @@ def pdf(request):
                 },
                 'rsru':{
                 'titulo':'RS/RU',
+                'nombreArchivo':'Documento_de_Consistencia_RS-RU',
                 'template1':'reqApp/pdf/proyecto/RS/rs.html',
                 'template2':'reqApp/pdf/proyecto/RU/ru.html',
                 'elementos':arbolDeRelaciones(RequisitoSoftware.objects.vigentes(proyecto)
@@ -1220,6 +1236,7 @@ def pdf(request):
                 },
                 'rscp':{
                 'titulo':'RS/CP',
+                'nombreArchivo':'Documento_de_Consistencia_RS-CP',
                 'template1':'reqApp/pdf/proyecto/RS/rs.html',
                 'template2':'reqApp/pdf/proyecto/CP/cp.html',
                 'elementos':arbolDeRelaciones(RequisitoSoftware.objects.vigentes(proyecto)
@@ -1228,6 +1245,7 @@ def pdf(request):
                 },
                 'rsmd':{
                 'titulo':'RS/MD',
+                'nombreArchivo':'Documento_de_Consistencia_RS-MD',
                 'template1':'reqApp/pdf/proyecto/RS/rs.html',
                 'template2':'reqApp/pdf/proyecto/MD/md.html',
                 'elementos':arbolDeRelaciones(RequisitoSoftware.objects.vigentes(proyecto)
@@ -1236,6 +1254,7 @@ def pdf(request):
                 },
                 'mdrs':{
                 'titulo':'MD/RS',
+                'nombreArchivo':'Documento_de_Consistencia_MD-RS',
                 'template1':'reqApp/pdf/proyecto/MD/md.html',
                 'template2':'reqApp/pdf/proyecto/RS/rs.html',
                 'elementos':arbolDeRelaciones(Modulo.objects.vigentes(proyecto)
@@ -1244,6 +1263,7 @@ def pdf(request):
                 },
                 'cpru':{
                 'titulo':'CP/RU',
+                'nombreArchivo':'Documento_de_Consistencia_CP-RU',
                 'template1':'reqApp/pdf/proyecto/CP/cp.html',
                 'template2':'reqApp/pdf/proyecto/RU/ru.html',
                 'elementos':arbolDeRelaciones(CasoPrueba.objects.vigentes(proyecto).filter(requisito__in=RequisitoUsuario.objects.bitacorados(proyecto))
@@ -1252,6 +1272,7 @@ def pdf(request):
                 },
                 'cprs':{
                 'titulo':'CP/RS',
+                'nombreArchivo':'Documento_de_Consistencia_CP-RS',
                 'template1':'reqApp/pdf/proyecto/CP/cp.html',
                 'template2':'reqApp/pdf/proyecto/RS/rs.html',
                 'elementos':arbolDeRelaciones(CasoPrueba.objects.vigentes(proyecto).filter(requisito__in=RequisitoSoftware.objects.bitacorados(proyecto))
@@ -1262,6 +1283,7 @@ def pdf(request):
             consistencia = request.GET.get('consistencia', 'rurs')
             context.update({
                 'titulo':u'Documento de Consistencia '+cTs[consistencia]['titulo'],
+                'nombreArchivo':cTs['nombreArchivo'],
                 'CTs':cTs[consistencia],
             })
         else:
