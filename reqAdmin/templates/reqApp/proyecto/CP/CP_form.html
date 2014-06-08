@@ -1,10 +1,10 @@
 {% extends "reqApp/proyecto/element_form.html" %}
 {% block campos %}
-    <div>*Nombre: {{ form.nombre }}</div>
-    <div>*Requisito asociado: {{ form.requisito }}</div>
-    <div class="top">*Descripción:</div> <div class="top">{{ form.descripcion }}</div>
-    <div><div class="top">*Resultado aceptable:</div><div class="top">{{ form.resultadoAceptable }}</div></div>
-    <div><div class="top">*Resultado óptimo:</div><div class="top">{{ form.resultadoOptimo }}</div></div>
-    <div><div class="top">Usuarios asociados: </div><div class="top">{{ form.tiposUsuario }}</div>(presionar "Ctrl" para seleccionar)</div>
-    <div>*Estado: {{ form.estado }}</div>
+    <div><span class="def_width">*Nombre: </span>{{ form.nombre }}</div>
+    <div><span class="def_width">*Requisito asociado: </span>{{ form.requisito }}</div>
+    <div class="top"><span class="def_width">*Descripción: </span></div> <div class="top">{{ form.descripcion }}</div>
+    <div><div class="top"><span class="def_width">*Resultado aceptable: </span></div><div class="top">{{ form.resultadoAceptable }}</div></div>
+    <div><div class="top"><span class="def_width">*Resultado óptimo: </span></div><div class="top">{{ form.resultadoOptimo }}</div></div>
+    <div><div class="top"><span class="def_width">Usuarios asociados: </span></div><div class="top">{{ form.tiposUsuario }}</div>(presionar "Ctrl" para seleccionar)</div>
+    <div><span class="def_width">*Estado: </span>{{ form.estado }}</div>
 {% endblock %}
