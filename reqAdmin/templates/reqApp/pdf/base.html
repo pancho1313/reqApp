@@ -24,6 +24,11 @@
             height: 1cm;
         }
     }
+    @page indice {
+        size: {{hoja}};
+        margin: 1.5cm;
+        bottom: 1cm;
+    }
     @page documento {
         size: {{hoja}};
         margin: 1.5cm;
@@ -76,6 +81,7 @@
 </div>
 <div>
 {% block indice %}
+    <pdf:nexttemplate name="indice"/>
     <pdf:nextpage/>
     <!-- Indice -->
     <p style="font-size:1.8em;">Indice</p>
