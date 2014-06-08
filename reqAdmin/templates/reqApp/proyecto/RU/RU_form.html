@@ -1,13 +1,13 @@
 {% extends "reqApp/proyecto/element_form.html" %}
 {% block campos %}
-        <div>*Nombre: {{ form.nombre }}</div>
-        <div class="top">*Descripción:</div> <div class="top">{{ form.descripcion }}</div>
-        <div>*Hito: {{ form.hito }}</div>
-        <div><div class="top">Usuarios asociados: </div><div class="top">{{ form.tiposUsuario }}</div>(presionar "Ctrl" para seleccionar)</div>
-        <div>*Prioridad: {{ form.prioridad }}</div>
-        <div>*Estabilidad: {{ form.estabilidad }}</div>
-        <div>*Tipo: {{ form.tipo }}</div>
-        <div>*Fuente: {{ form.fuente }}</div>
-        <div>*Estado: {{ form.estado }}</div>
-        <div>Costo: {{ form.costo }}</div>
+        <div><span style="display:inline-block;width:6em;">*Nombre: </span>{{ form.nombre }}</div>
+        <div class="top"><span style="display:inline-block;width:6em;">*Descripción:</span></div> <div class="top">{{ form.descripcion }}</div>
+        <div><span style="display:inline-block;width:6em;">*Hito: </span>{{ form.hito }}</div>
+        <div><div class="top"><span style="display:inline-block;width:6em;">Usuarios asociados: </span></div><div class="top">{{ form.tiposUsuario }}</div>(presionar "Ctrl" para seleccionar)</div>
+        <div><span style="display:inline-block;width:6em;">*Prioridad: </span>{{ form.prioridad }}</div>
+        <div><span style="display:inline-block;width:6em;">*Estabilidad: </span>{{ form.estabilidad }}</div>
+        <div><span style="display:inline-block;width:6em;">*Tipo: </span>{{ form.tipo }}</div>
+        <div><span style="display:inline-block;width:6em;">*Fuente: </span>{{ form.fuente }}</div>
+        <div><span style="display:inline-block;width:6em;">*Estado: </span>{{ form.estado }}</div>
+        <div><span style="display:inline-block;width:6em;">Costo: {{ form.costo }}</span></div>
 {% endblock %}
