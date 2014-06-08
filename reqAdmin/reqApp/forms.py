@@ -198,6 +198,13 @@ class HTForm(BitacoraForm):
             'nombre': forms.TextInput(attrs={'size': 80}),
         }
         
+    def clean_fechaFin(self):
+        ini = self.cleaned_data['fechaInicio']
+        fin = self.cleaned_data['fechaFin']
+        if fin < ini:
+            raise forms.ValidationError("Fecha Fin es menor que Fecha Inicio!")
+        return fin
+        
 
 class DocForm(forms.ModelForm):
     def registrarDocumento(self, proyecto, usuario, tipoParrafo):

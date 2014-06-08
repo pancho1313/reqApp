@@ -31,7 +31,8 @@ function expandirContraerContenido(self){
 
 // ocultar formulario de edición y volver a mostrar el elemento de lista
 function cancelarEdicionElemento(id){
-    location.reload(true);
+    //location.reload(true);
+    window.location = window.location.href.split("#")[0];
 }
 
 // ocultar el elemento de lista y mostrar el formulario de edición
@@ -42,7 +43,8 @@ function editarElemento(id){
 
 // ocultar edicion de nuevo elemento de lista
 function cancelarNuevoElemento(){
-    location.reload(true);
+    //location.reload(true);
+    window.location = window.location.href.split("#")[0];
 }
 
 // mostrar edicion de un nuevo elemento de lista
@@ -75,17 +77,6 @@ function cerrarTodos(){
     var elementos = $('[name=elemento_contenido]');
     elementos.hide('slow');
 }
-
-/* movido a /templates/reqApp/herramientas/matrices/matrices.html
-// mostrar elementos de fila y columna seleccionada en la matriz de trazado
-function mostrarElementosDeMatrizDeTrazado(el, elFila, elFilaEstado, elFilaTipo, elCol, elColEstado, elColTipo){
-    elFilaTipo = (elFilaTipo!='')?('title="tipo: '+elFilaTipo+'"'):'';
-    elColTipo = (elColTipo!='')?('title="tipo: '+elColTipo+'"'):'';
-    $('#fila').html("<div class='"+elFilaEstado+"' "+elFilaTipo+">"+elFila+"</div>");
-    $('#columna').html("<div class='"+elColEstado+"' "+elColTipo+">"+elCol+"</div>");
-    $('#matr_selec').css({'left': el.style.left, 'top': el.style.top});
-}
-*/
 
 // ajax para verificacion de formularios
 function validForm(event,button){

@@ -4,18 +4,6 @@
 $(window).bind("load", function() {
     var textoFila = "------------------";
     var textoColumna = "------------------";
-    /*
-    // mostrar elementos de fila y columna seleccionada en la matriz de trazado
-    function mostrarElementosDeMatrizDeTrazado(el, elFila, elFilaEstado, elFilaTipo, elCol, elColEstado, elColTipo){
-        elFilaTipo = (elFilaTipo!='')?('title="tipo: '+elFilaTipo+'"'):'';
-        elColTipo = (elColTipo!='')?('title="tipo: '+elColTipo+'"'):'';
-        textoFila = "<div class='"+elFilaEstado+"' "+elFilaTipo+">"+elFila+"</div>";
-        textoColumna = "<div class='"+elColEstado+"' "+elColTipo+">"+elCol+"</div>";
-        $('#fila').html(textoFila);
-        $('#columna').html(textoColumna);
-        $('#matr_selec').css({'left': el.style.left, 'top': el.style.top});
-    }
-    */
 
     function textoMatriz(el, elEstado, elTipo){
         elTipo = (elTipo!='')?('title="tipo: '+elTipo+'"'):'';
