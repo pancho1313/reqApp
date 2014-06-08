@@ -10,7 +10,7 @@
 -->
 <style type="text/css">
 {% block style %}
-    @page portada {
+    @page {
         size: {{hoja}};
         margin-left: 1.5cm;
         margin-right: 1.5cm;
@@ -58,7 +58,6 @@
     {%endblock%}
 </div>
 
-<pdf:nexttemplate name="portada"/>
 <div>
     <!-- Portada-->
     <img style="zoom:100%;" src="{{host}}/media/documentos/img/fcfm.png"><img/>
