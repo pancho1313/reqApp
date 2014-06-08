@@ -1,7 +1,7 @@
 {% extends "reqApp/proyecto/element_form.html" %}
 {% block campos %}
-    <div><span style="display:inline-block;width:6em;">*Nombre: </span>{{ form.nombre }}</div>
-    <div class="top"><span style="display:inline-block;width:6em;">*Descripción:</span></div> <div class="top">{{ form.descripcion }}</div>
-    <div><span style="display:inline-block;width:6em;">*Cantidad: </span>{{ form.cantidad }}</div>
-    <div class="top"><span style="display:inline-block;width:6em;">Usuarios contactables: </span></div><div class="top">{{ form.usuariosContactables }}</div>
+    <div><span class="def_width">*Nombre: </span>{{ form.nombre }}</div>
+    <div class="top"><span class="def_width">*Descripción:</span></div> <div class="top">{{ form.descripcion }}</div>
+    <div><span class="def_width">*Cantidad: </span>{{ form.cantidad }}</div>
+    <div class="top"><span class="def_width">Usuarios contactables: </span></div><div class="top">{{ form.usuariosContactables }}</div>
 {% endblock %}

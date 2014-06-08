@@ -305,6 +305,13 @@ background-color:#1464F6;
 background-color: #ffdddd;
 }
 
+/* texto campos formularios de elementos */
+span.def_width
+{
+display:inline-block;
+width:6em;
+}
+
 /* tabla de estadisticas */
 table.estadisticas
 {

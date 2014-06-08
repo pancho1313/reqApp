@@ -1,14 +1,14 @@
 {% extends "reqApp/proyecto/element_form.html" %}
 {% block campos %}
-    <div><span style="display:inline-block;width:6em;">*Nombre: </span>{{ form.nombre }}</div>
-    <div class="top"><span style="display:inline-block;width:6em;">*Descripción: </span></div> <div class="top">{{ form.descripcion }}</div>
-    <div><span style="display:inline-block;width:6em;">*Hito: </span>{{ form.hito }}</div>
-    <div><div class="top"><span style="display:inline-block;width:6em;">RU asociados: </span></div><div class="top">{{ form.requisitosUsuario }}</div>(presionar "Ctrl" para seleccionar)</div>
-    <div><div class="top"><span style="display:inline-block;width:6em;">Usuarios asociados: </span></div><div class="top">{{ form.tiposUsuario }}</div>(presionar "Ctrl" para seleccionar)</div>
-    <div><span style="display:inline-block;width:6em;">*Prioridad: </span>{{ form.prioridad }}</div>
-    <div><span style="display:inline-block;width:6em;">*Estabilidad: </span>{{ form.estabilidad }}</div>
-    <div><span style="display:inline-block;width:6em;">*Tipo: </span>{{ form.tipo }}</div>
-    <div><span style="display:inline-block;width:6em;">*Fuente: </span>{{ form.fuente }}</div>
-    <div><span style="display:inline-block;width:6em;">*Estado: </span>{{ form.estado }}</div>
-    <div><span style="display:inline-block;width:6em;">Costo: </span>{{ form.costo }}</div>
+    <div><span class="def_width">*Nombre: </span>{{ form.nombre }}</div>
+    <div class="top"><span class="def_width">*Descripción: </span></div> <div class="top">{{ form.descripcion }}</div>
+    <div><span class="def_width">*Hito: </span>{{ form.hito }}</div>
+    <div><div class="top"><span class="def_width">RU asociados: </span></div><div class="top">{{ form.requisitosUsuario }}</div>(presionar "Ctrl" para seleccionar)</div>
+    <div><div class="top"><span class="def_width">Usuarios asociados: </span></div><div class="top">{{ form.tiposUsuario }}</div>(presionar "Ctrl" para seleccionar)</div>
+    <div><span class="def_width">*Prioridad: </span>{{ form.prioridad }}</div>
+    <div><span class="def_width">*Estabilidad: </span>{{ form.estabilidad }}</div>
+    <div><span class="def_width">*Tipo: </span>{{ form.tipo }}</div>
+    <div><span class="def_width">*Fuente: </span>{{ form.fuente }}</div>
+    <div><span class="def_width">*Estado: </span>{{ form.estado }}</div>
+    <div><span class="def_width">Costo: </span>{{ form.costo }}</div>
 {% endblock %}
