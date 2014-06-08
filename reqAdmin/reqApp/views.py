@@ -702,15 +702,14 @@ def matrices(request):
     return render(request, 'reqApp/herramientas/matrices/matrices.html', context)
 
 ##############################  CONSISTENCIA
-def arbolDeRelaciones(model, subModel, prop, proyecto, identificador):
+def arbolDeRelaciones(modelQSet, subModelQSet, prop, identificador):
     resp = []
-    element = model.objects.vigente(proyecto, identificador)
-    if element is not None:
-        elements = [element]
+    if identificador > 0:
+        elements = modelQSet.filter(identificador=identificador)
     else:
-        elements = model.objects.vigentes(proyecto)
+        elements = modelQSet
     for e in elements:
-        subElementos = subModel.objects.vigentes(proyecto).filter(**myFilter(prop,e))
+        subElementos = subModelQSet.filter(**myFilter(prop,e))
         resp.append({'elemento':e,'subElementos':subElementos})
     return resp
 
@@ -757,36 +756,36 @@ def consistencia(request):
         
         elementos = []
         if consistencia == 'rurs':
-            modelo = RequisitoUsuario
-            subModelo = RequisitoSoftware
+            modelo = RequisitoUsuario.objects.vigentes(proyecto)
+            subModelo = RequisitoSoftware.objects.vigentes(proyecto)
             prop = 'requisitosUsuario'
         elif consistencia == 'rucp':
-            modelo = RequisitoUsuario
-            subModelo = CasoPrueba
+            modelo = RequisitoUsuario.objects.vigentes(proyecto)
+            subModelo = CasoPrueba.objects.vigentes(proyecto)
             prop = 'requisito'
         elif consistencia == 'rsru':
-            modelo = RequisitoSoftware
-            subModelo = RequisitoUsuario
+            modelo = RequisitoSoftware.objects.vigentes(proyecto)
+            subModelo = RequisitoUsuario.objects.vigentes(proyecto)
             prop = 'requisitosoftware'
         elif consistencia == 'rscp':
-            modelo = RequisitoSoftware
-            subModelo = CasoPrueba
+            modelo = RequisitoSoftware.objects.vigentes(proyecto)
+            subModelo = CasoPrueba.objects.vigentes(proyecto)
             prop = 'requisito'
         elif consistencia == 'rsmd':
-            modelo = RequisitoSoftware
-            subModelo = Modulo
+            modelo = RequisitoSoftware.objects.vigentes(proyecto)
+            subModelo = Modulo.objects.vigentes(proyecto)
             prop = 'requisitosSoftware'
         elif consistencia == 'mdrs':
-            modelo = Modulo
-            subModelo = RequisitoSoftware
+            modelo = Modulo.objects.vigentes(proyecto)
+            subModelo = RequisitoSoftware.objects.vigentes(proyecto)
             prop = 'modulo'
         elif consistencia == 'cpru':
-            modelo = CasoPrueba
-            subModelo = RequisitoUsuario
+            modelo = CasoPrueba.objects.vigentes(proyecto).filter(requisito__in=RequisitoUsuario.objects.bitacorados(proyecto))
+            subModelo = RequisitoUsuario.objects.vigentes(proyecto)
             prop = 'casoprueba'
         elif consistencia == 'cprs':
-            modelo = CasoPrueba
-            subModelo = RequisitoSoftware
+            modelo = CasoPrueba.objects.vigentes(proyecto).filter(requisito__in=RequisitoSoftware.objects.bitacorados(proyecto))
+            subModelo = RequisitoSoftware.objects.vigentes(proyecto)
             prop = 'casoprueba'
         else:
             raise Http404
@@ -800,7 +799,7 @@ def consistencia(request):
         for key in sorted(identificadoresDict):
             IDENTIFICADOR_CHOICES.append((key, identificadoresDict[key]))
             
-        elementos = arbolDeRelaciones(modelo, subModelo, prop, proyecto, identificador)
+        elementos = arbolDeRelaciones(modelo, subModelo, prop, identificador)
         
     else:
         raise Http404
@@ -1197,49 +1196,65 @@ def pdf(request):
                 'titulo':'RU/RS',
                 'template1':'reqApp/pdf/proyecto/RU/ru.html',
                 'template2':'reqApp/pdf/proyecto/RS/rs.html',
-                'elementos':arbolDeRelaciones(RequisitoUsuario, RequisitoSoftware, 'requisitosUsuario', proyecto, 0)
+                'elementos':arbolDeRelaciones(RequisitoUsuario.objects.vigentes(proyecto)
+                                            , RequisitoSoftware.objects.vigentes(proyecto)
+                                            , 'requisitosUsuario', 0)
                 },
                 'rucp':{
                 'titulo':'RU/CP',
                 'template1':'reqApp/pdf/proyecto/RU/ru.html',
                 'template2':'reqApp/pdf/proyecto/CP/cp.html',
-                'elementos':arbolDeRelaciones(RequisitoUsuario, CasoPrueba, 'requisito', proyecto, 0)
+                'elementos':arbolDeRelaciones(RequisitoUsuario.objects.vigentes(proyecto)
+                                            , CasoPrueba.objects.vigentes(proyecto)
+                                            , 'requisito', 0)
                 },
                 'rsru':{
                 'titulo':'RS/RU',
                 'template1':'reqApp/pdf/proyecto/RS/rs.html',
                 'template2':'reqApp/pdf/proyecto/RU/ru.html',
-                'elementos':arbolDeRelaciones(RequisitoSoftware, RequisitoUsuario, 'requisitosoftware', proyecto, 0)
+                'elementos':arbolDeRelaciones(RequisitoSoftware.objects.vigentes(proyecto)
+                                            , RequisitoUsuario.objects.vigentes(proyecto)
+                                            , 'requisitosoftware', 0)
                 },
                 'rscp':{
                 'titulo':'RS/CP',
                 'template1':'reqApp/pdf/proyecto/RS/rs.html',
                 'template2':'reqApp/pdf/proyecto/CP/cp.html',
-                'elementos':arbolDeRelaciones(RequisitoSoftware, CasoPrueba, 'requisito', proyecto, 0)
+                'elementos':arbolDeRelaciones(RequisitoSoftware.objects.vigentes(proyecto)
+                                            , CasoPrueba.objects.vigentes(proyecto)
+                                            , 'requisito', 0)
                 },
                 'rsmd':{
                 'titulo':'RS/MD',
                 'template1':'reqApp/pdf/proyecto/RS/rs.html',
                 'template2':'reqApp/pdf/proyecto/MD/md.html',
-                'elementos':arbolDeRelaciones(RequisitoSoftware, Modulo, 'requisitosSoftware', proyecto, 0)
+                'elementos':arbolDeRelaciones(RequisitoSoftware.objects.vigentes(proyecto)
+                                            , Modulo.objects.vigentes(proyecto)
+                                            , 'requisitosSoftware', 0)
                 },
                 'mdrs':{
                 'titulo':'MD/RS',
                 'template1':'reqApp/pdf/proyecto/MD/md.html',
                 'template2':'reqApp/pdf/proyecto/RS/rs.html',
-                'elementos':arbolDeRelaciones(Modulo, RequisitoSoftware, 'modulo', proyecto, 0)
+                'elementos':arbolDeRelaciones(Modulo.objects.vigentes(proyecto)
+                                            , RequisitoSoftware.objects.vigentes(proyecto)
+                                            , 'modulo', 0)
                 },
                 'cpru':{
                 'titulo':'CP/RU',
                 'template1':'reqApp/pdf/proyecto/CP/cp.html',
                 'template2':'reqApp/pdf/proyecto/RU/ru.html',
-                'elementos':arbolDeRelaciones(CasoPrueba, RequisitoUsuario, 'casoprueba', proyecto, 0)
+                'elementos':arbolDeRelaciones(CasoPrueba.objects.vigentes(proyecto).filter(requisito__in=RequisitoUsuario.objects.bitacorados(proyecto))
+                                            , RequisitoUsuario.objects.vigentes(proyecto)
+                                            , 'casoprueba', 0)
                 },
                 'cprs':{
                 'titulo':'CP/RS',
                 'template1':'reqApp/pdf/proyecto/CP/cp.html',
                 'template2':'reqApp/pdf/proyecto/RS/rs.html',
-                'elementos':arbolDeRelaciones(CasoPrueba, RequisitoSoftware, 'casoprueba', proyecto, 0)
+                'elementos':arbolDeRelaciones(CasoPrueba.objects.vigentes(proyecto).filter(requisito__in=RequisitoSoftware.objects.bitacorados(proyecto))
+                                            , RequisitoSoftware.objects.vigentes(proyecto)
+                                            , 'casoprueba', 0)
                 },
             }
             consistencia = request.GET.get('consistencia', 'rurs')
