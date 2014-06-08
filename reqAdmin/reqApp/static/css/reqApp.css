@@ -262,7 +262,7 @@ width: 9px;
 height: 9px; 
 cursor:pointer;
 }
-.matr_hover
+div.matr_match:hover
 {
 background-color:#1464F6;
 }
@@ -278,6 +278,10 @@ width: 9px;
 height: 9px;
 cursor:pointer;
 }
+div.matr_no_match:hover
+{
+background-color:#1464F6;
+}
 
 div.matr_no_intersec
 {
@@ -289,6 +293,10 @@ top: 100px;
 width: 9px;
 height: 9px;
 cursor:pointer;
+}
+div.matr_no_intersec:hover
+{
+background-color:#1464F6;
 }
 
 /* input invalido */

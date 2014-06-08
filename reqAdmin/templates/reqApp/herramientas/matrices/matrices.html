@@ -2,52 +2,46 @@
 {% block body %}
 <script>
 $(window).bind("load", function() {
-var textoFila = "------------------";
-var textoColumna = "------------------";
-/*
-// mostrar elementos de fila y columna seleccionada en la matriz de trazado
-function mostrarElementosDeMatrizDeTrazado(el, elFila, elFilaEstado, elFilaTipo, elCol, elColEstado, elColTipo){
-    elFilaTipo = (elFilaTipo!='')?('title="tipo: '+elFilaTipo+'"'):'';
-    elColTipo = (elColTipo!='')?('title="tipo: '+elColTipo+'"'):'';
-    textoFila = "<div class='"+elFilaEstado+"' "+elFilaTipo+">"+elFila+"</div>";
-    textoColumna = "<div class='"+elColEstado+"' "+elColTipo+">"+elCol+"</div>";
-    $('#fila').html(textoFila);
-    $('#columna').html(textoColumna);
-    $('#matr_selec').css({'left': el.style.left, 'top': el.style.top});
-}
-*/
+    var textoFila = "------------------";
+    var textoColumna = "------------------";
+    /*
+    // mostrar elementos de fila y columna seleccionada en la matriz de trazado
+    function mostrarElementosDeMatrizDeTrazado(el, elFila, elFilaEstado, elFilaTipo, elCol, elColEstado, elColTipo){
+        elFilaTipo = (elFilaTipo!='')?('title="tipo: '+elFilaTipo+'"'):'';
+        elColTipo = (elColTipo!='')?('title="tipo: '+elColTipo+'"'):'';
+        textoFila = "<div class='"+elFilaEstado+"' "+elFilaTipo+">"+elFila+"</div>";
+        textoColumna = "<div class='"+elColEstado+"' "+elColTipo+">"+elCol+"</div>";
+        $('#fila').html(textoFila);
+        $('#columna').html(textoColumna);
+        $('#matr_selec').css({'left': el.style.left, 'top': el.style.top});
+    }
+    */
 
-function textoMatriz(el, elEstado, elTipo){
-    elTipo = (elTipo!='')?('title="tipo: '+elTipo+'"'):'';
-    return "<div class='"+elEstado+"' "+elTipo+">"+el+"</div>";
-}
+    function textoMatriz(el, elEstado, elTipo){
+        elTipo = (elTipo!='')?('title="tipo: '+elTipo+'"'):'';
+        return "<div class='"+elEstado+"' "+elTipo+">"+el+"</div>";
+    }
 
-$('[name=elemento_matriz]').click(function(){
-    console.log("click");
-    var el = $(this);
-    
-    textoFila = textoMatriz(el.attr('elFila'), el.attr('elFilaEstado'), el.attr('elFilaTipo'));
-    textoColumna = textoMatriz(el.attr('elCol'), el.attr('elColEstado'), el.attr('elColTipo'));
-    
-    $('#fila').html(textoFila);
-    $('#columna').html(textoColumna);
-    $('#matr_selec').css({'left': el.style.left, 'top': el.style.top});
-});
+    $('[name=elemento_matriz]').click(function(){
+        console.log("click");
+        var el = $(this);
+        
+        textoFila = textoMatriz(el.attr('elFila'), el.attr('elFilaEstado'), el.attr('elFilaTipo'));
+        textoColumna = textoMatriz(el.attr('elCol'), el.attr('elColEstado'), el.attr('elColTipo'));
+        
+        $('#fila').html(textoFila);
+        $('#columna').html(textoColumna);
+        $('#matr_selec').css({'left': el.style.left, 'top': el.style.top});
+    });
 
-$('[name=elemento_matriz]').hover(function() {
-    console.log("hover in");
-    
-    var el = $(this);
-    el.addClass("matr_hover");
-    $('#fila').html(textoMatriz(el.attr('elFila'), el.attr('elFilaEstado'), el.attr('elFilaTipo')));
-    $('#columna').html(textoMatriz(el.attr('elCol'), el.attr('elColEstado'), el.attr('elColTipo')));
-}, function() {
-    console.log("hover out");
-    
-    $(this).removeClass("matr_hover");
-    $('#fila').html(textoFila);
-    $('#columna').html(textoColumna);
-});
+    $('[name=elemento_matriz]').hover(function() {
+        var el = $(this);
+        $('#fila').html(textoMatriz(el.attr('elFila'), el.attr('elFilaEstado'), el.attr('elFilaTipo')));
+        $('#columna').html(textoMatriz(el.attr('elCol'), el.attr('elColEstado'), el.attr('elColTipo')));
+    }, function() {
+        $('#fila').html(textoFila);
+        $('#columna').html(textoColumna);
+    });
 });
 </script>
 <br/>
