@@ -32,11 +32,11 @@ def tipoRS(elemento):
 def tipoReq(req):
     if req.asoc_RU():
         for key,val in TIPO_RU_CHOICES:
-            if key == elemento.tipo:
+            if key == req.tipo:
                 return val
     else:
         for key,val in TIPO_RS_CHOICES:
-            if key == elemento.tipo:
+            if key == req.tipo:
                 return val
             
 @register.filter(name="estado")
