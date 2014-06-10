@@ -683,7 +683,7 @@ def matriz(tipo, proyecto):
                 'fila':fila,
                 'col':col,
                 'match':match,
-                'nunca_intersec':(fila_no_intersec or colNoIntersec[col]),
+                'nunca_intersec':(fila_no_intersec and colNoIntersec[col]),
                 'fila_no_intersec':fila_no_intersec,
                 'col_no_intersec':colNoIntersec[col],
                 })
