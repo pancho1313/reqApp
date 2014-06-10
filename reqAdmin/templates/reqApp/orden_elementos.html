@@ -4,10 +4,12 @@
     <div style="display: inline-block;width:{{ atributo.posicion }}%;">
         {% ifequal orden_actual atributo.orden %}
             <a class="barra_orden" href='?orden=-{{ atributo.orden }}'><b>{{ atributo.orden }}</b></a>
-        {% elifequal orden_actual atributo.orden|invertOrd %}
-            <a class="barra_orden" href='?orden={{ atributo.orden }}'><b>{{ atributo.orden }}</b></a>
         {% else %}
-            <a class="barra_orden" href='?orden={{ atributo.orden }}'>{{ atributo.orden }}</a>
+            {% ifequal orden_actual atributo.orden|invertOrd %}
+                <a class="barra_orden" href='?orden={{ atributo.orden }}'><b>{{ atributo.orden }}</b></a>
+            {% else %}
+                <a class="barra_orden" href='?orden={{ atributo.orden }}'>{{ atributo.orden }}</a>
+            {% endifequal %}
         {% endifequal %}
     {% comment %}
         <a class="barra_orden" href='?orden={{ atributo.orden }}'>
