@@ -1,7 +1,7 @@
 <div class="barra_orden">
 {% for atributo in atributos %}
     <div style="display: inline-block;width:{{ atributo.posicion }}%;">
-        <a class="barra_orden" href='?orden={{ atributo.orden }}'>
+        <a class="barra_orden" href='?orden=--{{ atributo.orden }}'>
             {% ifequal orden_actual atributo.orden %}
 		        <b>{{ atributo.orden }}</b>
             {% else %}
