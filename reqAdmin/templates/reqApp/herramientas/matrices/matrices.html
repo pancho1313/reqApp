@@ -55,19 +55,19 @@ $(window).bind("load", function() {
         {% for e in fila %}
             <div style="left:{{e.col}}0px;top:{{e.fila}}0px;"
                 {% if e.match %}
-                    title="intersección&#013;[--]  {{e.elFila.textoIdentificador}}&#013;[ | ]  {{e.elCol.textoIdentificador}}"
+                    title="Intersección&#013;--  {{e.elFila.textoIdentificador}}{% if e.elFila.tipo %} ({{ e.elFila.tipo }}){% endif %}&#013; |   {{e.elCol.textoIdentificador}}{% if e.elCol.tipo %} ({{ e.elCol.tipo }}){% endif %}"
                     class="matr_match"
                 {% elif e.nunca_intersec %}
-                    title="nunca intersectan!&#013;[--]  {{e.elFila.textoIdentificador}}&#013;[ | ]  {{e.elCol.textoIdentificador}}"
+                    title="Nunca Intersectan!&#013;--  {{e.elFila.textoIdentificador}}&#013; |   {{e.elCol.textoIdentificador}}{% if e.elCol.tipo %} ({{ e.elCol.tipo }}){% endif %}"
                     class="matr_no_intersec"
                 {% elif e.fila_no_intersec %}
-                    title="[--]  {{e.elFila.textoIdentificador}} no intersecta!"
+                    title="No Intersecta!&#013;--  {{e.elFila.textoIdentificador}}{% if e.elFila.tipo %} ({{ e.elFila.tipo }}){% endif %}"
                     class="matr_no_intersec"
                 {% elif e.col_no_intersec %}
-                    title="[ | ]  {{e.elCol.textoIdentificador}} no intersecta!"
+                    title="No Intersecta!&#013; |   {{e.elCol.textoIdentificador}}{% if e.elCol.tipo %} ({{ e.elCol.tipo }}){% endif %}"
                     class="matr_no_intersec"
                 {% else %}
-                    title="no intersectan aquí&#013;[--]  {{e.elFila.textoIdentificador}}&#013;[ | ]  {{e.elCol.textoIdentificador}}"
+                    title="No Intersectan Aquí&#013;--  {{e.elFila.textoIdentificador}}{% if e.elFila.tipo %} ({{ e.elFila.tipo }}){% endif %}&#013; |   {{e.elCol.textoIdentificador}}{% if e.elCol.tipo %} ({{ e.elCol.tipo }}){% endif %}"
                     class="matr_no_match"
                 {% endif %}
                 name="elemento_matriz"
