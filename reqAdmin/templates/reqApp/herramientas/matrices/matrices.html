@@ -55,19 +55,19 @@ $(window).bind("load", function() {
         {% for e in fila %}
             <div style="left:{{e.col}}0px;top:{{e.fila}}0px;"
                 {% if e.match %}
-                    title="Intersección&#013;--  {{e.elFila.textoIdentificador}}{% if e.elFila.tipo %} ({{ e.elFila.tipo }}){% endif %}&#013; |   {{e.elCol.textoIdentificador}}{% if e.elCol.tipo %} ({{ e.elCol.tipo }}){% endif %}"
+                    title="Intersección&#013;---  {{e.elFila.textoIdentificador}}{% if e.elFila.tipo %} ({{ e.elFila.tipo }}){% endif %}&#013; |   {{e.elCol.textoIdentificador}}{% if e.elCol.tipo %} ({{ e.elCol.tipo }}){% endif %}"
                     class="matr_match"
                 {% elif e.nunca_intersec %}
-                    title="Nunca Intersectan!&#013;--  {{e.elFila.textoIdentificador}}&#013; |   {{e.elCol.textoIdentificador}}{% if e.elCol.tipo %} ({{ e.elCol.tipo }}){% endif %}"
+                    title="Nunca Intersectan!&#013;---  {{e.elFila.textoIdentificador}}{% if e.elFila.tipo %} ({{ e.elFila.tipo }}){% endif %}&#013; |   {{e.elCol.textoIdentificador}}{% if e.elCol.tipo %} ({{ e.elCol.tipo }}){% endif %}"
                     class="matr_no_intersec"
                 {% elif e.fila_no_intersec %}
-                    title="Nunca Intersecta!&#013;--  {{e.elFila.textoIdentificador}}{% if e.elFila.tipo %} ({{ e.elFila.tipo }}){% endif %}"
+                    title="Nunca Intersecta!&#013;---  {{e.elFila.textoIdentificador}}{% if e.elFila.tipo %} ({{ e.elFila.tipo }}){% endif %}"
                     class="matr_no_intersec"
                 {% elif e.col_no_intersec %}
                     title="Nunca Intersecta!&#013; |   {{e.elCol.textoIdentificador}}{% if e.elCol.tipo %} ({{ e.elCol.tipo }}){% endif %}"
                     class="matr_no_intersec"
                 {% else %}
-                    title="No Intersectan Aquí&#013;--  {{e.elFila.textoIdentificador}}{% if e.elFila.tipo %} ({{ e.elFila.tipo }}){% endif %}&#013; |   {{e.elCol.textoIdentificador}}{% if e.elCol.tipo %} ({{ e.elCol.tipo }}){% endif %}"
+                    title="No Intersectan Aquí&#013;---  {{e.elFila.textoIdentificador}}{% if e.elFila.tipo %} ({{ e.elFila.tipo }}){% endif %}&#013; |   {{e.elCol.textoIdentificador}}{% if e.elCol.tipo %} ({{ e.elCol.tipo }}){% endif %}"
                     class="matr_no_match"
                 {% endif %}
                 name="elemento_matriz"
