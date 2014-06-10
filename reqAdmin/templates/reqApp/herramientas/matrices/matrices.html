@@ -61,10 +61,10 @@ $(window).bind("load", function() {
                     title="Nunca Intersectan!&#013;--  {{e.elFila.textoIdentificador}}&#013; |   {{e.elCol.textoIdentificador}}{% if e.elCol.tipo %} ({{ e.elCol.tipo }}){% endif %}"
                     class="matr_no_intersec"
                 {% elif e.fila_no_intersec %}
-                    title="No Intersecta!&#013;--  {{e.elFila.textoIdentificador}}{% if e.elFila.tipo %} ({{ e.elFila.tipo }}){% endif %}"
+                    title="Nunca Intersecta!&#013;--  {{e.elFila.textoIdentificador}}{% if e.elFila.tipo %} ({{ e.elFila.tipo }}){% endif %}"
                     class="matr_no_intersec"
                 {% elif e.col_no_intersec %}
-                    title="No Intersecta!&#013; |   {{e.elCol.textoIdentificador}}{% if e.elCol.tipo %} ({{ e.elCol.tipo }}){% endif %}"
+                    title="Nunca Intersecta!&#013; |   {{e.elCol.textoIdentificador}}{% if e.elCol.tipo %} ({{ e.elCol.tipo }}){% endif %}"
                     class="matr_no_intersec"
                 {% else %}
                     title="No Intersectan Aquí&#013;--  {{e.elFila.textoIdentificador}}{% if e.elFila.tipo %} ({{ e.elFila.tipo }}){% endif %}&#013; |   {{e.elCol.textoIdentificador}}{% if e.elCol.tipo %} ({{ e.elCol.tipo }}){% endif %}"
