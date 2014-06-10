@@ -676,13 +676,16 @@ def matriz(tipo, proyecto):
         
         for col in range(0,len(m2s)):
             match = m2s[col].id in m2idsmatchs[fila]
+            fila_no_intersec = (len(m2idsmatchs[fila])==0)
             filas[fila].append({
                 'elFila':m1s[fila],
                 'elCol':m2s[col],
                 'fila':fila,
                 'col':col,
                 'match':match,
-                'no_intersec':((len(m2idsmatchs[fila])==0)or(colNoIntersec[col])),
+                'nunca_intersec':(fila_no_intersec or colNoIntersec[col]),
+                'fila_no_intersec':fila_no_intersec,
+                'col_no_intersec':colNoIntersec[col],
                 })
     return filas
 

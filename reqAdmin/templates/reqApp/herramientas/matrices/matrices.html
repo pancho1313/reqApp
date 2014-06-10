@@ -57,11 +57,17 @@ $(window).bind("load", function() {
                 {% if e.match %}
                     title="intersección&#013;[--]  {{e.elFila.textoIdentificador}}&#013;[ | ]  {{e.elCol.textoIdentificador}}"
                     class="matr_match"
-                {% elif e.no_intersec %}
-                    title="nunca intersecta!&#013;[--]  {{e.elFila.textoIdentificador}}&#013;[ | ]  {{e.elCol.textoIdentificador}}"
+                {% elif e.nunca_intersec %}
+                    title="nunca intersectan!&#013;[--]  {{e.elFila.textoIdentificador}}&#013;[ | ]  {{e.elCol.textoIdentificador}}"
+                    class="matr_no_intersec"
+                {% elif e.fila_no_intersec %}
+                    title="[--]  {{e.elFila.textoIdentificador}} no intersecta!"
+                    class="matr_no_intersec"
+                {% elif e.col_no_intersec %}
+                    title="[ | ]  {{e.elCol.textoIdentificador}} no intersecta!"
                     class="matr_no_intersec"
                 {% else %}
-                    title="no intersecta&#013;[--]  {{e.elFila.textoIdentificador}}&#013;[ | ]  {{e.elCol.textoIdentificador}}"
+                    title="no intersectan aquí&#013;[--]  {{e.elFila.textoIdentificador}}&#013;[ | ]  {{e.elCol.textoIdentificador}}"
                     class="matr_no_match"
                 {% endif %}
                 name="elemento_matriz"
