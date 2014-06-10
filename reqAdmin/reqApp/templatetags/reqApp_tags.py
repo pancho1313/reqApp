@@ -28,6 +28,17 @@ def tipoRS(elemento):
         if key == elemento.tipo:
             return val
             
+@register.filter(name="tipoReq")
+def tipoReq(req):
+    if req.asoc_RU():
+        for key,val in TIPO_RU_CHOICES:
+            if key == elemento.tipo:
+                return val
+    else:
+        for key,val in TIPO_RS_CHOICES:
+            if key == elemento.tipo:
+                return val
+            
 @register.filter(name="estado")
 def estado(elemento):
     for key,val in ESTADO_CHOICES:

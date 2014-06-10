@@ -173,11 +173,11 @@ class Requisito(Bitacora):
             req = RequisitoSoftware.objects.filter(id=self.id)
         return req[0].estado
     
-    """
+    
     def asoc_RU(self):
         # retorna True si este es requisito de usuario
         return (len(RequisitoUsuario.objects.filter(id=self.id)) >= 1)
-    """
+    
     
 class RequisitoUsuario(Requisito):
     fuente = models.CharField(max_length=140, blank=True)
