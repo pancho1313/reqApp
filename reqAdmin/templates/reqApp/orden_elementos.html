@@ -1,13 +1,23 @@
+{% load reqApp_tags %}
 <div class="barra_orden">
 {% for atributo in atributos %}
     <div style="display: inline-block;width:{{ atributo.posicion }}%;">
-        <a class="barra_orden" href='?orden=--{{ atributo.orden }}'>
+        {% ifequal orden_actual atributo.orden %}
+            <a class="barra_orden" href='?orden=-{{ atributo.orden }}'><b>{{ atributo.orden }}</b></a>
+        {% elifequal orden_actual atributo.orden|invertOrd %}
+            <a class="barra_orden" href='?orden={{ atributo.orden }}'><b>{{ atributo.orden }}</b></a>
+        {% else %}
+            <a class="barra_orden" href='?orden={{ atributo.orden }}'>{{ atributo.orden }}</a>
+        {% endifequal %}
+    {% comment %}
+        <a class="barra_orden" href='?orden={{ atributo.orden }}'>
             {% ifequal orden_actual atributo.orden %}
 		        <b>{{ atributo.orden }}</b>
             {% else %}
                 {{ atributo.orden }}
             {% endifequal %}
         </a>
+    {% endcomment %}
     </div>
 {% endfor %}
 </div>

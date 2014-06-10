@@ -10,6 +10,10 @@ register = template.Library()
 def proyecto(usuario):
     return proyectoDeUsuario(usuario)
 
+@register.filter(name="invertOrd")
+def invertOrd(orden):
+    return u'-'+orden
+
 @register.filter(name="prioridad")
 def prioridad(elemento):
     for key,val in PRIORIDAD_CHOICES:
