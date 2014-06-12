@@ -6,13 +6,25 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/reqApp.css' %}" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script type="text/javascript" src="{% static 'js/reqApp.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.dropdown.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.dropdown.css' %}" />
     
-    <title>reqAdmin</title>
+    <title>mainReq</title>
 </head>
 
 <body>
+    <div class="userDropDown">
+        <span data-dropdown="#dropdown-1">{{user}}</span>
+    </div>
+    
     {% include "reqApp/navbar.html" with proyecto=user|proyecto %}
     
     {% block body %}{% endblock %}
+    
+    <div id="dropdown-1" class="dropdown dropdown-tip">
+        <div class="contenedorElemento">
+        <a href="{% url 'reqApp:logout' %}">Salir</a>
+        </div>
+    </div>
 </body>
 </html>

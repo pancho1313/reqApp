@@ -60,7 +60,7 @@ WSGI_APPLICATION = 'reqAdmin.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'reqAdminDB',
+        'NAME': 'mainReqDB',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
@@ -81,6 +81,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+# login/logout
+LOGIN_URL = 'reqApp:login'
+LOGIN_REDIRECT_URL = 'reqApp:RU'
+LOGOUT_URL = 'reqApp:login'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/

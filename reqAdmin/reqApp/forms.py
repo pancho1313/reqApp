@@ -196,6 +196,8 @@ class HTForm(BitacoraForm):
         widgets = {
             'descripcion': forms.Textarea(attrs={'cols': 100, 'rows': 4}),
             'nombre': forms.TextInput(attrs={'size': 80}),
+            'fechaInicio': forms.DateTimeInput(format='%Y-%m-%d %H:%M',attrs={'placeholder': 'YYYY-MM-DD hh:mm'}),
+            'fechaFin': forms.DateTimeInput(format='%Y-%m-%d %H:%M',attrs={'placeholder': 'YYYY-MM-DD hh:mm'}),
         }
         
     def clean_fechaFin(self):

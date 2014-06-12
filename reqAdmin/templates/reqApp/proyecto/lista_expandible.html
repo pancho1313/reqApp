@@ -12,10 +12,10 @@
     <button title="útil para buscar (ctrl+f)" style="display: inline-block;width:auto;" class="boton_azul" onclick='abrirTodos()'>(+)Abrir Todos</button>
     <button title="colapsar elementos" style="display: inline-block;width:auto;" class="boton_azul" onclick='cerrarTodos()'>(--)Cerrar Todos</button>
     <div style="display: inline-block;width:20%;"></div>
-    <a style="display: inline-block;width:auto;" href='#nuevo' class="boton_azul" onclick='editarNuevoElemento()'>Nuevo</a>
+    <a title="Agregar Nuevo" style="display: inline-block;width:auto;" href='#nuevo' class="boton_azul" onclick='editarNuevoElemento()'>Nuevo</a>
     {% if pdfLink %}
         <div style="display:inline-block;position:relative;float:right;">
-            <a class="boton_azul" href="{% url 'reqApp:pdf' %}?tipo={{ pdfLink }}" target="_blank">PDF</a>
+            <a title="Generar Documento PDF" class="boton_azul" href="{% url 'reqApp:pdf' %}?tipo={{ pdfLink }}" target="_blank">PDF</a>
         </div>
     {% endif %}
 </div>

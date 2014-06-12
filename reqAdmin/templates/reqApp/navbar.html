@@ -1,4 +1,10 @@
 {# espera variable: proyecto #}
+<script>
+$(document).ready(function() {
+    $('.userDropDown').dropit();
+});
+</script>
+
 <div class="navbar_up">
     <ul>
     <li><a title="Editar/Ver Elementos&#013;del Proyecto" name="navbar" {% ifequal navbar.1 "proyecto" %} class="navbar_selected" {% endifequal %} href="{% url 'reqApp:RU' %}">Proyecto</a></li>
