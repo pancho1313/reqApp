@@ -35,7 +35,7 @@ def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate
             instance = modelClass.objects.vigente(proyecto, identificador)
             if 'borrar' in request.POST:# borrar elemento
                 instance.bitacorarElementoBorrado(usuario)
-                mensajes.append('elemento borrado y registrado en la bitácora')
+                mensajes.append(instance.textoIdentificador()+u' borrado y registrado en la bitácora')
             else:# editar elemento
                 form = modelFormClass(instance=instance, data=request.POST)
                 if form.is_valid():
@@ -43,7 +43,7 @@ def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate
                         return ajax_form_valid(form, True)
                     form.asignarProyecto(proyecto)
                     form.actualizarElementoDeBitacora(usuario, identificador)
-                    mensajes.append('elemento modificado y registrado en la bitácora')
+                    mensajes.append(instance.textoIdentificador()+u' modificado y registrado en la bitácora')
                 else:
                     if request.POST.has_key("solo_validar"):
                         return ajax_form_valid(form, False)
@@ -56,8 +56,8 @@ def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate
                 if request.POST.has_key("solo_validar"):
                     return ajax_form_valid(form, True)
                 form.asignarProyecto(proyecto)
-                form.crearElementoDeBitacora(usuario)
-                mensajes.append('elemento creado')
+                instance = form.crearElementoDeBitacora(usuario)
+                mensajes.append(instance.textoIdentificador()+u' creado')
             else:
                 if request.POST.has_key("solo_validar"):
                     return ajax_form_valid(form, False)

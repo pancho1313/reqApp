@@ -38,9 +38,10 @@ class BitacoraForm(forms.ModelForm):
         
         # actualizar relaciones "many2many"
         self.save_m2m()
+        return elemento
     
     def crearElementoDeBitacora(self, usuario):
-        self.bitacorarElemento(usuario)
+        return self.bitacorarElemento(usuario)
     
     def actualizarElementoDeBitacora(self, usuario, identificador):
         # copiar estado previo en la bitacora (no vigente) y

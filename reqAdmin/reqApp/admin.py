@@ -34,7 +34,7 @@ admin.site.register(Proyecto)
 
 
 
-# hide auth permissions
+# custom auth permissions
 from django import forms
 from django.contrib.auth.models import Permission
 from django.contrib.auth.models import Group
@@ -44,7 +44,7 @@ class MyGroupAdminForm(forms.ModelForm):
         model = Group
 
     permissions = forms.ModelMultipleChoiceField(
-        Permission.objects.filter(codename__startswith = 'EDITOR'),
+        Permission.objects.filter(codename__startswith = 'EDITOR'),# VERY IMPORTANT!!
         widget=admin.widgets.FilteredSelectMultiple('permissions', False))
 
 

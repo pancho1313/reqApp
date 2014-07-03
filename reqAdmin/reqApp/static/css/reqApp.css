@@ -2,6 +2,7 @@
 body{
     font-family:Arial,Helvetica,sans-serif;
     font-size:1em;
+    background-color:#F7F6F6;
 }
 
 /* barra de navegación principal */
@@ -83,6 +84,7 @@ font-size:1.2em;
 /* contenedor de elemento de lista */
 .contenedorElemento
 {
+background-color:White;
 border:1px solid #D6D6D6;
 border-radius:5px;
 padding:2px;
@@ -339,6 +341,7 @@ border-spacing: 0px;
 border: 1px solid LightGray;
 padding:3px;
 margin:0px;
+background-color:White;
 }
 tr.estadisticas
 {
