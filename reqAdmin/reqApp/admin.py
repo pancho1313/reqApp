@@ -10,6 +10,13 @@ class UserProfileInline(admin.StackedInline):
     filter_horizontal = ("proyectos",)
 
 class UserAdmin(AuthUserAdmin):
+    
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'email')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','groups')}),
+    )
+    
     def add_view(self, *args, **kwargs):
         self.inlines = []
         return super(UserAdmin, self).add_view(*args, **kwargs)
@@ -25,6 +32,28 @@ admin.site.register(User, UserAdmin)
 
 admin.site.register(Proyecto)
 
+
+
+# hide auth permissions
+from django import forms
+from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Group
+
+class MyGroupAdminForm(forms.ModelForm):
+    class Meta:
+        model = Group
+
+    permissions = forms.ModelMultipleChoiceField(
+        Permission.objects.filter(codename__startswith = 'EDITOR'),
+        widget=admin.widgets.FilteredSelectMultiple('permissions', False))
+
+
+class MyGroupAdmin(admin.ModelAdmin):
+    form = MyGroupAdminForm
+    search_fields = ('name',)
+
+admin.site.unregister(Group)
+admin.site.register(Group, MyGroupAdmin)
 
 """
 from django.contrib import admin

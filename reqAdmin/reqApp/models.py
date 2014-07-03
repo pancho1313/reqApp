@@ -11,6 +11,9 @@ class Proyecto(models.Model):
     nombre = models.CharField(max_length=64)
     descripcion = models.CharField(max_length=140)
     
+    class Meta:
+        ordering = ['-id'] # mostrar desde el mas reciente
+    
     def __unicode__(self):
         return u'%s' % self.nombre
 
@@ -142,6 +145,9 @@ class Hito(Bitacora):
     
     objects = BitacoraManager()
     
+    class Meta:
+        permissions = (("EDITOR_HT", "Editor Hitos"),) # WARNING: debe comenzar con 'EDITOR_'
+    
     def textoIdentificador(self):
         return u'HT%04d' % self.identificador
     
@@ -150,6 +156,9 @@ class TipoUsuario(Bitacora):
     usuariosContactables = models.CharField(max_length=200, default='', blank=True) # TODO en realidad es mejor una lista
     
     objects = BitacoraManager()
+    
+    class Meta:
+        permissions = (("EDITOR_TU", "Editor Tipos Usuario"),) # WARNING: debe comenzar con 'EDITOR_'
     
     def __unicode__(self):
         return u'TU%04d %s' % (self.identificador, self.nombre)
@@ -192,6 +201,9 @@ class RequisitoUsuario(Requisito):
     hito = models.ForeignKey(Hito, blank=False, null=False)
     
     objects = BitacoraManager()
+    
+    class Meta:
+        permissions = (("EDITOR_RU", "Editor Req. Usuario"),) # WARNING: debe comenzar con 'EDITOR_'
     
     def textoIdentificador(self):
         return u'RU%04d' % self.identificador
@@ -248,6 +260,9 @@ class RequisitoSoftware(Requisito):
     
     objects = BitacoraManager()
     
+    class Meta:
+        permissions = (("EDITOR_RS", "Editor Req. Software"),) # WARNING: debe comenzar con 'EDITOR_'
+    
     def textoIdentificador(self):
         return u'RS%04d' % self.identificador
     
@@ -301,6 +316,9 @@ class CasoPrueba(Bitacora):
     
     objects = BitacoraManager()
     
+    class Meta:
+        permissions = (("EDITOR_CP", "Editor Casos de Prueba"),) # WARNING: debe comenzar con 'EDITOR_'
+    
     def textoIdentificador(self):
         return u'CP%04d' % self.identificador
     
@@ -325,6 +343,9 @@ class Modulo(Bitacora):
     requisitosSoftware = models.ManyToManyField(RequisitoSoftware, null=True, blank=True)
     
     objects = BitacoraManager()
+    
+    class Meta:
+        permissions = (("EDITOR_MD", "Editor Modulos"),) # WARNING: debe comenzar con 'EDITOR_'
     
     def textoIdentificador(self):
         return u'MD%04d' % self.identificador
@@ -370,6 +391,9 @@ class Documento(models.Model):
     tipo = models.CharField(max_length=30, choices=PARRAFOS_CHOICES)
     
     objects = DocsManager()
+    
+    class Meta:
+        permissions = (("EDITOR_DC", "Editor Documentos"),) # WARNING: debe comenzar con 'EDITOR_'
     
     def registrarDocumento(self, proyecto, usuario, tipoParrafo):
         self.proyecto = proyecto
