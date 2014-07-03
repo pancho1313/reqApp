@@ -38,13 +38,14 @@ admin.site.register(Proyecto)
 from django import forms
 from django.contrib.auth.models import Permission
 from django.contrib.auth.models import Group
+from reqApp.util import *
 
 class MyGroupAdminForm(forms.ModelForm):
     class Meta:
         model = Group
 
     permissions = forms.ModelMultipleChoiceField(
-        Permission.objects.filter(codename__startswith = 'EDITOR'),# VERY IMPORTANT!!
+        Permission.objects.filter(codename__startswith = PERM_PRE),
         widget=admin.widgets.FilteredSelectMultiple('permissions', False))
 
 

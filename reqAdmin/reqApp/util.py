@@ -1,5 +1,8 @@
 from reqApp.models import *
 
+# admin permission prefix
+PERM_PRE = u"EDITOR_"
+
 def get_user_or_none(request):
     # TODO
     """

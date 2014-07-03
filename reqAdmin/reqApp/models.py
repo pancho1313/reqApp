@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from reqApp.choices import *
 from django.utils import timezone
+from reqApp.util import *
 
 
 class Proyecto(models.Model):
@@ -146,7 +147,10 @@ class Hito(Bitacora):
     objects = BitacoraManager()
     
     class Meta:
-        permissions = (("EDITOR_HT", "Editor Hitos"),) # WARNING: debe comenzar con 'EDITOR_'
+        permissions = ((PERM_PRE+'HT', "Editor Hitos"),)
+    @staticmethod
+    def getPerm():
+        return Hito._meta.permissions[0][0]
     
     def textoIdentificador(self):
         return u'HT%04d' % self.identificador
@@ -158,7 +162,10 @@ class TipoUsuario(Bitacora):
     objects = BitacoraManager()
     
     class Meta:
-        permissions = (("EDITOR_TU", "Editor Tipos Usuario"),) # WARNING: debe comenzar con 'EDITOR_'
+        permissions = ((PERM_PRE+'TU', "Editor Tipos Usuario"),)
+    @staticmethod
+    def getPerm():
+        return TipoUsuario._meta.permissions[0][0]
     
     def __unicode__(self):
         return u'TU%04d %s' % (self.identificador, self.nombre)
@@ -203,7 +210,10 @@ class RequisitoUsuario(Requisito):
     objects = BitacoraManager()
     
     class Meta:
-        permissions = (("EDITOR_RU", "Editor Req. Usuario"),) # WARNING: debe comenzar con 'EDITOR_'
+        permissions = ((PERM_PRE+'RU', "Editor Req. Usuario"),)
+    @staticmethod
+    def getPerm():
+        return RequisitoUsuario._meta.permissions[0][0]
     
     def textoIdentificador(self):
         return u'RU%04d' % self.identificador
@@ -261,7 +271,10 @@ class RequisitoSoftware(Requisito):
     objects = BitacoraManager()
     
     class Meta:
-        permissions = (("EDITOR_RS", "Editor Req. Software"),) # WARNING: debe comenzar con 'EDITOR_'
+        permissions = ((PERM_PRE+'RS', "Editor Req. Software"),)
+    @staticmethod
+    def getPerm():
+        return RequisitoSoftware._meta.permissions[0][0]
     
     def textoIdentificador(self):
         return u'RS%04d' % self.identificador
@@ -317,7 +330,10 @@ class CasoPrueba(Bitacora):
     objects = BitacoraManager()
     
     class Meta:
-        permissions = (("EDITOR_CP", "Editor Casos de Prueba"),) # WARNING: debe comenzar con 'EDITOR_'
+        permissions = ((PERM_PRE+'CP', "Editor Casos de Prueba"),)
+    @staticmethod
+    def getPerm():
+        return CasoPrueba._meta.permissions[0][0]
     
     def textoIdentificador(self):
         return u'CP%04d' % self.identificador
@@ -345,7 +361,10 @@ class Modulo(Bitacora):
     objects = BitacoraManager()
     
     class Meta:
-        permissions = (("EDITOR_MD", "Editor Modulos"),) # WARNING: debe comenzar con 'EDITOR_'
+        permissions = ((PERM_PRE+'MD', "Editor Modulos"),)
+    @staticmethod
+    def getPerm():
+        return Modulo._meta.permissions[0][0]
     
     def textoIdentificador(self):
         return u'MD%04d' % self.identificador
@@ -393,7 +412,10 @@ class Documento(models.Model):
     objects = DocsManager()
     
     class Meta:
-        permissions = (("EDITOR_DC", "Editor Documentos"),) # WARNING: debe comenzar con 'EDITOR_'
+        permissions = ((PERM_PRE+'DC', "Editor Documentos"),)
+    @staticmethod
+    def getPerm():
+        return Documento._meta.permissions[0][0]
     
     def registrarDocumento(self, proyecto, usuario, tipoParrafo):
         self.proyecto = proyecto
