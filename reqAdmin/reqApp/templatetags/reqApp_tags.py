@@ -7,8 +7,8 @@ from reqApp.util import *
 register = template.Library()
 
 @register.filter(name="proyecto")
-def proyecto(usuario):
-    return proyectoDeUsuario(usuario)
+def proyecto(request):
+    return getProject(request)
 
 @register.filter(name="invertOrd")
 def invertOrd(orden):

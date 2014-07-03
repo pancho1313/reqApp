@@ -9,16 +9,18 @@
     <div style="text-align:center;padding:10px" class="contenedorElemento">
         <h1><i>main</i>Req</h1>
         <h2>Hola {{user}}</h2>
-        
-        <form method="POST">{% csrf_token %}
-            <div>
-                <input name="index" type="text" id="user">
-            </div>
+        {% if projects %}
+            <form method="POST">{% csrf_token %}
+                <div>
+                    <input name="index" type="text" id="user">
+                </div>
 
-            <button class="boton_azul" type="submit">Seleccionar</button>
-            <a href="{% url 'reqApp:logout' %}">Salir</a>
-        </form>
-        
+                <button class="boton_azul" type="submit">Seleccionar</button>
+            </form>
+        {% else %}
+            <p>!No tiene proyectos asociados!</p>
+        {% endif %}
+        <a class="boton_azul" href="{% url 'reqApp:logout' %}">Salir</a>
     </div>
 </body>
 </html>

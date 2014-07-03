@@ -17,7 +17,7 @@
         <span data-dropdown="#dropdown-1">{{user}}</span>
     </div>
     
-    {% include "reqApp/navbar.html" with proyecto=user|proyecto %}
+    {% include "reqApp/navbar.html" with proyecto=request|proyecto %}
     
     {% block body %}{% endblock %}
     

@@ -9,6 +9,8 @@ def get_user_or_none(request):
         return None
 
 def getProject(request):
+    if 'project' not in request.session:
+        raise Http404
     index = int(request.session['project'])
     projects = request.user.userprofile.proyectos
     if (index < 0) or (projects.count() < 1) or (index >= projects.count()):
@@ -16,11 +18,12 @@ def getProject(request):
     else:
         return projects.all().order_by('-id')[index]
         
-
+"""
 def proyectoDeUsuario(usuario):
     # TODO: obtener el proyecto activo del usuario (en la sesion)
     return Proyecto.objects.all()[1]
-    
+"""
+ 
 def myFilter(s,val):
     # para la generacion de tablas (estadisticas)
     # uso:

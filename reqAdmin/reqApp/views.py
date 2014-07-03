@@ -22,6 +22,7 @@ def selectProject(request):
                 request.session['project'] = 0
             else:
                 context = {
+                    'projects':usuario.userprofile.proyectos.all().order_by('-id'),
                 }
                 return render(request, 'reqApp/selectProject.html', context)
         else:
@@ -49,7 +50,7 @@ def ajax_form_valid(form, validado):
 
 def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate, modelClass, listaAtributos, navbar, pdfLink=None):
     usuario = get_user_or_none(request) # TODO is None?
-    proyecto = proyectoDeUsuario(usuario)
+    proyecto = getProject(request)
     if request.method == 'POST':
         if 'identificador' in request.POST:# editar o borrar
             identificador = request.POST['identificador']
@@ -204,7 +205,7 @@ def viewHT(request):
 ################################# Documentos #############################
 def docView(request, navbar, activos, pdfLink):
     usuario = get_user_or_none(request) # TODO is None?
-    proyecto = proyectoDeUsuario(usuario)
+    proyecto = getProject(request)
 
     parrafo =  request.GET.get('parrafo', activos[0]) # valor por defecto si no corresponde a ningun tipo de parrafo conocido
     if parrafo not in activos:
@@ -559,7 +560,7 @@ def estadisticas(request):
     ]
 
     usuario = get_user_or_none(request) # TODO is None?
-    proyecto = proyectoDeUsuario(usuario)
+    proyecto = getProject(request)
     navbar = {'1':'herramientas', '2':'estadisticas'}
     
     if request.method == 'GET':
@@ -712,7 +713,7 @@ def matriz(tipo, proyecto):
 
 def matrices(request):
     usuario = get_user_or_none(request) # TODO is None?
-    proyecto = proyectoDeUsuario(usuario)
+    proyecto = getProject(request)
     navbar = {'1':'herramientas', '2':'matrices'}
     
     tipo =  request.GET.get('tipo', 'rurs')
@@ -771,7 +772,7 @@ def consistencia(request):
     }
     
     usuario = get_user_or_none(request) # TODO is None?
-    proyecto = proyectoDeUsuario(usuario)
+    proyecto = getProject(request)
     navbar = {'1':'herramientas', '2':'consistencia'}
     
     if request.method == 'GET':
@@ -870,7 +871,7 @@ def bitacora(request):
     }
     
     usuario = get_user_or_none(request) # TODO is None?
-    proyecto = proyectoDeUsuario(usuario)
+    proyecto = getProject(request)
     navbar = {'1':'herramientas', '2':'bitacora'}
     
     if request.method == 'GET':
@@ -932,7 +933,7 @@ from django.views.decorators.http import require_POST
 @require_POST
 def imgUpload(request):
     usuario = get_user_or_none(request) # TODO is None?
-    proyecto = proyectoDeUsuario(usuario)
+    proyecto = getProject(request)
     
     upload_path = getattr(settings, 'IMAGES_UPLOAD', 'uploads/') + str(proyecto.id) +'/'
     form = MceImageForm(request.POST, request.FILES)
@@ -965,7 +966,7 @@ def render_to_pdf(template_src, context_dict):
         
 def pdf(request):
     usuario = get_user_or_none(request) # TODO is None?
-    proyecto = proyectoDeUsuario(usuario)
+    proyecto = getProject(request)
     context = {
         'hoja':'letter',# https://github.com/chrisglass/xhtml2pdf/blob/master/doc/usage.rst#supported-page-properties-and-values
         'titulo':'',
