@@ -17,12 +17,6 @@ def getProject(request):
         raise Http404
     else:
         return projects.all().order_by('-id')[index]
-        
-"""
-def proyectoDeUsuario(usuario):
-    # TODO: obtener el proyecto activo del usuario (en la sesion)
-    return Proyecto.objects.all()[1]
-"""
  
 def myFilter(s,val):
     # para la generacion de tablas (estadisticas)

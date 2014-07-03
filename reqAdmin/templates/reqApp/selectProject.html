@@ -11,15 +11,18 @@
         <h2>Hola {{user}}</h2>
         {% if projects %}
             <form method="POST">{% csrf_token %}
-                <div>
-                    <input name="index" type="text" id="user">
-                </div>
+                <select name="index" class="boton_azul" title="Seleccionar Proyecto">
+                    {% for index,pr in projects %}
+                        <option value="{{index}}">{{pr}}</option>
+                    {% endfor %}
+                </select>
 
                 <button class="boton_azul" type="submit">Seleccionar</button>
             </form>
         {% else %}
             <p>!No tiene proyectos asociados!</p>
         {% endif %}
+        <br/>
         <a class="boton_azul" href="{% url 'reqApp:logout' %}">Salir</a>
     </div>
 </body>

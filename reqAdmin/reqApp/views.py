@@ -21,8 +21,11 @@ def selectProject(request):
             if usuario.userprofile.proyectos.count() == 1:
                 request.session['project'] = 0
             else:
+                projects = []
+                for i,p in enumerate(usuario.userprofile.proyectos.all().order_by('-id')):
+                    projects.append((i,p))
                 context = {
-                    'projects':usuario.userprofile.proyectos.all().order_by('-id'),
+                    'projects':projects,
                 }
                 return render(request, 'reqApp/selectProject.html', context)
         else:
