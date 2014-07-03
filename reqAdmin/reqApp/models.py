@@ -5,8 +5,9 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from reqApp.choices import *
 from django.utils import timezone
-from reqApp.util import *
 
+# admin permission prefix
+PERM_PRE = u"EDITOR_"
 
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=64)

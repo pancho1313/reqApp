@@ -38,7 +38,6 @@ admin.site.register(Proyecto)
 from django import forms
 from django.contrib.auth.models import Permission
 from django.contrib.auth.models import Group
-from reqApp.util import *
 
 class MyGroupAdminForm(forms.ModelForm):
     class Meta:

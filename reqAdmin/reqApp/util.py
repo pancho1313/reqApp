@@ -1,8 +1,5 @@
 from reqApp.models import *
 
-# admin permission prefix
-PERM_PRE = u"EDITOR_"
-
 def get_user_or_none(request):
     # TODO
     """
@@ -24,3 +21,24 @@ def myFilter(s,val):
     dic = {}
     dic[s] = val
     return dic
+    
+def isEditorHT(usuario):
+    return usuario.has_perm('reqApp.'+Hito._meta.permissions[0][0])
+
+def isEditorTU(usuario):
+    return usuario.has_perm('reqApp.'+TipoUsuario._meta.permissions[0][0])
+
+def isEditorRU(usuario):
+    return usuario.has_perm('reqApp.'+RequisitoUsuario._meta.permissions[0][0])
+
+def isEditorRS(usuario):
+    return usuario.has_perm('reqApp.'+RequisitoSoftware._meta.permissions[0][0])
+
+def isEditorMD(usuario):
+    return usuario.has_perm('reqApp.'+Modulo._meta.permissions[0][0])
+
+def isEditorCP(usuario):
+    return usuario.has_perm('reqApp.'+CasoPrueba._meta.permissions[0][0])
+
+def isEditorDC(usuario):
+    return usuario.has_perm('reqApp.'+Documento._meta.permissions[0][0])
