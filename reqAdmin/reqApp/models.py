@@ -148,9 +148,6 @@ class Hito(Bitacora):
     
     class Meta:
         permissions = ((PERM_PRE+'HT', "Editor Hitos"),)
-    @staticmethod
-    def getPerm():
-        return Hito._meta.permissions[0][0]
     
     def textoIdentificador(self):
         return u'HT%04d' % self.identificador
@@ -163,9 +160,6 @@ class TipoUsuario(Bitacora):
     
     class Meta:
         permissions = ((PERM_PRE+'TU', "Editor Tipos Usuario"),)
-    @staticmethod
-    def getPerm():
-        return TipoUsuario._meta.permissions[0][0]
     
     def __unicode__(self):
         return u'TU%04d %s' % (self.identificador, self.nombre)
@@ -211,9 +205,6 @@ class RequisitoUsuario(Requisito):
     
     class Meta:
         permissions = ((PERM_PRE+'RU', "Editor Req. Usuario"),)
-    @staticmethod
-    def getPerm():
-        return RequisitoUsuario._meta.permissions[0][0]
     
     def textoIdentificador(self):
         return u'RU%04d' % self.identificador
@@ -272,9 +263,6 @@ class RequisitoSoftware(Requisito):
     
     class Meta:
         permissions = ((PERM_PRE+'RS', "Editor Req. Software"),)
-    @staticmethod
-    def getPerm():
-        return RequisitoSoftware._meta.permissions[0][0]
     
     def textoIdentificador(self):
         return u'RS%04d' % self.identificador
@@ -331,9 +319,6 @@ class CasoPrueba(Bitacora):
     
     class Meta:
         permissions = ((PERM_PRE+'CP', "Editor Casos de Prueba"),)
-    @staticmethod
-    def getPerm():
-        return CasoPrueba._meta.permissions[0][0]
     
     def textoIdentificador(self):
         return u'CP%04d' % self.identificador
@@ -362,9 +347,6 @@ class Modulo(Bitacora):
     
     class Meta:
         permissions = ((PERM_PRE+'MD', "Editor Modulos"),)
-    @staticmethod
-    def getPerm():
-        return Modulo._meta.permissions[0][0]
     
     def textoIdentificador(self):
         return u'MD%04d' % self.identificador
@@ -413,9 +395,6 @@ class Documento(models.Model):
     
     class Meta:
         permissions = ((PERM_PRE+'DC', "Editor Documentos"),)
-    @staticmethod
-    def getPerm():
-        return Documento._meta.permissions[0][0]
     
     def registrarDocumento(self, proyecto, usuario, tipoParrafo):
         self.proyecto = proyecto
