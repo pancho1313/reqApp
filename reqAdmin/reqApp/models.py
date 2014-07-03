@@ -22,7 +22,7 @@ class Proyecto(models.Model):
 class UserProfile(models.Model):
     """
     >>> u = User.objects.get(username='fred')
-    >>> freds_proyecto = u.userProfile.proyectos
+    >>> freds_proyecto = u.userprofile.proyectos
     """
     user = models.OneToOneField(User)
     

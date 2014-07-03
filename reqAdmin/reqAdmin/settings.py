@@ -83,7 +83,7 @@ USE_TZ = True
 
 # login/logout
 LOGIN_URL = 'reqApp:login'
-LOGIN_REDIRECT_URL = 'reqApp:RU'
+LOGIN_REDIRECT_URL = 'reqApp:PR'
 LOGOUT_URL = 'reqApp:login'
 
 # Static files (CSS, JavaScript, Images)

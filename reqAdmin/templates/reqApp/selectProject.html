@@ -1,0 +1,24 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/reqApp.css' %}" />
+    <title>mainReq</title>
+</head>
+
+<body>
+    <div style="text-align:center;padding:10px" class="contenedorElemento">
+        <h1><i>main</i>Req</h1>
+        <h2>Hola {{user}}</h2>
+        
+        <form method="POST">{% csrf_token %}
+            <div>
+                <input name="index" type="text" id="user">
+            </div>
+
+            <button class="boton_azul" type="submit">Seleccionar</button>
+            <a href="{% url 'reqApp:logout' %}">Salir</a>
+        </form>
+        
+    </div>
+</body>
+</html>

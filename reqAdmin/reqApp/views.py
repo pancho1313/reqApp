@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from reqApp.forms import *
 from reqApp.util import *
 from django.contrib.auth.models import User
@@ -10,6 +12,25 @@ from django.http import HttpResponse
 from django.http import Http404
 
 from django.db.models import Sum
+
+################ Post login ################
+def selectProject(request):
+    usuario = get_user_or_none(request) # TODO is None?
+    if usuario is not None:
+        if request.method == 'GET':
+            if usuario.userprofile.proyectos.count() == 1:
+                request.session['project'] = 0
+            else:
+                context = {
+                }
+                return render(request, 'reqApp/selectProject.html', context)
+        else:
+            if 'index' in request.POST:
+                index = int(request.POST['index'])
+                request.session['project'] = index
+                print getProject(request)#checking
+        return HttpResponseRedirect(reverse('reqApp:RU'))
+    raise Http404
 
 ################ Proyecto ################
 

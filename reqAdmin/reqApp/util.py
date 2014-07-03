@@ -1,14 +1,21 @@
 from reqApp.models import *
+from django.http import Http404
 
 def get_user_or_none(request):
-    # TODO
-    """
+    #return User.objects.get(username='alejandro')
     if request.user.is_authenticated():
         return request.user
     else:
         return None
-    """
-    return User.objects.get(username='alejandro')
+
+def getProject(request):
+    index = int(request.session['project'])
+    projects = request.user.userprofile.proyectos
+    if (index < 0) or (projects.count() < 1) or (index >= projects.count()):
+        raise Http404
+    else:
+        return projects.all().order_by('-id')[index]
+        
 
 def proyectoDeUsuario(usuario):
     # TODO: obtener el proyecto activo del usuario (en la sesion)
