@@ -1,15 +1,20 @@
+{% load reqApp_tags %}
 <div>
     <div class="tituloElemento">
         {% block encabezado %}{% endblock %}
-        <div title="Alerta!" style="display: inline-block;float:right;margin-right:10px;width:1em;vertical-align:top;color:White;background-color:#0C59CF;text-align:center;cursor:pointer;" onclick="alert('una simple alerta:\n\ttienes poco tiempo\n\ty cada vez te queda menos');">
-        {% if not bitacora %}
-            {% comment %}
-                {% if elemento.alert %}
-                    <b>!</b>
-                {% endif %}
-            {% endcomment %}
-        {% endif %}
-        </div>
+            {% if not bitacora %}
+                {% with elemento|alerts as alerts %}
+                    {% if alerts %}
+                        <div title="Alerta!" style="display: inline-block;float:right;margin-right:10px;width:1em;vertical-align:top;color:White;background-color:#0C59CF;text-align:center;cursor:pointer;" onclick="alert('Posibles conflictos de {{ elemento.textoIdentificador }}:\n'
+                            {% for a in alerts %}
+                                +' • {{a}}\n'
+                            {% endfor %}
+                            );">
+                            <b>!</b>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            {% endif %}
     </div>
     {% if bitacora %}
         {% include "reqApp/herramientas/bitacora/registro_bitacora.html" with actual=actual borrado=borrado nuevo=nuevo %}

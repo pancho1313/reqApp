@@ -35,6 +35,54 @@ def sendEmail2User(user, subject, message):
     except Exception, e:
         return False
     
+def orderingList(model):
+    # la 'posicion' corresponde al ancho(%) dentro del div (ver 'reqApp/orden_elementos.html')
+    if model == TipoUsuario:
+        return [
+            {'orden': 'identificador', 'posicion': 15,},
+            {'orden': 'nombre', 'posicion': 9,},
+        ]
+    elif model == RequisitoUsuario:
+        return [
+            {'orden': 'identificador', 'posicion': 15,},
+            {'orden': 'nombre', 'posicion': 9,},
+            {'orden': 'estado', 'posicion': 15,},
+            {'orden': 'costo', 'posicion': 5,},
+            {'orden': 'prioridad', 'posicion': 13,},
+            {'orden': 'tipo', 'posicion': 18,},
+            {'orden': 'hito', 'posicion': 10,},
+        ]
+    elif model == RequisitoSoftware:
+        return [
+            {'orden': 'identificador', 'posicion': 15,},
+            {'orden': 'nombre', 'posicion': 9,},
+            {'orden': 'estado', 'posicion': 15,},
+            {'orden': 'costo', 'posicion': 5,},
+            {'orden': 'prioridad', 'posicion': 13,},
+            {'orden': 'tipo', 'posicion': 18,},
+            {'orden': 'hito', 'posicion': 15,},
+        ]
+    elif model == Modulo:
+        return [
+            {'orden': 'identificador', 'posicion': 15,},
+            {'orden': 'nombre', 'posicion': 44,},
+            {'orden': 'costo', 'posicion': 8,},
+            {'orden': 'prioridad', 'posicion': 10,},
+        ]
+    elif model == CasoPrueba:
+        return [
+            {'orden': 'identificador', 'posicion': 15,},
+            {'orden': 'nombre', 'posicion': 9,},
+            {'orden': 'estado', 'posicion': 20,},
+            {'orden': 'requisito', 'posicion': 10,},
+        ]
+    elif model == Hito:
+        return [
+            {'orden': 'identificador', 'posicion': 15,},
+            {'orden': 'nombre', 'posicion': 9,},
+        ]
+    return []
+    
 def isEditorHT(usuario):
     return usuario.has_perm('reqApp.'+Hito._meta.permissions[0][0])
 

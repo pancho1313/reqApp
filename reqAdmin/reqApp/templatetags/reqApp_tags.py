@@ -3,6 +3,7 @@ from django import template
 from reqApp.models import *
 from reqApp.choices import *
 from reqApp.util import *
+from random import randrange
 
 register = template.Library()
 
@@ -85,7 +86,7 @@ def textTableHorizHeaders(rows):
             hr = '|'
             rti = firstRow[0]['elFila'].textoIdentificador()
             for x in range(0, len(rti)):
-                pref = '<span style="color:White;">o</span>'+pref#'·'+pref
+                pref = '<span style="color:White;">o</span>'+pref
                 hr = '-'+hr
             hText = []
             for c in firstRow[0]['elCol'].textoIdentificador():
@@ -104,3 +105,9 @@ def textTableHorizHeaders(rows):
             
             return out
     return '---'
+
+@register.filter(name="alerts")
+def alerts(el):
+    if (randrange(100)+1)<30:
+        return ['3','4']
+    return False

@@ -2,27 +2,36 @@
 {% block body %}
 <br/>
 <div>
-    <div style="display: inline-block;width:100px;vertical-align:top;">
-        <select class="boton_azul" title="Seleccionar Bitácora" id='tipoSelect' onchange="location = this.options[this.selectedIndex].value;">
-            {% for key,val in TIPOS_CHOICES %}
-                <option value="?tipo={{key}}"{% ifequal tipo key %}selected{% endifequal %}>{{val}}</option>
-            {% endfor %}
-        </select>
-        <select class="boton_azul" title="Seleccionar Elemento" onchange="location = document.getElementById('tipoSelect').options[document.getElementById('tipoSelect').selectedIndex].value + this.options[this.selectedIndex].value;">
-            {% for key,val in IDENTIFICADOR_CHOICES %}
-                <option value="&identificador={{key}}"{% ifequal identificador|stringformat:"s" key|stringformat:"s" %}selected{% endifequal %}>{{val}}</option>
-            {% endfor %}
-        </select>
-        <div style="height: 30px;"></div>
-    </div>
+    <select style="display:inline-block;width:auto;vertical-align:top;" class="boton_azul" title="Seleccionar Bitácora" id='tipoSelect' onchange="location = this.options[this.selectedIndex].value;">
+        {% for key,val in TIPOS_CHOICES %}
+            <option value="?tipo={{key}}"{% ifequal tipo key %}selected{% endifequal %}>{{val}}</option>
+        {% endfor %}
+    </select>
+    <select style="display:inline-block;width:auto;vertical-align:top;" class="boton_azul" title="Seleccionar Elemento" onchange="location = document.getElementById('tipoSelect').options[document.getElementById('tipoSelect').selectedIndex].value + this.options[this.selectedIndex].value;">
+        {% for key,val in IDENTIFICADOR_CHOICES %}
+            <option value="&identificador={{key}}"{% ifequal identificador|stringformat:"s" key|stringformat:"s" %}selected{% endifequal %}>{{val}}</option>
+        {% endfor %}
+    </select>
 </div>
+
+<br/>
 
 <div>
 <button title="útil para buscar (ctrl+f)" style="display: inline-block;width:auto;" href='#' class="boton_azul" onclick='abrirTodos()'>(+)Abrir Todos</button>
 <button title="colapsar elementos" style="display: inline-block;width:auto;" href='#' class="boton_azul" onclick='cerrarTodos()'>(--)Cerrar Todos</button>
 <div style="display: inline-block;width:20%;"></div>
 </div>
-<br/>
+
+<div style="text-align:right;">
+    <div>
+        <i style="color:Gray;">Colores: </i>
+        <b class="cumple">cumple </b>
+        <b class="no_cumple">no cumple </b>
+        <b class="ambiguo">ambiguo </b>
+        <i style="color:Gray;">Ordenamiento: </i>
+        <b>fecha</b>
+    </div>
+</div>
 
 {% ifequal elementos|length 0 %}
     <p class="centrado">--------------- Lista Vacía ---------------</p>

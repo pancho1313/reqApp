@@ -41,16 +41,26 @@ $(window).bind("load", function() {
                 <option value="?tipo={{key}}"{% ifequal tipo key %}selected{% endifequal %}>{{val}}</option>
             {% endfor %}
         </select>
-        <div style="height: 30px;"></div>
-    </div>
-    <div style="display: inline-block;width:auto;vertical-align:top;">
-        <div><div style="display:inline-block;width:5em;">Fila:</div><div style="display:inline-block;width:auto;" id='fila'>------------------</div></div>
-        <div><div style="display:inline-block;width:5em;">Columna:</div><div style="display:inline-block;width:auto;" id='columna'>------------------</div></div>
     </div>
     <div style="display:inline-block;position:relative;float:right;">
         <a class="boton_azul" href="{% url 'reqApp:pdf' %}?tipo=MT" target="_blank">PDF</a>
     </div>
 </div>
+
+<div style="text-align:right;">
+    <div>
+        <i style="color:Gray;">Colores: </i>
+        <b class="cumple">cumple </b>
+        <b class="no_cumple">no cumple </b>
+        <b class="ambiguo">ambiguo </b>
+        <b style="color:Black;">intersectan </b>
+        <b style="color:Gray;">posible conflicto </b>
+    </div>
+</div>
+
+<div><div style="display:inline-block;width:5em;">Fila:</div><div style="display:inline-block;width:auto;" id='fila'>------------------</div></div>
+<div><div style="display:inline-block;width:5em;">Columna:</div><div style="display:inline-block;width:auto;" id='columna'>------------------</div></div>
+
 <div id="matr" style="position:relative;width:auto;height:auto;">
     {% for fila in filas %}
         {% for e in fila %}

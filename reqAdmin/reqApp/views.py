@@ -13,7 +13,7 @@ from django.http import Http404
 
 from django.db.models import Sum
 
-################ Post login ################
+################ after login ################
 def selectProject(request):
     usuario = get_user_or_none(request) # TODO is None?
     if usuario is not None:
@@ -51,7 +51,7 @@ def ajax_form_valid(form, validado):
         response_dict = {'server_response': "FAIL", 'errores':errores}
         return HttpResponse(json.dumps(response_dict), content_type='application/json')
 
-def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate, modelClass, listaAtributos, navbar, pdfLink=None):
+def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate, modelClass, navbar, pdfLink=None):
     usuario = get_user_or_none(request) # TODO is None?
     proyecto = getProject(request)
     if request.method == 'POST':
@@ -106,7 +106,7 @@ def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate
         'form': modelFormClass().asignarProyecto(proyecto),
         'form_template': formTemplate,# TODO: enviar solo si el usuario tiene permisos de edicion
         'barra_orden_elementos': 'reqApp/orden_elementos.html',
-        'atributos_ordenables': listaAtributos,
+        'atributos_ordenables': orderingList(modelClass),
         'orden_actual': ordenActual,
         'navbar':navbar,
         'pdfLink':pdfLink,
@@ -115,95 +115,33 @@ def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate
 
 def viewTU(request):
     mensajes = []
-    
-    # la 'posicion' corresponde al ancho(%) dentro del div (ver 'reqApp/orden_elementos.html')
-    listaAtributos = [
-        {'orden': 'identificador', 'posicion': 15,},
-        {'orden': 'nombre', 'posicion': 9,},
-    ]
-    
     navbar = {'1':'proyecto', '2':'TU'}
-    
-    return elementView(request, mensajes, TUForm, 'reqApp/proyecto/TU/TU.html', 'reqApp/proyecto/TU/TU_form.html', TipoUsuario, listaAtributos, navbar, 'TU')
+    return elementView(request, mensajes, TUForm, 'reqApp/proyecto/TU/TU.html', 'reqApp/proyecto/TU/TU_form.html', TipoUsuario, navbar, 'TU')
 
 def viewRU(request):
     mensajes = []
-    
-    # la 'posicion' corresponde al ancho(%) dentro del div (ver 'reqApp/orden_elementos.html')
-    listaAtributos = [
-        {'orden': 'identificador', 'posicion': 15,},
-        {'orden': 'nombre', 'posicion': 9,},
-        {'orden': 'estado', 'posicion': 15,},
-        {'orden': 'costo', 'posicion': 5,},
-        {'orden': 'prioridad', 'posicion': 13,},
-        {'orden': 'tipo', 'posicion': 18,},
-        {'orden': 'hito', 'posicion': 10,},
-    ]    
-    
     navbar = {'1':'proyecto', '2':'RU'}
-    
-    return elementView(request, mensajes, RUForm, 'reqApp/proyecto/RU/RU.html', 'reqApp/proyecto/RU/RU_form.html', RequisitoUsuario, listaAtributos, navbar, 'RU')
+    return elementView(request, mensajes, RUForm, 'reqApp/proyecto/RU/RU.html', 'reqApp/proyecto/RU/RU_form.html', RequisitoUsuario, navbar, 'RU')
 
 def viewRS(request):
     mensajes = []
-    
-    # la 'posicion' corresponde al ancho(%) dentro del div (ver 'reqApp/orden_elementos.html')
-    listaAtributos = [
-        {'orden': 'identificador', 'posicion': 15,},
-        {'orden': 'nombre', 'posicion': 9,},
-        {'orden': 'estado', 'posicion': 15,},
-        {'orden': 'costo', 'posicion': 5,},
-        {'orden': 'prioridad', 'posicion': 13,},
-        {'orden': 'tipo', 'posicion': 18,},
-        {'orden': 'hito', 'posicion': 15,},
-    ]  
-    
     navbar = {'1':'proyecto', '2':'RS'}
-    
-    return elementView(request, mensajes, RSForm, 'reqApp/proyecto/RS/RS.html', 'reqApp/proyecto/RS/RS_form.html', RequisitoSoftware, listaAtributos, navbar, 'RS')
+    return elementView(request, mensajes, RSForm, 'reqApp/proyecto/RS/RS.html', 'reqApp/proyecto/RS/RS_form.html', RequisitoSoftware, navbar, 'RS')
 
 def viewMD(request):
     mensajes = []
-    
-    # la 'posicion' corresponde al ancho(%) dentro del div (ver 'reqApp/orden_elementos.html')
-    listaAtributos = [
-        {'orden': 'identificador', 'posicion': 15,},
-        {'orden': 'nombre', 'posicion': 44,},
-        {'orden': 'costo', 'posicion': 8,},
-        {'orden': 'prioridad', 'posicion': 10,},
-    ]
-    
     navbar = {'1':'proyecto', '2':'MD'}
-    
-    return elementView(request, mensajes, MDForm, 'reqApp/proyecto/MD/MD.html', 'reqApp/proyecto/MD/MD_form.html', Modulo, listaAtributos, navbar, 'MD')
+    return elementView(request, mensajes, MDForm, 'reqApp/proyecto/MD/MD.html', 'reqApp/proyecto/MD/MD_form.html', Modulo, navbar, 'MD')
 
 def viewCP(request):
-    mensajes = []    
-    
-    # la 'posicion' corresponde al ancho(%) dentro del div (ver 'reqApp/orden_elementos.html')
-    listaAtributos = [
-        {'orden': 'identificador', 'posicion': 15,},
-        {'orden': 'nombre', 'posicion': 9,},
-        {'orden': 'estado', 'posicion': 20,},
-        {'orden': 'requisito', 'posicion': 10,},
-    ]
-    
+    mensajes = []
     navbar = {'1':'proyecto', '2':'CP'}
-    
-    return elementView(request, mensajes, CPForm, 'reqApp/proyecto/CP/CP.html', 'reqApp/proyecto/CP/CP_form.html', CasoPrueba, listaAtributos, navbar, 'CP')
+    return elementView(request, mensajes, CPForm, 'reqApp/proyecto/CP/CP.html', 'reqApp/proyecto/CP/CP_form.html', CasoPrueba, navbar, 'CP')
     
 def viewHT(request):
-    mensajes = []    
-    
-    # la 'posicion' corresponde al ancho(%) dentro del div (ver 'reqApp/orden_elementos.html')
-    listaAtributos = [
-        {'orden': 'identificador', 'posicion': 15,},
-        {'orden': 'nombre', 'posicion': 9,},
-    ]
-    
+    mensajes = []
     navbar = {'1':'proyecto', '2':'HT'}
-    
-    return elementView(request, mensajes, HTForm, 'reqApp/proyecto/HT/HT.html', 'reqApp/proyecto/HT/HT_form.html', Hito, listaAtributos, navbar, 'HT')
+    return elementView(request, mensajes, HTForm, 'reqApp/proyecto/HT/HT.html', 'reqApp/proyecto/HT/HT_form.html', Hito, navbar, 'HT')
     
 ################################# Documentos #############################
 def docView(request, navbar, activos, pdfLink):
@@ -755,14 +693,6 @@ def consistencia(request):
     IDENTIFICADOR_CHOICES = [
         (0, "Todos"),
     ]
-    models = {
-        "ht": Hito,
-        "tu": TipoUsuario,
-        "ru": RequisitoUsuario,
-        "rs": RequisitoSoftware,
-        "md": Modulo,
-        "cp": CasoPrueba,
-    }
     templates = {
         "rurs":{'elemento':'reqApp/proyecto/RU/RU.html','subElemento':'reqApp/proyecto/RS/RS.html'},
         "rucp":{'elemento':'reqApp/proyecto/RU/RU.html','subElemento':'reqApp/proyecto/CP/CP.html'},
@@ -782,52 +712,64 @@ def consistencia(request):
         consistencia =  request.GET.get('consistencia', 'rurs')
         identificador = int(request.GET.get('identificador', 0))
         
+        ordenActual = 'identificador'
+        if 'orden' in request.GET:
+            ordenActual = request.GET['orden']
+        
         elementos = []
         if consistencia == 'rurs':
-            modelo = RequisitoUsuario.objects.vigentes(proyecto)
-            subModelo = RequisitoSoftware.objects.vigentes(proyecto)
+            model = RequisitoUsuario
+            modeloQ = RequisitoUsuario.objects.vigentes(proyecto)
+            subModeloQ = RequisitoSoftware.objects.vigentes(proyecto)
             prop = 'requisitosUsuario'
         elif consistencia == 'rucp':
-            modelo = RequisitoUsuario.objects.vigentes(proyecto)
-            subModelo = CasoPrueba.objects.vigentes(proyecto)
+            model = RequisitoUsuario
+            modeloQ = RequisitoUsuario.objects.vigentes(proyecto)
+            subModeloQ = CasoPrueba.objects.vigentes(proyecto)
             prop = 'requisito'
         elif consistencia == 'rsru':
-            modelo = RequisitoSoftware.objects.vigentes(proyecto)
-            subModelo = RequisitoUsuario.objects.vigentes(proyecto)
+            model = RequisitoSoftware
+            modeloQ = RequisitoSoftware.objects.vigentes(proyecto)
+            subModeloQ = RequisitoUsuario.objects.vigentes(proyecto)
             prop = 'requisitosoftware'
         elif consistencia == 'rscp':
-            modelo = RequisitoSoftware.objects.vigentes(proyecto)
-            subModelo = CasoPrueba.objects.vigentes(proyecto)
+            model = RequisitoSoftware
+            modeloQ = RequisitoSoftware.objects.vigentes(proyecto)
+            subModeloQ = CasoPrueba.objects.vigentes(proyecto)
             prop = 'requisito'
         elif consistencia == 'rsmd':
-            modelo = RequisitoSoftware.objects.vigentes(proyecto)
-            subModelo = Modulo.objects.vigentes(proyecto)
+            model = RequisitoSoftware
+            modeloQ = RequisitoSoftware.objects.vigentes(proyecto)
+            subModeloQ = Modulo.objects.vigentes(proyecto)
             prop = 'requisitosSoftware'
         elif consistencia == 'mdrs':
-            modelo = Modulo.objects.vigentes(proyecto)
-            subModelo = RequisitoSoftware.objects.vigentes(proyecto)
+            model = Modulo
+            modeloQ = Modulo.objects.vigentes(proyecto)
+            subModeloQ = RequisitoSoftware.objects.vigentes(proyecto)
             prop = 'modulo'
         elif consistencia == 'cpru':
-            modelo = CasoPrueba.objects.vigentes(proyecto).filter(requisito__in=RequisitoUsuario.objects.bitacorados(proyecto))
-            subModelo = RequisitoUsuario.objects.vigentes(proyecto)
+            model = CasoPrueba
+            modeloQ = CasoPrueba.objects.vigentes(proyecto).filter(requisito__in=RequisitoUsuario.objects.bitacorados(proyecto))
+            subModeloQ = RequisitoUsuario.objects.vigentes(proyecto)
             prop = 'casoprueba'
         elif consistencia == 'cprs':
-            modelo = CasoPrueba.objects.vigentes(proyecto).filter(requisito__in=RequisitoSoftware.objects.bitacorados(proyecto))
-            subModelo = RequisitoSoftware.objects.vigentes(proyecto)
+            model = CasoPrueba
+            modeloQ = CasoPrueba.objects.vigentes(proyecto).filter(requisito__in=RequisitoSoftware.objects.bitacorados(proyecto))
+            subModeloQ = RequisitoSoftware.objects.vigentes(proyecto)
             prop = 'casoprueba'
         else:
             raise Http404
             
         # generar el listado de textos identificadores de elementos del tipo seleccionado
         identificadoresDict = {}
-        elementos = modelo
+        elementos = modeloQ
         for elemento in elementos:
             # el nombre correspondiente al identificador es el más reciente
             identificadoresDict.update({elemento.identificador: elemento.textoIdentificador()+" "+elemento.nombre})
         for key in sorted(identificadoresDict):
             IDENTIFICADOR_CHOICES.append((key, identificadoresDict[key]))
             
-        elementos = arbolDeRelaciones(modelo, subModelo, prop, identificador)
+        elementos = arbolDeRelaciones(modeloQ.order_by(ordenActual), subModeloQ, prop, identificador)
         
     else:
         raise Http404
@@ -840,6 +782,9 @@ def consistencia(request):
         'IDENTIFICADOR_CHOICES':IDENTIFICADOR_CHOICES,
         'consistencia':consistencia,
         'identificador':identificador,
+        'atributos_ordenables': orderingList(model),
+        'orden_actual': ordenActual,
+        'barra_orden_elementos': 'reqApp/orden_elementos.html',
     }
     return render(request, 'reqApp/herramientas/consistencia/consistencia.html', context)
 

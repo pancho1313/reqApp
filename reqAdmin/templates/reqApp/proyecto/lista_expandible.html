@@ -21,8 +21,16 @@
     {% endif %}
 </div>
 
-<div style="text-align:right;color:Gray;"><div>Colores: <b class="cumple">cumple</b> <b class="no_cumple">no cumple</b> <b class="ambiguo">ambiguo</b></div></div>
-{% include barra_orden_elementos with atributos=atributos_ordenables %}
+<div style="text-align:right;">
+    <div>
+        <i style="color:Gray;">Colores: </i>
+        <b class="cumple">cumple </b>
+        <b class="no_cumple">no cumple </b>
+        <b class="ambiguo">ambiguo </b>
+    </div>
+</div>
+
+{% include barra_orden_elementos with atributos=atributos_ordenables orden_actual=orden_actual %}
 
 {% ifequal elementos|length 0 %}
     <p class="centrado">--------------- Lista Vacía ---------------</p>
