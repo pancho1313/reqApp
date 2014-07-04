@@ -100,6 +100,7 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages'
 )
 
 # Tiny-mce
@@ -108,3 +109,10 @@ TINYMCE_JS_ROOT = os.path.join(STATIC_URL, "tiny_mce/")
 
 # doc. img. upload folder
 IMAGES_UPLOAD = 'uploads/'
+
+# email
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'mainreq.90@gmail.com'
+EMAIL_HOST_PASSWORD = 'NataliaPoklonskaia'
