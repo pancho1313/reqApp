@@ -9,6 +9,7 @@
 <br/>
 
 <div>
+
     <button title="útil para buscar (ctrl+f)" style="display: inline-block;width:auto;" class="boton_azul" onclick='abrirTodos()'>(+)Abrir Todos</button>
     <button title="colapsar elementos" style="display: inline-block;width:auto;" class="boton_azul" onclick='cerrarTodos()'>(--)Cerrar Todos</button>
     <div style="display: inline-block;width:20%;"></div>
@@ -20,7 +21,7 @@
     {% endif %}
 </div>
 
-<br/>
+<div style="text-align:right;color:Gray;"><div>Colores: <b class="cumple">cumple</b> <b class="no_cumple">no cumple</b> <b class="ambiguo">ambiguo</b></div></div>
 {% include barra_orden_elementos with atributos=atributos_ordenables %}
 
 {% ifequal elementos|length 0 %}
