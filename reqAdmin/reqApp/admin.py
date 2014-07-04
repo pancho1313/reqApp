@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 
 from random import randrange
 from django.contrib import messages
-from django.core.mail import EmailMessage
+from reqApp.util import *
 
 class UserProfileInline(admin.StackedInline):
     model = UserProfile
@@ -27,14 +27,12 @@ class UserAdmin(AuthUserAdmin):
         c = 0
         for u in queryset:
             npass = (randrange(9)+1)*1000+(randrange(9)+1)*100+(randrange(9)+1)*10+(randrange(9)+1)
-            u.set_password(npass)
-            message = EmailMessage('Bienvenido a MainReq!', 'Username:%s    Password:%s'%(u.username,npass), to=[u.email])
-            try:
-                message.send()
+            if sendEmail2User(u, 'Bienvenido a MainReq!', 'Username:%s    Password:%s'%(u.username,npass)):
                 messages.success(request, "password changed & sent by email (user: %s)" % u.username)
+                u.set_password(npass)
                 u.save()
                 c = c + 1
-            except Exception, e:
+            else:
                 messages.error(request, "Error: can't send email! (user: %s)" % u.username)
         messages.info(request, "%s passwords changed & sent by email." % c)#warning, debug, info, success, error
         

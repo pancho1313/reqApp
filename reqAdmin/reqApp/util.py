@@ -1,5 +1,6 @@
 from reqApp.models import *
 from django.http import Http404
+from django.core.mail import EmailMessage
 
 def get_user_or_none(request):
     #return User.objects.get(username='alejandro')
@@ -25,6 +26,14 @@ def myFilter(s,val):
     dic = {}
     dic[s] = val
     return dic
+    
+def sendEmail2User(user, subject, message):
+    email = EmailMessage(subject, message, to=[user.email])
+    try:
+        email.send()
+        return True
+    except Exception, e:
+        return False
     
 def isEditorHT(usuario):
     return usuario.has_perm('reqApp.'+Hito._meta.permissions[0][0])
