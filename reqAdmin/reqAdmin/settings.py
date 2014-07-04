@@ -83,7 +83,7 @@ USE_TZ = True
 
 # login/logout
 LOGIN_URL = 'reqApp:login'
-LOGIN_REDIRECT_URL = 'reqApp:PR'
+LOGIN_REDIRECT_URL = 'reqApp:PR' # selectProject.html
 LOGOUT_URL = 'reqApp:login'
 
 # Static files (CSS, JavaScript, Images)
@@ -112,7 +112,7 @@ IMAGES_UPLOAD = 'uploads/'
 
 # email
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.gmail.com' # larga vida a google
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'mainreq.90@gmail.com'
-EMAIL_HOST_PASSWORD = 'NataliaPoklonskaia'
+EMAIL_HOST_USER = 'mainreq.90@gmail.com' # inserte su gmail
+EMAIL_HOST_PASSWORD = 'NataliaPoklonskaia' # y su contrasegnia
