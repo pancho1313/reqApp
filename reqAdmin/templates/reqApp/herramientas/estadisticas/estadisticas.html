@@ -33,14 +33,10 @@
 {% include "reqApp/herramientas/estadisticas/MD.html" with MD=MD %}
 
 <br/>
-
-<div>
-    *Los Módulos no se encuentran asociados a un Hito específico, en esta gráfica se muestran todos los MD asociados al proyecto.
-</div>
-<div>
-    **No se contabilizan RU ni RS sin Hito asociado.
-</div>
-<div>
-    ***Se contabilizan sólo los CP asociados a los requisitos contabilizados aquí.
-</div>
+<ul>
+<li>Los Módulos no se encuentran asociados a un Hito específico, en esta gráfica se muestran todos los MD asociados al proyecto.</li>
+<li>No se contabilizan RU ni RS sin Hito asociado.</li>
+<li>Se contabilizan sólo los CP asociados a los requisitos contabilizados aquí.</li>
+<li>Elementos sin RU, RS o TU asociados son contabilizados en el total.</li>
+</ul>
 {% endblock %}

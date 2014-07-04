@@ -1,4 +1,5 @@
 {% extends "reqApp/proyecto/elemento_proyecto.html" %}
+{% load reqApp_tags %}
 
 {% block encabezado %}
     <div style="display: inline-block;width:95%;vertical-align:top;">
@@ -19,7 +20,14 @@
             <span style="color:Gray;">Cantidad de usuarios: </span>{{ elemento.cantidad }}
         </div>
         <div style="display: inline-block;width:40%;vertical-align:top;">
-            <span style="color:Gray;">Usuarios contactables: </span>{{ elemento.usuariosContactables }}
+            <ul>
+            <span style="color:Gray;">Usuarios contactables: </span>
+                <ul>
+                    {% for c in elemento.usuariosContactables|splitBy:';' %}
+                        <li>{{c}}</li>
+                    {% endfor %}
+                </ul>
+            </ul>
         </div>
     </div>
 {% endblock %}

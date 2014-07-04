@@ -60,6 +60,10 @@ def enlistarRegistrados(queryList):
 @register.filter(name="largoLista")
 def largoLista(lista):
     return len(lista)
+    
+@register.filter(name="splitBy")
+def splitBy(s, token):
+    return s.split(token)
 
 @register.filter(name="porcentaje")
 def porcentaje(total, parte):
