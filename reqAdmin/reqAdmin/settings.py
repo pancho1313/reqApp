@@ -111,8 +111,17 @@ TINYMCE_JS_ROOT = os.path.join(STATIC_URL, "tiny_mce/")
 IMAGES_UPLOAD = 'uploads/'
 
 # email
+from reqApp.email_settings import *
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com' # larga vida a google
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'mainreq.90@gmail.com' # inserte su gmail
-EMAIL_HOST_PASSWORD = 'NataliaPoklonskaia' # y su contrasegnia
+"""
+IMPORTANT ! ! ! ! ! ! ! ! ! ! ! ! ! ! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+TODO when deploy:
+
+Create /reqApp/email_settings.py (with following custom lines)
+
+EMAIL_HOST_USER = '_______@gmail.com' # your gmail
+EMAIL_HOST_PASSWORD = '________' # your gmail password
+
+"""
