@@ -20,7 +20,7 @@
             <span style="color:Gray;">Cantidad de usuarios: </span>{{ elemento.cantidad }}
         </div>
         <div style="display: inline-block;width:40%;vertical-align:top;">
-            <ul>
+            <ul class="flat">
             <span style="color:Gray;">Usuarios contactables: </span>
                 <ul>
                     {% for c in elemento.usuariosContactables|splitBy:';' %}

@@ -9,16 +9,6 @@ function expandirContraerElemento(id){
     }
 }
 
-// para expandir y contraer sub-listas de elementos (ej: lista de TUs asociados a un RU)
-function expandirContraerSubLista(self){
-    var subLista = $(self).parent().next('ul');
-    if(subLista.css('display') == 'block'){
-        subLista.hide('slow');
-    }else{
-        subLista.show('slow');
-    }
-}
-
 // para expandir y contraer el contenido de los elementos de lista
 function expandirContraerContenido(self){
     var elemento_contenido = $(self).parent().parent().parent().next('div[name=elemento_contenido]');

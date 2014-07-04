@@ -26,19 +26,17 @@
         <div style="display: inline-block;width:30%;vertical-align:top;"></div>
         <div style="display: inline-block;width:30%;vertical-align:top;"></div>
         <div style="display: inline-block;width:30%;vertical-align:top;">
-            <ul>
-                <li>
-                    <button class="sublista" onclick="expandirContraerSubLista(this)">
-                        RS asociados(
-                        {% if bitacora %}
-                            {{elemento.requisitosSoftware|enlistarRegistrados|largoLista}}
-                        {% else %}
-                            {{elemento.requisitosSoftware|enlistarVigentes|largoLista}}
-                        {% endif %}
-                        )
-                    </button>
-                </li>
-                <ul style="display:none;">
+            <ul class="flat">
+                <span style="color:Gray;">
+                    RS asociados(
+                    {% if bitacora %}
+                        {{elemento.requisitosSoftware|enlistarRegistrados|largoLista}}
+                    {% else %}
+                        {{elemento.requisitosSoftware|enlistarVigentes|largoLista}}
+                    {% endif %}
+                    ):
+                </span>
+                <ul>
                 {% if bitacora %}
                     {% for rs in elemento.requisitosSoftware|enlistarRegistrados %}
                         {% if rs.vigencia %}

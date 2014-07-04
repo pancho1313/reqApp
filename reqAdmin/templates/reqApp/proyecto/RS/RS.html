@@ -40,17 +40,15 @@
             <div><span style="color:Gray;">Estabilidad: </span>{{ elemento.estabilidad }}</div>
         </div>
         <div style="display: inline-block;width:30%;vertical-align:top;">
-            <ul>
-                <li>
-                    <button class="sublista" onclick="expandirContraerSubLista(this)">
-                        {% if bitacora %}
-                            Usuarios asociados({{elemento.tiposUsuario|enlistarRegistrados|largoLista}})
-                        {% else %}
-                            Usuarios asociados({{elemento.tiposUsuario|enlistarVigentes|largoLista}})
-                        {% endif %}
-                    </button>
-                </li>
-                <ul style="display:none;">
+            <ul class="flat">
+                <span style="color:Gray;">
+                    {% if bitacora %}
+                        Usuarios asociados({{elemento.tiposUsuario|enlistarRegistrados|largoLista}}):
+                    {% else %}
+                        Usuarios asociados({{elemento.tiposUsuario|enlistarVigentes|largoLista}}):
+                    {% endif %}
+                </span>
+                <ul>
                     {% if bitacora %}
                         {% for tu in elemento.tiposUsuario|enlistarRegistrados %}
                             {% if tu.vigencia %}
@@ -68,17 +66,15 @@
             </ul>
         </div>
         <div style="display: inline-block;width:30%;vertical-align:top;">
-            <ul>
-                <li>
-                    <button class="sublista" onclick="expandirContraerSubLista(this)">
+            <ul class="flat">
+                <span style="color:Gray;">
                         {% if bitacora %}
-                            RU asociados({{elemento.requisitosUsuario|enlistarRegistrados|largoLista}})
+                            RU asociados({{elemento.requisitosUsuario|enlistarRegistrados|largoLista}}):
                         {% else %}
-                            RU asociados({{elemento.requisitosUsuario|enlistarVigentes|largoLista}})
+                            RU asociados({{elemento.requisitosUsuario|enlistarVigentes|largoLista}}):
                         {% endif %}
-                    </button>
-                </li>
-                <ul style="display:none;">
+                </span>
+                <ul>
                     {% if bitacora %}
                         {% for ru in elemento.requisitosUsuario|enlistarRegistrados %}
                             {% if ru.vigencia %}

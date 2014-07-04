@@ -220,31 +220,6 @@ background-color:#D4E3FC;
 padding:5px;
 }
 
-/* botones que despliegan sublistas en los elementos */
-button.sublista
-{
-color:#1464F6;
-background-color:White;
-text-decoration:none;
-border: none;
-cursor:pointer;
-}
-
-button.sublista:hover
-{
-text-decoration:underline;
-}
-
-button.sublista:active
-{
-background-color:White;
-}
-
-button.sublista:focus
-{
-text-decoration:underline;
-}
-
 /* botones de las matrices de trazado */
 div.matr_selec
 {
@@ -429,4 +404,11 @@ color:#1464F6;
 text-align:right;
 cursor: pointer;
 padding:2px;
+}
+
+/* ul flat */
+ul.flat
+{
+margin-top:0px;
+margin-bottom:0px;
 }
