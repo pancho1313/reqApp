@@ -72,7 +72,7 @@ class Bitacora(models.Model):
     descripcion = models.CharField(max_length=5000, blank=True)
     proyecto = models.ForeignKey(Proyecto, blank=True, null=False)
     fecha = models.DateTimeField()
-    usuario = models.ForeignKey(User, null=True) # TODO referenciar al User correcto
+    usuario = models.ForeignKey(User, null=True)
     vigencia = models.BooleanField()
     
     def __unicode__(self):
@@ -389,7 +389,7 @@ class Documento(models.Model):
     
     proyecto = models.ForeignKey(Proyecto, null=False)
     fecha = models.DateTimeField()
-    usuario = models.ForeignKey(User) # TODO referenciar al User correcto
+    usuario = models.ForeignKey(User)
     tipo = models.CharField(max_length=30, choices=PARRAFOS_CHOICES)
     
     objects = DocsManager()
@@ -404,3 +404,16 @@ class Documento(models.Model):
         self.fecha = timezone.now()
         
         self.save()
+        
+############ Tareas #############
+class Task(models.Model):
+    nombre = models.CharField(max_length=100)
+    project = models.ForeignKey(Proyecto, null=False)
+    initDate = models.DateTimeField(default=timezone.now)
+    deadlineDate = models.DateTimeField(default=timezone.now)
+    user = models.ForeignKey(User)
+    description = models.CharField(max_length=5000, blank=True)
+    state = models.CharField(max_length=30, choices=TASK_CHOICES)
+    
+    class Meta:
+        permissions = ((PERM_PRE+'TR', "Asignar/Revisar Tareas"),)

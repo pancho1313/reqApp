@@ -59,3 +59,11 @@ PARRAFOS_CHOICES = [
     ("navegacion", "Diseño Detallado/Navegación"),
     ("interfaz", "Diseño Detallado/Interfaz"),
 ]
+
+TASK_CHOICES = [
+    ("realizada", "realizada"),
+    ("no_realizada", "no realizada"),
+    ("aprobada", "aprobada"),
+    ("reprobada", "reprobada"),
+    ("cancelada", "cancelada"),
+]

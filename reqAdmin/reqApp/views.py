@@ -285,16 +285,14 @@ def docHistorico(request):
     return docView(request, navbar, parrafos, 'docHis')
 
 ############################### Herramientas ##########################
-def herrView(request, navbar):
-    context = {
-        'navbar':navbar,
-    }
-    return render(request, 'reqApp/herramientas.html', context)
 
 ##############################  TAREAS
 def tareas(request):
     navbar = {'1':'herramientas', '2':'tareas'}
-    return herrView(request, navbar)
+    context = {
+        'navbar':navbar,
+    }
+    return render(request, 'reqApp/herramientas/tareas/tareas.html', context)
 
 ##############################  ESTADISTICAS
 def estadisticasRU_RS_CP_MD(proyecto, ht=None):

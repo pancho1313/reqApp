@@ -1,0 +1,66 @@
+{% extends "reqApp/base.html" %}
+{% load reqApp_tags %}
+{% block body %}
+<br/>
+<div>
+    <select style="display:inline-block;width:auto;vertical-align:top;" class="boton_azul" title="Seleccionar Integrante">
+        <option>aperez</option>
+        <option>segasep</option>
+        <option>ralonso</option>
+        <option>vmunoz</option>
+        <option>fhafon</option>
+    </select>
+    
+    <div style="display:inline-block;position:relative;float:right;">
+        <a class="boton_azul" href="#" target="_blank">PDF</a>
+    </div>
+</div>
+
+<br/>
+
+<div>
+    <button title="útil para buscar (ctrl+f)" style="display: inline-block;width:auto;" href='#' class="boton_azul" onclick='abrirTodos()'>(+)Abrir Todos</button>
+    <button title="colapsar elementos" style="display: inline-block;width:auto;" href='#' class="boton_azul" onclick='cerrarTodos()'>(--)Cerrar Todos</button>
+    <div style="display: inline-block;width:20%;"></div>
+    <a title="Agregar Nueva Tarea" style="display: inline-block;width:auto;" href='#nuevo' class="boton_azul" onclick=''>Nuevo</a>
+</div>
+
+<div style="text-align:right;">
+    <div>
+        <i style="color:Gray;">Colores: </i>
+        <b style="color:Black;">por hacer </b>
+        <b class="realizada">realizada </b>
+        <b class="no_realizada">no realizada </b>
+        <b class="aprobada">aprobada </b>
+        <b class="reprobada">reprobada </b>
+        <b class="cancelada">cancelada </b>
+    </div>
+</div>
+    
+<div class="contenedorElemento">
+    <div id="e.elemento.textoIdentificador">
+        <div>
+            <div class="tituloElemento">
+                <div style="display: inline-block;width:43%;vertical-align:top;">
+                    <a onclick="expandirContraerContenido(this)" style="cursor:pointer;" name="elemento.textoIdentificador">
+                        <b class="realizada">tarea 1</b>
+                    </a>
+                </div>
+                <div style="display: inline-block;width:50%;vertical-align:top;">
+                     <span>2014-06-07 21:00</span> <span style="color:Grey;">--></span> <span>2014-06-20 23:59</span> (quedan 2 dias)
+                </div>
+            </div>
+        </div>
+        <div name="elemento_contenido" style="display:none;">    
+            <div><span style="color:Gray;">Estado: </span><span class="realizada">realizada</span></div>
+            <div><span style="color:Gray;">Responsable: </span>[ralonso]</div>
+            <br/>
+            <div>
+                Esta es una tarea de prueba...
+            </div>
+            <br/>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
