@@ -1,4 +1,5 @@
 {% extends "reqApp/base.html" %}
+{% load reqApp_tags %}
 {% block body %}
 <br/>
 <div>
@@ -31,7 +32,13 @@
         <b class="ambiguo">ambiguo </b>
     </div>
 </div>
-{% include barra_orden_elementos with atributos=atributos_ordenables orden_actual=orden_actual %}
+
+{% if atributos_ordenables %}
+    {% with get_params="&consistencia="|concat:consistencia|concat:"&identificador="|concat:identificador %}
+        {% include barra_orden_elementos with atributos=atributos_ordenables orden_actual=orden_actual getParams=get_params %}
+    {% endwith %}
+{% endif %}
+    
 {% ifequal elementos|length 0 %}
     <p class="centrado">--------------- Lista de Elementos Vacía ---------------</p>
 {% else %}

@@ -3,23 +3,14 @@
 {% for atributo in atributos %}
     <div style="display: inline-block;width:{{ atributo.posicion }}%;">
         {% ifequal orden_actual atributo.orden %}
-            <a class="barra_orden" href='?orden=-{{ atributo.orden }}'><b>{{ atributo.orden }}</b></a>
+            <a class="barra_orden" href='?orden=-{{ atributo.orden }}{{getParams}}'><b>{{ atributo.orden }}</b></a>
         {% else %}
             {% ifequal orden_actual atributo.orden|invertOrd %}
-                <a class="barra_orden" href='?orden={{ atributo.orden }}'><b>{{ atributo.orden }}</b></a>
+                <a class="barra_orden" href='?orden={{ atributo.orden }}{{getParams}}'><b>{{ atributo.orden }}</b></a>
             {% else %}
-                <a class="barra_orden" href='?orden={{ atributo.orden }}'>{{ atributo.orden }}</a>
+                <a class="barra_orden" href='?orden={{ atributo.orden }}{{getParams}}'>{{ atributo.orden }}</a>
             {% endifequal %}
         {% endifequal %}
-    {% comment %}
-        <a class="barra_orden" href='?orden={{ atributo.orden }}'>
-            {% ifequal orden_actual atributo.orden %}
-		        <b>{{ atributo.orden }}</b>
-            {% else %}
-                {{ atributo.orden }}
-            {% endifequal %}
-        </a>
-    {% endcomment %}
     </div>
 {% endfor %}
 </div>

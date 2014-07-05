@@ -66,6 +66,10 @@ def largoLista(lista):
 def splitBy(s, token):
     return s.split(token)
 
+@register.filter(name="concat")
+def concat(s1,s2):
+    return str(s1)+str(s2)
+
 @register.filter(name="porcentaje")
 def porcentaje(total, parte):
     if total == 0:

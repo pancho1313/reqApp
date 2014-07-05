@@ -782,10 +782,15 @@ def consistencia(request):
         'IDENTIFICADOR_CHOICES':IDENTIFICADOR_CHOICES,
         'consistencia':consistencia,
         'identificador':identificador,
-        'atributos_ordenables': orderingList(model),
-        'orden_actual': ordenActual,
-        'barra_orden_elementos': 'reqApp/orden_elementos.html',
     }
+    
+    if identificador == 0:
+        context.update({
+            'atributos_ordenables': orderingList(model),
+            'orden_actual': ordenActual,
+            'barra_orden_elementos': 'reqApp/orden_elementos.html',
+        })
+    
     return render(request, 'reqApp/herramientas/consistencia/consistencia.html', context)
 
 ##############################  BITACORA
