@@ -416,4 +416,4 @@ class Task(models.Model):
     state = models.CharField(max_length=30, choices=TASK_CHOICES)
     
     class Meta:
-        permissions = ((PERM_PRE+'TR', "Asignar/Revisar Tareas"),)
+        permissions = ((PERM_PRE+'TR', "Asignar Tareas"),)
