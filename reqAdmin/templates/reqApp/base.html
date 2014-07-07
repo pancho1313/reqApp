@@ -21,9 +21,11 @@
     
     {% block body %}{% endblock %}
     
-    <div id="dropdown-1" class="dropdown dropdown-tip">
-        <div class="contenedorElemento">
-        <a href="{% url 'reqApp:logout' %}">Salir</a>
+    <div id="dropdown-1" class="dropdown dropdown-tip dropdown-anchor-right">
+        <div style="text-align:center;" class="contenedorElemento">
+            <div>{{user.first_name}} {{user.last_name}}</div>
+            <div>{{user.email}}</div>
+            <a href="{% url 'reqApp:logout' %}">Salir</a>
         </div>
     </div>
 </body>
