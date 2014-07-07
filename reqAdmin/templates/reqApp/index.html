@@ -7,7 +7,7 @@
 
 <body>
     <div style="text-align:center;padding:10px" class="contenedorElemento">
-        <h1><i>main</i>Req</h1>
+        <h1><i>main</i><span><a style="color:Black;text-decoration:none;cursor:text;" href="{% url 'admin:index' %}">R</a><span>eq</h1>
         <form method="POST">{% csrf_token %}
             {% if form.non_field_errors %}
                 <p class="invalido">Contraseña o Usuario incorrecto!</p>
