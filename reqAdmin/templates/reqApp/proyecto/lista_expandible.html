@@ -14,11 +14,16 @@
     <button title="colapsar elementos" style="display: inline-block;width:auto;" class="boton_azul" onclick='cerrarTodos()'>(--)Cerrar Todos</button>
     <div style="display: inline-block;width:20%;"></div>
     <a title="Agregar Nuevo" style="display: inline-block;width:auto;" href='#nuevo' class="boton_azul" onclick='editarNuevoElemento()'>Nuevo</a>
-    {% if pdfLink %}
-        <div style="display:inline-block;position:relative;float:right;">
+    
+    <div style="display:inline-block;position:relative;float:right;">
+        {% if pdfLink %}
             <a title="Generar Documento PDF" class="boton_azul" href="{% url 'reqApp:pdf' %}?tipo={{ pdfLink }}" target="_blank">PDF</a>
-        </div>
-    {% endif %}
+        {% endif %}
+        {% if helpLink %}
+            <a title="Ayuda" class="boton_azul" href="{% url 'reqApp:help' %}#{{ helpLink }}" target="_blank">?</a>
+        {% endif %}
+    </div>
+    
 </div>
 
 <div style="text-align:right;">

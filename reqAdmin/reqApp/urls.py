@@ -31,4 +31,6 @@ urlpatterns = patterns('',
     url('^upload/img/$', views.imgUpload, name='mce_upload_image'),
     
     url(r'pdf/$', views.pdf, name='pdf'),
+    
+    url(r'^ayuda/$', views.help, name='help'),
 )

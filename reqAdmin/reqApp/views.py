@@ -51,7 +51,7 @@ def ajax_form_valid(form, validado):
         response_dict = {'server_response': "FAIL", 'errores':errores}
         return HttpResponse(json.dumps(response_dict), content_type='application/json')
 
-def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate, modelClass, navbar, pdfLink=None):
+def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate, modelClass, navbar, pdfLink=None, helpLink=None):
     usuario = get_user_or_none(request) # TODO is None?
     proyecto = getProject(request)
     if request.method == 'POST':
@@ -110,38 +110,39 @@ def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate
         'orden_actual': ordenActual,
         'navbar':navbar,
         'pdfLink':pdfLink,
+        'helpLink':helpLink,
     }
     return render(request, 'reqApp/proyecto/lista_expandible.html', context)
 
 def viewTU(request):
     mensajes = []
     navbar = {'1':'proyecto', '2':'TU'}
-    return elementView(request, mensajes, TUForm, 'reqApp/proyecto/TU/TU.html', 'reqApp/proyecto/TU/TU_form.html', TipoUsuario, navbar, 'TU')
+    return elementView(request, mensajes, TUForm, 'reqApp/proyecto/TU/TU.html', 'reqApp/proyecto/TU/TU_form.html', TipoUsuario, navbar, 'TU', 'TU')
 
 def viewRU(request):
     mensajes = []
     navbar = {'1':'proyecto', '2':'RU'}
-    return elementView(request, mensajes, RUForm, 'reqApp/proyecto/RU/RU.html', 'reqApp/proyecto/RU/RU_form.html', RequisitoUsuario, navbar, 'RU')
+    return elementView(request, mensajes, RUForm, 'reqApp/proyecto/RU/RU.html', 'reqApp/proyecto/RU/RU_form.html', RequisitoUsuario, navbar, 'RU', 'RU')
 
 def viewRS(request):
     mensajes = []
     navbar = {'1':'proyecto', '2':'RS'}
-    return elementView(request, mensajes, RSForm, 'reqApp/proyecto/RS/RS.html', 'reqApp/proyecto/RS/RS_form.html', RequisitoSoftware, navbar, 'RS')
+    return elementView(request, mensajes, RSForm, 'reqApp/proyecto/RS/RS.html', 'reqApp/proyecto/RS/RS_form.html', RequisitoSoftware, navbar, 'RS', 'RS')
 
 def viewMD(request):
     mensajes = []
     navbar = {'1':'proyecto', '2':'MD'}
-    return elementView(request, mensajes, MDForm, 'reqApp/proyecto/MD/MD.html', 'reqApp/proyecto/MD/MD_form.html', Modulo, navbar, 'MD')
+    return elementView(request, mensajes, MDForm, 'reqApp/proyecto/MD/MD.html', 'reqApp/proyecto/MD/MD_form.html', Modulo, navbar, 'MD', 'MD')
 
 def viewCP(request):
     mensajes = []
     navbar = {'1':'proyecto', '2':'CP'}
-    return elementView(request, mensajes, CPForm, 'reqApp/proyecto/CP/CP.html', 'reqApp/proyecto/CP/CP_form.html', CasoPrueba, navbar, 'CP')
+    return elementView(request, mensajes, CPForm, 'reqApp/proyecto/CP/CP.html', 'reqApp/proyecto/CP/CP_form.html', CasoPrueba, navbar, 'CP', 'CP')
     
 def viewHT(request):
     mensajes = []
     navbar = {'1':'proyecto', '2':'HT'}
-    return elementView(request, mensajes, HTForm, 'reqApp/proyecto/HT/HT.html', 'reqApp/proyecto/HT/HT_form.html', Hito, navbar, 'HT')
+    return elementView(request, mensajes, HTForm, 'reqApp/proyecto/HT/HT.html', 'reqApp/proyecto/HT/HT_form.html', Hito, navbar, 'HT', 'HT')
     
 ################################# Documentos #############################
 def docView(request, navbar, activos, pdfLink):
@@ -1267,3 +1268,8 @@ def pdf(request):
     else:
         raise Http404
     return render_to_pdf(template,context)
+    
+############################### HELP ##########################
+def help(request):
+    context = {}# 'helpLink'
+    return render(request, 'reqApp/help.html', context)
