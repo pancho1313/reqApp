@@ -145,7 +145,7 @@ def viewHT(request):
     return elementView(request, mensajes, HTForm, 'reqApp/proyecto/HT/HT.html', 'reqApp/proyecto/HT/HT_form.html', Hito, navbar, 'HT', 'HT')
     
 ################################# Documentos #############################
-def docView(request, navbar, activos, pdfLink):
+def docView(request, navbar, activos, pdfLink, helpLink=None):
     usuario = get_user_or_none(request) # TODO is None?
     proyecto = getProject(request)
 
@@ -165,6 +165,7 @@ def docView(request, navbar, activos, pdfLink):
         'parrafos':parrafos,
         'parrafo':parrafo,
         'pdfLink':pdfLink,
+        'helpLink':helpLink,
     }
     
     id_version = -1 # sin version seleccionada para edición
@@ -218,7 +219,7 @@ def docRequisitos(request):
         'ambiente',
         'proyectos_relacionados',
     ]
-    return docView(request, navbar, parrafos, 'docReq')
+    return docView(request, navbar, parrafos, 'docReq', 'docReq')
     
 def docDiseno(request):
     navbar = {'1':'documentos', '2':'diseno'}
@@ -239,7 +240,7 @@ def docDiseno(request):
         'navegacion',
         'interfaz',
     ]
-    return docView(request, navbar, parrafos, 'docDis')
+    return docView(request, navbar, parrafos, 'docDis', 'docDis')
     
 def docCP(request):
     navbar = {'1':'documentos', '2':'cp'}
@@ -257,7 +258,7 @@ def docCP(request):
         'ambiente',
         'proyectos_relacionados',
     ]
-    return docView(request, navbar, parrafos, 'docCP')
+    return docView(request, navbar, parrafos, 'docCP', 'docCP')
 
 def docHistorico(request):
     navbar = {'1':'documentos', '2':'historico'}
@@ -283,7 +284,7 @@ def docHistorico(request):
         'navegacion',
         'interfaz',
     ]
-    return docView(request, navbar, parrafos, 'docHis')
+    return docView(request, navbar, parrafos, 'docHis', 'docHis')
 
 ############################### Herramientas ##########################
 
@@ -292,6 +293,7 @@ def tareas(request):
     navbar = {'1':'herramientas', '2':'tareas'}
     context = {
         'navbar':navbar,
+        'helpLink':'task',
     }
     return render(request, 'reqApp/herramientas/tareas/tareas.html', context)
 
@@ -528,6 +530,7 @@ def estadisticas(request):
         'RS':estDic['RS'],
         'MD':estDic['MD'],
         'CP':estDic['CP'],
+        'helpLink':'ET',
     }
     return render(request, 'reqApp/herramientas/estadisticas/estadisticas.html', context)
 
@@ -663,6 +666,7 @@ def matrices(request):
         'filas':filas,
         'MATRIZ_CHOICES':MATRIZ_CHOICES,
         'tipo':tipo,
+        'helpLink':'matrix',
     }
     return render(request, 'reqApp/herramientas/matrices/matrices.html', context)
 
@@ -781,6 +785,7 @@ def consistencia(request):
         'IDENTIFICADOR_CHOICES':IDENTIFICADOR_CHOICES,
         'consistencia':consistencia,
         'identificador':identificador,
+        'helpLink':'cons',
     }
     
     if identificador == 0:
@@ -871,6 +876,7 @@ def bitacora(request):
         'IDENTIFICADOR_CHOICES':IDENTIFICADOR_CHOICES,
         'tipo':tipo,
         'identificador':identificador,
+        'helpLink':'reg',
     }
     return render(request, 'reqApp/herramientas/bitacora/bitacora.html', context)
     

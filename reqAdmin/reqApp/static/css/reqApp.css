@@ -24,7 +24,7 @@ float:left;
 display:block;
 width:auto;
 color:Black;
-background-color:White;
+background-color:#F7F6F6;
 text-align:center;
 padding:10px;
 text-decoration:none;
@@ -33,7 +33,7 @@ border: 1px solid LightGray;
 
 .navbar_up a:hover, .navbar_up  a:active
 {
-background-color:#F7F6F6;
+background-color:White;
 }
 
 /* barra de navegación secundaria */
@@ -55,7 +55,7 @@ float:left;
 display:block;
 width:auto;
 color:Black;
-background-color:White;
+background-color:#F7F6F6;
 text-align:center;
 padding:4px;
 text-decoration:none;
@@ -64,7 +64,7 @@ border: 1px solid LightGray;
 
 .navbar_down a:hover, .navbar_down a:active
 {
-background-color:#F7F6F6;
+background-color:White;
 }
 
 /* destacar ruta actual en el navbar */
@@ -79,6 +79,7 @@ background-color:#D6D6D6;
 margin-top: 2px;
 margin-bottom: 2px;
 font-size:1.2em;
+color:Grey;
 }
 
 /* contenedor de elemento de lista */
@@ -126,7 +127,7 @@ text-decoration:underline;
 }
 
 /* color estado de cumplimiento de elemento */
-/* IMPORTANTE: estas clases deben corresponder con el nombre del estado especificado en choices.py */
+/* IMPORTANTE: estas clases deben corresponder con el nombre especificado en choices.py */
 .no_cumple{color:Red;}
 .cumple{color:Green;}
 .ambiguo{color:Purple;}
