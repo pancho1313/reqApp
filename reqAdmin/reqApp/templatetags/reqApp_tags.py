@@ -110,8 +110,11 @@ def textTableHorizHeaders(rows):
             return out
     return '---'
 
-@register.filter(name="alerts")
-def alerts(el):
+@register.filter(name="alarms")
+def alarms(el):
     if (randrange(100)+1)<30:
-        return ['3','4']
+        return [
+            "Su prioridad es menor que la prioridad más alta de sus Requisitos de Software asociados",
+            "Tiene más de 5 Requisitos de Software asociados (puede ser muy complejo y quizás deba ser dividido)"
+        ]
     return False

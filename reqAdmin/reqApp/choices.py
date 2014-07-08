@@ -28,9 +28,9 @@ TIPO_RS_CHOICES = [
 ]
 
 PRIORIDAD_CHOICES = [
-    ("critico","crítico"),
-    ("deseable","deseable"),
-    ("innecesario","innecesario"),
+    ("critico","urgente"),
+    ("deseable","normal"),
+    ("innecesario","pronto"),
 ]
 
 ESTADO_CHOICES = [

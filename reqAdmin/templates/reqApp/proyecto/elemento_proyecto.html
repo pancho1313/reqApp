@@ -3,9 +3,9 @@
     <div class="tituloElemento">
         {% block encabezado %}{% endblock %}
             {% if not bitacora %}
-                {% with elemento|alerts as alerts %}
+                {% with elemento|alarms as alerts %}
                     {% if alerts %}
-                        <div title="Alerta!" style="display: inline-block;float:right;margin-right:10px;width:1em;vertical-align:top;color:White;background-color:#0C59CF;text-align:center;cursor:pointer;" onclick="alert('Posibles conflictos de {{ elemento.textoIdentificador }}:\n'
+                        <div title="Alerta!" style="display:inline-block;float:right;margin-right:10px;width:1em;vertical-align:top;color:White;background-color:#0C59CF;text-align:center;cursor:pointer;" onclick="alert('Posibles conflictos de {{ elemento.textoIdentificador }}:\n'
                             {% for a in alerts %}
                                 +' • {{a}}\n'
                             {% endfor %}
