@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,7 +66,7 @@
 
 <div>
     <!-- Portada-->
-    <img style="zoom:100%;" src="{{host}}/media/documentos/img/fcfm.png"><img/>
+    <img style="zoom:100%;" src="{{host}}{% static 'img/fcfm.png' %}"><img/>
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     <div>
         <p style="font-size:2.5em;text-align:center;"><b>{{titulo}}</b></p>
