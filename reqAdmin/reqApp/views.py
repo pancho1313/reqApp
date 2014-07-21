@@ -36,7 +36,7 @@ def selectProject(request):
         return HttpResponseRedirect(reverse('reqApp:RU'))
     raise Http404
 
-################ Proyecto ################
+################ Elementos del Proyecto ################
 
 def ajax_form_valid(form, validado):
     # para validar a traves de ajax
@@ -104,13 +104,14 @@ def elementView(request, mensajes, modelFormClass, elementTemplate, formTemplate
         'elementos': listaElementos,
         'template':elementTemplate,
         'form': modelFormClass().asignarProyecto(proyecto),
-        'form_template': formTemplate,# TODO: enviar solo si el usuario tiene permisos de edicion
+        'form_template': formTemplate,
         'barra_orden_elementos': 'reqApp/orden_elementos.html',
         'atributos_ordenables': orderingList(modelClass),
         'orden_actual': ordenActual,
         'navbar':navbar,
         'pdfLink':pdfLink,
         'helpLink':helpLink,
+        'canEdit':usuario.has_perm(u'reqApp.'+modelClass._meta.permissions[0][0]),
     }
     return render(request, 'reqApp/proyecto/lista_expandible.html', context)
 
@@ -294,6 +295,9 @@ def tareas(request):
     context = {
         'navbar':navbar,
         'helpLink':'task',
+        'barra_orden_elementos': 'reqApp/orden_elementos.html',
+        'atributos_ordenables': orderingList(Task),
+        'orden_actual': 'fecha',
     }
     return render(request, 'reqApp/herramientas/tareas/tareas.html', context)
 

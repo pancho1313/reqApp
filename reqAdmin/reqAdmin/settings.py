@@ -100,8 +100,20 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.request',
-    'django.contrib.messages.context_processors.messages'
+    'django.contrib.messages.context_processors.messages',
+    "django.core.context_processors.media",
+    'django.core.context_processors.static',
 )
+
+"""
+# https://docs.djangoproject.com/en/1.6/ref/templates/api/#django.template.loaders.cached.Loader
+TEMPLATE_LOADERS = (
+    ('django.template.loaders.cached.Loader', (
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    )),
+)
+"""
 
 # Tiny-mce
 TINYMCE_JS_URL = os.path.join(STATIC_URL, "js/tiny_mce/tiny_mce.js")

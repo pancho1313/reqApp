@@ -5,7 +5,6 @@
         {{ mensaje }}
     </div>
 {% endfor %}
-
 <br/>
 
 <div>
@@ -13,8 +12,9 @@
     <button title="útil para buscar (ctrl+f)" style="display: inline-block;width:auto;" class="boton_azul" onclick='abrirTodos()'>(+)Abrir Todos</button>
     <button title="colapsar elementos" style="display: inline-block;width:auto;" class="boton_azul" onclick='cerrarTodos()'>(--)Cerrar Todos</button>
     <div style="display: inline-block;width:20%;"></div>
-    <a title="Agregar Nuevo" style="display: inline-block;width:auto;" href='#nuevo' class="boton_azul" onclick='editarNuevoElemento()'>Nuevo</a>
-    
+    {% if canEdit %}
+        <a title="Agregar Nuevo" style="display: inline-block;width:auto;" href='#nuevo' class="boton_azul" onclick='editarNuevoElemento()'>Nuevo</a>
+    {% endif %}
     <div style="display:inline-block;position:relative;float:right;">
         {% if pdfLink %}
             <a title="Generar Documento PDF" class="boton_azul" href="{% url 'reqApp:pdf' %}?tipo={{ pdfLink }}" target="_blank">PDF</a>
@@ -40,19 +40,19 @@
 {% ifequal elementos|length 0 %}
     <p class="centrado">--------------- Lista Vacía ---------------</p>
 {% else %}
-    {% for e in elementos %}
-        <div class="contenedorElemento">
-            <div id="{{ e.elemento.textoIdentificador }}">
-                {% include template with elemento=e.elemento %}
+        {% for e in elementos %}
+            <div class="contenedorElemento">
+                <div id="{{ e.elemento.textoIdentificador }}">
+                    {% include template with elemento=e.elemento %}
+                </div>
+                {% if canEdit %}
+                    {% include form_template with form=e.form identificador=e.elemento.identificador textoIdentificador=e.elemento.textoIdentificador %}
+                {% endif %}
             </div>
-            {% if form_template %}
-                {% include form_template with form=e.form identificador=e.elemento.identificador textoIdentificador=e.elemento.textoIdentificador %}
-            {% endif %}
-        </div>
-    {% endfor %}
+        {% endfor %}
 {% endifequal %}
 
-{% if form_template %}
+{% if canEdit %}
     <div class="contenedorNuevoElemento">
         <a name='nuevo'></a>
         {% include form_template with form=form %}

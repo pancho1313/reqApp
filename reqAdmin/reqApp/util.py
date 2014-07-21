@@ -81,6 +81,11 @@ def orderingList(model):
             {'orden': 'identificador', 'posicion': 15,},
             {'orden': 'nombre', 'posicion': 9,},
         ]
+    elif model == Task:
+        return [
+            {'orden': 'estado', 'posicion': 45,},
+            {'orden': 'fecha', 'posicion': 9,},
+        ]
     return []
     
 def isEditorHT(usuario):

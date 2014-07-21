@@ -31,6 +31,7 @@ PRIORIDAD_CHOICES = [
     ("critico","urgente"),
     ("deseable","normal"),
     ("innecesario","pronto"),
+    ("cuando_haya_tiempo","cuando haya tiempo"),
 ]
 
 ESTADO_CHOICES = [

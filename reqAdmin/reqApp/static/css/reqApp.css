@@ -135,7 +135,7 @@ text-decoration:underline;
 .no_realizada{color:Red;}
 .aprobada{color:Green;}
 .reprobada{color:Orange;}
-.cancelada{color:Purple;}
+.descartada{color:Purple;}
 
 /* vertical-align:top; */
 .top

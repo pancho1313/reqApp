@@ -24,7 +24,7 @@
 <div id="{{ elemento.id }}_contenido" name="elemento_contenido" style="display:none;">
     {% block contenido %}{% endblock %}
     
-    {% if form_template %}
+    {% if canEdit %}
         <br/>
         <button class="boton_azul" onclick="editarElemento('{{ elemento.textoIdentificador }}')">Editar</button>
     {% endif %}

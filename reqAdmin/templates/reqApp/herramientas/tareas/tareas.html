@@ -4,11 +4,11 @@
 <br/>
 <div>
     <select style="display:inline-block;width:auto;vertical-align:top;" class="boton_azul" title="Seleccionar Integrante">
-        <option>aperez</option>
+        <option>fhafon [ifracke.95@gmail.com]</option>
         <option>segasep</option>
         <option>ralonso</option>
         <option>vmunoz</option>
-        <option>fhafon</option>
+        <option>aperez</option>
     </select>
     
     <div style="display:inline-block;position:relative;float:right;">
@@ -33,32 +33,65 @@
         <b class="no_realizada">no realizada </b>
         <b class="aprobada">aprobada </b>
         <b class="reprobada">reprobada </b>
-        <b class="cancelada">cancelada </b>
+        <b class="descartada">descartada </b>
     </div>
 </div>
-    
+
+{% include barra_orden_elementos with atributos=atributos_ordenables orden_actual=orden_actual %}
+
 <div class="contenedorElemento">
     <div id="e.elemento.textoIdentificador">
         <div>
             <div class="tituloElemento">
                 <div style="display: inline-block;width:43%;vertical-align:top;">
                     <a onclick="expandirContraerContenido(this)" style="cursor:pointer;" name="elemento.textoIdentificador">
-                        <b class="realizada">tarea 1</b>
+                        <b>Actualizar estado requisitos</b>
                     </a>
                 </div>
                 <div style="display: inline-block;width:50%;vertical-align:top;">
-                     <span>2014-06-07 21:00</span> <span style="color:Grey;">--></span> <span>2014-06-20 23:59</span> (quedan 2 dias)
+                     <span>2014-06-20 23:59</span> (quedan 2 dias)
+                </div>
+            </div>
+        </div>
+        <div name="elemento_contenido" style="display:none;">    
+            <div><span style="color:Gray;">Estado: </span>por hacer</div>
+            <div><span style="color:Gray;">Responsable: </span>[fhafon]</div>
+            <div><span style="color:Gray;">Fecha inicio: </span>2014-06-18 21:00</div>
+            <br/>
+            <div>
+                Debes actualizar el estado de cumplimiento de los Requisitos de Software de acuerdo al resultado de los Casos de Prueba respectivos.
+            </div>
+            <br/>
+        </div>
+    </div>
+</div>
+
+<div class="contenedorElemento">
+    <div id="e.elemento.textoIdentificador">
+        <div>
+            <div class="tituloElemento">
+                <div style="display: inline-block;width:43%;vertical-align:top;">
+                    <a onclick="expandirContraerContenido(this)" style="cursor:pointer;" name="elemento.textoIdentificador">
+                        <b class="realizada">Realizar los primeros Casos de Prueba</b>
+                    </a>
+                </div>
+                <div style="display: inline-block;width:50%;vertical-align:top;">
+                     <span>2014-06-15 23:59</span>
                 </div>
             </div>
         </div>
         <div name="elemento_contenido" style="display:none;">    
             <div><span style="color:Gray;">Estado: </span><span class="realizada">realizada</span></div>
-            <div><span style="color:Gray;">Responsable: </span>[ralonso]</div>
+            <div><span style="color:Gray;">Responsable: </span>fhafon [ifracke.95@gmail.com]</div>
+            <div><span style="color:Gray;">Fecha inicio: </span>2014-06-07 21:00</div>
             <br/>
             <div>
-                Esta es una tarea de prueba...
+                Debes realizar los casos de prueba de los requisitos de software con prioridad 'urgente'.
             </div>
             <br/>
+            <button class="boton_azul">Aprobar</button>
+	        <button style="margin-left:100px;" class="boton_azul">Reprobar</button>
+	        <button style="margin-left:100px;" class="boton_azul">Descartar</button>
         </div>
     </div>
 </div>

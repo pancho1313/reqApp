@@ -71,7 +71,7 @@ $(window).bind("load", function() {
         </div>
         <div id="versionSelect" style="display:none;">
             {% if versiones %}
-                <select id="selectVersion" title="Revisar versiones anteriores" onchange="location = this.options[this.selectedIndex].value;">
+                <select class="boton_azul" id="selectVersion" title="Revisar versiones anteriores" onchange="location = this.options[this.selectedIndex].value;">
                     {% for version in versiones %}
                         <option value="?parrafo={{ parrafo }}&id={{version.id}}" {% if id_version %}{% ifequal version.id id_version %}selected{% endifequal %}{% endif %}>{{ version.fecha|date:"Y-m-d H:i" }} [{{version.usuario}}]{% ifequal version.id vigente.id %} (actual){% endifequal %}</option>
                     {% endfor %}
